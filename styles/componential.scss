@@ -1,0 +1,104 @@
+button, .button{
+    border: 0;
+    border-radius: 6px;
+    background: black;
+    color: white;
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-decoration: none;
+    padding: 8px 10px;
+    margin: 12px 4px;
+    cursor: pointer;
+
+    &:hover{
+        background: #333;
+    }
+
+    &:focus{
+        outline: none;
+        border: 1px white;
+    }
+}
+button.disabled{
+    border: 0;
+    border-radius: 6px;
+    background: #aaa;
+    color: white;
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-decoration: none;
+    padding: 8px 10px;
+    margin: 12px 4px;
+    cursor: pointer;
+
+    &:hover{
+        background: #aaa;
+    }
+
+    &:focus{
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+}
+
+.orange{
+    background: #FFB514;
+
+    &:hover{
+        background: #d69915;
+    }
+
+    &:focus{
+        outline: none;
+        border: 1px white;
+    }
+}
+
+.blue{
+    background: #1ba5db;
+
+    &:hover{
+        background: #1788b4;
+    }
+
+    &:focus{
+        outline: none;
+        border: 1px white;
+    }
+}
+
+.red{
+    background: #e20a5d;
+
+    &:hover{
+        background: #b6064a;
+    }
+
+    &:focus{
+        outline: none;
+        border: 1px white;
+    }
+}
+.bordered{
+    background: none;
+    border: 1px solid black;
+    color: black;
+    &:hover{
+        background: #cccccc;
+    }
+
+    &:focus{
+        outline: none;
+    }
+}
+
+input{
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 8px;
+}

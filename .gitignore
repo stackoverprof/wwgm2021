@@ -2,11 +2,12 @@
 
 # dependencies
 /node_modules
+/.vscode
 /.pnp
 .pnp.js
 
 # testing
-/coverage
+/coverage 
 
 # next.js
 /.next/
@@ -32,3 +33,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+node_modules
+.vscode/settings.json
+next.config.js
