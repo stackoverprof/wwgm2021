@@ -11,21 +11,21 @@ const Register = () => {
     const [retypePassword, setRetypePassword] = useState('')
     const [displayName, setDisplayName] = useState('')
 
-    const { authMethods, errorCode, seterrorCode } = useAuth()
+    const { authMethods, errorCode, setErrorCode } = useAuth()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        seterrorCode('')
+        setErrorCode('')
 
         if(password === retypePassword){
             authMethods.handleSignup(email, password, displayName)
                 .catch(() => setPassword(''))
         }
-        else seterrorCode('password did not match')
+        else setErrorCode('password did not match')
     }
 
     useEffect(() => {
-        return seterrorCode('')
+        return setErrorCode('')
     }, [])
 
     return (

@@ -3,10 +3,10 @@ import Styled from '@emotion/styled'
 import { useAuth } from '../../core/contexts/AuthContext'
 
 const GoogleButton = () => {
-    const { authMethods, seterrorCode } = useAuth()
+    const { authMethods, setErrorCode } = useAuth()
 
     const handleGoogleAuth = () => {
-        seterrorCode('')
+        setErrorCode('')
         authMethods.handleGoogle()
     }
 

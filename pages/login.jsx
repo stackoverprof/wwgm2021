@@ -6,20 +6,20 @@ import GuestOnlyRoute from '../core/customRoute/GuestOnlyRoute'
 import GoogleAuth from '../components/login/GoogleAuth'
 
 const Login = () => {
-    const [email, setemail] = useState('')
-    const [password, setpassword] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const { authMethods, errorCode, seterrorCode } = useAuth()
+    const { authMethods, errorCode, setErrorCode } = useAuth()
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        seterrorCode('')
+        setErrorCode('')
         authMethods.handleSignin(email, password)
-            .catch(() => setpassword(''))
+            .catch(() => setPassword(''))
     }
 
     useEffect(() => {
-        return seterrorCode('')
+        return setErrorCode('')
     }, [])
 
     return (
@@ -29,11 +29,11 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="email">EMAIL</label>
-                        <input type="email" onChange={(e) => setemail(e.target.value)} value={email} required id="email" placeholder="Masukan Email"/>
+                        <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} required id="email" placeholder="Masukan Email"/>
                     </div>
                     <div>
                         <label htmlFor="email">PASSWORD</label>
-                        <input type="password" onChange={(e) => setpassword(e.target.value)} value={password} required id="password" placeholder="Masukan Password"/>
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} required id="password" placeholder="Masukan Password"/>
                     </div>
                     <button type="submit">LOGIN</button>
                 </form>

@@ -4,9 +4,9 @@ import { AUTH, GoogleAUTH, DB } from '../services/firebase'
 const firebaseAuth = React.createContext()
 
 const AuthProvider = ({children}) => {
-    const [authState, setauthState] = useState('initial')
-    const [currentUser, setcurrentUser] = useState({})
-    const [errorCode, seterrorCode] = useState('')
+    const [authState, setAuthState] = useState('initial')
+    const [currentUser, setCurrentUser] = useState({})
+    const [errorCode, setErrorCode] = useState('')
 
     const authMethods = {
         handleSignup : (email, password, displayName) => {
@@ -25,15 +25,15 @@ const AuthProvider = ({children}) => {
                         photoURL : avatar
                     })
 
-                    setcurrentUser(data.user) 
+                    setCurrentUser(data.user) 
                 })
-                .catch(err => seterrorCode(err.code))
+                .catch(err => setErrorCode(err.code))
         },
 
         handleSignin : (email, password) => {
             return AUTH.signInWithEmailAndPassword(email, password)
-                .then(res => setcurrentUser(res.user))  
-                .catch(err => seterrorCode(err.code))
+                .then(res => setCurrentUser(res.user))  
+                .catch(err => setErrorCode(err.code))
         },
 
         handleGoogle : () => {
@@ -49,9 +49,9 @@ const AuthProvider = ({children}) => {
                     })
                 }
 
-                setcurrentUser(res.user)
+                setCurrentUser(res.user)
             })
-            .catch(err => seterrorCode(err.code))
+            .catch(err => setErrorCode(err.code))
         },
 
         handleSignout : () => {
@@ -61,9 +61,9 @@ const AuthProvider = ({children}) => {
         
     useEffect(() => {        
         const unsubscribe = AUTH.onAuthStateChanged(user => {
-            if(user) setauthState('user')
-            else setauthState('guest')
-            setcurrentUser(user)
+            if(user) setAuthState('user')
+            else setAuthState('guest')
+            setCurrentUser(user)
         })
         return unsubscribe
     }, [])
@@ -74,7 +74,7 @@ const AuthProvider = ({children}) => {
             authState,
             currentUser,
             errorCode,
-            seterrorCode
+            setErrorCode
         }}>
             {children}
         </firebaseAuth.Provider>

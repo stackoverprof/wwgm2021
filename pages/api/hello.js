@@ -5,5 +5,7 @@ export default async (req, res) => {
 
   const decodedToken = await admin.auth().verifyIdToken(userToken).catch(err => console.log("catch " + err))
 
-  res.status(200).json({ body: 'token ' + decodedToken})
+  console.log(decodedToken.admin)
+
+  res.status(200).json({ body: 'token ' + decodedToken })
 }
