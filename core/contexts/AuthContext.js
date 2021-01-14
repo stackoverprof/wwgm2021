@@ -12,14 +12,17 @@ const AuthProvider = ({children}) => {
         handleSignup : (email, password, displayName) => {
             return AUTH.createUserWithEmailAndPassword(email, password)
                 .then(async res => {
+                    const avatar = `https://ui-avatars.com/api/?name=${displayName}&background=random&bold=true`
+
                     const data = await res.user.updateProfile({
-                        displayName: displayName
+                        displayName: displayName,
+                        photoURL : avatar
                     })
 
                     DB.collection('Profile').doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : displayName,
-                        photoURL : `https://ui-avatars.com/api/?name=${displayName}&background=random&bold=true`
+                        photoURL : avatar
                     })
 
                     setcurrentUser(data.user) 
