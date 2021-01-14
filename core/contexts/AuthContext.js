@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AUTH, GoogleAUTH } from '../services/firebase'
+import { AUTH, GoogleAUTH, DB } from '../services/firebase'
 
 const firebaseAuth = React.createContext()
 
@@ -30,9 +30,9 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
-            return AUTH.signInWithPopup(GoogleAUTH).then((res)=>{
+            return AUTH.signInWithPopup(GoogleAUTH).then(res => {
                 if(res.additionalUserInfo.isNewUser){
-                    db.collection("Profile").doc(res.user.uid).set({
+                    DB.collection("Profile").doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : res.user.displayName,
                         photoURL : res.user.photoURL

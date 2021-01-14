@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Styled from '@emotion/styled'
 import { useAuth } from '../core/contexts/AuthContext'
 import GuestOnlyRoute from '../core/customRoute/GuestOnlyRoute'
+import GoogleAuth from '../components/login/GoogleAuth'
 
 const Login = () => {
     const [email, setemail] = useState('')
@@ -17,12 +18,6 @@ const Login = () => {
             .catch(() => setpassword(''))
     }
 
-    const handleGoogleAuth = () => {
-        seterrorCode('')
-        authMethods.handleGoogle()
-            .catch(() => setpassword(''))
-    }
-    
     useEffect(() => {
         return seterrorCode('')
     }, [])
@@ -42,7 +37,9 @@ const Login = () => {
                     </div>
                     <button type="submit">LOGIN</button>
                 </form>
-                <button onClick={handleGoogleAuth}>LOGIN WITH GOOGLE</button>
+                
+                <GoogleAuth />
+
                 <div className="links">
                     <Link href="/register">Register Instead</Link>
                     |

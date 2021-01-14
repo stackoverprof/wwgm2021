@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Styled from '@emotion/styled'
 import { useAuth } from '../core/contexts/AuthContext'
 import GuestOnlyRoute from '../core/customRoute/GuestOnlyRoute'
+import GoogleAuth from '../components/login/GoogleAuth'
 
 const Register = () => {
     const [email, setemail] = useState('')
@@ -41,6 +42,9 @@ const Register = () => {
                     </div>
                     <button type="submit">REGISTER</button>
                 </form>
+
+                <GoogleAuth />
+
                 <div className="links">
                     <Link href="/login">Login Instead</Link>
                     |

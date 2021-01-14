@@ -8,9 +8,8 @@ const Home = () => {
 
     return (
         <Wrapper>
-            <h1><strong>Next</strong>PLANET</h1>
-            <p>Clean-code practice oriented, It's a NextJS practical starter-template with a freedom of choice</p>
-            <h2>START-UP: AUTH ONLY EMAIL </h2>
+            <h1><strong>AREKSGM</strong></h1>
+            <h2>Uji Coba Sistem Login</h2>
             <div className="links">
                 {authState == 'guest' && <Link href="/login"><button>Login</button></Link>}
                 {authState == 'guest' && <Link href="/register"><button>Register</button></Link>}
