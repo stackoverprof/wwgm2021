@@ -1,6 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import admin from '../../core/services/firebaseAdmin'
 
-export default (req, res) => {
-  res.statusCode = 200
-  res.json({ name: 'John Doe' })
+export default async (req, res) => {
+  const userToken = req.body.userToken
+
+  const decodedToken = await admin.auth().verifyIdToken(userToken).catch(err => console.log("catch " + err))
+
+  res.status(200).json({ body: 'token ' + decodedToken})
 }

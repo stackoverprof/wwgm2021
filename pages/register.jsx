@@ -6,17 +6,22 @@ import GuestOnlyRoute from '../core/customRoute/GuestOnlyRoute'
 import GoogleAuth from '../components/login/GoogleAuth'
 
 const Register = () => {
-    const [email, setemail] = useState('')
-    const [password, setpassword] = useState('')
-    const [displayName, setdisplayName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [retypePassword, setRetypePassword] = useState('')
+    const [displayName, setDisplayName] = useState('')
 
     const { authMethods, errorCode, seterrorCode } = useAuth()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         seterrorCode('')
-        authMethods.handleSignup(email, password, displayName)
-            .catch(() => setpassword(''))
+
+        if(password === retypePassword){
+            authMethods.handleSignup(email, password, displayName)
+                .catch(() => setPassword(''))
+        }
+        else seterrorCode('password did not match')
     }
 
     useEffect(() => {
@@ -30,15 +35,19 @@ const Register = () => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="diplay-name">NAMA</label>
-                        <input type="text" onChange={(e) => setdisplayName(e.target.value)} value={displayName} required id="display-name" placeholder="Masukan Nama"/>
+                        <input type="text" onChange={(e) => setDisplayName(e.target.value)} value={displayName} required id="display-name" placeholder="Masukan Nama"/>
                     </div>
                     <div>
                         <label htmlFor="email">EMAIL</label>
-                        <input type="email" onChange={(e) => setemail(e.target.value)} value={email} required id="email" placeholder="Masukan Email"/>
+                        <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} required id="email" placeholder="Masukan Email"/>
                     </div>
                     <div>
                         <label htmlFor="password">PASSWORD</label>
-                        <input type="password" onChange={(e) => setpassword(e.target.value)} value={password} required id="password" placeholder="Masukan Password"/>
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} required id="password" placeholder="Masukan Password"/>
+                    </div>
+                    <div>
+                        <label htmlFor="re-password">ULANGI PASSWORD</label>
+                        <input type="password" onChange={(e) => setRetypePassword(e.target.value)} value={retypePassword} required id="re-password" placeholder="Masukan Ulang Password"/>
                     </div>
                     <button type="submit">REGISTER</button>
                 </form>
