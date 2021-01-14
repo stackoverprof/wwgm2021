@@ -15,7 +15,14 @@ const AuthProvider = ({children}) => {
                     const data = await res.user.updateProfile({
                         displayName: displayName
                     })
-                    setcurrentUser(data.user)
+
+                    DB.collection('Profile').doc(res.user.uid).set({
+                        uid : res.user.uid,
+                        displayName : displayName,
+                        photoURL : `https://ui-avatars.com/api/?name=${displayName}&background=random&bold=true`
+                    })
+
+                    setcurrentUser(data.user) 
                 })
                 .catch(err => seterrorCode(err.code))
         },
@@ -32,16 +39,15 @@ const AuthProvider = ({children}) => {
 
             return AUTH.signInWithPopup(GoogleAUTH).then(res => {
                 if(res.additionalUserInfo.isNewUser){
-                    DB.collection("Profile").doc(res.user.uid).set({
+                    DB.collection('Profile').doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : res.user.displayName,
                         photoURL : res.user.photoURL
                     })
-                    .then(() => console.log("Signed up"))
-                } 
-                else console.log('Signed in')
+                }
+
+                setcurrentUser(res.user)
             })
-            .then(res => setcurrentUser(res.user))
             .catch(err => seterrorCode(err.code))
         },
 

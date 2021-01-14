@@ -52,6 +52,13 @@ const Wrapper = Styled.div(() =>`
         z-index: -1;
     }
 
+    .links{
+        margin-top: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 `)
     
 export default Home
