@@ -1,7 +1,7 @@
 import admin from 'firebase-admin'
 
-const accountKey = JSON.parse(process.env.SERVICE_ACCOUNT_KEY)
-accountKey.private_key = process.env.SERVICE_PRIVATE_KEY
+const accountKey = JSON.parse(process.env.NEXT_PUBLIC_SERVICE_ACCOUNT_KEY)
+accountKey.private_key = process.env.NEXT_PUBLIC_SERVICE_PRIVATE_KEY
 
 const adminConfig = {
   credential: admin.credential.cert(accountKey)
