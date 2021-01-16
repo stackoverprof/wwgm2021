@@ -7,14 +7,21 @@ import axios from 'axios'
     
 const Dashboard = () => {
     const { currentUser, authMethods } = useAuth()
-    const [role, setRole] = useState('user')
+    const [role, setRole] = useState('initial')
 
     const CheckRole = async () => {
-        const res = await axios.post('/api/hello', {
+        axios.post('/api/hello', {
             userToken: await currentUser.getIdToken(),
-            email: 'mail.errbint@gmail.com'
+            email: 'zvezda.estrella.ze@gmail.com'
         })
-        setRole(res.data.message)
+        .then(res => {
+            console.log(res)
+            setRole(res.data.message)
+        })
+        .catch(err => {
+            console.log(err.response.data)
+            setRole(err.response.data.message)
+        })
     }
 
     return (
