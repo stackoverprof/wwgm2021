@@ -28,12 +28,12 @@ export default async (req, res) => {
     .then(() => {
       DB.collection("Private").doc("Data").update({
           ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
-      })
+      }).catch(err => console.log("db " + err))
       DB.collection("Private").doc("Data").collection("AdminSecurityRecord").doc(issuedUser.uid).set({
         issued: issuedUser.uid,
         promotor: currentUser.uid,
         timestamp: admin.firestore.Timestamp.now()
-      })
+      }).catch(err => console.log("db " + err))
 
       console.log(`new admin set : ${email}`)
       
