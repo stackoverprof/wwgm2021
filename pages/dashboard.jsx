@@ -11,9 +11,10 @@ const Dashboard = () => {
 
     const CheckRole = async () => {
         const res = await axios.post('/api/hello', {
-            userToken: await currentUser.getIdToken()
+            userToken: await currentUser.getIdToken(),
+            email: 'mail.errbint@gmail.com'
         })
-        setRole(res.data.body)
+        setRole(res.data.message)
     }
 
     return (

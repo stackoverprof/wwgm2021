@@ -18,3 +18,4 @@ const adminConfig = {
 if (!admin.apps.length) admin.initializeApp(adminConfig)
 
 export default admin
+export const DB = admin.firestore()

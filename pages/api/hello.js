@@ -1,16 +1,49 @@
-import admin from '../../core/services/firebaseAdmin'
+import admin, { DB } from '../../core/services/firebaseAdmin'
 
 export default async (req, res) => {
-  console.log(process.env.SERVICE_PRIVATE_KEY_ID)
-  console.log(process.env.SERVICE_PRIVATE_KEY)
-  console.log(process.env.SERVICE_CLIENT_EMAIL)
-  console.log(process.env.SERVICE_CLIENT_ID)
+  const { userToken, email } = req.body
 
-  const userToken = req.body.userToken
+  if (!email && !userToken) {
+    return res.status(400).json({ status: "error", message: "bad request, incomplete parameters" })
+  }
 
-  const decodedToken = await admin.auth().verifyIdToken(userToken).catch(err => console.log("catch " + err))
+  const currentUser = await admin.auth().verifyIdToken(userToken)
+    .catch(err => {
+      console.log("decoding error : " + err)
+      return res.status(500).json({ status: "error", message: err.message })
+    })
 
-  console.log(decodedToken.admin)
+  if (!currentUser.admin) {
+    return res.status(403).json({ status: "error", message: "anda tidak berhak menambah admin"})
+  }
 
-  res.status(200).json({ body: 'token ' + decodedToken })
+  const issuedUser = await admin.auth().getUserByEmail(email)
+
+  if (typeof issuedUser === 'undefined') return res.status(400).json({ status: "error", message: email + " is not a user" })
+  else if (issuedUser.hasOwnProperty('customClaims') && issuedUser.customClaims.admin) {
+    return res.status(400).json({ message: email + " is already an admin" })
+  }
+
+  return admin.auth().setCustomUserClaims(issuedUser.uid, { admin: true })
+    .then(() => {
+      DB.collection("Private").doc("Data").update({
+          ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
+      })
+      DB.collection("Private").doc("Data").collection("AdminSecurityRecord").doc(issuedUser.uid).set({
+        issued: issuedUser.uid,
+        promotor: currentUser.uid,
+        timestamp: admin.firestore.Timestamp.now()
+      })
+
+      console.log(`new admin set : ${email}`)
+      
+      res.status(200).json({
+        status: "success",
+        message: `Berhasil menambahkan ${email} sebagai admin, silahkan login ulang untuk akun terkait`
+      })
+    })
+    .catch((err) => {
+      console.log('customUserClaims failed ' + err)
+      res.status(500).json({ status: "error", message: err.message })
+    })
 }
