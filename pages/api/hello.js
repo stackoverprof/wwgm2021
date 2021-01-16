@@ -25,25 +25,29 @@ export default async (req, res) => {
   }
 
   return admin.auth().setCustomUserClaims(issuedUser.uid, { admin: true })
-    .then(() => {
+    .then(async () => {
       DB.collection("Private").doc("Data").update({
-          ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
-      }).catch(err => console.log("db " + err))
+        ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
+      })
+      .then(() => console.log('db1 success'))
+      .catch(err => console.log("db1 " + err))
       DB.collection("Private").doc("Data").collection("AdminSecurityRecord").doc(issuedUser.uid).set({
         issued: issuedUser.uid,
         promotor: currentUser.uid,
         timestamp: admin.firestore.Timestamp.now()
-      }).catch(err => console.log("db " + err))
+      })
+      .then(() => console.log('db2 success'))
+      .catch(err => console.log("db2 " + err))
 
       console.log(`new admin set : ${email}`)
       
-      res.status(200).json({
+      return res.status(200).json({
         status: "success",
         message: `Berhasil menambahkan ${email} sebagai admin, silahkan login ulang untuk akun terkait`
       })
     })
     .catch((err) => {
       console.log('customUserClaims failed ' + err)
-      res.status(500).json({ status: "error", message: err.message })
+      return res.status(500).json({ status: "error", message: err.message })
     })
 }
