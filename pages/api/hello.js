@@ -29,7 +29,7 @@ export default async (req, res) => {
     })
     
   if (!issuedUser) return
-  else if (issuedUser.hasOwnProperty('customClaims') && issuedUser.customClaims.admin) {
+  else if (issuedUser.hasOwnProperty('customClaims') && issuedUser.customClaims['admin']) {
     return res.status(400).json({ status: 'error', message: `${email} sudah menjadi admin` })
   }
 
