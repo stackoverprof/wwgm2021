@@ -26,12 +26,12 @@ export default async (req, res) => {
 
   return admin.auth().setCustomUserClaims(issuedUser.uid, { admin: true })
     .then(async () => {
-      DB.collection("Private").doc("Data").update({
+      const res1 = await DB.collection("Private").doc("Data").update({
         ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
       })
       .then(() => console.log('db1 success'))
       .catch(err => console.log("db1 " + err))
-      DB.collection("Private").doc("Data").collection("AdminSecurityRecord").doc(issuedUser.uid).set({
+      const res2 = await DB.collection("Private").doc("Data").collection("AdminSecurityRecord").doc(issuedUser.uid).set({
         issued: issuedUser.uid,
         promotor: currentUser.uid,
         timestamp: admin.firestore.Timestamp.now()
@@ -39,6 +39,8 @@ export default async (req, res) => {
       .then(() => console.log('db2 success'))
       .catch(err => console.log("db2 " + err))
 
+      console.log(res1)
+      console.log(res2)
       console.log(`new admin set : ${email}`)
       
       return res.status(200).json({
