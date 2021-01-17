@@ -2,7 +2,7 @@ import admin, { DB } from '../../core/services/firebaseAdmin'
 
 export default async (req, res) => {
   const { userToken, email } = req.body
-
+  
   //CHECKING THE DATA NEEDED
   if (!email && !userToken) {
     return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
@@ -29,10 +29,13 @@ export default async (req, res) => {
     })
     
   if (!issuedUser) return
+  else if (issuedUser.uid === currentUser.uid) {
+    return res.status(400).json({ status: 'error', message: `tidak bisa menambahkan diri sendiri` })
+  }
   else if (issuedUser.hasOwnProperty('customClaims') && issuedUser.customClaims['admin']) {
     return res.status(400).json({ status: 'error', message: `${email} sudah menjadi admin` })
   }
-
+  
 
   //CLAIMING ADMIN STATUS
   return admin.auth().setCustomUserClaims(issuedUser.uid, { admin: true })
