@@ -38,6 +38,5 @@ yarn-error.log*
 .vercel
 node_modules
 .vscode/settings.json
-next.config.js
 firebase-debug.log
 ui-debug.log
