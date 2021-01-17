@@ -1,5 +1,4 @@
 import React from 'react'
-import Styled from '@emotion/styled'
 import { useAuth } from '../../core/contexts/AuthContext'
 
 const GoogleButton = () => {
@@ -11,15 +10,11 @@ const GoogleButton = () => {
     }
 
     return (
-        <Wrapper onClick={handleGoogleAuth}>
+        <button onClick={handleGoogleAuth}>
             <img className="icon" src="/img/icons/google.svg" alt=""/>
             Sign in with Google
-        </Wrapper>
+        </button>
     )
 }
-
-const Wrapper = Styled.button(() =>`
-    
-`)
 
 export default GoogleButton
