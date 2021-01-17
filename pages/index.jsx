@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <Wrapper>
             <h1><strong>AREKSGM</strong></h1>
-            <h2>Uji Coba Sistem Login</h2>
+            <h2>Uji Coba Continous Integration</h2>
             <div className="links">
                 {authState == 'guest' && <Link href="/login"><button>Login</button></Link>}
                 {authState == 'guest' && <Link href="/register"><button>Register</button></Link>}
