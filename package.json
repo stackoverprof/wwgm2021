@@ -6,7 +6,8 @@
     "dev": "next dev -p 7010",
     "build": "next build",
     "start": "next start",
-    "prepare": "next export",
+    "export": "next export",
+    "prepare": "next build && next export",
     "deploy": "firebase deploy"
   },
   "dependencies": {
