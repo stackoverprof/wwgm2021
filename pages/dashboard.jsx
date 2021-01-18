@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Styled from '@emotion/styled'
 import Link from 'next/link'
 import { useAuth } from '../core/contexts/AuthContext'
-import UserOnlyRoute from '../core/customRoute/UserOnlyRoute'
+import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
 import axios from 'axios'
     
 const Dashboard = () => {

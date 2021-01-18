@@ -6,9 +6,7 @@
     "dev": "next dev -p 7010",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
-    "prepare": "next build && next export",
-    "deploy": "firebase deploy"
+    "export": "next export"
   },
   "dependencies": {
     "@emotion/react": "^11.1.1",

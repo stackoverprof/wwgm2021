@@ -3,7 +3,7 @@ import admin from 'firebase-admin'
 const adminConfig = {
     credential: admin.credential.cert({
         type: "service_account",
-        project_id: "areks-gm",
+        project_id: process.env.NEXT_PUBLIC_PROJECT_ID,
         private_key_id: process.env.SERVICE_PRIVATE_KEY_ID,
         private_key: process.env.SERVICE_PRIVATE_KEY.replace(/\\n/g, '\n'),
         client_email: process.env.SERVICE_CLIENT_EMAIL,

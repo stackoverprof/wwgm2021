@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Styled from '@emotion/styled'
 import { useAuth } from '../core/contexts/AuthContext'
-import GuestOnlyRoute from '../core/customRoute/GuestOnlyRoute'
-import GoogleAuth from '../components/login/GoogleAuth'
+import GuestOnlyRoute from '../core/routeblocks/GuestOnlyRoute'
+import GoogleAuth from '../components/atomic/GoogleAuth'
 
 const Login = () => {
     const [email, setEmail] = useState('')
