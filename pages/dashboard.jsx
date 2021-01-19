@@ -5,12 +5,12 @@ import { useAuth } from '../core/contexts/AuthContext'
 import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
 import axios from 'axios'
     
-const Dashboard = () => {
+const Dashboard = ({halo}) => {
     const { currentUser, authMethods } = useAuth()
     const [role, setRole] = useState('initial')
 
     const CheckRole = async () => {
-        axios.post('/api/hello', {
+        axios.post('/api/admin/set', {
             userToken: await currentUser.getIdToken(),
             email: 'zvezda.estrella.ze@gmail.com'
         })
@@ -29,7 +29,7 @@ const Dashboard = () => {
             {currentUser && 
                 <Wrapper>
                     <img src="" alt=""/>
-                    <p>Dashboard of {currentUser.displayName} {role}</p>
+                    <p>Dashboard of {currentUser.displayName} {role} {halo}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href="/"><button>BACK HOME</button></Link>
@@ -42,10 +42,12 @@ const Dashboard = () => {
     )
 }
 
-// Dashboard.getInitialProps = async () => {
-//     const res = await axios.post('https://localhost:3000/api/hello')
-//     return { userProfile: res.name }
-// }
+Dashboard.getInitialProps = async () => {
+    const res = await axios.post('/api/halo', {
+        name: 'Angkasa'
+    })
+    return { halo: res.message }
+}
 
 const Wrapper = Styled.div(() =>`
     display: flex;
