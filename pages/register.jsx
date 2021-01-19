@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Styled from '@emotion/styled'
 import { useAuth } from '../core/contexts/AuthContext'
-import GuestOnlyRoute from '../core/routeblocks/GuestOnlyRoute'
+import { GuestOnlyRoute } from '../core/routeblocks'
+
 import GoogleAuth from '../components/atomic/GoogleAuth'
 
 const Register = () => {
@@ -25,7 +26,7 @@ const Register = () => {
     }
 
     useEffect(() => {
-        return setErrorCode('')
+        return () => setErrorCode('')
     }, [])
 
     return (

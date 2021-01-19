@@ -8,8 +8,8 @@ const Home = () => {
 
     return (
         <Wrapper>
-            <h1><strong>AREKSGM</strong></h1>
-            <h2>Uji Coba : Raname WWGM2021</h2>
+            <h1><strong>WWGM2021</strong></h1>
+            <h2>Event Try Out UTBK Nasional by areksgm</h2>
             <div className="links">
                 {authState == 'guest' && <Link href="/login"><button>Login</button></Link>}
                 {authState == 'guest' && <Link href="/register"><button>Register</button></Link>}

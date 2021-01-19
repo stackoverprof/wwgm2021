@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Styled from '@emotion/styled'
 import Link from 'next/link'
-import { useAuth } from '../core/contexts/AuthContext'
-import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
 import axios from 'axios'
+import { useAuth } from '../core/contexts/AuthContext'
+import { UserOnlyRoute } from '../core/routeblocks'
     
-const Dashboard = ({halo}) => {
+const Dashboard = () => {
     const { currentUser, authMethods } = useAuth()
     const [role, setRole] = useState('initial')
 
@@ -29,7 +29,7 @@ const Dashboard = ({halo}) => {
             {currentUser && 
                 <Wrapper>
                     <img src="" alt=""/>
-                    <p>Dashboard of {currentUser.displayName} {role} {halo}</p>
+                    <p>Dashboard of {currentUser.displayName} {role}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href="/"><button>BACK HOME</button></Link>
@@ -42,12 +42,13 @@ const Dashboard = ({halo}) => {
     )
 }
 
-Dashboard.getInitialProps = async () => {
-    const res = await axios.post('/api/halo', {
-        name: 'Angkasa'
-    })
-    return { halo: res.message }
-}
+// Dashboard.getInitialProps = async () => {
+//     const res = await axios.post('/api/halo', {
+//         name: 'Angkasa'
+//     })
+//     console.log(res)
+//     return { halo: res.message }
+// }
 
 const Wrapper = Styled.div(() =>`
     display: flex;
