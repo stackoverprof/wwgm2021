@@ -19,7 +19,7 @@ const AuthProvider = ({children}) => {
                         photoURL : avatar
                     })
 
-                    DB.collection('Profile').doc(res.user.uid).set({
+                    DB.collection('Users').doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : displayName,
                         photoURL : avatar
@@ -42,7 +42,7 @@ const AuthProvider = ({children}) => {
 
             return AUTH.signInWithPopup(GoogleAUTH).then(res => {
                 if(res.additionalUserInfo.isNewUser){
-                    DB.collection('Profile').doc(res.user.uid).set({
+                    DB.collection('Users').doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : res.user.displayName,
                         photoURL : res.user.photoURL

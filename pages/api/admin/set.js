@@ -45,7 +45,7 @@ export default async (req, res) => {
       await DB.collection("Private").doc("Data").update({
           ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
         })
-      await DB.collection("Private").doc("Data").collection("AdminSecurityRecord").doc(issuedUser.uid).set({
+      await DB.collection("Private").doc("Data").collection("AdminSecurityRecords").doc(issuedUser.uid).set({
           issued: issuedUser.uid,
           promotor: currentUser.uid,
           timestamp: admin.firestore.Timestamp.now()
