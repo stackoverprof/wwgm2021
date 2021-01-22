@@ -1,21 +1,21 @@
 import React from 'react'
 import Styled from '@emotion/styled'
 
-const Navbar = () => {
+const Navbar = ({big}) => {
 
     return (
-        <Wrapper>
+        <Wrapper big={big}>
             
         </Wrapper>
     )
 }
 
-const Wrapper = Styled.nav(() =>`
+const Wrapper = Styled.nav(({big}) =>`
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 88px;
+    height: ${big ? '88px' : '60px'};
     z-index: 100;
 
     background: #FFFFFF;

@@ -9,7 +9,7 @@ const Home = () => {
 
     return (
     <>
-        <Navbar />
+        <Navbar big/>
         <Wrapper>
             <h1><strong>WWGM2021</strong></h1>
             <h2>Event Try Out UTBK Nasional by areksgm</h2>
