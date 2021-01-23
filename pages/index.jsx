@@ -2,7 +2,7 @@ import React from 'react'
 import Styled from '@emotion/styled'
 import Link from 'next/link'
 import { useAuth } from '../core/contexts/AuthContext'
-import Navbar from '../components/molecules/Navbar'
+import Navbar from '../components/molecular/Navbar'
     
 const Home = () => {
     const { authState } = useAuth()
