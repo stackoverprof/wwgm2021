@@ -1,5 +1,6 @@
 import React from 'react'
 import Styled from '@emotion/styled'
+import Link from 'next/link'
 
 const Navbar = ({big}) => {
 
@@ -8,6 +9,11 @@ const Navbar = ({big}) => {
             <div className="brand">
                 <img src="/img/sgm-icon.png" alt=""/>
                 <p>ArekSGM</p>
+            </div>
+            <div className="links">
+                <Link href="">Try Out</Link>
+                <Link href="">Kontak</Link>
+                <Link href="">Tentang Kami</Link>
             </div>
         </Wrapper>
     )
@@ -24,6 +30,10 @@ const Wrapper = Styled.nav(({big}) =>`
     background: #FFFFFF;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     .brand{
         p{
             font-family: Poppins;
@@ -35,6 +45,11 @@ const Wrapper = Styled.nav(({big}) =>`
 
             color: #0B4D29;
         }
+    }
+    .links{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `)
 
