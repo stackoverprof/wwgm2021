@@ -3,9 +3,10 @@ import Styled from '@emotion/styled'
 import Link from 'next/link'
 import axios from 'axios'
 import { useAuth } from '../core/contexts/AuthContext'
-import { UserOnlyRoute } from '../core/routeblocks'
+import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
+import MainLayout from '../components/layouts/MainLayout'
     
-const Dashboard = ({halo}) => {
+const Dashboard = () => {
     const { currentUser, authMethods } = useAuth()
     const [role, setRole] = useState('initial')
 
@@ -27,36 +28,22 @@ const Dashboard = ({halo}) => {
     return (
         <UserOnlyRoute redirect="/login">
             {currentUser && 
-                <Wrapper>
-                    <img src="" alt=""/>
-                    <p>Dashboard of {currentUser.displayName} {role} {halo}</p>
-                    <div>
-                        <img src={currentUser.photoURL} alt=""/>
-                        <Link href="/"><button>BACK HOME</button></Link>
-                        <button onClick={CheckRole}>check role</button>
-                        <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
-                    </div>
-                </Wrapper>
+                <MainLayout>
+                    <Wrapper>
+                        <img src="" alt=""/>
+                        <p>Dashboard of {currentUser.displayName} {role}</p>
+                        <div>
+                            <img src={currentUser.photoURL} alt=""/>
+                            <Link href="/"><button>BACK HOME</button></Link>
+                            <button onClick={CheckRole}>check role</button>
+                            <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
+                        </div>
+                    </Wrapper>
+                </MainLayout>
             }
         </UserOnlyRoute>
     )
 }
-
-Dashboard.getInitialProps = async (ctx) => {
-    const res = await axios.post('/api/halo', {
-        name: 'Angkasa'
-    })
-    console.log(ctx)
-    return { halo: res.data.message }
-}
-
-// export async function getServerSideProps(context) {
-//     const res = await axios.post('http://localhost:7010/api/halo', {
-//         name: 'Angkasa'
-//     })
-
-//     return { props: { halo : res.data.message + 'gSSprops'} }
-// }
 
 const Wrapper = Styled.div(() =>`
     display: flex;
