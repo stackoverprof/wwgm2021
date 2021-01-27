@@ -1,7 +1,8 @@
 import '../core/styles/globals.scss'
 
-import ProgressBar from 'nextjs-progressbar'
 import Head from 'next/head'
+import ProgressBar from 'nextjs-progressbar'
+import Loader from '../components/molecular/Spinner/Spinkit1'
 import AuthProvider from '../core/contexts/AuthContext'
 
 function MyApp({ Component, pageProps }) {
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#060410"/>
     </Head>
+    <Loader />
     <ProgressBar color="black" startPosition={0.3} stopDelayMs={200} height="3" options={{showSpinner: false}}/>
     <AuthProvider>
       <Component {...pageProps} />
