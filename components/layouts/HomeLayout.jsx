@@ -1,20 +1,22 @@
 import React from 'react'
 import Navbar from '../molecular/Navbar'
-import Styled from '@emotion/styled'
+import { css } from '@emotion/css'
 
-const HomeLayout = ({children}) => {
+const HomeLayout = ({className, children}) => {
 
     return (
-        <Wrapper>
+        <div className={style}>
             <Navbar big/>
-            {children}
-        </Wrapper>
+            <div className={className}>
+                {children}
+            </div>
+        </div>
     )
 }
 
-const Wrapper = Styled.div(() =>`
+const style = css`
     padding-top: 88px;
     
-`)
+`
 
 export default HomeLayout
