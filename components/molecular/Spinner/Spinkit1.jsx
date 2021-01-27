@@ -5,16 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 const Spinkit1 = () => {
     const [loaded, setloaded] = useState(false)
 
-    const remover = () => {
-        setloaded(true)
-    }
-
     useEffect(() => {
-        window.onload = remover
-        const timeout = setTimeout(remover, 2000)
-        return () => {
-            clearTimeout(timeout)
-        }
+        window.onload = setloaded(true)
     }, [])
 
     return (
