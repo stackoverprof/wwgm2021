@@ -19,7 +19,7 @@ const Dashboard = () => {
         axios.post('/api/admin/manage/try-out/new', {
                 userToken: await currentUser.getIdToken(),
                 title: 'Try Out Soshum 1',
-                cluster: 'soshum',
+                cluster: 'SOSHUM',
                 availability: {
                     status: 'limited',
                     start: 1611802800000,
@@ -40,6 +40,7 @@ const Dashboard = () => {
         .catch(err => setData(err.response.data.message))
     }
 
+    //TODO: admin only route
     return (
         <UserOnlyRoute redirect={to.login}>
             {currentUser && (

@@ -22,7 +22,8 @@ import { v4 as uuid } from 'uuid'
 //         TPA4: 20,
 //     }
 // }
-
+//[TODO] : 
+// TODO: perbedaan struktur data SAINTEK dan SOSHUM
 export default async (req, res) => {
     if (Object.keys(req.body).length === 0) {
         return res.status(400).json({status: 'ERROR', message: `Bad Request: No request body`})
@@ -41,7 +42,7 @@ export default async (req, res) => {
         return res.status(403).json({ status: 'error', message: 'anda tidak berhak membuat ujian'})
     }
 
-    const examId = `${Req.cluster}-${uuid()}`
+    const examId = `${Req.cluster.toUpperCase()}-${uuid()}`
     let _dataInvalid = false
 
     const validate = (data, type) => {
@@ -62,7 +63,7 @@ export default async (req, res) => {
     const ExamFormat = {
         examId: examId,
         title: validate(Req.title, 'string'),
-        cluster: validate(Req.cluster, 'string'),
+        cluster: validate(Req.cluster.toUpperCase(), 'string'),
         availability: {
             status: validate(Req.availability.status, 'string'),
             start: validateTimeStamp(Req.availability.start),

@@ -18,7 +18,7 @@ const Dashboard = () => {
         
         axios.post('/api/admin/set', {
             userToken: await currentUser.getIdToken(),
-            email: 'mail.errbint.rules@gmail.com'
+            email: 'rbintang.bagus11@gmail.com'
         })
         .then(res => setData(res.data.message))
         .catch(err => setData(err.response.data.message))
