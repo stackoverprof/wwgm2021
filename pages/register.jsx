@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/css'
 import Link from 'next/link'
+import to from '../core/routepath'
 import { useAuth } from '../core/contexts/AuthContext'
 import GuestOnlyRoute from '../core/routeblocks/GuestOnlyRoute'
-import MainLayout from '../components/layouts/MainLayout'
 
+import MainLayout from '../components/layouts/MainLayout'
 import GoogleAuth from '../components/atomic/GoogleAuth'
 
 const Register = () => {
@@ -31,7 +32,7 @@ const Register = () => {
     }, [])
 
     return (
-        <GuestOnlyRoute redirect="/dashboard">
+        <GuestOnlyRoute redirect={to.dashboard}>
             <MainLayout className={style}>
                 {errorCode != '' && <p className="error-message">{errorCode}</p>}
                 <form onSubmit={handleSubmit}>
@@ -57,9 +58,9 @@ const Register = () => {
                 <GoogleAuth />
 
                 <div className="links">
-                    <Link href="/login">Login Instead</Link>
+                    <Link href={to.login}>Login Instead</Link>
                     |
-                    <Link href="/">Back Home</Link>
+                    <Link href={to.home}>Back Home</Link>
                 </div>
             </MainLayout>
         </GuestOnlyRoute>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/css'
 import Link from 'next/link'
+import to from '../core/routepath'
 import axios from 'axios'
 import { useAuth } from '../core/contexts/AuthContext'
 import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
+
 import MainLayout from '../components/layouts/MainLayout'
 import Spinner from '../components/atomic/Spinner'
     
@@ -29,14 +31,14 @@ const Dashboard = () => {
     }
 
     return (
-        <UserOnlyRoute redirect="/login">
+        <UserOnlyRoute redirect={to.login}>
             {currentUser && (
                 <MainLayout className={style}>
                     <img src="" alt=""/>
                     <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
-                        <Link href="/"><button>BACK HOME</button></Link>
+                        <Link href={to.home}><button>BACK HOME</button></Link>
                         <button onClick={CheckRole}>check data</button>
                         <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
                     </div>

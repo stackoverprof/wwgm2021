@@ -1,6 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/css'
 import Link from 'next/link'
+import to, { set } from '../../../core/routepath'
 
 const Navbar = ({big}) => {
 
@@ -11,9 +12,9 @@ const Navbar = ({big}) => {
                 <p>ArekSGM</p>
             </div>
             <div className="links">
-                <Link href="">Try Out</Link>
-                <Link href="">Kontak</Link>
-                <Link href="">Tentang Kami</Link>
+                <Link href={set.get('haha')}>Try Out</Link>
+                <Link href={to.contact}>Kontak</Link>
+                <Link href={to.aboutUs}>Tentang Kami</Link>
             </div>
         </div>
     )

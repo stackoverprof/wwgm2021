@@ -1,11 +1,14 @@
 import React from 'react'
+import Link from 'next/link'
 import { css } from '@emotion/css'
+import to from '../core/routepath'
 
 const error404 = () => {
 
     return (
         <div className={style}>
             <h1>404 | Not Found</h1>
+            <Link href={to.home}><button>BACK HOME</button></Link>
         </div>
     )
 }
@@ -17,6 +20,7 @@ const style = css`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 `
 
 export default error404

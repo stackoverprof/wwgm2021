@@ -1,9 +1,11 @@
 import React from 'react'
 import { css } from '@emotion/css'
 import Link from 'next/link'
-import { useAuth } from '../core/contexts/AuthContext'
-import HomeLayout from '../components/layouts/HomeLayout'
+import to from '../core/routepath'
 import useResize from 'use-resizing'
+import { useAuth } from '../core/contexts/AuthContext'
+
+import HomeLayout from '../components/layouts/HomeLayout'
     
 const Home = () => {
     const screen = useResize().width
@@ -14,9 +16,9 @@ const Home = () => {
             <h1><strong>WWGM2021</strong></h1>
             <h2>Event Try Out UTBK Nasional by areksgm</h2>
             <div className="links">
-                {authState == 'guest' && <Link href="/login"><button>Login</button></Link>}
-                {authState == 'guest' && <Link href="/register"><button>Register</button></Link>}
-                {authState == 'user' && <Link href="/dashboard"><button>Dashboard</button></Link>}
+                {authState == 'guest' && <Link href={to.login}><button>Login</button></Link>}
+                {authState == 'guest' && <Link href={to.register}><button>Register</button></Link>}
+                {authState == 'user' && <Link href={to.dashboard}><button>Dashboard</button></Link>}
             </div>
             <div className="test-scroll"></div>
             <svg width="420" height="337.5" viewBox="0 0 56 45" fill="#ddd" xmlns="http://www.w3.org/2000/svg">
