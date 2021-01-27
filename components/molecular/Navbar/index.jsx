@@ -1,11 +1,11 @@
 import React from 'react'
-import Styled from '@emotion/styled'
+import { css } from '@emotion/css'
 import Link from 'next/link'
 
 const Navbar = ({big}) => {
 
     return (
-        <Wrapper big={big}>
+        <div className={style({big})}>
             <div className="brand">
                 <img src="/img/sgm-icon.png" alt=""/>
                 <p>ArekSGM</p>
@@ -15,11 +15,11 @@ const Navbar = ({big}) => {
                 <Link href="">Kontak</Link>
                 <Link href="">Tentang Kami</Link>
             </div>
-        </Wrapper>
+        </div>
     )
 }
 
-const Wrapper = Styled.nav(({big}) =>`
+const style = ({big}) => css`
     position: fixed;
     top: 0;
     left: 0;
@@ -51,6 +51,6 @@ const Wrapper = Styled.nav(({big}) =>`
         justify-content: center;
         align-items: center;
     }
-`)
+`
 
 export default Navbar

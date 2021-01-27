@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Styled from '@emotion/styled'
+import { css } from '@emotion/css'
 import Link from 'next/link'
 import axios from 'axios'
 import { useAuth } from '../core/contexts/AuthContext'
@@ -27,25 +27,22 @@ const Dashboard = () => {
 
     return (
         <UserOnlyRoute redirect="/login">
-            {currentUser && 
-                <MainLayout>
-                    <Wrapper>
-                        <img src="" alt=""/>
-                        <p>Dashboard of {currentUser.displayName} {role}</p>
-                        <div>
-                            <img src={currentUser.photoURL} alt=""/>
-                            <Link href="/"><button>BACK HOME</button></Link>
-                            <button onClick={CheckRole}>check role</button>
-                            <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
-                        </div>
-                    </Wrapper>
+            {currentUser && (
+                <MainLayout className={style}>
+                    <img src="" alt=""/>
+                    <p>Dashboard of {currentUser.displayName} {role}</p>
+                    <div>
+                        <img src={currentUser.photoURL} alt=""/>
+                        <Link href="/"><button>BACK HOME</button></Link>
+                        <button onClick={CheckRole}>check role</button>
+                        <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
+                    </div>
                 </MainLayout>
-            }
+            )}
         </UserOnlyRoute>
     )
 }
-
-const Wrapper = Styled.div(() =>`
+const style = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,6 +59,6 @@ const Wrapper = Styled.div(() =>`
         margin-top: 54px;
         text-align: center;
     }
-`)
+`
     
 export default Dashboard

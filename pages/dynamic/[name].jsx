@@ -1,5 +1,5 @@
 import React from 'react'
-import Styled from '@emotion/styled'
+import { css } from '@emotion/css'
 import { useRouter } from 'next/router'
 
 const Dynamic = () => {
@@ -7,14 +7,14 @@ const Dynamic = () => {
   const { name } = router.query
 
     return (
-        <Wrapper>
+        <div className={style}>
             <h1>dynamic with {name}</h1>
-        </Wrapper>
+        </div>
     )
 }
 
-const Wrapper = Styled.div(() =>`
-    
-`)
+const style = css`
+
+`
 
 export default Dynamic

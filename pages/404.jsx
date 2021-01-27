@@ -1,15 +1,16 @@
 import React from 'react'
-import Styled from '@emotion/styled'
-    
+import { css } from '@emotion/css'
+
 const error404 = () => {
+
     return (
-        <Wrapper>
+        <div className={style}>
             <h1>404 | Not Found</h1>
-        </Wrapper>
+        </div>
     )
 }
-    
-const Wrapper = Styled.div`
+
+const style = css`
     width: 100%;
     height: 100%;
     position: fixed;
@@ -17,5 +18,5 @@ const Wrapper = Styled.div`
     justify-content: center;
     align-items: center;
 `
-    
+
 export default error404
