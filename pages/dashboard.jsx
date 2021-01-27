@@ -5,23 +5,26 @@ import axios from 'axios'
 import { useAuth } from '../core/contexts/AuthContext'
 import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
 import MainLayout from '../components/layouts/MainLayout'
+import Spinner from '../components/atomic/Spinner'
     
 const Dashboard = () => {
     const { currentUser, authMethods } = useAuth()
-    const [role, setRole] = useState('initial')
+    const [data, setData] = useState('')
 
     const CheckRole = async () => {
+        setData('_loading')
+        
         axios.post('/api/admin/set', {
             userToken: await currentUser.getIdToken(),
-            email: 'zvezda.estrella.ze@gmail.com'
+            email: 'zvezda.esella.ze@gmail.com'
         })
         .then(res => {
             console.log(res)
-            setRole(res.data.message)
+            setData(res.data.message)
         })
         .catch(err => {
             console.log(err.response.data)
-            setRole(err.response.data.message)
+            setData(err.response.data.message)
         })
     }
 
@@ -30,13 +33,14 @@ const Dashboard = () => {
             {currentUser && (
                 <MainLayout className={style}>
                     <img src="" alt=""/>
-                    <p>Dashboard of {currentUser.displayName} {role}</p>
+                    <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href="/"><button>BACK HOME</button></Link>
-                        <button onClick={CheckRole}>check role</button>
+                        <button onClick={CheckRole}>check data</button>
                         <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
                     </div>
+                    <p>{data === '_loading' ? <Spinner /> : data}</p>
                 </MainLayout>
             )}
         </UserOnlyRoute>

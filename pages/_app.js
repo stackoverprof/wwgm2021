@@ -2,7 +2,7 @@ import '../core/styles/globals.scss'
 
 import Head from 'next/head'
 import ProgressBar from 'nextjs-progressbar'
-import Loader from '../components/molecular/Spinner/Spinkit1'
+import Loader from '../components/molecular/LoaderScreen'
 import AuthProvider from '../core/contexts/AuthContext'
 
 function MyApp({ Component, pageProps }) {
