@@ -7,18 +7,18 @@ import { useAuth } from '../core/contexts/AuthContext'
 import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
 
 import MainLayout from '../components/layouts/MainLayout'
-import Spinner from '../components/atomic/Spinner'
+import Spinner from '../components/atomic/spinner/Circle'
     
 const Dashboard = () => {
     const { currentUser, role, authMethods } = useAuth()
     const [data, setData] = useState('')
 
     const CheckRole = async () => {
-        setData('_loading')
+        setData(null)
         
         axios.post('/api/admin/set', {
             userToken: await currentUser.getIdToken(),
-            email: 'AKA1@mail.ugm.ac.id'
+            email: 'mail.errbint.rules@gmail.com'
         })
         .then(res => setData(res.data.message))
         .catch(err => setData(err.response.data.message))
@@ -33,11 +33,13 @@ const Dashboard = () => {
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href={to.home}><button>BACK HOME</button></Link>
-                        <button onClick={CheckRole}>check data</button>
+                        <button onClick={CheckRole}>{data === null ? <Spinner /> : 'set admin'}</button>
                         <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
                     </div>
-                    <p>Admin Status : {role.admin ? 'admin' : 'not-admin'}</p>
-                    {data === '_loading' ? <Spinner /> : <p>{data}</p>}
+                    <p>Admin Status : {role.admin ? 'admin' : 'false'}</p>
+                    <p>Approval Status : {role.approved ? 'approved' : 'false'}</p>
+                    <p>Access Try Out : {Array.isArray(role.access) && role.approved ? role.access.join(", ") : 'no-access'}</p>
+                    <p>{data}</p>
                 </MainLayout>
             )}
         </UserOnlyRoute>

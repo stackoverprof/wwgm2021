@@ -60,16 +60,24 @@ const AuthProvider = ({children}) => {
         }
     }
         
-    useEffect(() => {        
+    useEffect(() => {     
+        const fetchApproval = () => {
+            return ['saintek-to-1', 'soshum-to-2', 'soshum-to-3']
+        }   
+
         const unsubscribe = AUTH.onAuthStateChanged(user => {
             if(user) {
                 setAuthState('user')
                 user.getIdTokenResult().then(res => {
-                    setRole(res.claims)
+                    setCurrentUser(user)
+                    setRole({
+                        admin: res.claims.admin,
+                        approved: fetchApproval().length !== 0,
+                        access: fetchApproval()
+                    })
                 })
             }
             else setAuthState('guest')
-            setCurrentUser(user)
         })
         return unsubscribe
     }, [])

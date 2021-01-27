@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/css'
 import { AnimatePresence, motion } from 'framer-motion'
-import Spinner from '../atomic/Spinner'
+import Spinner from '../atomic/spinner/ThreeDot'
     
 const LoadScreen = () => {
     const [loaded, setloaded] = useState(false)
