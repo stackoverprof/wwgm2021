@@ -29,6 +29,18 @@ export default async (req, res) => {
     }
     
     const Req = req.body
+
+    //VERIVYING THE CURRENT USER
+    const currentUser = await admin.auth().verifyIdToken(Req.userToken)
+        .catch(err => {
+            console.log('problem with : ' + err)
+            return res.status(500).json({ status: 'error', message: 'token tidak valid, coba login ulang' })
+    })
+
+    if (!currentUser.admin) {
+        return res.status(403).json({ status: 'error', message: 'anda tidak berhak membuat ujian'})
+    }
+
     const examId = `${Req.cluster}-${uuid()}`
     let _dataInvalid = false
 
@@ -69,7 +81,7 @@ export default async (req, res) => {
         participans: [],
         security: [
             {
-                editor: Req.userToken,
+                editor: currentUser.uid,
                 timestamp: admin.firestore.Timestamp.now()
             }
         ]
