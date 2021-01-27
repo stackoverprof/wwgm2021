@@ -7,6 +7,7 @@ const AuthProvider = ({children}) => {
     const [authState, setAuthState] = useState('initial')
     const [currentUser, setCurrentUser] = useState({})
     const [errorCode, setErrorCode] = useState('')
+    const [role, setRole] = useState({})
 
     const authMethods = {
         handleSignup : (email, password, displayName) => {
@@ -61,7 +62,12 @@ const AuthProvider = ({children}) => {
         
     useEffect(() => {        
         const unsubscribe = AUTH.onAuthStateChanged(user => {
-            if(user) setAuthState('user')
+            if(user) {
+                setAuthState('user')
+                user.getIdTokenResult().then(res => {
+                    setRole(res.claims)
+                })
+            }
             else setAuthState('guest')
             setCurrentUser(user)
         })
@@ -73,10 +79,11 @@ const AuthProvider = ({children}) => {
             authMethods,
             authState,
             currentUser,
+            role,
             errorCode,
             setErrorCode
         }}>
-            {children}
+            { children }
         </firebaseAuth.Provider>
     )
 }

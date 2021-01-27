@@ -14,7 +14,7 @@ const UserOnlyRoute = ({children, redirect}) => {
 
     return (
         <div>
-           {authState == 'user' && children} 
+           { authState == 'user' && children } 
         </div>
     )
 }

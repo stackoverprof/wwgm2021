@@ -10,7 +10,7 @@ import MainLayout from '../components/layouts/MainLayout'
 import Spinner from '../components/atomic/Spinner'
     
 const Dashboard = () => {
-    const { currentUser, authMethods } = useAuth()
+    const { currentUser, role, authMethods } = useAuth()
     const [data, setData] = useState('')
 
     const CheckRole = async () => {
@@ -18,16 +18,10 @@ const Dashboard = () => {
         
         axios.post('/api/admin/set', {
             userToken: await currentUser.getIdToken(),
-            email: 'zvezda.esella.ze@gmail.com'
+            email: 'AKA1@mail.ugm.ac.id'
         })
-        .then(res => {
-            console.log(res)
-            setData(res.data.message)
-        })
-        .catch(err => {
-            console.log(err.response.data)
-            setData(err.response.data.message)
-        })
+        .then(res => setData(res.data.message))
+        .catch(err => setData(err.response.data.message))
     }
 
     return (
@@ -42,7 +36,8 @@ const Dashboard = () => {
                         <button onClick={CheckRole}>check data</button>
                         <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
                     </div>
-                    <p>{data === '_loading' ? <Spinner /> : data}</p>
+                    <p>Admin Status : {role.admin ? 'admin' : 'not-admin'}</p>
+                    {data === '_loading' ? <Spinner /> : <p>{data}</p>}
                 </MainLayout>
             )}
         </UserOnlyRoute>
