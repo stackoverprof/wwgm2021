@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#060410"/>
     </Head>
-    <ProgressBar color="black" startPosition={0.3} stopDelayMs={200} height="3"/>
+    <ProgressBar color="black" startPosition={0.3} stopDelayMs={200} height="3" options={{showSpinner: false}}/>
     <AuthProvider>
       <Component {...pageProps} />
     </AuthProvider>
