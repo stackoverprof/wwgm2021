@@ -142,14 +142,14 @@ export default async (req, res) => {
         let completelyStored = true
  
         DB.collection("Exams").doc(examId)
-            .collection('Data').doc('Questions')
+            .collection('Content').doc('Questions')
             .set({
                 list: questionFiller()
             })
             .catch(() => completelyStored = false)
 
         DB.collection("Exams").doc(examId)
-            .collection('Data').doc('Answers')
+            .collection('Content').doc('Answers')
             .set({
                 list: answerFiller()
             })
