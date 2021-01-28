@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { css } from '@emotion/css'
+import Styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
 import Spinner from '../atomic/spinner/ThreeDot'
     
@@ -27,15 +27,17 @@ const LoadScreen = () => {
     return (
         <AnimatePresence exitBeforeEnter>
             {!loaded && 
-                <motion.div className={style} initial="visible" animate={{ opacity: 0.5, transition: { duration: 1 }}} exit={{ opacity: 0 }}>
-                    <Spinner />
+                <motion.div initial="visible" animate={{ opacity: 0.5, transition: { duration: 1 }}} exit={{ opacity: 0 }}>
+                    <Wrapper>    
+                        <Spinner />
+                    </Wrapper>
                 </motion.div>
             }
         </AnimatePresence>
     )
 }
     
-const style = css`
+const Wrapper = Styled.div(`
     position: fixed;
     top: 0;
     left: 0;
@@ -48,6 +50,6 @@ const style = css`
     transition: 1s;
     z-index: 101;
     padding-bottom: 10%;
-`
+`)
     
 export default LoadScreen
