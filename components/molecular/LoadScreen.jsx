@@ -26,10 +26,12 @@ const LoadScreen = () => {
     return (
         <AnimatePresence exitBeforeEnter>
             {!loaded && 
-                <motion.div css={style} initial="visible" animate={{ opacity: 0.5, transition: { duration: 1 }}} exit={{ opacity: 0 }}>
-                    <img src="/img/logo-wwgm.webp" alt=""/>
+                <motion.div css={style} initial="visible" animate={{ opacity: 0.2, transition: { duration: 1 }}} exit={{ opacity: 0, transition: { duration: 0.5 }}}>
+                    <motion.div initial="visible" animate={{ opacity: 0, transition: { duration: 1 }}}>
+                        <img src="/img/logo-wwgm.webp" alt=""/>
+                    </motion.div>
                 </motion.div>
-            }
+            }       
         </AnimatePresence>
     )
 }
