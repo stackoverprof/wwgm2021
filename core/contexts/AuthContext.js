@@ -62,6 +62,7 @@ const AuthProvider = ({children}) => {
         
     useEffect(() => {     
         const fetchApproval = () => {
+            // nanti ambil dari DB.Users
             return ['saintek-to-1', 'soshum-to-2', 'soshum-to-3']
         }   
 
