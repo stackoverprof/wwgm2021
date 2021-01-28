@@ -1,7 +1,6 @@
 import admin, { DB } from '../../../../core/services/firebaseAdmin'
 import { v4 as uuid } from 'uuid'
 
-// TODO: perbedaan struktur data SAINTEK dan SOSHUM
 export default async (req, res) => {
     if (Object.keys(req.body).length === 0) {
         return res.status(400).json({status: 'ERROR', message: `Bad Request: No request body`})
@@ -19,6 +18,7 @@ export default async (req, res) => {
         return res.status(403).json({ status: 'error', message: 'anda tidak berhak membuat ujian'})
     }
 
+    //REQUEST BODY STRUCTURE VALIDATION
     const examId = `${Req.cluster.toUpperCase()}-${uuid()}`
     let _dataInvalid = false
 
@@ -39,6 +39,7 @@ export default async (req, res) => {
 
     let totalQuestions = 0
     let divideSession = []
+
     const validateSession = (data) => {
         if (!Array.isArray(Req.sessions)) {
             _dataInvalid = true
@@ -78,7 +79,9 @@ export default async (req, res) => {
     if (_dataInvalid) {
         return res.status(400).json({status: 'ERROR', message: `Bad Request: Invalid Parametes`})
     }
+    //END OF VALIDATION PROCESS
 
+    //FILLING UP INITIAL EXAMS STORING
     const countSession = (i) => {
         let count = 0
         for (const divider of divideSession) {
@@ -155,7 +158,7 @@ export default async (req, res) => {
             })
             .catch(() => completelyStored = false)
 
-        console.log(`New Exam created : ${examId}`)
+        console.log(`New Exam created : ${examId}. Is completely : ${completelyStored}`)
 
         if (completelyStored) res.status(200).json({status: 'OK', message: `KODE TES ${examId}`})
         else res.status(500).json({status: 'ERROR', message: `Not completely stored, try again`})
