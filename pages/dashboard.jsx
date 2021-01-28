@@ -16,7 +16,7 @@ const Dashboard = () => {
     const CheckRole = async () => {
         setData(null)
         
-        axios.post('/api/admin/set', {
+        axios.post('/api/private/admin/set', {
             userToken: await currentUser.getIdToken(),
             email: 'rbintang.bagus11@gmail.com'
         })

@@ -16,25 +16,57 @@ const Dashboard = () => {
     const CheckRole = async () => {
         setData(null)
         
-        axios.post('/api/admin/manage/try-out/new', {
+        axios.post('/api/private/exams/new', {
                 userToken: await currentUser.getIdToken(),
                 title: 'Try Out Soshum 1',
-                cluster: 'SOSHUM',
+                cluster: 'SAINTEK',
+                status: 'limited',
                 availability: {
-                    status: 'limited',
                     start: 1611802800000,
                     end: 1611820800000
                 },
-                durations: {
-                    TPS1: 15,
-                    TPS2: 15,
-                    TPS3: 15,
-                    TPS4: 15,
-                    TPA1: 20,
-                    TPA2: 20,
-                    TPA3: 20,
-                    TPA4: 20,
-                }
+                sessions: [
+                    {
+                        name: 'Penalaran Umum',
+                        size: 20,
+                        duration: 35
+                    },
+                    {
+                        name: 'Pemahaman Bacaan dan Menulis',
+                        size: 20,
+                        duration: 25
+                    },
+                    {
+                        name: 'Pengetahuan dan Pemahaman Umum',
+                        size: 20,
+                        duration: 25
+                    },
+                    {
+                        name: 'Pengetahuan Kuantitatif',
+                        size: 20,
+                        duration: 35
+                    },
+                    {
+                        name: 'Matematika',
+                        size: 20,
+                        duration: 22.5
+                    },
+                    {
+                        name: 'Fisika',
+                        size: 20,
+                        duration: 22.5
+                    },
+                    {
+                        name: 'Kimia',
+                        size: 20,
+                        duration: 22.5
+                    },
+                    {
+                        name: 'Biologi',
+                        size: 20,
+                        duration: 22.5
+                    }
+                ]
             })
         .then(res => setData(res.data.message))
         .catch(err => setData(err.response.data.message))
