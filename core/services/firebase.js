@@ -14,11 +14,7 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
 }
 
-if (!firebase.apps.length && typeof window !== 'undefined') {
-    firebase.initializeApp(firebaseConfig)
-    
-    if ('measurementId' in firebaseConfig) firebase.analytics()
-}
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
 
 export default firebase
 export const DB = firebase.firestore()
