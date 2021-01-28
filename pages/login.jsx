@@ -61,7 +61,6 @@ const style = css`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: pink;
 
     form{
         display: flex;
