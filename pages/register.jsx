@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 import to from '../core/routepath'
 import { useAuth } from '../core/contexts/AuthContext'
@@ -33,7 +33,7 @@ const Register = () => {
 
     return (
         <GuestOnlyRoute redirect={to.dashboard}>
-            <MainLayout className={style}>
+            <MainLayout style={style}>
                 {errorCode !== '' && <p className="error-message">{errorCode}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>

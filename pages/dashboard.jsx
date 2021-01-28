@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 import to from '../core/routepath'
 import axios from 'axios'
@@ -27,7 +27,7 @@ const Dashboard = () => {
     return (
         <UserOnlyRoute redirect={to.login}>
             {currentUser && (
-                <MainLayout className={style}>
+                <MainLayout style={style}>
                     <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>

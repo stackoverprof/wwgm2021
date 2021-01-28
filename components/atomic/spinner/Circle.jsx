@@ -1,10 +1,10 @@
 import React from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 
 const CircleSpinner = () => {
 
     return (
-        <div className={style}>
+        <div css={style}>
             <div></div><div></div><div></div><div></div>
         </div>
     )
@@ -29,15 +29,15 @@ const style = css`
         border-color: #fff transparent transparent transparent;
     }
 
-    div:nth-child(1) {
+    div:nth-of-type(1) {
         animation-delay: -0.45s;
     }
 
-    div:nth-child(2) {
+    div:nth-of-type(2) {
         animation-delay: -0.3s;
     }
 
-    div:nth-child(3) {
+    div:nth-of-type(3) {
         animation-delay: -0.15s;
     }
 

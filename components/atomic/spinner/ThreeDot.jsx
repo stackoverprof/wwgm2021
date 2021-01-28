@@ -1,10 +1,10 @@
 import React from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 
 const ThreeDotSpinner = () => {
 
     return (
-        <div className={style}>
+        <div css={style}>
             <div></div><div></div><div></div><div></div>
         </div>
     )
@@ -26,22 +26,22 @@ const style = css`
         animation-timing-function: cubic-bezier(0, 1, 1, 0);
     }
     
-    div:nth-child(1) {
+    div:nth-of-type(1) {
         left: 8px;
         animation: lds-ellipsis1 0.6s infinite;
     }
     
-    div:nth-child(2) {
+    div:nth-of-type(2) {
         left: 8px;
         animation: lds-ellipsis2 0.6s infinite;
     }
     
-    div:nth-child(3) {
+    div:nth-of-type(3) {
         left: 32px;
         animation: lds-ellipsis2 0.6s infinite;
     }
     
-    div:nth-child(4) {
+    div:nth-of-type(4) {
         left: 56px;
         animation: lds-ellipsis3 0.6s infinite;
     }

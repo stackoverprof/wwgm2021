@@ -1,12 +1,12 @@
 import React from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 import to, { set } from '../../../core/routepath'
 
 const Navbar = ({big}) => {
 
     return (
-        <div className={style({big})}>
+        <nav css={style({big})}>
             <div className="brand">
                 <img src="/img/sgm-icon.png" alt=""/>
                 <p>ArekSGM</p>
@@ -16,7 +16,7 @@ const Navbar = ({big}) => {
                 <Link href={to.contact}>Kontak</Link>
                 <Link href={to.aboutUs}>Tentang Kami</Link>
             </div>
-        </div>
+        </nav>
     )
 }
 

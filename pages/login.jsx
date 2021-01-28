@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 import to from '../core/routepath'
 import { useAuth } from '../core/contexts/AuthContext'
@@ -27,7 +27,7 @@ const Login = () => {
 
     return (
         <GuestOnlyRoute redirect={to.dashboard}>
-            <MainLayout className={style}>
+            <MainLayout style={style}>
                 {errorCode !== '' && <p className="error-message">{errorCode}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -61,6 +61,7 @@ const style = css`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: pink;
 
     form{
         display: flex;

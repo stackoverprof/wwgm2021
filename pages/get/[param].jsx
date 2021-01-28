@@ -1,5 +1,5 @@
 import React from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
 
 const GetDynamic = () => {
@@ -7,7 +7,7 @@ const GetDynamic = () => {
   const { param } = router.query
 
     return (
-        <div className={style}>
+        <div css={style}>
             <h1>dynamic routing with {param}</h1>
         </div>
     )

@@ -1,12 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import to from '../core/routepath'
 
 const error404 = () => {
 
     return (
-        <div className={style}>
+        <div css={style}>
             <h1>404 | Not Found</h1>
             <Link href={to.home}><button>BACK HOME</button></Link>
         </div>

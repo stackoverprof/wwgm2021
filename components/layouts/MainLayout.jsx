@@ -1,22 +1,21 @@
 import React from 'react'
 import Navbar from '../molecular/Navbar'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 
-const MainLayout = ({className, children}) => {
+const MainLayout = ({style, children}) => {
 
     return (
-        <div className={style}>
+        <div css={layer}>
             <Navbar />
-            <div className={className}>
+            <div css={style}>
                 {children}
             </div>
         </div>
     )
 }
 
-const style = css`
+const layer = css`
     padding-top: 60px;
-    
 `
 
 export default MainLayout

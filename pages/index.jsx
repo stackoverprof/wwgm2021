@@ -1,5 +1,5 @@
 import React from 'react'
-import { css } from '@emotion/css'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 import to from '../core/routepath'
 import useResize from 'use-resizing'
@@ -12,7 +12,7 @@ const Home = () => {
     const { authState } = useAuth()
 
     return (
-        <HomeLayout className={style({screen})}>
+        <HomeLayout style={style({screen})}>
             <h1><strong>WWGM2021</strong></h1>
             <h2>Event Try Out UTBK Nasional by areksgm</h2>
             <div className="links">
