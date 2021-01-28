@@ -1,4 +1,5 @@
 import '../core/styles/globals.scss'
+import '../core/services/firebase'
 
 import Head from 'next/head'
 import ProgressBar from 'nextjs-progressbar'

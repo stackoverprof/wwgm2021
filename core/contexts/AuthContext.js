@@ -4,8 +4,8 @@ import { AUTH, GoogleAUTH, DB } from '../services/firebase'
 const firebaseAuth = React.createContext()
 
 const AuthProvider = ({children}) => {
-    const [authState, setAuthState] = useState('initial')
-    const [currentUser, setCurrentUser] = useState({})
+    const [authState, setAuthState] = useState('initial')   //initial/user/guest
+    const [currentUser, setCurrentUser] = useState({}) 
     const [errorCode, setErrorCode] = useState('')
     const [role, setRole] = useState({})
 
