@@ -14,7 +14,9 @@ const MainLayout = ({style, children}) => {
     )
 }
 
+// [TODO] : ISSUE FOOTER MIN-HEIGHT NYA LAYAOUT
 const layer = css`
+    position: relative;
     padding-top: 60px;
 `
 

@@ -16,7 +16,6 @@ const HomeLayout = ({style, children}) => {
 
 const layer = css`
     padding-top: 88px;
-    
 `
 
 export default HomeLayout
