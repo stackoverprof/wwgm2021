@@ -4,7 +4,7 @@ import Link from 'next/link'
 import to from '../core/routepath'
 import axios from 'axios'
 import { useAuth } from '../core/contexts/AuthContext'
-import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
+import AdminOnlyRoute from '../core/routeblocks/AdminOnlyRoute'
 
 import MainLayout from '../components/layouts/MainLayout'
 import Spinner from '../components/atomic/spinner/Circle'
@@ -74,10 +74,9 @@ const Dashboard = () => {
 
     //TODO: admin only route
     return (
-        <UserOnlyRoute redirect={to.login}>
+        <AdminOnlyRoute redirect={to.home}>
             {currentUser && (
                 <MainLayout className={style}>
-                    <img src="" alt=""/>
                     <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
@@ -89,7 +88,7 @@ const Dashboard = () => {
                     <p>{data}</p>
                 </MainLayout>
             )}
-        </UserOnlyRoute>
+        </AdminOnlyRoute>
     )
 }
 const style = css`

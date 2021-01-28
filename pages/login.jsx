@@ -28,7 +28,7 @@ const Login = () => {
     return (
         <GuestOnlyRoute redirect={to.dashboard}>
             <MainLayout className={style}>
-                {errorCode != '' && <p className="error-message">{errorCode}</p>}
+                {errorCode !== '' && <p className="error-message">{errorCode}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="email">EMAIL</label>

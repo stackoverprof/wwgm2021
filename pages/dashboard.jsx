@@ -28,7 +28,6 @@ const Dashboard = () => {
         <UserOnlyRoute redirect={to.login}>
             {currentUser && (
                 <MainLayout className={style}>
-                    <img src="" alt=""/>
                     <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>
@@ -37,8 +36,7 @@ const Dashboard = () => {
                         <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
                     </div>
                     <p>Admin Status : {role.admin ? 'admin' : 'false'}</p>
-                    <p>Approval Status : {role.approved ? 'approved' : 'false'}</p>
-                    <p>Access Try Out : {Array.isArray(role.access) && role.approved ? role.access.join(", ") : 'no-access'}</p>
+                    <p>Access Try Out : {Array.isArray(role.enrolledExams) ? role.enrolledExams.join(", ") : 'no-access'}</p>
                     <p>{data}</p>
                 </MainLayout>
             )}

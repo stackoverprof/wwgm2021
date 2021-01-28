@@ -27,7 +27,6 @@ const Dashboard = () => {
         <UserOnlyRoute redirect={to.login}>
             {currentUser && (
                 <MainLayout className={style}>
-                    <img src="" alt=""/>
                     <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>

@@ -7,14 +7,14 @@ const GuestOnlyRoute = ({children, redirect}) => {
     const router = useRouter()
     
     useEffect(() => {
-        if (authState != 'guest' && authState != 'initial') {
+        if (authState !== 'guest' && authState !== 'initial') {
             router.push(redirect)
         }
     }, [authState])
 
     return (
         <div>
-           {authState == 'guest' && children}
+           {authState === 'guest' && children}
         </div>
     )
 }

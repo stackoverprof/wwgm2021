@@ -67,17 +67,20 @@ const AuthProvider = ({children}) => {
 
         const unsubscribe = AUTH.onAuthStateChanged(user => {
             if(user) {
-                setAuthState('user')
                 user.getIdTokenResult().then(res => {
                     setCurrentUser(user)
                     setRole({
                         admin: res.claims.admin,
-                        approved: fetchApproval().length !== 0,
-                        access: fetchApproval()
+                        enrolledExams: fetchApproval()
                     })
+                    setAuthState('user')
                 })
             }
-            else setAuthState('guest')
+            else {
+                setCurrentUser({})
+                setRole({})
+                setAuthState('guest')
+            }
         })
         return unsubscribe
     }, [])
