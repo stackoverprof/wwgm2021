@@ -7,7 +7,7 @@ export default async (req, res) => {
         return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
     }
     
-    //VERIVYING THE CURRENT USER
+    //VERIVYING _AUTHENTICATED
     const currentUser = await admin.auth().verifyIdToken(authToken)
         .catch(() => {
             return res.status(403).json({ status: 'ERROR', message: 'not a user. forbidden api access' })
