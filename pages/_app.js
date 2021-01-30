@@ -2,10 +2,10 @@ import '../core/styles/globals.scss'
 
 import Head from 'next/head'
 import ProgressBar from 'nextjs-progressbar'
-import LoadScreen from '../components/molecular/LoadScreen'
 import AuthProvider from '../core/contexts/AuthContext'
+import LoadScreen from '../components/molecular/LoadScreen'
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   return (
   <>
     <Head>
@@ -22,4 +22,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
+export default App
