@@ -12,7 +12,7 @@ const HomeLayout = ({style, children}) => {
 
     return (
         <div css={layer({navHeight})} ref={navRef}>
-            <Navbar big/>
+            <Navbar/>
             <div css={style}>
                 {children}
             </div>
