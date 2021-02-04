@@ -97,6 +97,11 @@ nav{
     justify-content: space-between;
     align-items: center;
   }
+  &-be {
+    @extend .flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
   &-ec {
     @extend .flex;
     justify-content: space-evenly;
