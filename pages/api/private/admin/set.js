@@ -1,4 +1,4 @@
-import admin, { DB } from '../../../../core/services/firebaseAdmin'
+import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
   const { userToken, email } = req.body

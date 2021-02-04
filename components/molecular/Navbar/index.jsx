@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import to, { set } from '../../../core/routepath'
+import to, { set } from '@core/routepath'
 
 const Navbar = ({big}) => {
 

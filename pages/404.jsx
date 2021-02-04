@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import to from '../core/routepath'
+import to from '@core/routepath'
 
 const error404 = () => {
 

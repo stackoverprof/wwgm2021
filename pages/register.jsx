@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import to from '../core/routepath'
-import { useAuth } from '../core/contexts/AuthContext'
-import GuestOnlyRoute from '../core/routeblocks/GuestOnlyRoute'
+import to from '@core/routepath'
+import { useAuth } from '@core/contexts/AuthContext'
+import GuestOnlyRoute from '@core/routeblocks/GuestOnlyRoute'
 
-import MainLayout from '../components/layouts/MainLayout'
-import GoogleAuth from '../components/atomic/GoogleAuth'
+import MainLayout from '@components/layouts/MainLayout'
+import GoogleAuth from '@components/atomic/GoogleAuth'
 
 const Register = () => {
     const [email, setEmail] = useState('')

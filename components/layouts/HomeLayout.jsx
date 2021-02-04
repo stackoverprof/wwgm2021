@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import Navbar from '../molecular/Navbar'
+import Navbar from '@components/molecular/Navbar'
 
 const HomeLayout = ({style, children}) => {
 

@@ -1,9 +1,9 @@
-import '../core/styles/globals.scss'
+import '@core/styles/globals.scss'
 
 import Head from 'next/head'
 import ProgressBar from 'nextjs-progressbar'
-import AuthProvider from '../core/contexts/AuthContext'
-import LoadScreen from '../components/molecular/LoadScreen'
+import AuthProvider from '@core/contexts/AuthContext'
+import LoadScreen from '@components/molecular/LoadScreen'
 
 const App = ({ Component, pageProps }) => {
   return (

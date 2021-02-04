@@ -2,10 +2,10 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import useResize from 'use-resizing'
-import { useAuth } from '../core/contexts/AuthContext'
-import to from '../core/routepath'
+import { useAuth } from '@core/contexts/AuthContext'
+import to from '@core/routepath'
 
-import HomeLayout from '../components/layouts/HomeLayout'
+import HomeLayout from '@components/layouts/HomeLayout'
     
 const Home = () => {
     const screen = useResize().width

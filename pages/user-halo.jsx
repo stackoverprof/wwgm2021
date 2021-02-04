@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import to from '../core/routepath'
+import to from '@core/routepath'
 import axios from 'axios'
-import { useAuth } from '../core/contexts/AuthContext'
-import UserOnlyRoute from '../core/routeblocks/UserOnlyRoute'
+import { useAuth } from '@core/contexts/AuthContext'
+import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 
-import MainLayout from '../components/layouts/MainLayout'
-import Spinner from '../components/atomic/spinner/Circle'
+import MainLayout from '@components/layouts/MainLayout'
+import Spinner from '@components/atomic/spinner/Circle'
     
 const Dashboard = () => {
     const { currentUser, authMethods } = useAuth()

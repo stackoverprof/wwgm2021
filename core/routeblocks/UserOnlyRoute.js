@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '@core/contexts/AuthContext'
 
 const UserOnlyRoute = ({children, redirect}) => {
     const { authState } = useAuth()
