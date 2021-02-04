@@ -33,3 +33,51 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.contain-size{
+  width: 90%;
+  max-width: 1000px;
+  min-width: 320px;
+  
+  &-m {
+    @extend .contain-size;
+    max-width: 900px;
+  }
+  &-s {
+    @extend .contain-size;
+    max-width: 720px;
+  }
+  &-xs {
+    @extend .contain-size;
+    max-width: 500px;
+  }
+}
+
+.flex{
+  display: flex;
+  
+  &-cc {
+    @extend .flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-sc {
+    @extend .flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &-ec {
+    @extend .flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &-bc {
+    @extend .flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &.col{
+    flex-direction: column;
+  }
+}

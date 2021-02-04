@@ -8,6 +8,7 @@ const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState({}) 
     const [errorCode, setErrorCode] = useState('')
     const [role, setRole] = useState({})
+    const [userData, setUserData] = useState({})
 
     const authMethods = {
         handleSignup : (email, password, displayName) => {
@@ -59,22 +60,25 @@ const AuthProvider = ({children}) => {
             AUTH.signOut()
         }
     }
-        
-    useEffect(() => {     
-        const fetchApproval = () => {
-            // nanti ambil dari DB.Users
-            return ['saintek-to-1', 'soshum-to-2', 'soshum-to-3']
-        }   
 
+         
+    const refreshUserData = (uid = currentUser.uid) => {
+        console.log('Refetching user data...')
+        DB.collection('Users').doc(uid).get()
+        .then(doc => setUserData(doc.data()))
+    }   
+        
+    useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(user => {
             if(user) {
                 user.getIdTokenResult().then(res => {
                     setCurrentUser(user)
+                    console.log(user)
                     setRole({
-                        admin: res.claims.admin,
-                        enrolledExams: fetchApproval()
+                        admin: res.claims.admin
                     })
                     setAuthState('user')
+                    refreshUserData(user.uid)
                 })
             }
             else {
@@ -93,7 +97,9 @@ const AuthProvider = ({children}) => {
             currentUser,
             role,
             errorCode,
-            setErrorCode
+            setErrorCode,
+            userData,
+            refreshUserData
         }}>
             { children }
         </firebaseAuth.Provider>

@@ -6,8 +6,8 @@ const AlertHandler = ({message, closeHandler = () => {}, color = 'default'}) => 
     return (
     <>        
         { message && (
-            <div css={style} className="flex -cc">
-                <div className={`box flex -bc ${color}`}>
+            <div css={style} className="flex-cc">
+                <div className={`box flex-bc ${color}`}>
                     <p>{message}</p>
                     <FaWindowClose onClick={() => closeHandler()}/>
                 </div>

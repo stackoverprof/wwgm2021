@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { css } from '@emotion/react'
 import Navbar from '@components/molecular/Navbar'
 
 const HomeLayout = ({style, children}) => {
+    const [navHeight, setNavHeight] = useState(0)
+    const navRef = useRef(null)
+
+    useEffect(() => {
+        setNavHeight(navRef.current.firstChild.offsetHeight)
+    }, [])
 
     return (
-        <div css={layer}>
+        <div css={layer({navHeight})} ref={navRef}>
             <Navbar big/>
             <div css={style}>
                 {children}
@@ -14,8 +20,9 @@ const HomeLayout = ({style, children}) => {
     )
 }
 
-const layer = css`
-    padding-top: 88px;
+const layer = ({navHeight}) => css`
+    padding-top: ${navHeight}px;
+    padding-bottom: 54px;
 `
 
 export default HomeLayout

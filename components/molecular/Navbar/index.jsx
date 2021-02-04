@@ -6,8 +6,8 @@ import to, { set } from '@core/routepath'
 const Navbar = ({big}) => {
 
     return (
-        <nav css={style({big})}>
-            <div className="brand">
+        <nav css={style({big})} className="flex-cc">
+            <div className="brand flex-cc">
                 <img src="/img/sgm-icon.png" alt=""/>
                 <p>ArekSGM</p>
             </div>
