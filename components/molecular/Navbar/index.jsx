@@ -9,6 +9,9 @@ import LoginPopUp from '@components/molecular/LoginPopUp'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
+    const [loginPopUp, setLoginPopUp] = useState(false)
+
+    
 
     return (
     <>  
@@ -22,23 +25,23 @@ const Navbar = () => {
                         </div>
                     </Link>
                     <div className="wider links flex-cc">
-                        <LinkSet />
+                        <LinkSet setLoginPopUp={setLoginPopUp}/>
                     </div>
                     <MenuButton open={open} setOpen={setOpen} breakpoint={950}/>
                 </div>
                 <div className="dropper links bg-blur flex-cc">
                     <div className="dropper-inner contain-size-m flex-cc">
-                        <LinkSet />
+                        <LinkSet setLoginPopUp={setLoginPopUp}/>
                     </div>
                 </div>
             </nav>
         </OutsideClickHandler>
-        <LoginPopUp />
+        <LoginPopUp open={loginPopUp} handleClose={() => setLoginPopUp(false)}/>
     </>
     )
 }
 
-const LinkSet = () => {
+const LinkSet = ({setLoginPopUp}) => {
     return (
     <>
         <Link href={to.tryOut}>
@@ -59,11 +62,9 @@ const LinkSet = () => {
                 <div className="bar"></div> 
             </div>
         </Link>
-        <Link href={to.home}>
-            <div className="link-item login flex-cc">
-                <button>LOGIN</button>
-            </div>
-        </Link>
+        <div className="link-item login flex-cc">
+            <button onClick={() => setLoginPopUp(true)}>LOGIN</button>
+        </div>
     </>
     )
 }
