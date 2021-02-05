@@ -117,6 +117,17 @@ nav{
   }
 }
 
+.fixed{
+  position: fixed;
+  
+  &.fullscreen{
+    top: 0;
+    width: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
 .no-pointer{
   pointer-events: none;
 }

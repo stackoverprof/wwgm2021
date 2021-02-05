@@ -5,11 +5,13 @@ import to from '@core/routepath'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 import MenuButton from '@components/atomic/MenuButton'
+import LoginPopUp from '@components/molecular/LoginPopUp'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
 
     return (
+    <>  
         <OutsideClickHandler onOutsideClick={() => setOpen(false)}>
             <nav css={style({open})} className="flex-cc">
                 <div className="contain-size-xl flex-bc inner">
@@ -31,6 +33,8 @@ const Navbar = () => {
                 </div>
             </nav>
         </OutsideClickHandler>
+        <LoginPopUp />
+    </>
     )
 }
 
@@ -89,9 +93,12 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
         
         @media (max-width: 950px) {
             display: flex;
+            padding: 12px 0;
         }
         
-        @media (max-width: 640px) {            
+        @media (max-width: 640px) {      
+            padding: 24px 0;      
+            
             .dropper-inner{
                 flex-direction: column;
                 align-items: flex-start;
@@ -154,11 +161,6 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
                 margin: 0;
                 z-index: 101;
                 transition: 0.25s;
-                box-shadow: 0 8px 12px -8px #0006;
-
-                &:hover{
-                    box-shadow: 0 8px 12px -8px #0008, 0 0 0 2px #fff, 0 0 0 2.8px #0f4125;
-                }
             }
         }
         
