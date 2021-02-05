@@ -157,19 +157,11 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
                 box-shadow: 0 8px 12px -8px #0006;
 
                 &:hover{
-                    box-shadow: 0 0 0 4px #fff, 0 0 8px 4px #0005;
+                    box-shadow: 0 8px 12px -8px #0008, 0 0 0 3px #fff, 0 0 6px 3px #0005;
                 }
             }
         }
-
-        &:hover {
-            color: #1a693e;
-            .bar{
-                width: 90%;
-                opacity: 1;
-            }
-        }
-
+        
         .bar{
             opacity: 0;
             height: 4px;
@@ -178,7 +170,15 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
             width: 0;
             background: #0B4D29;
             transition: all 0.25s, opacity 0.1s;
+            
+        }
 
+        &:hover {
+            color: #1a693e;
+            .bar{
+                width: 90%;
+                opacity: 1;
+            }
         }
 
         @media (max-width: 950px) {
