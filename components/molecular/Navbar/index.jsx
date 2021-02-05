@@ -157,7 +157,7 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
                 box-shadow: 0 8px 12px -8px #0006;
 
                 &:hover{
-                    box-shadow: 0 8px 12px -8px #0008, 0 0 0 3px #fff, 0 0 6px 3px #0005;
+                    box-shadow: 0 8px 12px -8px #0008, 0 0 0 2px #fff, 0 0 0 2.8px #0f4125;
                 }
             }
         }
@@ -168,7 +168,7 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
             position: absolute;
             bottom: 0;
             width: 0;
-            background: #0B4D29;
+            background: #0f4125;
             transition: all 0.25s, opacity 0.1s;
             
         }
