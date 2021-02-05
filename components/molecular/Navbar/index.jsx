@@ -10,11 +10,13 @@ const Navbar = () => {
 
     return (
         <nav css={style({open})} className="flex-cc bg-blur">
-            <div className="contain-size-xl flex-bc">
-                <div className="brand flex-cc">
-                    <img src="/img/sgm-icon.png" alt=""/>
-                    <p>WWGM 2021</p>
-                </div>
+            <div className="contain-size-xl flex-bc inner">
+                <Link href={to.home}>
+                    <div className="brand flex-cc">
+                        <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
+                        <p>WWGM 2021</p>
+                    </div>
+                </Link>
                 <div className="wider links flex-cc">
                     <LinkSet />
                 </div>
@@ -32,9 +34,24 @@ const Navbar = () => {
 const LinkSet = () => {
     return (
     <>
-        <Link href={to.tryOut}>Try Out</Link>
-        <Link href={to.home}>Dokumentasi</Link>
-        <Link href={to.home}>Tentang Kami</Link>
+        <Link href={to.tryOut}>
+            <div className="link-item flex-cc">
+                <a>Try Out</a>
+                <div className="bar"></div> 
+            </div>
+        </Link>
+        <Link href={to.home}>
+            <div className="link-item flex-cc">
+                <a>Dokumentasi</a>
+                <div className="bar"></div> 
+            </div>
+        </Link>
+        <Link href={to.home}>
+            <div className="link-item flex-cc">
+                <a>Tentang Kami</a>
+                <div className="bar"></div> 
+            </div>
+            </Link>
         <Link href={to.home}><button>LOGIN</button></Link>
     </>
     )
@@ -78,13 +95,20 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
         }
     }
 
+    .inner{
+        height: 100%;
+    }
+    
     .wider{
+        height: 100%;
         @media (max-width: 950px) {
             display: none;
         }
     }
 
     .brand{
+        cursor: pointer;
+
         img{
             height: 45px;
             margin-right: 12px;
@@ -97,26 +121,54 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
             
             padding-top: 2px;
 
-            color: #0B4D29;
+            color: #0f4125;
         }
     }
 
-    .links{
-        a{
-            font-family: Poppins;
-            font-weight: 600;
-            font-size: 20px;
-            text-align: center;
-            margin: 12px;
+    .link-item{
+        position: relative;
+        height: 100%;
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: center;
+        padding: 0 12px;
+        cursor: pointer;
+
+        &:hover {
+            color: #1a693e;
+            .bar{
+                width: 80%;
+                opacity: 1;
+            }
         }
-        button{
-            padding: 8px 24px;
-            font-weight: 600;
-            font-size: 22px;
-            letter-spacing: 0.04em;
-            margin: 0;
-            margin-left: 12px;
+
+        .bar{
+            opacity: 0;
+            height: 4px;
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            background: #0B4D29;
+            transition: all 0.25s, opacity 0.1s;
+
         }
+
+        @media (max-width: 950px) {
+            padding: 12px;
+
+            .bar{
+                display: none;
+            }
+        }
+    }
+    button{
+        padding: 8px 24px;
+        font-weight: 600;
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        margin: 0;
+        margin-left: 12px;
     }
 `
 

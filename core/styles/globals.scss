@@ -42,6 +42,10 @@ nav{
   z-index: 100;
 }
 
+.h-full{
+  height: 100%;
+}
+
 .contain-size{
   width: 90%;
   max-width: 1000px;
@@ -111,4 +115,8 @@ nav{
   &.col{
     flex-direction: column;
   }
+}
+
+.no-pointer{
+  pointer-events: none;
 }
