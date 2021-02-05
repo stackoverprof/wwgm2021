@@ -17,11 +17,6 @@ const style =  ({open, breakpoint}) => css`
     width: 32px;
     transition: 0.25s;
 
-    &:hover{
-        width: 36px;
-        margin-right: -2px;
-    }
-
     @media (min-width: ${breakpoint}px){
         display: none;
     }
@@ -29,7 +24,7 @@ const style =  ({open, breakpoint}) => css`
     .burger{
         width: 100%;
         height: 20%;
-        background: #0F1A12;
+        background: #151a0f;
         border-radius: 4px;
         transition: 0.25s;
 

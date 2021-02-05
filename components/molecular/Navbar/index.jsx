@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import to from '@core/routepath'
+import OutsideClickHandler from 'react-outside-click-handler'
 
 import MenuButton from '@components/atomic/MenuButton'
 
@@ -9,25 +10,27 @@ const Navbar = () => {
     const [open, setOpen] = useState(false)
 
     return (
-        <nav css={style({open})} className="flex-cc bg-blur">
-            <div className="contain-size-xl flex-bc inner">
-                <Link href={to.home}>
-                    <div className="brand flex-cc">
-                        <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
-                        <p>WWGM 2021</p>
+        <OutsideClickHandler onOutsideClick={() => setOpen(false)}>
+            <nav css={style({open})} className="flex-cc">
+                <div className="contain-size-xl flex-bc inner">
+                    <Link href={to.home}>
+                        <div className="brand flex-cc">
+                            <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
+                            <p>WWGM 2021</p>
+                        </div>
+                    </Link>
+                    <div className="wider links flex-cc">
+                        <LinkSet />
                     </div>
-                </Link>
-                <div className="wider links flex-cc">
-                    <LinkSet />
+                    <MenuButton open={open} setOpen={setOpen} breakpoint={950}/>
                 </div>
-                <MenuButton open={open} setOpen={setOpen} breakpoint={950}/>
-            </div>
-            <div className="dropper links bg-blur flex-cc">
-                <div className="contain-size-m flex-cc">
-                    <LinkSet />
+                <div className="dropper links bg-blur flex-cc">
+                    <div className="dropper-inner contain-size-m flex-cc">
+                        <LinkSet />
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </OutsideClickHandler>
     )
 }
 
@@ -51,8 +54,12 @@ const LinkSet = () => {
                 <a>Tentang Kami</a>
                 <div className="bar"></div> 
             </div>
-            </Link>
-        <Link href={to.home}><button>LOGIN</button></Link>
+        </Link>
+        <Link href={to.home}>
+            <div className="link-item login flex-cc">
+                <button>LOGIN</button>
+            </div>
+        </Link>
     </>
     )
 }
@@ -63,12 +70,12 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
     background: rgba(255, 255, 255, ${open ? 1 : 0.85});
     backdrop-filter: blur(8px);
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);   
-    
+
     .dropper{
         position: absolute;
         display: none;
         width: 100%;
-        max-height: ${typeof window !== 'undefined' ? window.innerHeight : 1000}px;
+        max-height: 100vh;
         top: 100%;
         overflow: hidden;
         padding: 24px 0;
@@ -85,11 +92,11 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
         }
         
         @media (max-width: 640px) {            
-            div{
+            .dropper-inner{
                 flex-direction: column;
                 align-items: flex-start;
             }
-            button{
+            .login{
                 margin-top: 12px !important;
             }    
         }
@@ -130,15 +137,35 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
         height: 100%;
         font-family: Poppins;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 18px;
         text-align: center;
         padding: 0 12px;
         cursor: pointer;
 
+        &.login{
+            padding-left: 12px;
+            padding-right: 0;
+
+            button{
+                padding: 8px 24px;
+                font-weight: 600;
+                font-size: 22px;
+                letter-spacing: 0.04em;
+                margin: 0;
+                z-index: 101;
+                transition: 0.25s;
+                box-shadow: 0 8px 12px -8px #0006;
+
+                &:hover{
+                    box-shadow: 0 0 0 4px #fff, 0 0 8px 4px #0005;
+                }
+            }
+        }
+
         &:hover {
             color: #1a693e;
             .bar{
-                width: 80%;
+                width: 90%;
                 opacity: 1;
             }
         }
@@ -161,14 +188,6 @@ const style = ({open}) => css` //Nav tag core style is in globals.scss
                 display: none;
             }
         }
-    }
-    button{
-        padding: 8px 24px;
-        font-weight: 600;
-        font-size: 22px;
-        letter-spacing: 0.04em;
-        margin: 0;
-        margin-left: 12px;
     }
 `
 

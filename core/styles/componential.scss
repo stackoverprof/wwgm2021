@@ -22,7 +22,7 @@ button {
     }
 
     &:hover{
-        background: #2e4735;
+        // background: #2e4735;
     }
 
     &:focus{
@@ -35,6 +35,7 @@ button {
     background: none;
     border: 1px solid black;
     color: black;
+
     &:hover{
         background: #cccccc;
     }
