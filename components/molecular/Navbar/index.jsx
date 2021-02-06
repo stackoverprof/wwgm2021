@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import OutsideClickHandler from 'react-outside-click-handler'
+import useResize from 'use-resizing'
 import to from '@core/routepath'
 
 import { useLayout } from '@core/contexts/LayoutContext'
@@ -15,6 +16,7 @@ const Navbar = ({clean}) => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
 
     const { dimm } = useLayout()
+    const screen = useResize().width
 
     const toggleDropper = (value) => {
         setOpenDropper(value)
@@ -34,7 +36,23 @@ const Navbar = ({clean}) => {
                                 <p>WWGM 2021</p>
                             </div>
                         </Link>
-                        <div className="wider links flex-cc">
+                            {screen > 950 && (
+                                <div className="wider links flex-cc">
+                                    <LinkSet
+                                        openLoginPop={openLoginPop}
+                                        setOpenLoginPop={setOpenLoginPop}
+                                        openAuthAction={openAuthAction}
+                                        setOpenAuthAction={setOpenAuthAction}
+                                        toggleDropper={toggleDropper}
+                                    />
+                                </div>
+                            )}
+                        <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
+                    </div>
+                </div>
+                {screen < 950 && (
+                    <div className="dropper links bg-blur flex-cc">
+                        <div className="dropper-inner contain-size-m flex-cc">
                             <LinkSet
                                 openLoginPop={openLoginPop}
                                 setOpenLoginPop={setOpenLoginPop}
@@ -43,20 +61,8 @@ const Navbar = ({clean}) => {
                                 toggleDropper={toggleDropper}
                             />
                         </div>
-                        <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
                     </div>
-                </div>
-                <div className="dropper links bg-blur flex-cc">
-                    <div className="dropper-inner contain-size-m flex-cc">
-                        <LinkSet
-                            openLoginPop={openLoginPop}
-                            setOpenLoginPop={setOpenLoginPop}
-                            openAuthAction={openAuthAction}
-                            setOpenAuthAction={setOpenAuthAction}
-                            toggleDropper={toggleDropper}
-                        />
-                    </div>
-                </div>
+                )}
             </OutsideClickHandler>
         </nav>
     )

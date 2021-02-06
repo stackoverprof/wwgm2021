@@ -28,7 +28,8 @@ const LoginPopUp = ({open, handleClose}) => {
                             className="pop-up flex-bc"
                         >
                             <div className="partition-40 flex-cc">
-                                <img className="illus" src="/img/illus/login.svg" alt=""/>
+                                {authState !== 'user' && <img className="illus" src="/img/illus/login.svg" alt=""/>}
+                                {authState === 'user' && <img className="illus" src="/img/illus/login-success.svg" alt=""/>}
                             </div>
                             <div className="partition-60 flex-cs col">
                                 
