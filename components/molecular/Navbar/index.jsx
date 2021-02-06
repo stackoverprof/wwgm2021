@@ -133,7 +133,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
         height: 100%;
         z-index: 101;
         transition: 0.25s ${dimm ? 0 : '0.5s'};
-        background: rgba(255, 255, 255, ${openDropper || dimm ? 1 : 0.85});
+        background: rgba(255, 255, 255, ${openDropper || dimm ? 1 : 0.75});
         backdrop-filter: blur(8px);
         box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
     }

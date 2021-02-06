@@ -49,6 +49,25 @@ button, .btn {
         }
     }
 
+    &.bordered-bold{
+        background: none;
+        border: 4px solid #000;
+        color: var(--army);
+        padding: 10px 14px;
+
+        &.orange{
+            color: var(--orange);
+            border-color: var(--orange);
+            
+            &:hover{
+                color: white;
+                box-shadow: 0 10px 12px -10px #0008;
+                background: #FBC34344;
+            }
+        }
+
+    }
+
     &.no-btn{
         background: none;
         color: var(--army);
