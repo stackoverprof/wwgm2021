@@ -1,19 +1,21 @@
 button, .btn {
+    padding: 8px 18px;
+    margin: 0;
     border: none;
     border-radius: 8px;
     background: #0F1A12;
-    color: white;
-    font-family: Poppins, system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.2;
-    white-space: nowrap;
-    text-decoration: none;
-    padding: 8px 16px;
-    margin: 12px 4px;
     cursor: pointer;
-    transition: 0.1s;
-
+    transition: 0.25s;
+    
+    font-family: Poppins, system-ui, sans-serif;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    color: white;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,5 +64,9 @@ button, .btn {
         &:focus{
             outline: none;
         }
+    }
+
+    &.red{
+        background: #c72121;
     }
 }

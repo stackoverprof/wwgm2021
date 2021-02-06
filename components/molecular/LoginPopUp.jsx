@@ -1,9 +1,15 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import GoogleAuth from '@components/atomic/GoogleAuth'
+import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { useAuth } from '@core/contexts/AuthContext'
+import to from '@core/routepath'
+
+import GoogleAuth from '@components/atomic/GoogleAuth'
 
 const LoginPopUp = ({open, handleClose}) => {
+    const { authState } = useAuth()
 
     return (
         <AnimatePresence exitBeforeEnter>
@@ -15,24 +21,33 @@ const LoginPopUp = ({open, handleClose}) => {
                     css={style} 
                     className="fixed fullscreen flex-cs"
                 >
-                    <motion.div 
-                        initial={{ opacity: 0 , y: 50}} 
-                        animate={{ opacity: 1, y: 0 , transition: { duration: 0.5, delay: 0.25}}} 
-                        exit={{ opacity: 0, transition: { duration: 0.5 }}} 
-                        className="pop-up contain-size-l flex-bc"
-                    >
-                        <div className="partition flex-cc">
-                            <img src="/img/illus/login.svg" alt=""/>
-                        </div>
-                        <div className="partition flex-cs col">
-                            <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
-                            <div className="flex-cc">
-                                <GoogleAuth />
-                                <button onClick={handleClose} className="btn bordered tutup">Tutup</button>
+                    <OutsideClickHandler onOutsideClick={handleClose} display="flex">
+                        <motion.div 
+                            initial={{ opacity: 0 , y: -25}} 
+                            animate={{ opacity: 1, y: 0 , transition: { duration: 0.25, delay: 0.1}}} 
+                            exit={{ opacity: 0, transition: { duration: 0.5 }}} 
+                            className="pop-up flex-bc"
+                        >
+                            <div className="partition flex-cc">
+                                <img src="/img/illus/login.svg" alt=""/>
                             </div>
-                        </div>
-                    </motion.div>
-                </motion.div>
+                            <div className="partition flex-cs col">
+                                
+                                {authState !== 'user' ?
+                                    <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
+                                :
+                                <p className="instruction">Berhasil Login! <br/> Selamat datang</p>
+                                }
+                                <div className="flex-cc">
+                                    {authState !== 'user' && <GoogleAuth />}
+                                    {authState !== 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
+                                    {authState === 'user' && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
+                                    {authState === 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </OutsideClickHandler>
+                </motion.div>    
             )}
         </AnimatePresence>
     )
@@ -41,10 +56,20 @@ const LoginPopUp = ({open, handleClose}) => {
 const style = css`
     background:  #000c;
     padding-top: 100px;
+
+    > div {
+        width: 90%;
+        max-width: 1000px;
+        min-width: 320px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     
     .pop-up{
         background: #fff;
         height: 456px;
+        width: 100%;
         border-radius: 12px;
     }
 
@@ -53,8 +78,13 @@ const style = css`
         height: 100%;
     }
 
-    button.tutup{
-        padding: 12px 16px;
+    .btn{
+        font-size: 16px;
+        margin-right: 12px;
+
+        &.tutup{
+            padding: 12px 18px;
+        }
     }
 
     p.instruction{
