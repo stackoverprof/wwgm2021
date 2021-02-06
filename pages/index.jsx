@@ -1,21 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 
 import MainLayout from '@components/layouts/MainLayout'
     
 const Home = () => {
+    const router = useRouter()
+    const { action } = router.query
     const { authState } = useAuth()
 
+    useEffect(() => {
+        console.log(action)
+    }, [])
+
     return (
-        <MainLayout style={style}>
+        <MainLayout style={style} directLogin={action === 'login'}>
             <h1><strong>WWGM2021</strong></h1>
             <h2>Event Try Out UTBK Nasional by areksgm</h2>
             <div className="links">
-                { authState === 'guest' && <Link href={to.login}><button>Login</button></Link> }
-                { authState === 'guest' && <Link href={to.register}><button>Register</button></Link> }
                 { authState === 'user' && <Link href={to.dashboard}><button>Dashboard</button></Link> }
             </div>
             <svg width="420" height="337.5" viewBox="0 0 56 45" fill="#ddd" xmlns="http://www.w3.org/2000/svg">

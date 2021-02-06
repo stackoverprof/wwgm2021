@@ -4,7 +4,7 @@ import Navbar from '@components/molecular/Navbar'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLayout } from '@core/contexts/LayoutContext'
 
-const MainLayout = ({style, children}) => {
+const MainLayout = ({style, children, directLogin}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
@@ -16,7 +16,7 @@ const MainLayout = ({style, children}) => {
 
     return (
         <div css={layer({navHeight})} ref={navRef}>
-            <Navbar/>
+            <Navbar directLogin={directLogin}/>
             <div css={style}>
                 {children}
             </div>

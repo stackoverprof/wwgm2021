@@ -28,7 +28,7 @@ const Dashboard = () => {
     }
 
     return (
-        <UserOnlyRoute redirect={to.login}>
+        <UserOnlyRoute redirect={to.home}>
             {currentUser && (
                 <MainLayout style={style}>
                     <p>Dashboard of {currentUser.displayName}</p>

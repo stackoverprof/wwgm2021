@@ -3,12 +3,11 @@ import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
 
 const GetDynamic = () => {
-  const router = useRouter()
-  const { param } = router.query
+  const { query: { param, action }} = useRouter()
 
     return (
         <div css={style}>
-            <h1>dynamic routing with {param}</h1>
+            <h1>dynamic routing with {param} aksinya {action}</h1>
         </div>
     )
 }

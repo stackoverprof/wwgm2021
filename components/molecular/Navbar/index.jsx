@@ -10,10 +10,10 @@ import MenuButton from '@components/atomic/MenuButton'
 import NavbarClean from './NavbarClean'
 import AuthArea from './AuthArea'
 
-const Navbar = ({clean}) => {
+const Navbar = ({clean, directLogin}) => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
-    const [openLoginPop, setOpenLoginPop] = useState(false)
+    const [openLoginPop, setOpenLoginPop] = useState(directLogin)
     const [openLogoutPop, setOpenLogoutPop] = useState(false)
 
     const { dimm } = useLayout()
