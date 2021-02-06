@@ -89,6 +89,7 @@ const style = css`
         @media (max-width: 720px) {
             flex-direction: column;
             padding-bottom: 32px;
+            min-width: 300px;
         }
     }
 
@@ -122,6 +123,7 @@ const style = css`
         margin-right: 12px;
 
         @media (max-width: 720px) {
+            min-width: 220px;
             margin: 6px 0;
 
             &.tutup{

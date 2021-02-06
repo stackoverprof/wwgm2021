@@ -247,6 +247,7 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
         text-align: center;
         padding: 0 12px;
         cursor: pointer;
+        transition: 0.1s;
 
         &.login{
             padding-left: 12px;
@@ -270,7 +271,8 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
         }
 
         &:hover {
-            color: #1a693e;
+            transform: scale(1.02);
+
             .bar{
                 width: 90%;
                 opacity: 1;
