@@ -18,6 +18,11 @@ const Navbar = () => {
         setOpenAuthAction(false)
     }
 
+    const showLogin = () => {
+        setOpenLoginPop(true)
+        toggleDropper(false)
+    }
+
     return (
     <>  
         <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper}>
@@ -31,14 +36,14 @@ const Navbar = () => {
                             </div>
                         </Link>
                         <div className="wider links flex-cc">
-                            <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} setOpenLoginPop={setOpenLoginPop}/>
+                            <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} showLogin={showLogin}/>
                         </div>
                         <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
                     </div>
                 </div>
                 <div className="dropper links bg-blur flex-cc">
                     <div className="dropper-inner contain-size-m flex-cc">
-                        <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} setOpenLoginPop={setOpenLoginPop}/>
+                        <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} showLogin={showLogin}/>
                     </div>
                 </div>
             </nav>
@@ -48,7 +53,7 @@ const Navbar = () => {
     )
 }
 
-const LinkSet = ({openAuthAction, setOpenAuthAction, setOpenLoginPop}) => {
+const LinkSet = ({openAuthAction, setOpenAuthAction, showLogin}) => {
     const { currentUser, role, authMethods, authState } = useAuth()
     
     return (
@@ -72,7 +77,7 @@ const LinkSet = ({openAuthAction, setOpenAuthAction, setOpenLoginPop}) => {
             </div>
         </Link>
         <div className="link-item login flex-cc">
-        {authState !== 'user' && <button onClick={() => setOpenLoginPop(true)}>LOGIN</button>}
+        {authState !== 'user' && <button onClick={showLogin}>LOGIN</button>}
         {authState === 'user' && (
             <div className="auth-area">
                     <div onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
@@ -81,6 +86,7 @@ const LinkSet = ({openAuthAction, setOpenAuthAction, setOpenLoginPop}) => {
                     </div>
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
+                        {role.admin && <Link href={to.dashboard}>ADMIN AREA</Link>}
                         <button onClick={authMethods.handleSignout} className="btn red">LOG OUT</button>
                     </div>
                 </div>
@@ -127,6 +133,11 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
         a{
             color: #0F1A12;
             margin: 6px 0;
+            transition: 0.1s;
+
+            &:hover{
+                transform: scale(1.05);
+            }
         }
         
         button{
@@ -150,7 +161,8 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
         }
         
         img{
-            height: 66%;
+            height: 30px;
+            width: 30px;
             margin-right: 12px;
             margin-left: 12px;
             border-radius: 50%;
