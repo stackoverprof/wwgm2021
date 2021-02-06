@@ -21,7 +21,7 @@ const LoginPopUp = ({open, handleClose}) => {
                     css={style} 
                     className="fixed fullscreen flex-cs"
                 >
-                    <OutsideClickHandler onOutsideClick={handleClose} display="flex">
+                    <OutsideClickHandler onOutsideClick={handleClose} disabled={!open} display="flex">
                         <motion.div 
                             initial={{ opacity: 0 , y: -25}} 
                             animate={{ opacity: 1, y: 0 , transition: { duration: 0.25, delay: 0.1}}} 

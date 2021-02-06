@@ -9,39 +9,46 @@ import MenuButton from '@components/atomic/MenuButton'
 import LoginPopUp from '@components/molecular/LoginPopUp'
 
 const Navbar = () => {
-    const [dropper, setDropper] = useState(false)
-    const [loginPopUp, setLoginPopUp] = useState(false)
-    const [authAction, setAuthAction] = useState(false)
+    const [openDropper, setOpenDropper] = useState(false)
+    const [openLoginPop, setOpenLoginPop] = useState(false)
+    const [openAuthAction, setOpenAuthAction] = useState(false)
+
+    const toggleDropper = (value) => {
+        setOpenDropper(value)
+        setOpenAuthAction(false)
+    }
 
     return (
     <>  
-        <OutsideClickHandler onOutsideClick={() => setDropper(false)} disabled={!dropper}>
-            <nav css={style({dropper, authAction})} className="flex-cc">
-                <div className="contain-size-xl flex-bc inner">
-                    <Link href={to.home}>
-                        <div className="brand flex-cc">
-                            <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
-                            <p>WWGM 2021</p>
+        <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper}>
+            <nav css={style({openDropper, openAuthAction})}>
+                <div className="navbar-main flex-cc">
+                    <div className="contain-size-xl flex-bc inner">
+                        <Link href={to.home}>
+                            <div className="brand flex-cc">
+                                <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
+                                <p>WWGM 2021</p>
+                            </div>
+                        </Link>
+                        <div className="wider links flex-cc">
+                            <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} setOpenLoginPop={setOpenLoginPop}/>
                         </div>
-                    </Link>
-                    <div className="wider links flex-cc">
-                        <LinkSet authAction={authAction} setAuthAction={setAuthAction} setLoginPopUp={setLoginPopUp}/>
+                        <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
                     </div>
-                    <MenuButton open={dropper} setOpen={setDropper} breakpoint={950}/>
                 </div>
                 <div className="dropper links bg-blur flex-cc">
                     <div className="dropper-inner contain-size-m flex-cc">
-                        <LinkSet authAction={authAction} setAuthAction={setAuthAction} setLoginPopUp={setLoginPopUp}/>
+                        <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} setOpenLoginPop={setOpenLoginPop}/>
                     </div>
                 </div>
             </nav>
         </OutsideClickHandler>
-        <LoginPopUp open={loginPopUp} handleClose={() => setLoginPopUp(false)}/>
+        <LoginPopUp open={openLoginPop} handleClose={() => setOpenLoginPop(false)}/>
     </>
     )
 }
 
-const LinkSet = ({authAction, setAuthAction, setLoginPopUp}) => {
+const LinkSet = ({openAuthAction, setOpenAuthAction, setOpenLoginPop}) => {
     const { currentUser, role, authMethods, authState } = useAuth()
     
     return (
@@ -65,66 +72,77 @@ const LinkSet = ({authAction, setAuthAction, setLoginPopUp}) => {
             </div>
         </Link>
         <div className="link-item login flex-cc">
-        {authState !== 'user' && <button onClick={() => setLoginPopUp(true)}>LOGIN</button>}
+        {authState !== 'user' && <button onClick={() => setOpenLoginPop(true)}>LOGIN</button>}
         {authState === 'user' && (
             <div className="auth-area">
-                <div onClick={() => setAuthAction(!authAction)} className="user-action btn flex-cc">
-                    <img src={currentUser.photoURL} alt=""/>
-                    <p>Angkasa</p>
+                    <div onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
+                        <img src={currentUser.photoURL} alt=""/>
+                        <p>Angkasa</p>
+                    </div>
+                    <div className="auth-dropper flex-cc col">
+                        <Link href={to.dashboard}>DASHBOARD</Link>
+                        <button onClick={authMethods.handleSignout} className="btn red">LOG OUT</button>
+                    </div>
                 </div>
-                <div className="auth-dropper flex-cc col">
-                    <Link href={to.dashboard}>DASHBOARD</Link>
-                    <button onClick={authMethods.handleSignout} className="btn red">LOG OUT</button>
-                </div>
-            </div>
         )}
         </div>
     </>
     )
 }
 
-const style = ({dropper, authAction}) => css` //Nav tag core style is in globals.scss
+const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in globals.scss
     width: 100%;
     height: 64px;
-    background: rgba(255, 255, 255, ${dropper ? 1 : 0.85});
-    backdrop-filter: blur(8px);
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+    z-index: 100;
+    
+    .navbar-main{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 101;
+        background: rgba(255, 255, 255, ${openDropper ? 1 : 0.85});
+        backdrop-filter: blur(8px);
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+    }
 
     .auth-area{
         position: relative;
-        height: 70%;
+        height: 46px;
         max-width: 200px;
     }
 
     .auth-dropper{
         position: absolute;
-        top: 110%;
+        top: 114%;
         width: 100%;
-        max-height: ${authAction ? '100vh' : 0};
+        max-height: ${openAuthAction ? '100vh' : 0};
         background: white;
         box-shadow: 0 0 4px 0 #0005;
         border-radius: 8px;
-        padding: ${authAction ? '6px 0' : 0};
-        opacity: ${authAction ? 1 : 0};
+        padding: ${openAuthAction ? '6px 0' : 0};
+        opacity: ${openAuthAction ? 1 : 0};
         overflow: hidden;
-        transition: all 0.5s, opacity  ${authAction ? '0.5s 0s' : '0.25s 0.25s'};
+        transition: all 0.5s, opacity  ${openAuthAction ? '0.5s 0s' : '0.25s 0.25s'};
 
-        a, button{
+        a{
+            color: #0F1A12;
             margin: 6px 0;
         }
-
+        
         button{
+            margin: 6px 0;
             padding: 8px 10px !important;
-            transition: 0.5s ${authAction ? '0s' : '.5s'};
+            transition: 0.5s ${openAuthAction ? '0s' : '.5s'};
             width: 76%;
-            transform: scale(${authAction ? 1 : 1.1});
+            transform: scale(${openAuthAction ? 1 : 1.1});
             font-size: 20px;
         }
     }
 
     .user-action{
-        padding: 0 18px;
+        padding: 0;
         height: 100%;
+        min-width: 160px;
 
         p{
             font-size: 16px;
@@ -132,8 +150,10 @@ const style = ({dropper, authAction}) => css` //Nav tag core style is in globals
         }
         
         img{
-            height: 70%;
+            height: 66%;
             margin-right: 12px;
+            margin-left: 12px;
+            border-radius: 50%;
         }
     }
 
@@ -143,15 +163,15 @@ const style = ({dropper, authAction}) => css` //Nav tag core style is in globals
         width: 100%;
         max-height: 100vh;
         top: 100%;
-        overflow: hidden;
         padding: 24px 0;
         background: white;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0 2px 2px rgba(0,0,0,0.1);  
-
+        z-index: 100;
         transition: 0.5s;
-        ${dropper ? '' : 'max-height: 0;'}
-        ${dropper ? '' : 'padding: 0;'}
-        ${dropper ? '' : 'opacity: 0;'}
+        ${openDropper ? '' : 'max-height: 0;'}
+        ${openDropper ? '' : 'padding: 0 !important;'}
+        ${openDropper ? '' : 'pointer-events: none;'}
+        ${openDropper ? '' : 'opacity: 0;'}
         
         @media (max-width: 950px) {
             display: flex;

@@ -1,10 +1,10 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
-const MenuButton = ({open, setOpen, breakpoint}) => {
+const MenuButton = ({open, toggleDropper, breakpoint}) => {
 
     return (
-        <div css={style({open, breakpoint})} className="flex-be col" onClick={() => setOpen(!open)}>
+        <div css={style({open, breakpoint})} className="flex-be col" onClick={() => toggleDropper(!open)}>
             <div className="burger"></div>
             <div className="burger"></div>
             <div className="burger"></div>
