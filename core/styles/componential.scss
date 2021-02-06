@@ -68,5 +68,9 @@ button, .btn {
 
     &.red{
         background: #c72121;
+        
+        &:hover{
+            box-shadow: 0 8px 12px -8px #0008, 0 0 0 2px #fffe, 0 0 0 2.8px #c72121;
+        }
     }
 }

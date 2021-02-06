@@ -73,7 +73,6 @@ const AuthProvider = ({children}) => {
             if(user) {
                 user.getIdTokenResult().then(res => {
                     setCurrentUser(user)
-                    console.log(user)
                     setRole({
                         admin: res.claims.admin
                     })

@@ -7,6 +7,7 @@ const HomeLayout = ({style, children}) => {
     const navRef = useRef(null)
 
     useEffect(() => {
+        console.log(navRef.current.firstChild.offsetHeight);
         setNavHeight(navRef.current.firstChild.offsetHeight)
     }, [])
 

@@ -28,17 +28,17 @@ const LoginPopUp = ({open, handleClose}) => {
                             exit={{ opacity: 0, transition: { duration: 0.5 }}} 
                             className="pop-up flex-bc"
                         >
-                            <div className="partition flex-cc">
-                                <img src="/img/illus/login.svg" alt=""/>
+                            <div className="partition-40 flex-cc">
+                                <img className="illus" src="/img/illus/login.svg" alt=""/>
                             </div>
-                            <div className="partition flex-cs col">
+                            <div className="partition-60 flex-cs col">
                                 
                                 {authState !== 'user' ?
                                     <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
                                 :
                                 <p className="instruction">Berhasil Login! <br/> Selamat datang</p>
                                 }
-                                <div className="flex-cc">
+                                <div className="buttons flex-cc">
                                     {authState !== 'user' && <GoogleAuth />}
                                     {authState !== 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
                                     {authState === 'user' && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
@@ -56,45 +56,99 @@ const LoginPopUp = ({open, handleClose}) => {
 const style = css`
     background:  #000c;
     padding-top: 100px;
+    z-index: 99;
 
     > div {
-        width: 90%;
-        max-width: 1000px;
-        min-width: 320px;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @media (min-width: 720px) {
+            width: 90%;
+            max-width: 800px;
+            min-width: 320px;
+        }
+    }
+
+    img.illus{
+        height: 200px;
+        margin-left: 24px;
+
+        @media (max-width: 720px) {
+            margin-left: 0;
+            margin-bottom: 32px;
+        }
     }
     
     .pop-up{
         background: #fff;
-        height: 456px;
+        padding: 54px 0;
         width: 100%;
         border-radius: 12px;
+
+        @media (max-width: 720px) {
+            flex-direction: column;
+            padding-bottom: 32px;
+        }
     }
 
     .partition{
-        width: 50%;
-        height: 100%;
+        &-40{
+            width: 40%;
+
+            @media (max-width: 720px) {
+                width: 100%;
+            }
+        }
+
+        &-60{
+            width: 60%;
+
+            @media (max-width: 720px) {
+                width: 90%;
+                align-items: center;
+            }
+        }
+    }
+
+    .buttons{
+        @media (max-width: 720px) {
+            flex-direction: column;
+        }
     }
 
     .btn{
         font-size: 16px;
         margin-right: 12px;
 
+        @media (max-width: 720px) {
+            margin: 6px 0;
+
+            &.tutup{
+                width: 100%;
+                padding: 12px 0 !important;
+            }
+        }
+        
         &.tutup{
             padding: 12px 18px;
         }
     }
 
     p.instruction{
-        max-width: 440px;
+        max-width: 320px;
         font-family: Poppins;
         font-style: normal;
         font-weight: 800;
-        font-size: 34px;
-        line-height: 51px;
-        padding-bottom: 32px;
+        font-size: 24px;
+        margin-bottom: 32px;
+        
+        @media (max-width: 720px) {
+            width: 90%;
+            text-align: center;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
     }
 `
 

@@ -25,8 +25,8 @@ const Navbar = () => {
 
     return (
     <>  
-        <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper}>
-            <nav css={style({openDropper, openAuthAction})}>
+        <nav css={style({openDropper, openAuthAction})}>
+            <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper && !openAuthAction}>
                 <div className="navbar-main flex-cc">
                     <div className="contain-size-xl flex-bc inner">
                         <Link href={to.home}>
@@ -46,8 +46,8 @@ const Navbar = () => {
                         <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} showLogin={showLogin}/>
                     </div>
                 </div>
-            </nav>
-        </OutsideClickHandler>
+            </OutsideClickHandler>
+        </nav>
         <LoginPopUp open={openLoginPop} handleClose={() => setOpenLoginPop(false)}/>
     </>
     )
@@ -100,6 +100,11 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
     width: 100%;
     height: 64px;
     z-index: 100;
+
+    > div{
+        height: 100%;
+        width: 100%;
+    }
     
     .navbar-main{
         position: relative;
@@ -136,7 +141,7 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
             transition: 0.1s;
 
             &:hover{
-                transform: scale(1.05);
+                transform: scale(1.02);
             }
         }
         
