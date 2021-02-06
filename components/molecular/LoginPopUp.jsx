@@ -89,7 +89,7 @@ const style = css`
         @media (max-width: 720px) {
             flex-direction: column;
             padding-bottom: 32px;
-            min-width: 300px;
+            width: 320px;
         }
     }
 
