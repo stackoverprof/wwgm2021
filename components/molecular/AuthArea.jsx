@@ -13,7 +13,7 @@ const AuthArea = ({className, openAuthAction, setOpenAuthAction, toggleDropper})
     const showLogin = () => {
         setOpenLoginPop(true)
         toggleDropper(false)
-    }
+    }   
 
     return (
     <>

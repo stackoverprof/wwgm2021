@@ -22,16 +22,10 @@ const LoginPopUp = ({open, handleClose}) => {
     return (
         <AnimatePresence exitBeforeEnter>
             {open && (
-                <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1, transition: { duration: 0.25 }}} 
-                    exit={{ opacity: 0, transition: { duration: 0.25 }}} 
-                    css={style} 
-                    className="fixed fullscreen flex-cs"
-                >
+                <div css={style} className="fixed fullscreen flex-cs">
                     <OutsideClickHandler onOutsideClick={handleClose} disabled={!open} display="flex">
                         <motion.div 
-                            initial={{ opacity: 0 , y: -25}} 
+                            initial={{ opacity: 0, y: -25}} 
                             animate={{ opacity: 1, y: 0 , transition: { duration: 0.25, delay: 0.1}}} 
                             exit={{ opacity: 0, transition: { duration: 0.5 }}} 
                             className="pop-up flex-bc"
@@ -55,19 +49,19 @@ const LoginPopUp = ({open, handleClose}) => {
                             </div>
                         </motion.div>
                     </OutsideClickHandler>
-                </motion.div>    
+                </div>    
             )}
         </AnimatePresence>
     )
 }
 
 const style = css`
-    /* margin-top: 64px;
-    background:  #000c; */
     padding-top: 100px;
     z-index: 99;
-
+    pointer-events: none;
+    
     > div {
+        pointer-events: all;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -156,6 +150,9 @@ const style = css`
 
         &.bigger{
             font-size: 20px;
+            @media (min-width: 720px){
+                font-size: 32px;
+            }
         }
         
         @media (max-width: 720px) {

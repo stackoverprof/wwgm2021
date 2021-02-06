@@ -7,10 +7,13 @@ import to from '@core/routepath'
 import MenuButton from '@components/atomic/MenuButton'
 import AuthArea from '@components/molecular/AuthArea'
 import NavbarClean from './NavbarClean'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const Navbar = ({clean}) => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
+
+    const { dimm } = useLayout()
 
     const toggleDropper = (value) => {
         setOpenDropper(value)
@@ -20,7 +23,7 @@ const Navbar = ({clean}) => {
     if (clean) return <NavbarClean />
 
     return (
-        <nav css={style({openDropper})}>
+        <nav css={style({openDropper, dimm})}>
             <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper && !openAuthAction}>
                 <div className="navbar-main flex-cc">
                     <div className="contain-size-xl flex-bc inner">
@@ -78,7 +81,7 @@ const LinkSet = ({openAuthAction, setOpenAuthAction, toggleDropper}) => {
     )
 }
 
-const style = ({openDropper}) => css` //Nav tag core style is in globals.scss
+const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.scss
     width: 100%;
     height: 64px;
     z-index: 100;
@@ -93,7 +96,8 @@ const style = ({openDropper}) => css` //Nav tag core style is in globals.scss
         width: 100%;
         height: 100%;
         z-index: 101;
-        background: rgba(255, 255, 255, ${openDropper ? 1 : 0.85});
+        transition: 0.25s ${dimm ? 0 : '0.5s'};
+        background: rgba(255, 255, 255, ${openDropper || dimm ? 1 : 0.85});
         backdrop-filter: blur(8px);
         box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
     }
@@ -112,7 +116,20 @@ const style = ({openDropper}) => css` //Nav tag core style is in globals.scss
         ${openDropper ? '' : 'max-height: 0;'}
         ${openDropper ? '' : 'padding: 0 !important;'}
         ${openDropper ? '' : 'pointer-events: none;'}
-        ${openDropper ? '' : 'opacity: 0;'}
+        
+        a, button{
+            transition: 0.25s;
+            ${openDropper ? '' : 'opacity: 0;'}
+        }
+
+        .pop-up{
+            opacity: 1;
+            *{
+                opacity: 1;
+            }
+        }
+
+
         
         @media (max-width: 950px) {
             display: flex;
