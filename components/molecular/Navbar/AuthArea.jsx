@@ -99,7 +99,7 @@ const style = ({openAuthAction}) => css`
         transition: all 0.5s, opacity  ${openAuthAction ? '0.5s 0s' : '0.25s 0.25s'};
 
         a{
-            color: #0F1A12;
+            color: var(--army);
             margin: 6px 0;
             transition: 0.1s;
 
@@ -146,7 +146,7 @@ const style = ({openAuthAction}) => css`
             top: 0;
             right: 0;
             pointer-events: none;
-            background: linear-gradient(to right,  #0F1A1200 0%, #0F1A1244 40%, #0F1A12ff 80%);
+            background: linear-gradient(to right,  #0f412500 0%, #0f412544 40%, #0f4125ff 80%);
         }
     }
 

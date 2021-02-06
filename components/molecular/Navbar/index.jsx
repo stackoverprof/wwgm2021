@@ -213,7 +213,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
             
             padding-top: 2px;
 
-            color: #0f4125;
+            color: var(--army);
         }
     }
 
@@ -223,6 +223,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
         font-family: Poppins;
         font-weight: 600;
         font-size: 18px;
+        color: var(--army);
         text-align: center;
         padding: 0 12px;
         cursor: pointer;
@@ -243,7 +244,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
             position: absolute;
             bottom: 0;
             width: 0;
-            background: #0f4125;
+            background: var(--army);
             transition: all 0.25s, opacity 0.1s;
             
         }

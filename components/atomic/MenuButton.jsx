@@ -24,7 +24,7 @@ const style =  ({open, breakpoint}) => css`
     .burger{
         width: 100%;
         height: 20%;
-        background: #151a0f;
+        background: var(--army);
         border-radius: 4px;
         transition: 0.25s;
 

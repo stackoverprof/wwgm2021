@@ -47,7 +47,7 @@ const style = () => css` //Nav tag core style is in globals.scss
             
             padding-top: 2px;
 
-            color: #0f4125;
+            color: var(--army);
         }
     }
 `
