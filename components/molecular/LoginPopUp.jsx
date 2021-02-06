@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -7,9 +7,17 @@ import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 
 import GoogleAuth from '@components/atomic/GoogleAuth'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const LoginPopUp = ({open, handleClose}) => {
     const { authState } = useAuth()
+
+    const { setDimm } = useLayout()
+
+    useEffect(() => {
+        console.log('effected')
+        setDimm(open)
+    }, [open])
 
     return (
         <AnimatePresence exitBeforeEnter>
@@ -56,7 +64,7 @@ const LoginPopUp = ({open, handleClose}) => {
 const style = css`
     /* margin-top: 64px;
     background:  #000c; */
-    padding-top: 50px;
+    padding-top: 100px;
     z-index: 99;
 
     > div {

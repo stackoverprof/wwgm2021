@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 const LayoutContext = React.createContext()
 
 const LayoutProvider = ({children}) => {
-    const [dimm, setDimm] = useState(true)
+    const [dimm, setDimm] = useState(false)
 
     return (
         <LayoutContext.Provider value={{
