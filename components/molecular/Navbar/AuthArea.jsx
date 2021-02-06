@@ -5,6 +5,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 
 import LoginPopUp from '@components/molecular/LoginPopUp'
+import RunningText from '@components/atomic/RunningText'
 
 const AuthArea = ({
     openAuthAction,
@@ -30,7 +31,7 @@ const AuthArea = ({
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
                         <img src={currentUser.photoURL} alt=""/>
-                        <p>Angkasa</p>
+                        <RunningText>{currentUser.displayName}</RunningText>
                     </button>
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
@@ -89,11 +90,12 @@ const style = ({openAuthAction}) => css`
     button.user-action{
         padding: 0 !important;
         height: 100%;
-        min-width: 160px;
+        width: 168px;
 
         p{
             font-size: 16px;
             font-weight: 600;
+            margin-right: 12px; 
         }
         
         img{
