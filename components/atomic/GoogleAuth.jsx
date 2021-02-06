@@ -6,7 +6,7 @@ const GoogleButton = () => {
 
     const handleGoogleAuth = () => {
         setErrorCode('')
-        authMethods.handleGoogle()
+        authMethods.google()
     }
 
     return (

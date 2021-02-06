@@ -191,6 +191,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
     }
     
     .wider{
+        position: relative;
         height: 100%;
         @media (max-width: 950px) {
             display: none;

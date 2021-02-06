@@ -17,7 +17,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         setErrorCode('')
-        authMethods.handleSignin(email, password)
+        authMethods.emailSignin(email, password)
             .catch(() => setPassword(''))
     }
 

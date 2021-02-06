@@ -32,7 +32,7 @@ const Dashboard = () => {
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href={to.home}><button>BACK HOME</button></Link>
                         <button onClick={CheckRole}>{data === null ? <Spinner /> : 'api user'}</button>
-                        <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
+                        <button onClick={authMethods.signout} className="red">LOGOUT</button>
                     </div>
                     <p>{data}</p>
                 </MainLayout>

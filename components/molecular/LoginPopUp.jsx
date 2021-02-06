@@ -1,55 +1,57 @@
 import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 import to from '@core/routepath'
 
 import GoogleAuth from '@components/atomic/GoogleAuth'
-import { useLayout } from '@core/contexts/LayoutContext'
 
-const LoginPopUp = ({open, handleClose}) => {
-    const { authState } = useAuth()
+const LoginPopUp = ({handleClose}) => {
+    const { authState, setErrorCode } = useAuth()
 
     const { setDimm } = useLayout()
 
-    useEffect(() => setDimm(open), [open])
+    useEffect(() => {
+        setDimm(true)
+        return () => {
+            setDimm(false)
+            setErrorCode('')
+        }
+    }, [])
 
     return (
-        <AnimatePresence exitBeforeEnter>
-            {open && (
-                <div css={style} className="fixed fullscreen flex-cs">
-                    <OutsideClickHandler onOutsideClick={handleClose} disabled={!open} display="flex">
-                        <motion.div 
-                            initial={{ opacity: 0, y: -25}} 
-                            animate={{ opacity: 1, y: 0 , transition: { duration: 0.25, delay: 0.1}}} 
-                            exit={{ opacity: 0, transition: { duration: 0.5 }}} 
-                            className="pop-up flex-bc"
-                        >
-                            <div className="partition-40 flex-cc">
-                                {authState !== 'user' && <img className="illus" src="/img/illus/login.svg" alt=""/>}
-                                {authState === 'user' && <img className="illus" src="/img/illus/login-success.svg" alt=""/>}
-                            </div>
-                            <div className="partition-60 flex-cs col">
-                                
-                                {authState !== 'user' ?
-                                    <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
-                                :
-                                    <p className="instruction bigger">Berhasil Login! <br/> Selamat datang</p>
-                                }
-                                <div className="buttons flex-cc">
-                                    {authState !== 'user' && <GoogleAuth />}
-                                    {authState !== 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
-                                    {authState === 'user' && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
-                                    {authState === 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
-                                </div>
-                            </div>
-                        </motion.div>
-                    </OutsideClickHandler>
-                </div>    
-            )}
-        </AnimatePresence>
+        <div css={style} className="fixed fullscreen flex-cs">
+            <OutsideClickHandler onOutsideClick={handleClose} disabled={!open} display="flex">
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.95, y: -10}} 
+                    animate={{ opacity: 1, scale: 1, y: 0 , transition: { duration: 0.25, delay: 0.1}}} 
+                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
+                    className="pop-up flex-bc"
+                >
+                    <div className="partition-40 flex-cc">
+                        {authState !== 'user' && <img className="illus" src="/img/illus/login.svg" alt=""/>}
+                        {authState === 'user' && <img className="illus" src="/img/illus/login-success.svg" alt=""/>}
+                    </div>
+                    <div className="partition-60 flex-cs col">
+                        
+                        {authState !== 'user' ?
+                            <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
+                        :
+                            <p className="instruction bigger">Berhasil Login! <br/> Selamat datang</p>
+                        }
+                        <div className="buttons flex-cc">
+                            {authState !== 'user' && <GoogleAuth />}
+                            {authState !== 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
+                            {authState === 'user' && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
+                            {authState === 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
+                        </div>
+                    </div>
+                </motion.div>
+            </OutsideClickHandler>
+        </div>
     )
 }
 

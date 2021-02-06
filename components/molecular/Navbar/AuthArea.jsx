@@ -2,11 +2,14 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 import to from '@core/routepath'
+import { AnimatePresence } from 'framer-motion'
 
 import LoginPopUp from '@components/molecular/LoginPopUp'
 import LogoutPopUp from '@components/molecular/LogoutPopUp'
 import RunningText from '@components/atomic/RunningText'
+import AlertHandler from '@components/atomic/AlertHandler'
 
 const AuthArea = ({
     openAuthAction,
@@ -19,24 +22,35 @@ const AuthArea = ({
     setOpenAuthAction
 }) => {
 
-    const { currentUser, role, authState } = useAuth()
+    const { currentUser, role, authState, errorCode, setErrorCode } = useAuth()
+    const { setDimm } = useLayout()
     
-    const showLogin = () => {
-        if (openLoginPop) return
-        setOpenLoginPop(true)
-        toggleDropper(false)
+    const showLogin = (show) => {
+        if (show && !openLoginPop) {
+            setOpenLoginPop(true)
+            toggleDropper(false)
+        }
+        else if (!show) {
+            setOpenLoginPop(false)
+            setDimm(false)
+        }
     }   
     
-    const showLogout = () => {
-        if (openLogoutPop) return
-        setOpenLogoutPop(true)
-        toggleDropper(false)
+    const showLogout = (show) => {
+        if (show && !openLogoutPop) {
+            setOpenLogoutPop(true)
+            toggleDropper(false)
+        }
+        else if (!show) {
+            setOpenLogoutPop(false)
+            setDimm(false)
+        }
     }   
 
     return (
     <>
         <div css={style({openAuthAction})} className={className}>
-            {authState !== 'user' && <button onClick={showLogin}>LOGIN</button>}
+            {authState !== 'user' && <button onClick={() => showLogin(true)} disabled={openLoginPop}>LOGIN</button>}
             {authState === 'user' && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
@@ -47,13 +61,18 @@ const AuthArea = ({
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
                         {role.admin && <Link href={to.dashboard}>ADMIN AREA</Link>}
-                        <button onClick={showLogout} className="btn red">LOG OUT</button>
+                        <button onClick={() => showLogout(true)} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
                     </div>
                 </div>
             )}
         </div>
-        <LoginPopUp open={openLoginPop} handleClose={() => setOpenLoginPop(false)}/>
-        <LogoutPopUp open={openLogoutPop} handleClose={() => setOpenLogoutPop(false)}/>
+        
+        <AnimatePresence exitBeforeEnter>
+            {openLoginPop && <LoginPopUp handleClose={() => showLogin(false)}/>}
+            {openLogoutPop && <LogoutPopUp handleClose={() => showLogout(false)}/>}
+        </AnimatePresence>
+
+        {errorCode && <AlertHandler message={errorCode} closeHandler={() => setErrorCode('')} color="red" />}
     </>
     )
 }

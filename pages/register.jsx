@@ -21,7 +21,7 @@ const Register = () => {
         setErrorCode('')
 
         if(password === retypePassword){
-            authMethods.handleSignup(email, password, displayName)
+            authMethods.emailSignup(email, password, displayName)
                 .catch(() => setPassword(''))
         }
         else setErrorCode('password did not match')

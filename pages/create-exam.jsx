@@ -81,7 +81,7 @@ const Dashboard = () => {
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href={to.home}><button>BACK HOME</button></Link>
                         <button onClick={CheckRole}>{data === null ? <Spinner /> : 'create exam'}</button>
-                        <button onClick={authMethods.handleSignout} className="red">LOGOUT</button>
+                        <button onClick={authMethods.signout} className="red">LOGOUT</button>
                     </div>
                     <p>Admin Status : {role.admin ? 'admin' : 'false'}</p>
                     <p>{data}</p>

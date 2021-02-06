@@ -35,7 +35,7 @@ const Dashboard = () => {
                     <div className="control">
                         <img src={currentUser.photoURL} alt=""/>
                         <Link href={to.home}><button className="btn">Back Home</button></Link>
-                        <button className="btn red" onClick={authMethods.handleSignout}>LOGOUT</button>
+                        <button className="btn red" onClick={authMethods.signout}>LOGOUT</button>
                     </div>
                     <p>Access Try Out : {role.enrolledExams && role.enrolledExams.length > 0? role.enrolledExams.join(", ") : 'no-access'}</p>
                     <p>Admin Status : {role.admin ? 'admin' : 'false'}</p>

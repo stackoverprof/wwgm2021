@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
     const [userData, setUserData] = useState({})
 
     const authMethods = {
-        handleSignup : (email, password, displayName) => {
+        emailSignup : (email, password, displayName) => {
             return AUTH.createUserWithEmailAndPassword(email, password)
                 .then(async res => {
                     const avatar = `https://ui-avatars.com/api/?name=${displayName}&background=random&bold=true`
@@ -32,13 +32,13 @@ const AuthProvider = ({children}) => {
                 .catch(err => setErrorCode(err.code))
         },
 
-        handleSignin : (email, password) => {
+        emailSignin : (email, password) => {
             return AUTH.signInWithEmailAndPassword(email, password)
                 .then(res => setCurrentUser(res.user))  
                 .catch(err => setErrorCode(err.code))
         },
 
-        handleGoogle : () => {
+        google : () => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
@@ -56,7 +56,7 @@ const AuthProvider = ({children}) => {
             .catch(err => setErrorCode(err.code))
         },
 
-        handleSignout : () => {
+        signout : () => {
             AUTH.signOut()
         }
     }
