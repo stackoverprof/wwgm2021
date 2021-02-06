@@ -1,0 +1,90 @@
+
+.h-full{
+    height: 100%;
+}
+  
+.contain-size{
+    width: 90%;
+    max-width: 1000px;
+    min-width: 320px;
+    
+    &-xl {
+        @extend .contain-size;
+        max-width: 1200px;
+    }
+    &-l {
+        @extend .contain-size;
+        max-width: 1000px;
+    }
+    &-m {
+        @extend .contain-size;
+        max-width: 800px;
+    }
+    &-s {
+        @extend .contain-size;
+        max-width: 600px;
+    }
+    &-xs {
+        @extend .contain-size;
+        max-width: 400px;
+    }
+}
+  
+.flex{
+    display: flex;
+    
+    &-cc {
+        @extend .flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &-cs {
+        @extend .flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    &-sc {
+        @extend .flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    &-ec {
+        @extend .flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    &-bc {
+        @extend .flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-be {
+        @extend .flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    &-ec {
+        @extend .flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+  
+    &.col{
+        flex-direction: column;
+    }
+}
+  
+.fixed{
+    position: fixed;
+    
+    &.fullscreen{
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+}
+  
+.no-pointer{
+    pointer-events: none;
+}

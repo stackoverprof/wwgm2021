@@ -31,7 +31,8 @@ const AuthArea = ({
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
                         <img src={currentUser.photoURL} alt=""/>
-                        <RunningText>{currentUser.displayName}</RunningText>
+                        <RunningText offset={20}>{currentUser.displayName}</RunningText>
+                        <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
@@ -88,14 +89,16 @@ const style = ({openAuthAction}) => css`
     }
 
     button.user-action{
+        position: relative;
         padding: 0 !important;
         height: 100%;
-        width: 168px;
+        width: 180px;
+        overflow: hidden;
 
         p{
             font-size: 16px;
             font-weight: 600;
-            margin-right: 12px; 
+            height: 100%;
         }
         
         img{
@@ -104,6 +107,16 @@ const style = ({openAuthAction}) => css`
             margin-right: 12px;
             margin-left: 12px;
             border-radius: 50%;
+        }
+
+        .cover{
+            position: absolute;
+            height: 100%;
+            width: 20%;
+            top: 0;
+            right: 0;
+            pointer-events: none;
+            background: linear-gradient(to right,  #0F1A1200 0%, #0F1A1244 40%, #0F1A12ff 80%);
         }
     }
 
