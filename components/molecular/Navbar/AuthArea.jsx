@@ -5,21 +5,31 @@ import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 
 import LoginPopUp from '@components/molecular/LoginPopUp'
+import LogoutPopUp from '@components/molecular/LogoutPopUp'
 import RunningText from '@components/atomic/RunningText'
 
 const AuthArea = ({
     openAuthAction,
     openLoginPop,
+    openLogoutPop,
     className,
     toggleDropper,
     setOpenLoginPop,
+    setOpenLogoutPop,
     setOpenAuthAction
 }) => {
 
-    const { currentUser, role, authMethods, authState } = useAuth()
+    const { currentUser, role, authState } = useAuth()
     
     const showLogin = () => {
+        if (openLoginPop) return
         setOpenLoginPop(true)
+        toggleDropper(false)
+    }   
+    
+    const showLogout = () => {
+        if (openLogoutPop) return
+        setOpenLogoutPop(true)
         toggleDropper(false)
     }   
 
@@ -37,12 +47,13 @@ const AuthArea = ({
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
                         {role.admin && <Link href={to.dashboard}>ADMIN AREA</Link>}
-                        <button onClick={authMethods.handleSignout} className="btn red">LOG OUT</button>
+                        <button onClick={showLogout} className="btn red">LOG OUT</button>
                     </div>
                 </div>
             )}
         </div>
         <LoginPopUp open={openLoginPop} handleClose={() => setOpenLoginPop(false)}/>
+        <LogoutPopUp open={openLogoutPop} handleClose={() => setOpenLogoutPop(false)}/>
     </>
     )
 }

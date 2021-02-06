@@ -14,6 +14,7 @@ const Navbar = ({clean}) => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
     const [openLoginPop, setOpenLoginPop] = useState(false)
+    const [openLogoutPop, setOpenLogoutPop] = useState(false)
 
     const { dimm } = useLayout()
     const screen = useResize().width
@@ -40,7 +41,9 @@ const Navbar = ({clean}) => {
                                 <div className="wider links flex-cc">
                                     <LinkSet
                                         openLoginPop={openLoginPop}
+                                        openLogoutPop={openLogoutPop}
                                         setOpenLoginPop={setOpenLoginPop}
+                                        setOpenLogoutPop={setOpenLogoutPop}
                                         openAuthAction={openAuthAction}
                                         setOpenAuthAction={setOpenAuthAction}
                                         toggleDropper={toggleDropper}
@@ -55,7 +58,9 @@ const Navbar = ({clean}) => {
                         <div className="dropper-inner contain-size-m flex-cc">
                             <LinkSet
                                 openLoginPop={openLoginPop}
+                                openLogoutPop={openLogoutPop}
                                 setOpenLoginPop={setOpenLoginPop}
+                                setOpenLogoutPop={setOpenLogoutPop}
                                 openAuthAction={openAuthAction}
                                 setOpenAuthAction={setOpenAuthAction}
                                 toggleDropper={toggleDropper}
@@ -71,8 +76,10 @@ const Navbar = ({clean}) => {
 const LinkSet = ({
     openAuthAction,
     openLoginPop,
+    openLogoutPop,
     toggleDropper,
     setOpenLoginPop,
+    setOpenLogoutPop,
     setOpenAuthAction
 }) => {
     
@@ -99,10 +106,12 @@ const LinkSet = ({
         <AuthArea 
             className="link-item login flex-cc" 
             openAuthAction={openAuthAction}
-            openLoginPop={openLoginPop}
             toggleDropper={toggleDropper}
-            setOpenLoginPop={setOpenLoginPop}
+            openLoginPop={openLoginPop}
+            openLogoutPop={openLogoutPop}
             setOpenAuthAction={setOpenAuthAction}
+            setOpenLoginPop={setOpenLoginPop}
+            setOpenLogoutPop={setOpenLogoutPop}
         />
     </>
     )
