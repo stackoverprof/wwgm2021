@@ -54,8 +54,9 @@ const LoginPopUp = ({open, handleClose}) => {
 }
 
 const style = css`
-    background:  #000c;
-    padding-top: 100px;
+    /* margin-top: 64px;
+    background:  #000c; */
+    padding-top: 50px;
     z-index: 99;
 
     > div {

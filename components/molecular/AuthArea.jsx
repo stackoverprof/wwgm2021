@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 
-const AuthArea = ({className, openAuthAction, setOpenAuthAction, showLogin}) => {
+import LoginPopUp from '@components/molecular/LoginPopUp'
+
+const AuthArea = ({className, openAuthAction, setOpenAuthAction, toggleDropper}) => {
+    const [openLoginPop, setOpenLoginPop] = useState(false)
     const { currentUser, role, authMethods, authState } = useAuth()
+    
+    const showLogin = () => {
+        setOpenLoginPop(true)
+        toggleDropper(false)
+    }
 
     return (
+    <>
         <div css={style({openAuthAction})} className={className}>
             {authState !== 'user' && <button onClick={showLogin}>LOGIN</button>}
             {authState === 'user' && (
@@ -24,6 +33,8 @@ const AuthArea = ({className, openAuthAction, setOpenAuthAction, showLogin}) => 
                 </div>
             )}
         </div>
+        <LoginPopUp open={openLoginPop} handleClose={() => setOpenLoginPop(false)}/>
+    </>
     )
 }
 

@@ -47,7 +47,7 @@ const style = css`
     align-items: center;
     background-color: white;
     transition: 1s;
-    z-index: 101;
+    z-index: 200;
     padding-bottom: 10%;
 
     img{

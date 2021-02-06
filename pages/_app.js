@@ -3,6 +3,7 @@ import '@core/styles/globals.scss'
 import Head from 'next/head'
 import ProgressBar from 'nextjs-progressbar'
 import AuthProvider from '@core/contexts/AuthContext'
+import LayoutProvider from '@core/contexts/LayoutContext'
 import LoadScreen from '@components/molecular/LoadScreen'
 
 const App = ({ Component, pageProps }) => {
@@ -16,7 +17,9 @@ const App = ({ Component, pageProps }) => {
     <LoadScreen />
     <ProgressBar color="black" startPosition={0.3} stopDelayMs={200} height="3" options={{showSpinner: false}}/>
     <AuthProvider>
-      <Component {...pageProps} />
+      <LayoutProvider>
+        <Component {...pageProps} />
+      </LayoutProvider>
     </AuthProvider>
   </>
   )

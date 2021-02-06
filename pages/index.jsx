@@ -1,18 +1,16 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import useResize from 'use-resizing'
 import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 
 import HomeLayout from '@components/layouts/HomeLayout'
     
 const Home = () => {
-    const screen = useResize().width
     const { authState } = useAuth()
 
     return (
-        <HomeLayout style={style({screen})}>
+        <HomeLayout style={style}>
             <h1><strong>WWGM2021</strong></h1>
             <h2>Event Try Out UTBK Nasional by areksgm</h2>
             <div className="links">
@@ -27,7 +25,7 @@ const Home = () => {
     )
 }
 
-const style = ({screen}) => css`
+const style = css`
     display: flex;
     justify-content: center;
     align-items: center;

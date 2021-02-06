@@ -5,12 +5,11 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import to from '@core/routepath'
 
 import MenuButton from '@components/atomic/MenuButton'
-import LoginPopUp from '@components/molecular/LoginPopUp'
 import AuthArea from '@components/molecular/AuthArea'
+import NavbarClean from './NavbarClean'
 
-const Navbar = () => {
+const Navbar = ({clean}) => {
     const [openDropper, setOpenDropper] = useState(false)
-    const [openLoginPop, setOpenLoginPop] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
 
     const toggleDropper = (value) => {
@@ -18,13 +17,9 @@ const Navbar = () => {
         setOpenAuthAction(false)
     }
 
-    const showLogin = () => {
-        setOpenLoginPop(true)
-        toggleDropper(false)
-    }
+    if (clean) return <NavbarClean />
 
     return (
-    <>  
         <nav css={style({openDropper})}>
             <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper && !openAuthAction}>
                 <div className="navbar-main flex-cc">
@@ -36,24 +31,22 @@ const Navbar = () => {
                             </div>
                         </Link>
                         <div className="wider links flex-cc">
-                            <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} showLogin={showLogin}/>
+                            <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} toggleDropper={toggleDropper}/>
                         </div>
                         <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
                     </div>
                 </div>
                 <div className="dropper links bg-blur flex-cc">
                     <div className="dropper-inner contain-size-m flex-cc">
-                        <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} showLogin={showLogin}/>
+                        <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} toggleDropper={toggleDropper}/>
                     </div>
                 </div>
             </OutsideClickHandler>
         </nav>
-        <LoginPopUp open={openLoginPop} handleClose={() => setOpenLoginPop(false)}/>
-    </>
     )
 }
 
-const LinkSet = ({openAuthAction, setOpenAuthAction, showLogin}) => {
+const LinkSet = ({openAuthAction, setOpenAuthAction, toggleDropper}) => {
     
     return (
     <>
@@ -79,7 +72,7 @@ const LinkSet = ({openAuthAction, setOpenAuthAction, showLogin}) => {
             className="link-item login flex-cc" 
             openAuthAction={openAuthAction}
             setOpenAuthAction={setOpenAuthAction}
-            showLogin={showLogin}
+            toggleDropper={toggleDropper}
         />
     </>
     )
@@ -186,7 +179,6 @@ const style = ({openDropper}) => css` //Nav tag core style is in globals.scss
 
             button{
                 padding: 8px 24px;
-                z-index: 101;
             }
         }
         
