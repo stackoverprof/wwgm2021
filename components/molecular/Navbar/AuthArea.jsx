@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -6,8 +6,15 @@ import to from '@core/routepath'
 
 import LoginPopUp from '@components/molecular/LoginPopUp'
 
-const AuthArea = ({className, openAuthAction, setOpenAuthAction, toggleDropper}) => {
-    const [openLoginPop, setOpenLoginPop] = useState(false)
+const AuthArea = ({
+    openAuthAction,
+    openLoginPop,
+    className,
+    toggleDropper,
+    setOpenLoginPop,
+    setOpenAuthAction
+}) => {
+
     const { currentUser, role, authMethods, authState } = useAuth()
     
     const showLogin = () => {

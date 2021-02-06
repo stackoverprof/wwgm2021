@@ -4,14 +4,15 @@ import Link from 'next/link'
 import OutsideClickHandler from 'react-outside-click-handler'
 import to from '@core/routepath'
 
-import MenuButton from '@components/atomic/MenuButton'
-import AuthArea from '@components/molecular/AuthArea'
-import NavbarClean from './NavbarClean'
 import { useLayout } from '@core/contexts/LayoutContext'
+import MenuButton from '@components/atomic/MenuButton'
+import NavbarClean from './NavbarClean'
+import AuthArea from './AuthArea'
 
 const Navbar = ({clean}) => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
+    const [openLoginPop, setOpenLoginPop] = useState(false)
 
     const { dimm } = useLayout()
 
@@ -34,14 +35,26 @@ const Navbar = ({clean}) => {
                             </div>
                         </Link>
                         <div className="wider links flex-cc">
-                            <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} toggleDropper={toggleDropper}/>
+                            <LinkSet
+                                openLoginPop={openLoginPop}
+                                setOpenLoginPop={setOpenLoginPop}
+                                openAuthAction={openAuthAction}
+                                setOpenAuthAction={setOpenAuthAction}
+                                toggleDropper={toggleDropper}
+                            />
                         </div>
                         <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
                     </div>
                 </div>
                 <div className="dropper links bg-blur flex-cc">
                     <div className="dropper-inner contain-size-m flex-cc">
-                        <LinkSet openAuthAction={openAuthAction} setOpenAuthAction={setOpenAuthAction} toggleDropper={toggleDropper}/>
+                        <LinkSet
+                            openLoginPop={openLoginPop}
+                            setOpenLoginPop={setOpenLoginPop}
+                            openAuthAction={openAuthAction}
+                            setOpenAuthAction={setOpenAuthAction}
+                            toggleDropper={toggleDropper}
+                        />
                     </div>
                 </div>
             </OutsideClickHandler>
@@ -49,7 +62,13 @@ const Navbar = ({clean}) => {
     )
 }
 
-const LinkSet = ({openAuthAction, setOpenAuthAction, toggleDropper}) => {
+const LinkSet = ({
+    openAuthAction,
+    openLoginPop,
+    toggleDropper,
+    setOpenLoginPop,
+    setOpenAuthAction
+}) => {
     
     return (
     <>
@@ -74,8 +93,10 @@ const LinkSet = ({openAuthAction, setOpenAuthAction, toggleDropper}) => {
         <AuthArea 
             className="link-item login flex-cc" 
             openAuthAction={openAuthAction}
-            setOpenAuthAction={setOpenAuthAction}
+            openLoginPop={openLoginPop}
             toggleDropper={toggleDropper}
+            setOpenLoginPop={setOpenLoginPop}
+            setOpenAuthAction={setOpenAuthAction}
         />
     </>
     )
@@ -124,6 +145,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
 
         .pop-up{
             opacity: 1;
+            
             *{
                 opacity: 1;
             }

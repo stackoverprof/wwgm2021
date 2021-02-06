@@ -14,10 +14,7 @@ const LoginPopUp = ({open, handleClose}) => {
 
     const { setDimm } = useLayout()
 
-    useEffect(() => {
-        console.log('effected')
-        setDimm(open)
-    }, [open])
+    useEffect(() => setDimm(open), [open])
 
     return (
         <AnimatePresence exitBeforeEnter>
