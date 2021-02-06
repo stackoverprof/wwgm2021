@@ -36,7 +36,7 @@ const LoginPopUp = ({open, handleClose}) => {
                                 {authState !== 'user' ?
                                     <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
                                 :
-                                <p className="instruction">Berhasil Login! <br/> Selamat datang</p>
+                                    <p className="instruction bigger">Berhasil Login! <br/> Selamat datang</p>
                                 }
                                 <div className="buttons flex-cc">
                                     {authState !== 'user' && <GoogleAuth />}
@@ -144,6 +144,10 @@ const style = css`
         font-weight: 800;
         font-size: 24px;
         margin-bottom: 32px;
+
+        &.bigger{
+            font-size: 20px;
+        }
         
         @media (max-width: 720px) {
             width: 90%;

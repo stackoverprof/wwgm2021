@@ -80,10 +80,10 @@ const LinkSet = ({openAuthAction, setOpenAuthAction, showLogin}) => {
         {authState !== 'user' && <button onClick={showLogin}>LOGIN</button>}
         {authState === 'user' && (
             <div className="auth-area">
-                    <div onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
+                    <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
                         <img src={currentUser.photoURL} alt=""/>
                         <p>Angkasa</p>
-                    </div>
+                    </button>
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
                         {role.admin && <Link href={to.dashboard}>ADMIN AREA</Link>}
@@ -155,8 +155,8 @@ const style = ({openDropper, openAuthAction}) => css` //Nav tag core style is in
         }
     }
 
-    .user-action{
-        padding: 0;
+    button.user-action{
+        padding: 0 !important;
         height: 100%;
         min-width: 160px;
 
