@@ -9,9 +9,11 @@ import MainLayout from '@components/layouts/MainLayout'
 import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 import LoginPopUp from '@components/molecular/LoginPopUp'
+import axios from 'axios'
     
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
+    const [displayedExams, setDisplayedExams] = useState([])
     const { query : { action }} = useRouter()
     const { setDimm } = useLayout()
 
@@ -27,6 +29,11 @@ const Home = () => {
 
     useEffect(() => {
         console.log(action)
+    }, [])
+    
+    useEffect(() => {
+        axios.post('/api/public/exams/get-displayed-exams')
+            .then(res => setDisplayedExams(res.data.body))
     }, [])
 
     return (
@@ -50,8 +57,14 @@ const Home = () => {
                         <Advantages />
                     </div>
                     <div className="right flex-bc">
-                        <CardDisplay examId={'SAINTEK-a10bd8a1-0c56-4a7f-a76e-3c1c4d65995d'} />
-                        <CardDisplay examId={'SAINTEK-a10bd8a1-0c56-4a7f-a76e-3c1c4d65995d'} />
+                        {displayedExams.map((examId, i) => (
+                            <CardDisplay examId={examId} key={i}/>
+                        ))}
+                        {displayedExams.length < 2 && (
+                            <div className="display-fallback flex-cc">
+                                <p>Loading Error, coba refresh halaman</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -88,7 +101,6 @@ const style = {
         }
         
         .right {
-            
             @media (max-width: 1000px) {
                 flex-direction: column;
                 justify-content: center;
@@ -116,6 +128,24 @@ const style = {
         hr{
             width: 300px;
             border: 1px solid #0003;
+        }
+
+        .display-fallback{
+            border: 1px solid #0004;
+            height: 300px;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            width: 400px;
+            
+            @media (max-width: 1000px) {
+                margin-top: 0;
+                width: 100%;
+            }
+
+            p{
+                color: #0008;
+            }
         }
     `,
 

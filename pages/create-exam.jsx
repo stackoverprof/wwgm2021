@@ -18,12 +18,12 @@ const Dashboard = () => {
         
         axios.post('/api/private/exams/new', {
                 userToken: await currentUser.getIdToken(),
-                title: 'SOSHUM',
+                title: 'TRY OUT NASIONAL SOSHUM 2021',
                 cluster: 'SOSHUM',
                 status: 'limited',
                 availability: {
-                    start: 1611802800000,
-                    end: 1611820800000
+                    start: 1614999600000,
+                    end: 1615017600000
                 },
                 sessions: [
                     {
@@ -49,22 +49,27 @@ const Dashboard = () => {
                     {
                         name: 'Matematika',
                         size: 20,
-                        duration: 22.5
+                        duration: 18
                     },
                     {
-                        name: 'Fisika',
+                        name: 'Sejarah',
                         size: 20,
-                        duration: 22.5
+                        duration: 18
                     },
                     {
-                        name: 'Kimia',
+                        name: 'Geografi',
                         size: 20,
-                        duration: 22.5
+                        duration: 18
                     },
                     {
-                        name: 'Biologi',
+                        name: 'Sosiologi',
                         size: 20,
-                        duration: 22.5
+                        duration: 18
+                    },
+                    {
+                        name: 'Ekonomi',
+                        size: 20,
+                        duration: 18
                     }
                 ]
             })

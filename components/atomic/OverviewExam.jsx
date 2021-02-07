@@ -4,15 +4,15 @@ import { FaPencilAlt, FaRegCalendarAlt } from 'react-icons/fa'
 import { MdTimelapse, MdClass } from 'react-icons/md'
 import { BiTimeFive } from 'react-icons/bi'
 
-const Advantages = () => {
+const Advantages = ({size, duration, sessionsLength, fullDate, time}) => {
 
     return (
         <ul css={style}>
-            <li className="flex-sc"><FaPencilAlt />160 Soal</li>
-            <li className="flex-sc"><MdTimelapse />210 Menit</li>
-            <li className="flex-sc"><MdClass />8 Sesi</li>
-            <li className="flex-sc"><FaRegCalendarAlt />6 Maret 2021</li>
-            <li className="flex-sc"><BiTimeFive />10:00 WIB</li>
+            <li className="flex-sc"><FaPencilAlt />{size} Soal</li>
+            <li className="flex-sc"><MdTimelapse />{duration} Menit</li>
+            <li className="flex-sc"><MdClass />{sessionsLength} Sesi</li>
+            <li className="flex-sc"><FaRegCalendarAlt />{fullDate}</li>
+            <li className="flex-sc"><BiTimeFive />{time} WIB</li>
         </ul>
     )
 }

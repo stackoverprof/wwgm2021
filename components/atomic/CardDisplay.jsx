@@ -1,22 +1,77 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import OverviewExam from '@components/atomic/OverviewExam'
 import { FaRegCalendarAlt } from 'react-icons/fa'
+import axios from 'axios'
 
-const CardDisplay = ({cardDisplay}) => {
+const CardDisplay = ({examId}) => {
+    const [examData, setExamData] = useState(null)
+    
+    useEffect(() => {
+        axios.post('/api/public/exams/get-exam-data', {
+            examId: examId
+        }).then(res => setExamData(res.data.body))
+    }, [])
 
     return (
         <div css={style}>
-            <div className="header flex-cc col">
-                <p className="title">SAINTEK</p>
-                <p className="date flex-cc"><FaRegCalendarAlt />6 Maret</p>
-            </div>
-            <div className="body">
-                <OverviewExam />
-                <button className="mx-auto bordered">IKUTI TRYOUT</button>
-            </div>
+            {examData && 
+            <>     
+                <div className="header flex-cc col">
+                    <p className="title">{examData.cluster}</p>
+                    <p className="date flex-cc"><FaRegCalendarAlt />{mainDate(examData.availability.start)}</p>
+                </div>
+                <div className="body">
+                    <OverviewExam
+                        size={getSize(examData.sessions)}
+                        duration={getDuration(examData.sessions)}
+                        sessionsLength={examData.sessions.length}
+                        fullDate={fullDate(examData.availability.start)}
+                        time={time(examData.availability.start)}
+                    />
+                    <button className="mx-auto bordered">IKUTI TRYOUT</button>
+                </div>
+            </>
+            }
         </div>
     )
+}
+
+const mainDate = (UNIX_timestamp) => {
+    const a = new Date(UNIX_timestamp._seconds * 1000)
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
+    const month = months[a.getMonth()]
+    const date = a.getDate()
+    return `${date} ${month}`
+}
+
+const fullDate = (UNIX_timestamp) => {
+    const a = new Date(UNIX_timestamp._seconds * 1000)
+    const year = a.getFullYear()
+    return `${mainDate(UNIX_timestamp)} ${year}`
+}
+
+const time = (UNIX_timestamp) => {
+    const a = new Date(UNIX_timestamp._seconds * 1000)
+    const hour = a.getHours()
+    const min = a.getMinutes()
+    return `${hour}:${("0" + min).slice(-2)}`
+}
+
+const getDuration = (sessions) => {
+    let count = 0
+    for (const session of sessions) {
+        count += session.duration
+    }
+    return count
+}
+
+const getSize = (sessions) => {
+    let count = 0
+    for (const session of sessions) {
+        count += session.size
+    }
+    return count
 }
 
 const style = css`
