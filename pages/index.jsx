@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
-// import Link from 'next/link'
-// import to from '@core/routepath'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
 
 import MainLayout from '@components/layouts/MainLayout'
 import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 import LoginPopUp from '@components/molecular/LoginPopUp'
-import axios from 'axios'
+import Spinner from '@components/atomic/spinner/ThreeDot'
     
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
@@ -33,7 +32,7 @@ const Home = () => {
     
     useEffect(() => {
         axios.post('/api/public/exams/get-displayed-exams')
-            .then(res => setDisplayedExams(res.data.body))
+            // .then(res => setDisplayedExams(res.data.body))
     }, [])
 
     return (
@@ -62,7 +61,7 @@ const Home = () => {
                         ))}
                         {displayedExams.length < 2 && (
                             <div className="display-fallback flex-cc">
-                                <p>Loading Error, coba refresh halaman</p>
+                                <Spinner />
                             </div>
                         )}
                     </div>
@@ -140,7 +139,7 @@ const style = {
             
             @media (max-width: 1000px) {
                 margin-top: 0;
-                width: 100%;
+                width: 300px;
             }
 
             p{

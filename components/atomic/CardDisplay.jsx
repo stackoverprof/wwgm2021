@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
-import OverviewExam from '@components/atomic/OverviewExam'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import axios from 'axios'
+import { mainDate, fullDate, getDuration, getSize, time} from '@core/utils/examData'
+
+import OverviewExam from '@components/atomic/OverviewExam'
 
 const CardDisplay = ({examId}) => {
     const [examData, setExamData] = useState(null)
@@ -35,43 +37,6 @@ const CardDisplay = ({examId}) => {
             }
         </div>
     )
-}
-
-const mainDate = (UNIX_timestamp) => {
-    const a = new Date(UNIX_timestamp._seconds * 1000)
-    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
-    const month = months[a.getMonth()]
-    const date = a.getDate()
-    return `${date} ${month}`
-}
-
-const fullDate = (UNIX_timestamp) => {
-    const a = new Date(UNIX_timestamp._seconds * 1000)
-    const year = a.getFullYear()
-    return `${mainDate(UNIX_timestamp)} ${year}`
-}
-
-const time = (UNIX_timestamp) => {
-    const a = new Date(UNIX_timestamp._seconds * 1000)
-    const hour = a.getHours()
-    const min = a.getMinutes()
-    return `${hour}:${("0" + min).slice(-2)}`
-}
-
-const getDuration = (sessions) => {
-    let count = 0
-    for (const session of sessions) {
-        count += session.duration
-    }
-    return count
-}
-
-const getSize = (sessions) => {
-    let count = 0
-    for (const session of sessions) {
-        count += session.size
-    }
-    return count
 }
 
 const style = css`
