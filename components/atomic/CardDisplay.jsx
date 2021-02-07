@@ -25,6 +25,7 @@ const CardDisplay = ({examId}) => {
                 </div>
                 <div className="body">
                     <OverviewExam
+                        title={examData.title}
                         size={getSize(examData.sessions)}
                         duration={getDuration(examData.sessions)}
                         sessionsLength={examData.sessions.length}
