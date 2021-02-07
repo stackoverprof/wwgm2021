@@ -16,10 +16,13 @@ const Dashboard = () => {
     const CheckRole = async () => {
         setData(null)
         
-        axios.post('/api/user/halo', {
+        axios.post('/api/private/cek', {
             authToken: await currentUser.getIdToken()
         })
-        .then(res => setData(res.data.message))
+        .then(res => {
+            console.log(res)
+            setData(res.data.message)
+        })
         .catch(err => setData(err.response.data.message))
     }
 

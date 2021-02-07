@@ -51,9 +51,15 @@ button, .btn {
 
     &.bordered-bold{
         background: none;
-        border: 4px solid #000;
+        border: 4px solid var(--army);
         color: var(--army);
         padding: 10px 14px;
+
+        &:hover{
+            color: white;
+            box-shadow: 0 10px 12px -10px #0008;
+            background: #0C3B2244;
+        }
 
         &.orange{
             color: var(--orange);

@@ -39,10 +39,11 @@ const MainLayout = ({className, style, children, directLogin, noClearance}) => {
 const layer = ({navHeight, noClearance}) => css`
     padding-top: ${noClearance ? 0 : navHeight}px;
     padding-bottom: 54px;
+    overflow: hidden;
 
     .dimm-layer{
         background:  #000c;
-        z-index: 99;
+        z-index: 50;
     }
 `
 

@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import OverviewExam from '@components/atomic/OverviewExam'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
-const CardDisplay = () => {
+const CardDisplay = ({cardDisplay}) => {
 
     return (
         <div css={style}>
@@ -29,12 +29,13 @@ const style = css`
         padding: 20px 30px;
         margin-bottom: 12px;
 
-        p.title{
+        .title{
             font-family: Poppins;
             font-weight: 600;
             font-size: 42px;
             text-align: center;
             line-height: 36px;
+            max-width: 200px;
             
             color: #FFFFFF;
             margin-bottom: 10px;

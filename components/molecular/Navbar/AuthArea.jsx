@@ -158,7 +158,7 @@ const style = ({openAuthAction}) => css`
             top: 0;
             right: 0;
             pointer-events: none;
-            background: linear-gradient(to right,  #0F1A1200 0%, #0F1A1244 40%, #0F1A12ff 80%);
+            background: linear-gradient(to right, #0C291900 0%, #0C291944 40%, #0C2919ff 80%);
         }
     }
 

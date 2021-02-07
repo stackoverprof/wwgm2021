@@ -22,9 +22,14 @@ const style = css`
     li{
         font-family: Poppins;
         font-weight: 500;
-        font-size: 32px;
+        font-size: 28px;
         color: #0B4D29;
         margin: 16px 0;
+
+        @media (max-width: 1000px) {
+            font-size: 24px;
+            justify-content: center;
+        }
 
         svg{
             margin-right: 24px;

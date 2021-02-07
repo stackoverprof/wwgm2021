@@ -116,6 +116,10 @@ const style = css`
     }
 
     .buttons{
+        button, .btn{
+            max-height: 25px;
+        }
+
         @media (max-width: 720px) {
             flex-direction: column;
         }

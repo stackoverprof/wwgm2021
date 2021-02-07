@@ -18,8 +18,8 @@ const Dashboard = () => {
         
         axios.post('/api/private/exams/new', {
                 userToken: await currentUser.getIdToken(),
-                title: 'SOSHUM I',
-                cluster: 'SAINTEK',
+                title: 'SOSHUM',
+                cluster: 'SOSHUM',
                 status: 'limited',
                 availability: {
                     start: 1611802800000,
