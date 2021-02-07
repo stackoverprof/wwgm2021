@@ -25,34 +25,35 @@ const AuthArea = ({
     const { currentUser, role, authState, errorCode, setErrorCode } = useAuth()
     const { setDimm } = useLayout()
     
-    const showLogin = (show) => {
-        if (show && !openLoginPop) {
+    const showLogin = {
+        open: () => {
             setOpenLoginPop(true)
             toggleDropper(false)
-        }
-        else if (!show) {
+        },
+        close: () => {
             setOpenLoginPop(false)
             setDimm(false)
         }
-    }   
-    
-    const showLogout = (show) => {
-        if (show && !openLogoutPop) {
+    }
+ 
+    const showLogout = {
+        open: () => {
             setOpenLogoutPop(true)
             toggleDropper(false)
-        }
-        else if (!show) {
+        },
+        close: () => {
             setOpenLogoutPop(false)
             setDimm(false)
         }
-    }   
+    }
+
 
     return (
     <>
         <div css={style({openAuthAction})} className={className}>
             {authState !== 'user' && (
                 <button 
-                    onClick={() => showLogin(true)} 
+                    onClick={showLogin.open} 
                     disabled={openLoginPop} 
                     className="btn-login"
                 >
@@ -69,15 +70,15 @@ const AuthArea = ({
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
                         {role.admin && <Link href={to.dashboard}>ADMIN AREA</Link>}
-                        <button onClick={() => showLogout(true)} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
+                        <button onClick={showLogout.open} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
                     </div>
                 </div>
             )}
         </div>
         
         <AnimatePresence exitBeforeEnter>
-            {openLoginPop && <LoginPopUp handleClose={() => showLogin(false)}/>}
-            {openLogoutPop && <LogoutPopUp handleClose={() => showLogout(false)}/>}
+            {openLoginPop && <LoginPopUp handleClose={showLogin.close}/>}
+            {openLogoutPop && <LogoutPopUp handleClose={showLogout.close}/>}
         </AnimatePresence>
 
         {errorCode && <AlertHandler message={errorCode} closeHandler={() => setErrorCode('')} color="red"/>}

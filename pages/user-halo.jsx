@@ -29,7 +29,7 @@ const Dashboard = () => {
     return (
         <UserOnlyRoute redirect={to.home}>
             {currentUser && (
-                <MainLayout style={style}>
+                <MainLayout css={style}>
                     <p>Dashboard of {currentUser.displayName}</p>
                     <div>
                         <img src={currentUser.photoURL} alt=""/>

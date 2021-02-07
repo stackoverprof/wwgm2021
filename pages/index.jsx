@@ -10,21 +10,23 @@ import CardDisplay from '@components/atomic/CardDisplay'
 import LoginPopUp from '@components/molecular/LoginPopUp'
 import Spinner from '@components/atomic/spinner/ThreeDot'
     
+// [TODO] : Skeleton loader in displayed card
+
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
     const [displayedExams, setDisplayedExams] = useState([])
     const { query : { action }} = useRouter()
     const { setDimm } = useLayout()
 
-    const showLogin = (show) => {
-        if (show && !openLoginPop) {
+    const showLogin = {
+        open: () => {
             setOpenLoginPop(true)
-        }
-        else if (!show) {
+        },
+        close: () => {
             setOpenLoginPop(false)
             setDimm(false)
         }
-    }   
+    }
 
     useEffect(() => {
         console.log(action)
@@ -36,14 +38,14 @@ const Home = () => {
     }, [])
 
     return (
-        <MainLayout style={style.page} className="flex-sc col" noClearance>
+        <MainLayout css={style.page} className="flex-sc col" noClearance>
             
             <section css={style.hero}>
                 <div className="background">
                     <div className="contain-size-s flex-cc col">
                         <img src="/img/logo-wwgm-full.webp" alt="logo wwgm 2021" className="hero-img"/>
-                        <button onClick={() => showLogin(true)} className="hero-button bordered-bold orange">Daftar Sekarang!</button>
-                        {openLoginPop && <LoginPopUp handleClose={() => showLogin(false)}/>}
+                        <button onClick={showLogin.open} className="hero-button bordered-bold orange">Daftar Sekarang!</button>
+                        {openLoginPop && <LoginPopUp handleClose={showLogin.close}/>}
                     </div>
                 </div>
             </section>

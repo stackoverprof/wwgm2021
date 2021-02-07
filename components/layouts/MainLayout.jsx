@@ -4,7 +4,7 @@ import Navbar from '@components/molecular/Navbar'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLayout } from '@core/contexts/LayoutContext'
 
-const MainLayout = ({className, style, children, directLogin, noClearance}) => {
+const MainLayout = ({className, css: style, children, directLogin, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
