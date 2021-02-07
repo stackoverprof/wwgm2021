@@ -32,7 +32,7 @@ const Home = () => {
     
     useEffect(() => {
         axios.post('/api/public/exams/get-displayed-exams')
-            // .then(res => setDisplayedExams(res.data.body))
+            .then(res => setDisplayedExams(res.data.body))
     }, [])
 
     return (
