@@ -29,7 +29,7 @@ const Navbar = ({clean, directLogin}) => {
     return (
         <nav css={style({openDropper, dimm})}>
             <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper && !openAuthAction}>
-                <div className="navbar-main flex-cc">
+                <div className="navbar-main">
                     <div className="contain-size-xl flex-bc inner">
                         <Link href={to.home}>
                             <div className="brand flex-cc">
@@ -54,7 +54,7 @@ const Navbar = ({clean, directLogin}) => {
                     </div>
                 </div>
                 {screen < 950 && (
-                    <div className="dropper links bg-blur flex-cc">
+                    <div className="dropper links bg-blur">
                         <div className="dropper-inner contain-size-m flex-cc">
                             <LinkSet
                                 openLoginPop={openLoginPop}
@@ -132,7 +132,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
         width: 100%;
         height: 100%;
         z-index: 101;
-        transition: 0.25s ${dimm ? 0 : '0.5s'};
+        transition: 0.25s ${dimm || openDropper ? '0s' : '0.5s'};
         background: rgba(255, 255, 255, ${openDropper || dimm ? 1 : 0.75});
         backdrop-filter: blur(8px);
         box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);

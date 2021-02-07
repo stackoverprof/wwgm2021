@@ -7,6 +7,7 @@
     width: 90%;
     max-width: 1000px;
     min-width: 320px;
+    margin: 0 auto;
     
     &-xl {
         @extend .contain-size;
@@ -63,6 +64,11 @@
         justify-content: space-between;
         align-items: center;
     }
+    &-bs {
+        @extend .flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
     &-be {
         @extend .flex;
         justify-content: space-between;
@@ -77,6 +83,10 @@
     &.col{
         flex-direction: column;
     }
+}
+
+.mx-auto{
+    margin: 0 auto;
 }
   
 .fixed{
