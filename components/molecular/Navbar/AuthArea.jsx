@@ -64,7 +64,7 @@ const AuthArea = ({
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
                         <img src={currentUser.photoURL} alt=""/>
-                        <RunningText offset={20}>{currentUser.displayName}</RunningText>
+                        <RunningText offset={26}>{currentUser.displayName}</RunningText>
                         <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">

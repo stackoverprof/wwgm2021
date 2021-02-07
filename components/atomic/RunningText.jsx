@@ -26,6 +26,7 @@ const style = ({spanWidth, pWidth, offset}) => css`
     align-items: center;
 
     height: 100%;
+    width: 100%;
 
     span{
         position: relative;
