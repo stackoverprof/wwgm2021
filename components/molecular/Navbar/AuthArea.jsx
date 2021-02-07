@@ -50,7 +50,15 @@ const AuthArea = ({
     return (
     <>
         <div css={style({openAuthAction})} className={className}>
-            {authState !== 'user' && <button onClick={() => showLogin(true)} disabled={openLoginPop}>LOGIN</button>}
+            {authState !== 'user' && (
+                <button 
+                    onClick={() => showLogin(true)} 
+                    disabled={openLoginPop} 
+                    className="btn-login"
+                >
+                    LOGIN 
+                </button>
+            )}
             {authState === 'user' && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
@@ -72,7 +80,7 @@ const AuthArea = ({
             {openLogoutPop && <LogoutPopUp handleClose={() => showLogout(false)}/>}
         </AnimatePresence>
 
-        {errorCode && <AlertHandler message={errorCode} closeHandler={() => setErrorCode('')} color="red" />}
+        {errorCode && <AlertHandler message={errorCode} closeHandler={() => setErrorCode('')} color="red"/>}
     </>
     )
 }
@@ -117,13 +125,17 @@ const style = ({openAuthAction}) => css`
             font-size: 20px;
         }
     }
-
+    button.btn-login{
+        background: var(--army-dark);
+    }
+    
     button.user-action{
         position: relative;
         padding: 0 !important;
         height: 100%;
         width: 180px;
         overflow: hidden;
+        background: var(--army-dark);
 
         p{
             font-size: 16px;
@@ -146,7 +158,7 @@ const style = ({openAuthAction}) => css`
             top: 0;
             right: 0;
             pointer-events: none;
-            background: linear-gradient(to right,  #0f412500 0%, #0f412544 40%, #0f4125ff 80%);
+            background: linear-gradient(to right,  #0F1A1200 0%, #0F1A1244 40%, #0F1A12ff 80%);
         }
     }
 
