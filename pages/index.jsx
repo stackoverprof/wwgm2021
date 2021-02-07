@@ -159,7 +159,8 @@ const style = {
             background-position: left, right, center;
             background-size: contain;
             background-repeat: no-repeat;
-            
+	    background-attachment: fixed;
+
             @media (max-width: 1060px){
                 background-size: cover;
             }
