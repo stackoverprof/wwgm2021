@@ -42,6 +42,7 @@ const style = ({skeleton}) => css`
 
         .title{
             max-width: 220px;
+            margin-right: 20px;
         }
 
         p{

@@ -26,11 +26,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             await axios.post('/api/public/exams/get-displayed-exams')
-            .then(res => {
-                setTimeout(() => {    
-                    setDisplayedExams(res.data.body)
-                }, 6000);
-            })
+                .then(res => setDisplayedExams(res.data.body))
         }
 
         fetchData()
@@ -152,16 +148,12 @@ const style = {
             height: 100%;
             padding: 76px 0 42px 0;
             background: url('/img/home/hero-left.webp'), url('/img/home/hero-right.webp'), #0F1A12;
-            background-position: left, right, center;
-            background-size: contain;
+            background-position: top left, top right, center;
             background-repeat: no-repeat;
-	    background-attachment: fixed;
+	        background-attachment: fixed;
 
-            @media (max-width: 1060px){
-                background-size: cover;
-            }
-            @media (max-width: 720px){
-                background-position: center;
+            @media (max-width: 790px){
+                background-position: top center, top center, center;
             }
         }
 
