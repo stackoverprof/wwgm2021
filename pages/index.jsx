@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
-import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
 
@@ -8,14 +7,10 @@ import MainLayout from '@components/layouts/MainLayout'
 import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 import LoginPopUp from '@components/molecular/LoginPopUp'
-import Spinner from '@components/atomic/spinner/ThreeDot'
-    
-// [TODO] : Skeleton loader in displayed card
 
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
     const [displayedExams, setDisplayedExams] = useState([])
-    const { query : { action }} = useRouter()
     const { setDimm } = useLayout()
 
     const showLogin = {
@@ -27,14 +22,18 @@ const Home = () => {
             setDimm(false)
         }
     }
-
-    useEffect(() => {
-        console.log(action)
-    }, [])
     
     useEffect(() => {
-        axios.post('/api/public/exams/get-displayed-exams')
-            // .then(res => setDisplayedExams(res.data.body))
+        const fetchData = async () => {
+            await axios.post('/api/public/exams/get-displayed-exams')
+            .then(res => {
+                setTimeout(() => {    
+                    setDisplayedExams(res.data.body)
+                }, 6000);
+            })
+        }
+
+        fetchData()
     }, [])
 
     return (
@@ -58,14 +57,8 @@ const Home = () => {
                         <Advantages />
                     </div>
                     <div className="right flex-bc">
-                        {displayedExams.map((examId, i) => (
-                            <CardDisplay examId={examId} key={i}/>
-                        ))}
-                        {displayedExams.length < 2 && (
-                            <div className="display-fallback flex-cc">
-                                <Spinner />
-                            </div>
-                        )}
+                        <CardDisplay examId={displayedExams[0]}/>
+                        <CardDisplay examId={displayedExams[1]}/>
                     </div>
                 </div>
             </section>
@@ -102,7 +95,10 @@ const style = {
         }
         
         .right {
+            width: 100%;
+            max-width: 538px;
             @media (max-width: 1000px) {
+                width: 80%;
                 flex-direction: column;
                 justify-content: center;
             }

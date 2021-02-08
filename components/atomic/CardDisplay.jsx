@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import axios from 'axios'
+import Skeleton from 'react-loading-skeleton'
 import { mainDate, fullDate, getDuration, getSize, time} from '@core/utils/examData'
 
 import OverviewExam from '@components/atomic/OverviewExam'
@@ -10,38 +11,72 @@ const CardDisplay = ({examId}) => {
     const [examData, setExamData] = useState(null)
     
     useEffect(() => {
-        axios.post('/api/public/exams/get-exam-data', {
-            examId: examId
-        }).then(res => setExamData(res.data.body))
-    }, [])
+        console.log(examId)
+
+        if (!examId) return
+        
+        const fetchData = async () => {
+            await axios.post('/api/public/exams/get-exam-data', {
+                examId: examId
+            }).then(res => setExamData(res.data.body))
+        }
+        fetchData()
+    }, [examId])
+
+    if (!examId || !examData) return <ContentLoader />
 
     return (
         <div css={style}>
-            {examData && 
-            <>     
-                <div className="header flex-cc col">
-                    <p className="title">{examData.cluster}</p>
-                    <p className="date flex-cc"><FaRegCalendarAlt />{mainDate(examData.availability.start)}</p>
-                </div>
-                <div className="body">
-                    <OverviewExam
-                        title={examData.title}
-                        size={getSize(examData.sessions)}
-                        duration={getDuration(examData.sessions)}
-                        sessionsLength={examData.sessions.length}
-                        fullDate={fullDate(examData.availability.start)}
-                        time={time(examData.availability.start)}
-                    />
-                    <button className="mx-auto bordered">IKUTI TRYOUT</button>
-                </div>
-            </>
-            }
+            <div className="header flex-cc col">
+                <p className="title">{examData.cluster}</p>
+                <p className="date flex-cc"><FaRegCalendarAlt />{mainDate(examData.availability.start)}</p>
+            </div>
+            <div className="body">
+                <OverviewExam
+                    title={examData.title}
+                    size={getSize(examData.sessions)}
+                    duration={getDuration(examData.sessions)}
+                    sessionsLength={examData.sessions.length}
+                    fullDate={fullDate(examData.availability.start)}
+                    time={time(examData.availability.start)}
+                />
+                <button className="mx-auto bordered">IKUTI TRYOUT</button>
+            </div>
+        </div>
+    )
+}
+
+const ContentLoader = () => {
+
+    return (
+        <div css={style}>
+            <div className="header-skeleton">
+                <Skeleton height={110} />
+            </div>
+            <div className="body body-skeleton">
+                <OverviewExam skeleton/>
+                <button className="mx-auto bordered">IKUTI TRYOUT</button>
+            </div>
         </div>
     )
 }
 
 const style = css`
     margin: 16px;
+    width: 100%;
+    max-width: 238px;
+
+    @media (max-width: 1000px){
+        max-width: 300px;
+    }
+
+    .header-skeleton{
+        .react-loading-skeleton{
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }    
+    }
     
     .header{
         background: var(--army);
@@ -61,7 +96,7 @@ const style = css`
             color: #FFFFFF;
             margin-bottom: 10px;
         }
-        
+
         p.date{
             font-family: Poppins;
             font-weight: 500;
@@ -103,6 +138,20 @@ const style = css`
             &:hover{
                 box-shadow: inset 0 0 0 1.5px var(--army);
                 color: var(--army);
+            }
+        }
+
+        &.body-skeleton{
+            border-color: #0001;
+
+            button{
+                border-color: #0001;
+                color: #0003;
+
+                &:hover{
+                    box-shadow: none;
+                    color: #0003;
+                }
             }
         }
     }
