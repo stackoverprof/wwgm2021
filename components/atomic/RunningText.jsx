@@ -36,7 +36,7 @@ const style = ({spanWidth, pWidth, offset}) => css`
     }
     
     &:hover span{
-        transition: ${spanWidth/60}s ease-out;
+        transition: left ${spanWidth/60}s ease-out;
         left: -${spanWidth - pWidth + offset }px;
         
     }

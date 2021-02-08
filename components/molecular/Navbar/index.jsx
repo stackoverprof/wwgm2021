@@ -125,6 +125,11 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
     > div{
         height: 100%;
         width: 100%;
+        transition: 0.15s;
+
+        &:hover{
+            background: rgba(255, 255, 255, 0.3);
+        }
     }
     
     .navbar-main{
@@ -133,7 +138,7 @@ const style = ({openDropper, dimm}) => css` //Nav tag core style is in globals.s
         height: 100%;
         z-index: 101;
         transition: 0.25s ${dimm || openDropper ? '0s' : '0.5s'};
-        background: rgba(255, 255, 255, ${openDropper || dimm ? 1 : 0.75});
+        background: rgba(255, 255, 255, ${openDropper || dimm ? 1 : 0.7});
         backdrop-filter: blur(8px);
         box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
     }
