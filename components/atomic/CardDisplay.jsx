@@ -40,7 +40,7 @@ const CardDisplay = ({examId}) => {
                     fullDate={fullDate(examData.availability.start)}
                     time={time(examData.availability.start)}
                 />
-                <button className="mx-auto bordered">IKUTI TRYOUT</button>
+                <button className="mx-auto bordered green">IKUTI TRYOUT</button>
             </div>
         </div>
     )
@@ -55,7 +55,7 @@ const ContentLoader = () => {
             </div>
             <div className="body body-skeleton">
                 <OverviewExam skeleton/>
-                <button className="mx-auto bordered">IKUTI TRYOUT</button>
+                <button className="mx-auto bordered" disabled>IKUTI TRYOUT</button>
             </div>
         </div>
     )
@@ -135,9 +135,17 @@ const style = css`
             color: #7B7B7B;
             border-color: #0F412544;
 
-            &:hover{
-                box-shadow: inset 0 0 0 1.5px var(--army);
+            &.green{
                 color: var(--army);
+                box-shadow: inset 0 0 0 1.5px var(--army);
+                opacity: 0.9;
+                
+                &:hover{
+                    box-shadow: inset 0 0 0 3px var(--army);
+                    opacity: 1;
+                    -webkit-text-stroke-width: 0.25px;
+                }
+                
             }
         }
 
