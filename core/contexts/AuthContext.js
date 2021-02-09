@@ -47,7 +47,14 @@ const AuthProvider = ({children}) => {
                     DB.collection('Users').doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : res.user.displayName,
-                        photoURL : res.user.photoURL
+                        fullName : '',
+                        photoURL : res.user.photoURL,
+                        contact: '',
+                        province: '',
+                        city: '',
+                        school: '',
+                        noPeserta: '',
+                        examsAccess: []
                     })
                 }
 
@@ -57,7 +64,7 @@ const AuthProvider = ({children}) => {
         },
 
         signout : () => {
-            AUTH.signOut()
+            return AUTH.signOut()
         }
     }
 
