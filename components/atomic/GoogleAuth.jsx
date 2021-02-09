@@ -2,10 +2,10 @@ import React from 'react'
 import { useAuth } from '@core/contexts/AuthContext'
 
 const GoogleButton = () => {
-    const { authMethods, setErrorCode } = useAuth()
+    const { authMethods, setErrorAuth } = useAuth()
 
     const handleGoogleAuth = () => {
-        setErrorCode('')
+        setErrorAuth('')
         authMethods.google()
     }
 

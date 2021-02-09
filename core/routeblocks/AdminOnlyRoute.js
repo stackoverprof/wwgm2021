@@ -3,18 +3,18 @@ import { useRouter } from 'next/router'
 import { useAuth } from '@core/contexts/AuthContext'
 
 const AdminOnlyRoute = ({children, redirect}) => {
-    const { authState, user } = useAuth()
+    const { authState, access } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
-        if (authState !== 'initial' && !user.role.admin) {
+        if (authState !== 'initial' && !access.admin) {
             router.push(redirect)
         }
-    }, [authState, user.role.admin])
+    }, [authState, access.admin])
 
     return (
         <div>
-           { authState === 'user' && user.role.admin && children } 
+           { authState === 'user' && access.admin && children } 
         </div>
     )
 }

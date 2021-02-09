@@ -7,7 +7,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
 
 const LoginPopUp = ({handleClose}) => {
-    const { authState, authMethods, setErrorCode } = useAuth()
+    const { authState, authMethods, setErrorAuth } = useAuth()
 
     const { setDimm } = useLayout()
 
@@ -15,7 +15,7 @@ const LoginPopUp = ({handleClose}) => {
         setDimm(true)
         return () => {
             setDimm(false)
-            setErrorCode('')
+            setErrorAuth('')
         }
     }, [])
 

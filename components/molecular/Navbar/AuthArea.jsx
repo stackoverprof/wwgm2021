@@ -23,7 +23,7 @@ const AuthArea = ({
     setOpenAuthAction
 }) => {
 
-    const { user, authState, errorCode, setErrorCode } = useAuth()
+    const { user, access, authState, errorAuth, setErrorAuth } = useAuth()
     const { setDimm } = useLayout()
     
     const showLogin = {
@@ -69,7 +69,7 @@ const AuthArea = ({
                         <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">
-                        {user.role?.admin && <Link href={to.dashboard}><a className="flex-cc">ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" /></a></Link>}
+                        {access.admin && <Link href={to.dashboard}><a className="flex-cc">ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" /></a></Link>}
                         <Link href={to.dashboard}>DASHBOARD</Link>
                         <button onClick={showLogout.open} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
                     </div>
@@ -82,7 +82,7 @@ const AuthArea = ({
             {openLogoutPop && <LogoutPopUp handleClose={showLogout.close}/>}
         </AnimatePresence>
 
-        {errorCode && <AlertHandler message={errorCode} closeHandler={() => setErrorCode('')} color="red"/>}
+        {errorAuth && <AlertHandler message={errorAuth} closeHandler={() => setErrorAuth('')} color="red"/>}
     </>
     )
 }

@@ -10,7 +10,7 @@ import MainLayout from '@components/layouts/MainLayout'
 import Spinner from '@components/atomic/spinner/Circle'
     
 const Dashboard = () => {
-    const { user, authMethods } = useAuth()
+    const { user, access, authMethods } = useAuth()
     const [data, setData] = useState('')
 
     const CheckRole = async () => {
@@ -88,7 +88,7 @@ const Dashboard = () => {
                         <button onClick={CheckRole}>{data === null ? <Spinner /> : 'create exam'}</button>
                         <button onClick={authMethods.signout} className="red">LOGOUT</button>
                     </div>
-                    <p>Admin Status : {user.role.admin ? 'admin' : 'false'}</p>
+                    <p>Admin Status : {access.admin ? 'admin' : 'false'}</p>
                     <p>{data}</p>
                 </MainLayout>
             )}

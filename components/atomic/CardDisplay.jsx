@@ -13,7 +13,7 @@ import OverviewExam from '@components/atomic/OverviewExam'
 const CardDisplay = ({examId}) => {
     const [examData, setExamData] = useState(null)
 
-    const { user } = useAuth()
+    const { user, access } = useAuth()
     
     useEffect(() => {
         if (!examId) return
@@ -50,7 +50,7 @@ const CardDisplay = ({examId}) => {
                 />
                 <button className="mx-auto bordered green">IKUTI TRYOUT</button>
             </div>
-            { user?.role.admin && <AdminEdit />}
+            { access.admin && <AdminEdit />}
         </div>
     )
 }

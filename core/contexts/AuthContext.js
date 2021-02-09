@@ -5,9 +5,10 @@ const firebaseAuth = React.createContext()
 
 const AuthProvider = ({children}) => {
     const [authState, setAuthState] = useState('initial')   //initial/user/guest
-    const [user, setUser] = useState({}) 
+    const [user, setUser] = useState({})
+    const [access, setAccess] = useState({})
     const [userData, setUserData] = useState({})
-    const [errorCode, setErrorCode] = useState('')
+    const [errorAuth, setErrorAuth] = useState('')
 
     const authMethods = {
         emailSignup : (email, password, displayName) => {
@@ -28,13 +29,13 @@ const AuthProvider = ({children}) => {
 
                     setUser(data.user) 
                 })
-                .catch(err => setErrorCode(err.code))
+                .catch(err => setErrorAuth(err.code))
         },
 
         emailSignin : (email, password) => {
             return AUTH.signInWithEmailAndPassword(email, password)
                 .then(res => setUser(res.user))  
-                .catch(err => setErrorCode(err.code))
+                .catch(err => setErrorAuth(err.code))
         },
 
         google : () => {
@@ -52,7 +53,7 @@ const AuthProvider = ({children}) => {
 
                 setUser(res.user)
             })
-            .catch(err => setErrorCode(err.code))
+            .catch(err => setErrorAuth(err.code))
         },
 
         signout : () => {
@@ -70,16 +71,18 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(userAuth => {
             if(userAuth) {
-                refreshUserData(userAuth.uid)
                 setAuthState('user')
+                setUser(userAuth)
+                refreshUserData(userAuth.uid)
                 userAuth.getIdTokenResult().then(res => {
-                    setUser({ role: { admin: res.claims.admin }, ...userAuth })
+                    setAccess({ admin: res.claims.admin })
                 })
             }
             else {
-                setUserData({})
-                setUser({})
                 setAuthState('guest')
+                setUser({})
+                setUserData({})
+                setAccess({})
             }
         })
         return unsubscribe
@@ -90,10 +93,11 @@ const AuthProvider = ({children}) => {
             authMethods,
             authState,
             user,
-            errorCode,
-            setErrorCode,
+            access,
             userData,
-            refreshUserData
+            errorAuth,
+            setErrorAuth,
+            refreshUserData,
         }}>
             { children }
         </firebaseAuth.Provider>

@@ -11,7 +11,7 @@ import Spinner from '@components/atomic/spinner/Circle'
 import AlertHandler from '@components/atomic/AlertHandler'
     
 const Dashboard = () => {
-    const { user, authMethods } = useAuth()
+    const { user, access, authMethods } = useAuth()
     const [alert, setAlert] = useState('')
     const [issuedEmail, setIssuedEmail] = useState('')
 
@@ -37,9 +37,8 @@ const Dashboard = () => {
                         <Link href={to.home}><button className="btn">Back Home</button></Link>
                         <button className="btn red" onClick={authMethods.signout}>LOGOUT</button>
                     </div>
-                    <p>Access Try Out : {user.role.enrolledExams && user.role.enrolledExams.length > 0? user.role.enrolledExams.join(", ") : 'no-access'}</p>
-                    <p>Admin Status : {user.role.admin ? 'admin' : 'false'}</p>
-                    {user.role.admin && (
+                    <p>Admin Status : {access.admin ? 'admin' : 'false'}</p>
+                    {access.admin && (
                         <form onSubmit={handleSetAdmin}>
                             <input type="email" value={issuedEmail} required onChange={e => setIssuedEmail(e.target.value)}/>
                             <button className="btn" type="submit">{alert === null ? <Spinner /> : 'set admin'}</button>
