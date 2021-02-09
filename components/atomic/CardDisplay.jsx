@@ -48,7 +48,7 @@ const CardDisplay = ({examId, i, refreshData}) => {
                 />
                 <button className="mx-auto bordered green">IKUTI TRYOUT</button>
             </div>
-            { access.admin && <EditDisplayExams i={i} refreshData={refreshData}/>}
+            {access.admin && <EditDisplayExams i={i} refreshData={refreshData}/>}
         </div>
     )
 }

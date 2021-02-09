@@ -43,7 +43,7 @@ const EditDisplayExams = ({i, refreshData}) => {
                     <input type="text" placeholder="Exam ID" value={examId} onChange={e => setExamId(e.target.value)}/>
                     <div className="flex-bc full-w">
                         <button type="submit">{alert === null ? <Spinner w={64.5} h={26}/> : 'UBAH'}</button>
-                        <button type="button" onCLick={() => setShow(false)} className="bordered">BATAL</button>
+                        <button type="button" onClick={() => setShow(false)} className="bordered">BATAL</button>
                     </div>
                 </form>
             }
