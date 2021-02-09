@@ -6,13 +6,11 @@ import { mainDate, fullDate, getDuration, getSize, time} from '@core/utils/examD
 import { useAuth } from '@core/contexts/AuthContext'
 
 import { FaRegCalendarAlt } from 'react-icons/fa'
-import { MdSettings } from 'react-icons/md'
-import { RiShieldFlashLine } from 'react-icons/ri'
 import OverviewExam from '@components/atomic/OverviewExam'
+import EditDisplayExams from '@components/atomic/EditDisplayExams'
 
-const CardDisplay = ({examId}) => {
+const CardDisplay = ({examId, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
-
     const { user, access } = useAuth()
     
     useEffect(() => {
@@ -50,42 +48,7 @@ const CardDisplay = ({examId}) => {
                 />
                 <button className="mx-auto bordered green">IKUTI TRYOUT</button>
             </div>
-            { access.admin && <AdminEdit />}
-        </div>
-    )
-}
-
-const AdminEdit = () => {
-    const [show, setShow] = useState(false)
-    const [examId, setExamId] = useState('')
-    const [response, setResponse] = useState('')
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setResponse(null)
-
-        await axios.post('/api/private/exams/edit-displayed-exams', {
-            position: i,
-            examId: examId,
-            token: await user.getIdToken()
-        }).then(res => setResponse(res.data.message))
-    }
-
-    return (
-        <div className="admin-edit flex-cc col">
-            <button onClick={() => setShow(!show)} className={`edit no-btn flex-bc mx-auto ${show ? 'active' : ''}`}>
-                Ganti display <span className="flex-cc"><MdSettings /><RiShieldFlashLine color="orange" /></span>
-            </button>
-            {show &&
-                <form onSubmit={handleSubmit} className="flex-cc col">
-                    <input type="text" placeholder="Exam ID" value={examId} onChange={e => setExamId(e.target.value)}/>
-                    <div className="flex-bc full-w">
-                        <button type="submit">UBAH</button>
-                        <button type="button" onCLick={() => setShow(false)} className="bordered">BATAL</button>
-                    </div>
-                </form>
-            }
-            <p>{response}</p>
+            { access.admin && <EditDisplayExams i={i} refreshData={refreshData}/>}
         </div>
     )
 }
@@ -212,40 +175,6 @@ const style = css`
         }
     }
 
-    .admin-edit{
-        form{
-            margin-top: 4px;
-            width: 100%;
-            max-width: 222px;
-        }
-        input{
-            margin-bottom: 12px;
-            width: calc(100% - 20px);
-        }
-    }
-
-    button.edit{
-        padding: 12px;
-        width: calc(100% - 24px);
-        border-radius: 10px;
-        margin-top: 6px;
-        color: #0004;
-        
-        &:hover{            
-            color: #000a;
-            box-shadow: inset 0 0 0 1px #0004;
-
-        }
-
-        &.active{
-            color: #000a;
-
-            &:hover{
-                box-shadow: none;
-            }
-        }
-    }
-    
 `
 
 export default CardDisplay

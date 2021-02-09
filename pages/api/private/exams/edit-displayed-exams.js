@@ -7,18 +7,24 @@ export default async (req, res) => {
     const currentUser = await admin.auth().verifyIdToken(token)
     .catch(err => {
         console.log('problem with : ' + err)
-        return res.status(500).json({ status: 'ERROR', message: 'token tidak valid, coba login ulang' })
+        return res.status(500).json({ status: 'ERROR', message: 'Token tidak valid, coba login ulang' })
     })
 
     if (!currentUser.admin) {
-        return res.status(403).json({ status: 'ERROR', message: 'anda tidak berhak menambah admin'})
+        return res.status(403).json({ status: 'ERROR', message: 'Anda tidak berhak merubah data'})
     }
 
-    const doc = await DB.collection('Private').doc('Data').get()
-
-    if (!doc) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+    const allExamsRef = await admin.firestore().collection('Exams').listDocuments()
+    if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+    const allExams = allExamsRef.map(item => item.id)
     
-    const { displayedExams } = doc.data()
+    if (!allExams.includes(examId)) return res.status(500).json({ status: 'ERROR', message: 'Ujian terkait tidak ditemukan' })
+
+    const privateData = await DB.collection('Private').doc('Data').get()
+    if (!privateData) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+
+    
+    const { displayedExams } = privateData.data()
 
     let updated = displayedExams
     updated[position] = examId
@@ -27,5 +33,5 @@ export default async (req, res) => {
         displayedExams: updated
     })
     .then(() => res.status(200).json({ status: 'OK', message: 'Berhasil mengubah data display' }))
-    .catch(err => res.status(500).json({ status: 'error', message: `Gagal : ${err}` }))
+    .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
 }
