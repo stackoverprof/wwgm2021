@@ -69,8 +69,8 @@ const AuthArea = ({
                         <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">
+                        {user.role?.admin && <Link href={to.dashboard}><a className="flex-cc">ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" /></a></Link>}
                         <Link href={to.dashboard}>DASHBOARD</Link>
-                        {user.role?.admin && <Link href={to.dashboard}>ADMIN AREA <RiShieldFlashLine color="orange" /></Link>}
                         <button onClick={showLogout.open} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
                     </div>
                 </div>
