@@ -52,7 +52,7 @@ const Home = () => {
                         <hr/>
                         <Advantages />
                     </div>
-                    <div className="right flex-bc">
+                    <div className="right flex-bs">
                         <CardDisplay examId={displayedExams[0]}/>
                         <CardDisplay examId={displayedExams[1]}/>
                     </div>
@@ -93,10 +93,12 @@ const style = {
         .right {
             width: 100%;
             max-width: 538px;
+
             @media (max-width: 1000px) {
                 width: 80%;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
             }
         }
 

@@ -6,6 +6,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import to from '@core/routepath'
 import { AnimatePresence } from 'framer-motion'
 
+import { RiShieldFlashLine } from 'react-icons/ri'
 import LoginPopUp from '@components/molecular/LoginPopUp'
 import LogoutPopUp from '@components/molecular/LogoutPopUp'
 import RunningText from '@components/atomic/RunningText'
@@ -22,7 +23,7 @@ const AuthArea = ({
     setOpenAuthAction
 }) => {
 
-    const { currentUser, role, authState, errorCode, setErrorCode } = useAuth()
+    const { user, authState, errorCode, setErrorCode } = useAuth()
     const { setDimm } = useLayout()
     
     const showLogin = {
@@ -63,13 +64,13 @@ const AuthArea = ({
             {authState === 'user' && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
-                        <img src={currentUser.photoURL} alt=""/>
-                        <RunningText offset={26}>{currentUser.displayName}</RunningText>
+                        <img src={user.photoURL} alt=""/>
+                        <RunningText offset={26}>{user.displayName}</RunningText>
                         <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">
                         <Link href={to.dashboard}>DASHBOARD</Link>
-                        {role.admin && <Link href={to.dashboard}>ADMIN AREA</Link>}
+                        {user.role?.admin && <Link href={to.dashboard}>ADMIN AREA <RiShieldFlashLine color="orange" /></Link>}
                         <button onClick={showLogout.open} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
                     </div>
                 </div>

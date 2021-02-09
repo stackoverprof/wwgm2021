@@ -10,14 +10,14 @@ import MainLayout from '@components/layouts/MainLayout'
 import Spinner from '@components/atomic/spinner/Circle'
     
 const Dashboard = () => {
-    const { currentUser, authMethods } = useAuth()
+    const { user, authMethods } = useAuth()
     const [data, setData] = useState('')
 
     const CheckRole = async () => {
         setData(null)
         
         axios.post('/api/private/cek', {
-            authToken: await currentUser.getIdToken()
+            authToken: await user.getIdToken()
         })
         .then(res => {
             console.log(res)
@@ -28,11 +28,11 @@ const Dashboard = () => {
 
     return (
         <UserOnlyRoute redirect={to.home}>
-            {currentUser && (
+            {user && (
                 <MainLayout css={style}>
-                    <p>Dashboard of {currentUser.displayName}</p>
+                    <p>Dashboard of {user.displayName}</p>
                     <div>
-                        <img src={currentUser.photoURL} alt=""/>
+                        <img src={user.photoURL} alt=""/>
                         <Link href={to.home}><button>BACK HOME</button></Link>
                         <button onClick={CheckRole}>{data === null ? <Spinner /> : 'api user'}</button>
                         <button onClick={authMethods.signout} className="red">LOGOUT</button>

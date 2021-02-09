@@ -77,9 +77,12 @@ button, .btn {
     &.no-btn{
         background: none;
         color: var(--army);
+        box-shadow: none;
+        font-size: 14px !important;
+        padding: 0;
     
         &:hover{
-            background: #ccc;
+            background: none;
         }
     
         &:focus{
@@ -93,5 +96,15 @@ button, .btn {
         &:hover{
             box-shadow: 0 8px 12px -8px #0008, 0 0 0 2px #fffe, 0 0 0 2.8px #c72121;
         }
+    }
+}
+
+input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #0008;
+    
+    &:focus{
+        outline: none;
     }
 }

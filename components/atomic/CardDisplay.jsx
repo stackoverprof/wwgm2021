@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
-import { FaRegCalendarAlt } from 'react-icons/fa'
 import axios from 'axios'
 import Skeleton from 'react-loading-skeleton'
 import { mainDate, fullDate, getDuration, getSize, time} from '@core/utils/examData'
+import { useAuth } from '@core/contexts/AuthContext'
 
+import { FaRegCalendarAlt } from 'react-icons/fa'
+import { MdSettings } from 'react-icons/md'
+import { RiShieldFlashLine } from 'react-icons/ri'
 import OverviewExam from '@components/atomic/OverviewExam'
 
 const CardDisplay = ({examId}) => {
     const [examData, setExamData] = useState(null)
+
+    const { user } = useAuth()
     
     useEffect(() => {
-        console.log(examId)
-
         if (!examId) return
         
         const fetchData = async () => {
@@ -20,8 +23,13 @@ const CardDisplay = ({examId}) => {
                 examId: examId
             }).then(res => setExamData(res.data.body))
         }
+
         fetchData()
     }, [examId])
+
+    useEffect(() => {
+        console.log(user)
+    }, [user])
 
     if (!examId || !examData) return <ContentLoader />
 
@@ -31,7 +39,7 @@ const CardDisplay = ({examId}) => {
                 <p className="title">{examData.cluster}</p>
                 <p className="date flex-cc"><FaRegCalendarAlt />{mainDate(examData.availability.start)}</p>
             </div>
-            <div className="body">
+            <div className="body flex-cc col">
                 <OverviewExam
                     title={examData.title}
                     size={getSize(examData.sessions)}
@@ -42,6 +50,42 @@ const CardDisplay = ({examId}) => {
                 />
                 <button className="mx-auto bordered green">IKUTI TRYOUT</button>
             </div>
+            { user?.role.admin && <AdminEdit />}
+        </div>
+    )
+}
+
+const AdminEdit = () => {
+    const [show, setShow] = useState(false)
+    const [examId, setExamId] = useState('')
+    const [response, setResponse] = useState('')
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setResponse(null)
+
+        await axios.post('/api/private/exams/edit-displayed-exams', {
+            position: i,
+            examId: examId,
+            token: await user.getIdToken()
+        }).then(res => setResponse(res.data.message))
+    }
+
+    return (
+        <div className="admin-edit flex-cc col">
+            <button onClick={() => setShow(!show)} className={`edit no-btn flex-bc mx-auto ${show ? 'active' : ''}`}>
+                Ganti display <span className="flex-cc"><MdSettings /><RiShieldFlashLine color="orange" /></span>
+            </button>
+            {show &&
+                <form onSubmit={handleSubmit} className="flex-cc col">
+                    <input type="text" placeholder="Exam ID" value={examId} onChange={e => setExamId(e.target.value)}/>
+                    <div className="flex-bc full-w">
+                        <button type="submit">UBAH</button>
+                        <button type="button" onCLick={() => setShow(false)} className="bordered">BATAL</button>
+                    </div>
+                </form>
+            }
+            <p>{response}</p>
         </div>
     )
 }
@@ -121,10 +165,14 @@ const style = css`
     .body{
         border: 1px solid #0F412544;
         border-radius: 14px;
+        padding: 0 18px;
+
+        @media (min-width: 1000px) {
+        }
         
         button{
             padding: 10px 0;
-            width: calc(100% - 40px);
+            width: 100%;
             margin-bottom: 18px;
             font-family: Poppins;
             font-weight: 600;
@@ -160,6 +208,40 @@ const style = css`
                     box-shadow: none;
                     color: #0003;
                 }
+            }
+        }
+    }
+
+    .admin-edit{
+        form{
+            margin-top: 4px;
+            width: 100%;
+            max-width: 222px;
+        }
+        input{
+            margin-bottom: 12px;
+            width: calc(100% - 20px);
+        }
+    }
+
+    button.edit{
+        padding: 12px;
+        width: calc(100% - 24px);
+        border-radius: 10px;
+        margin-top: 6px;
+        color: #0004;
+        
+        &:hover{            
+            color: #000a;
+            box-shadow: inset 0 0 0 1px #0004;
+
+        }
+
+        &.active{
+            color: #000a;
+
+            &:hover{
+                box-shadow: none;
             }
         }
     }

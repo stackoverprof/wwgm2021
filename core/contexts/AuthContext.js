@@ -5,10 +5,9 @@ const firebaseAuth = React.createContext()
 
 const AuthProvider = ({children}) => {
     const [authState, setAuthState] = useState('initial')   //initial/user/guest
-    const [currentUser, setCurrentUser] = useState({}) 
-    const [errorCode, setErrorCode] = useState('')
-    const [role, setRole] = useState({})
+    const [user, setUser] = useState({}) 
     const [userData, setUserData] = useState({})
+    const [errorCode, setErrorCode] = useState('')
 
     const authMethods = {
         emailSignup : (email, password, displayName) => {
@@ -27,14 +26,14 @@ const AuthProvider = ({children}) => {
                         photoURL : avatar
                     })
 
-                    setCurrentUser(data.user) 
+                    setUser(data.user) 
                 })
                 .catch(err => setErrorCode(err.code))
         },
 
         emailSignin : (email, password) => {
             return AUTH.signInWithEmailAndPassword(email, password)
-                .then(res => setCurrentUser(res.user))  
+                .then(res => setUser(res.user))  
                 .catch(err => setErrorCode(err.code))
         },
 
@@ -51,7 +50,7 @@ const AuthProvider = ({children}) => {
                     })
                 }
 
-                setCurrentUser(res.user)
+                setUser(res.user)
             })
             .catch(err => setErrorCode(err.code))
         },
@@ -62,27 +61,24 @@ const AuthProvider = ({children}) => {
     }
 
          
-    const refreshUserData = (uid = currentUser.uid) => {
+    const refreshUserData = (uid = user.uid) => {
         console.log('Refetching user data...')
         DB.collection('Users').doc(uid).get()
         .then(doc => setUserData(doc.data()))
     }   
         
     useEffect(() => {
-        const unsubscribe = AUTH.onAuthStateChanged(user => {
-            if(user) {
-                user.getIdTokenResult().then(res => {
-                    setCurrentUser(user)
-                    setRole({
-                        admin: res.claims.admin
-                    })
-                    setAuthState('user')
-                    refreshUserData(user.uid)
+        const unsubscribe = AUTH.onAuthStateChanged(userAuth => {
+            if(userAuth) {
+                refreshUserData(userAuth.uid)
+                setAuthState('user')
+                userAuth.getIdTokenResult().then(res => {
+                    setUser({ role: { admin: res.claims.admin }, ...userAuth })
                 })
             }
             else {
-                setCurrentUser({})
-                setRole({})
+                setUserData({})
+                setUser({})
                 setAuthState('guest')
             }
         })
@@ -93,8 +89,7 @@ const AuthProvider = ({children}) => {
         <firebaseAuth.Provider value={{
             authMethods,
             authState,
-            currentUser,
-            role,
+            user,
             errorCode,
             setErrorCode,
             userData,

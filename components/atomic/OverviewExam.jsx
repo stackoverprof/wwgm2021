@@ -22,6 +22,8 @@ const Advantages = ({title, size, duration, sessionsLength, fullDate, time, skel
 
 const style = ({skeleton}) => css`
     padding: 16px 12px 16px 24px;
+    max-width: 300px;
+    width: 100%;
 
     .react-loading-skeleton{
         position: relative;

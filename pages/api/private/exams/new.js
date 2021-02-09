@@ -11,11 +11,11 @@ export default async (req, res) => {
     //VERIVYING THE CURRENT USER
     const currentUser = await admin.auth().verifyIdToken(Req.userToken)
         .catch(() => {
-            return res.status(500).json({ status: 'error', message: 'token tidak valid, coba login ulang' })
+            return res.status(500).json({ status: 'ERROR', message: 'token tidak valid, coba login ulang' })
     })
 
     if (!currentUser.admin) {
-        return res.status(403).json({ status: 'error', message: 'anda tidak berhak membuat ujian'})
+        return res.status(403).json({ status: 'ERROR', message: 'anda tidak berhak membuat ujian'})
     }
 
     //REQUEST BODY STRUCTURE VALIDATION

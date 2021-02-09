@@ -11,7 +11,7 @@ import Spinner from '@components/atomic/spinner/Circle'
 import AlertHandler from '@components/atomic/AlertHandler'
     
 const Dashboard = () => {
-    const { currentUser, role, authMethods } = useAuth()
+    const { user, authMethods } = useAuth()
     const [alert, setAlert] = useState('')
     const [issuedEmail, setIssuedEmail] = useState('')
 
@@ -20,7 +20,7 @@ const Dashboard = () => {
         setAlert(null)
         
         axios.post('/api/private/admin/set', {
-            userToken: await currentUser.getIdToken(),
+            userToken: await user.getIdToken(),
             email: issuedEmail
         })
         .then(res => setAlert({error: false, body: res.data.message}))
@@ -29,17 +29,17 @@ const Dashboard = () => {
 
     return (
         <UserOnlyRoute redirect={to.home}>
-            {currentUser && (
+            {user && (
                 <MainLayout css={style}>
-                    <p>Dashboard of {currentUser.displayName}</p>
+                    <p>Dashboard of {user.displayName}</p>
                     <div className="control">
-                        <img src={currentUser.photoURL} alt=""/>
+                        <img src={user.photoURL} alt=""/>
                         <Link href={to.home}><button className="btn">Back Home</button></Link>
                         <button className="btn red" onClick={authMethods.signout}>LOGOUT</button>
                     </div>
-                    <p>Access Try Out : {role.enrolledExams && role.enrolledExams.length > 0? role.enrolledExams.join(", ") : 'no-access'}</p>
-                    <p>Admin Status : {role.admin ? 'admin' : 'false'}</p>
-                    {role.admin && (
+                    <p>Access Try Out : {user.role.enrolledExams && user.role.enrolledExams.length > 0? user.role.enrolledExams.join(", ") : 'no-access'}</p>
+                    <p>Admin Status : {user.role.admin ? 'admin' : 'false'}</p>
+                    {user.role.admin && (
                         <form onSubmit={handleSetAdmin}>
                             <input type="email" value={issuedEmail} required onChange={e => setIssuedEmail(e.target.value)}/>
                             <button className="btn" type="submit">{alert === null ? <Spinner /> : 'set admin'}</button>
