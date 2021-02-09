@@ -24,7 +24,14 @@ const AuthProvider = ({children}) => {
                     DB.collection('Users').doc(res.user.uid).set({
                         uid : res.user.uid,
                         displayName : displayName,
-                        photoURL : avatar
+                        photoURL : avatar,
+                        fullName : '',
+                        contact: '',
+                        province: '',
+                        city: '',
+                        school: '',
+                        noPeserta: '',
+                        examsAccess: []
                     })
 
                     setUser(data.user) 
