@@ -20,7 +20,6 @@ const Dashboard = () => {
             authToken: await user.getIdToken()
         })
         .then(res => {
-            console.log(res)
             setData(res.data.message)
         })
         .catch(err => setData(err.response.data.message))

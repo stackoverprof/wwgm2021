@@ -11,7 +11,7 @@ import EditDisplayExams from '@components/atomic/EditDisplayExams'
 
 const CardDisplay = ({examId, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
-    const { user, access } = useAuth()
+    const { access } = useAuth()
     
     useEffect(() => {
         if (!examId) return
@@ -24,10 +24,6 @@ const CardDisplay = ({examId, i, refreshData}) => {
 
         fetchData()
     }, [examId])
-
-    useEffect(() => {
-        console.log(user)
-    }, [user])
 
     if (!examId || !examData) return <ContentLoader />
 

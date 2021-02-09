@@ -7,12 +7,10 @@ const LoadScreen = () => {
 
     const remover = () => {
         setloaded(true)
-        console.log('onload')
     }
     
     const fallback = () => {
         setloaded(true)
-        console.log('fallback loader')
     }
 
     useEffect(() => {

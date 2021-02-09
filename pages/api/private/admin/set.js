@@ -8,8 +8,6 @@ export default async (req, res) => {
     return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
   }
 
-  console.log(admin);
-
   //VERIVYING THE CURRENT USER
   const currentUser = await admin.auth().verifyIdToken(userToken)
     .catch(err => {
