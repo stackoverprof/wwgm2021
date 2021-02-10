@@ -4,11 +4,14 @@ const LayoutContext = React.createContext()
 
 const LayoutProvider = ({children}) => {
     const [dimm, setDimm] = useState(false)
+    const [globalAlert, setGlobalAlert] = useState('')
 
     return (
         <LayoutContext.Provider value={{
             dimm,
-            setDimm
+            globalAlert,
+            setDimm,
+            setGlobalAlert
         }}>
             { children }
         </LayoutContext.Provider>

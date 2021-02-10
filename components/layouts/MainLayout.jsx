@@ -3,12 +3,13 @@ import { css } from '@emotion/react'
 import Navbar from '@components/molecular/Navbar'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLayout } from '@core/contexts/LayoutContext'
+import AlertHandler from '@components/atomic/AlertHandler'
 
 const MainLayout = ({className, css: style, children, directLogin, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
-    const { dimm } = useLayout()
+    const { dimm, globalAlert, setGlobalAlert } = useLayout()
 
     useEffect(() => {
         setNavHeight(navRef.current.firstChild.offsetHeight)
@@ -32,6 +33,8 @@ const MainLayout = ({className, css: style, children, directLogin, noClearance})
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {globalAlert && <AlertHandler message={globalAlert.body} closeHandler={() => setGlobalAlert('')} color={globalAlert.error ? 'red' : 'default'}/>}
         </div>
     )
 }

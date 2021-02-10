@@ -8,6 +8,7 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState({})
     const [access, setAccess] = useState({})
     const [userData, setUserData] = useState({})
+    const [isNew, setIsNew] = useState(false)
     const [errorAuth, setErrorAuth] = useState('')
 
     const profileData = (uid, displayName, img) => {
@@ -54,14 +55,14 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('email')
 
             return AUTH.signInWithPopup(GoogleAUTH).then(res => {
-                const { user } = res
 
                 if(res.additionalUserInfo.isNewUser){
-                    DB.collection('Users').doc(user.uid)
-                    .set(profileData(user.uid, user.displayName, user.photoURL))
+                    DB.collection('Users').doc(res.user.uid)
+                    .set(profileData(res.user.uid, res.user.displayName, res.user.photoURL))
+                
+                    setIsNew(true)
                 }
-
-                setUser(user)
+                setUser(res.user)
             })
             .catch(err => setErrorAuth(err.code))
         },
@@ -82,7 +83,7 @@ const AuthProvider = ({children}) => {
         const unsubscribe = AUTH.onAuthStateChanged(user => {
             if(user) {
                 setAuthState('user')
-                setUser(user)
+                setUser(user) 
                 refreshUserData(user.uid)
                 user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
@@ -93,16 +94,22 @@ const AuthProvider = ({children}) => {
                 setUser({})
                 setUserData({})
                 setAccess({})
+                setIsNew(false)
             }
         })
         return unsubscribe
     }, [])
     
+    useEffect(() => {
+        console.log(isNew)
+    }, [isNew])
+
     return (
         <firebaseAuth.Provider value={{
             authMethods,
             authState,
             user,
+            isNew,
             access,
             userData,
             errorAuth,

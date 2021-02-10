@@ -10,7 +10,7 @@ import to from '@core/routepath'
 import GoogleAuth from '@components/atomic/GoogleAuth'
 
 const LoginPopUp = ({handleClose}) => {
-    const { authState, setErrorAuth } = useAuth()
+    const { user, isNew, authState, setErrorAuth } = useAuth()
 
     const { setDimm } = useLayout()
 
@@ -39,13 +39,17 @@ const LoginPopUp = ({handleClose}) => {
                         
                         {authState !== 'user' ?
                             <p className="instruction">Hai, mohon gunakan email yang sama dengan yang digunakan saat mengisi gform</p>
+                        : isNew ?
+                            <p className="instruction">Berhasil Mendaftar!<br/>Yuk lengkapi dulu biodatamu.</p>
                         :
                             <p className="instruction bigger">Berhasil Login! <br/> Selamat datang</p>
                         }
+                        
                         <div className="buttons flex-cc">
                             {authState !== 'user' && <GoogleAuth />}
                             {authState !== 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
-                            {authState === 'user' && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
+                            {authState === 'user' && isNew && <Link href="//editbiodata"><a className="btn tutup">Lengkapi biodata</a></Link>}
+                            {authState === 'user' && !isNew && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
                             {authState === 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
                         </div>
                     </div>

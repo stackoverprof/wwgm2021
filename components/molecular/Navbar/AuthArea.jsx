@@ -15,7 +15,7 @@ import AlertHandler from '@components/atomic/AlertHandler'
 const AuthArea = ({
     openAuthAction,
     openLoginPop,
-    openLogoutPop,
+openLogoutPop,
     className,
     toggleDropper,
     setOpenLoginPop,
@@ -23,7 +23,7 @@ const AuthArea = ({
     setOpenAuthAction
 }) => {
 
-    const { user, access, authState, errorAuth, setErrorAuth } = useAuth()
+    const { user, userData, access, authState, errorAuth, setErrorAuth } = useAuth()
     const { setDimm } = useLayout()
     
     const showLogin = {
@@ -64,7 +64,7 @@ const AuthArea = ({
             {authState === 'user' && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
-                        <img src={user.photoURL} alt=""/>
+                        <img src={userData.photoURL} alt=""/>
                         <RunningText offset={26}>{user.displayName}</RunningText>
                         <div className="cover"></div>
                     </button>
