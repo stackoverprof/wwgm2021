@@ -10,6 +10,21 @@ const AuthProvider = ({children}) => {
     const [userData, setUserData] = useState({})
     const [errorAuth, setErrorAuth] = useState('')
 
+    const profileData = (uid, displayName, img) => {
+        return {
+            uid : uid,
+            displayName : displayName,
+            photoURL : img,
+            fullName : '',
+            contact: '',
+            province: '',
+            city: '',
+            school: '',
+            noPeserta: '',
+            examsAccess: []
+        }
+    }
+
     const authMethods = {
         emailSignup : (email, password, displayName) => {
             return AUTH.createUserWithEmailAndPassword(email, password)
@@ -21,18 +36,7 @@ const AuthProvider = ({children}) => {
                         photoURL : avatar
                     })
 
-                    DB.collection('Users').doc(res.user.uid).set({
-                        uid : res.user.uid,
-                        displayName : displayName,
-                        photoURL : avatar,
-                        fullName : '',
-                        contact: '',
-                        province: '',
-                        city: '',
-                        school: '',
-                        noPeserta: '',
-                        examsAccess: []
-                    })
+                    DB.collection('Users').doc(res.user.uid).set(profileData(res.user.uid, displayName, avatar))
 
                     setUser(data.user) 
                 })
@@ -50,22 +54,14 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('email')
 
             return AUTH.signInWithPopup(GoogleAUTH).then(res => {
+                const { user } = res
+
                 if(res.additionalUserInfo.isNewUser){
-                    DB.collection('Users').doc(res.user.uid).set({
-                        uid : res.user.uid,
-                        displayName : res.user.displayName,
-                        fullName : '',
-                        photoURL : res.user.photoURL,
-                        contact: '',
-                        province: '',
-                        city: '',
-                        school: '',
-                        noPeserta: '',
-                        examsAccess: []
-                    })
+                    DB.collection('Users').doc(user.uid)
+                    .set(profileData(user.uid, user.displayName, user.photoURL))
                 }
 
-                setUser(res.user)
+                setUser(user)
             })
             .catch(err => setErrorAuth(err.code))
         },
@@ -83,12 +79,12 @@ const AuthProvider = ({children}) => {
     }   
         
     useEffect(() => {
-        const unsubscribe = AUTH.onAuthStateChanged(userAuth => {
-            if(userAuth) {
+        const unsubscribe = AUTH.onAuthStateChanged(user => {
+            if(user) {
                 setAuthState('user')
-                setUser(userAuth)
-                refreshUserData(userAuth.uid)
-                userAuth.getIdTokenResult().then(res => {
+                setUser(user)
+                refreshUserData(user.uid)
+                user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
                 })
             }

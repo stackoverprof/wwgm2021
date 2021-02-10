@@ -15,6 +15,11 @@ const EditDisplayExams = ({i, refreshData}) => {
 
     const { user } = useAuth()
 
+    const handleClose = () => {
+        setExamId('')
+        setShow(false)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setAlert(null)
@@ -43,7 +48,7 @@ const EditDisplayExams = ({i, refreshData}) => {
                     <input type="text" placeholder="Exam ID" value={examId} onChange={e => setExamId(e.target.value)}/>
                     <div className="flex-bc full-w">
                         <button type="submit">{alert === null ? <Spinner w={64.5} h={26}/> : 'UBAH'}</button>
-                        <button type="button" onClick={() => setShow(false)} className="bordered">BATAL</button>
+                        <button type="button" onClick={handleClose} className="bordered">BATAL</button>
                     </div>
                 </form>
             }

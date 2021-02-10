@@ -35,6 +35,7 @@ const CardDisplay = ({examId, i, refreshData}) => {
             </div>
             <div className="body flex-cc col">
                 <OverviewExam
+                    examId={examId}
                     title={examData.title}
                     size={getSize(examData.sessions)}
                     duration={getDuration(examData.sessions)}
@@ -56,7 +57,7 @@ const ContentLoader = () => {
             <div className="header-skeleton">
                 <Skeleton height={110} />
             </div>
-            <div className="body body-skeleton">
+            <div className="body body-skeleton flex-cc col">
                 <OverviewExam skeleton/>
                 <button className="mx-auto bordered" disabled>IKUTI TRYOUT</button>
             </div>

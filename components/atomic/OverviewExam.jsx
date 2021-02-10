@@ -1,12 +1,16 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { FaPencilAlt, FaRegCalendarAlt, FaBook } from 'react-icons/fa'
+
+import { RiShieldFlashLine } from 'react-icons/ri'
 import { MdTimelapse, MdClass } from 'react-icons/md'
 import { BiTimeFive } from 'react-icons/bi'
 import Skeleton from 'react-loading-skeleton'
-import RunningText from './RunningText'
+import RunningText from '@components/atomic/RunningText'
+import { useAuth } from '@core/contexts/AuthContext'
 
-const Advantages = ({title, size, duration, sessionsLength, fullDate, time, skeleton}) => {
+const Advantages = ({examId, title, size, duration, sessionsLength, fullDate, time, skeleton}) => {
+    const { access } = useAuth()
 
     return (
         <ul css={style({skeleton})}>
@@ -16,6 +20,7 @@ const Advantages = ({title, size, duration, sessionsLength, fullDate, time, skel
             <li className="flex-sc"><MdClass /><p>{sessionsLength && !skeleton ? sessionsLength + ' Sesi' : <Skeleton />}</p></li>
             <li className="flex-sc"><FaRegCalendarAlt /><p>{fullDate && !skeleton ? fullDate : <Skeleton />}</p></li>
             <li className="flex-sc"><BiTimeFive /><p>{time && !skeleton ? time + ' WIB' : <Skeleton />}</p></li>
+            {access.admin && <li className="flex-sc"><RiShieldFlashLine color="orange" />{examId && !skeleton ? <RunningText className="title" offset={20}>{examId}</RunningText> : <p><Skeleton /></p>}</li>}
         </ul>
     )
 }
