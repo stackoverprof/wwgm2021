@@ -13,7 +13,7 @@ import MainLayout from '@components/layouts/MainLayout'
 const Dashboard = () => {
     const [provinceList, setProvinceList] = useState([])
     const [cityList, setCityList] = useState([])
-    const [selectedProvinceId, setSelectedProvinceId] = useState(11)
+    const [selectedProvinceId, setSelectedProvinceId] = useState('')
     const [inputData, setInputData] = useState({
         fullname: '',
         displayname: '',
@@ -53,23 +53,16 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             await axios.get(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${selectedProvinceId}`)
-            .then(res => {
-                setCityList(res.data.kota_kabupaten)
-                console.log(res.data.kota_kabupaten)
-            })
+            .then(res => setCityList(res.data.kota_kabupaten))
             .catch(err => setGlobalAlert({body: err.message, error: true}))
         }
         fetchData()
     }, [selectedProvinceId])
 
-    useEffect(() => {
-        console.log(selectedProvinceId)
-    }, [selectedProvinceId])
-
     return (
         <UserOnlyRoute redirect={to.home}>
             {user && (
-                <MainLayout css={style} className="flex-sc col">
+                <MainLayout css={style({inputData})} className="flex-sc col">
                     <div className="form-container contain-size-s">
                         <form>
                             <div className="form-item flex-cs col">
@@ -98,9 +91,10 @@ const Dashboard = () => {
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><GiRank2 /></div>
                                     <select value={inputData.province} onChange={mutateInput} name="province" id="province">
+                                        <option value="" disabled>Pilih provinsi</option>
                                         {provinceList.map((item, i) => (
                                             <option value={item.nama} key={i}>{item.nama}</option>
-                                        ))}
+                                            ))}
                                     </select>
                                 </div>
                             </div>
@@ -109,6 +103,7 @@ const Dashboard = () => {
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><GiRank1 /></div>
                                     <select value={inputData.city} onChange={mutateInput} name="city" id="city">
+                                        <option value="" disabled>{cityList.length === 0 ? 'Pilih provinsi terlebih dahulu' : 'Pilih kota'}</option>
                                         {cityList.map((item, i) => (
                                             <option value={item.nama} key={i}>{item.nama}</option>
                                         ))}
@@ -129,7 +124,7 @@ const Dashboard = () => {
         </UserOnlyRoute>
     )
 }
-const style = css`
+const style = ({inputData}) => css`
     padding: 64px 0;
 
     .form-item {
@@ -186,6 +181,17 @@ const style = css`
 
             select{
                 margin-right: 12px;
+
+                &:focus{
+                    color: var(--army) !important;
+                }
+                
+                &:nth-of-type(1){
+                    ${inputData.province ? '' : 'color: #0005;'}
+                }
+                &:nth-of-type(2){
+                    ${inputData.city ? '' : 'color: #0005;'}
+                }
             }
         }
     }
