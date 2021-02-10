@@ -31,6 +31,14 @@ const Dashboard = () => {
            ...prevState,
            [e.target.id]: e.target.value
         }))
+
+        if (e.target.id === 'province') {
+            const provinceItem = provinceList.filter((item) => {
+                return item.nama === e.target.value
+            })[0]
+
+            setSelectedProvinceId(provinceItem.id)
+        }
     }
 
     useEffect(() => {
@@ -91,7 +99,7 @@ const Dashboard = () => {
                                     <div className="icon flex-cc"><GiRank2 /></div>
                                     <select value={inputData.province} onChange={mutateInput} name="province" id="province">
                                         {provinceList.map((item, i) => (
-                                            <option value={item.nama} onClick={() => setSelectedProvinceId(item.id)} key={i}>{item.nama}</option>
+                                            <option value={item.nama} key={i}>{item.nama}</option>
                                         ))}
                                     </select>
                                 </div>
