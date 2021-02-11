@@ -23,7 +23,7 @@ const Dashboard = () => {
         school: ''
     })
     
-    const { user } = useAuth()
+    const { user, userData } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const mutateInput = (e) => {
@@ -33,31 +33,54 @@ const Dashboard = () => {
         }))
 
         if (e.target.id === 'province') {
-            const provinceItem = provinceList.filter((item) => {
-                return item.nama === e.target.value
-            })[0]
-
-            setSelectedProvinceId(provinceItem.id)
+            handleProvinceChange(e.target.value)
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            await axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
-            .then(res => setProvinceList(res.data.provinsi))
-            .catch(err => setGlobalAlert({body: err.message, error: true}))
-        }
-        fetchData()
-    }, [])
+    const handleProvinceChange = (name) => {
+        const provinceItem = provinceList.filter((item) => {
+            return item.nama === name
+        })[0]
+        console.log(provinceList)
+        console.log(name)
+        console.log(provinceItem)
+        setSelectedProvinceId(provinceItem.id)
+    }
+
+    const fetchProvince = () => {
+        return axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
+        .then(res => setProvinceList(res.data.provinsi))
+        .catch(err => setGlobalAlert({body: err.message, error: true}))
+    }
+
+    const fetchCity = async () => {
+        await axios.get(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${selectedProvinceId}`)
+        .then(res => setCityList(res.data.kota_kabupaten))
+        .catch(err => setGlobalAlert({body: err.message, error: true}))
+    }
+    
+    
+    useEffect(() => { fetchCity() }, [selectedProvinceId])
 
     useEffect(() => {
-        const fetchData = async () => {
-            await axios.get(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${selectedProvinceId}`)
-            .then(res => setCityList(res.data.kota_kabupaten))
-            .catch(err => setGlobalAlert({body: err.message, error: true}))
+        const initialFetch = async () => {
+            await fetchProvince().then(() => {
+                if (Object.keys(userData).length !== 0) {
+                    handleProvinceChange(userData.province)
+                    setInputData({
+                        fullname: userData.fullName,
+                        displayname: userData.displayName,
+                        contact: userData.contact,
+                        province: userData.province,
+                        city: userData.city,
+                        school: userData.school
+                    })
+                }
+            })
         }
-        fetchData()
-    }, [selectedProvinceId])
+
+        initialFetch()
+    }, [userData])
 
     return (
         <UserOnlyRoute redirect={to.home}>

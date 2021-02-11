@@ -74,7 +74,6 @@ const AuthProvider = ({children}) => {
 
          
     const refreshUserData = (uid = user.uid) => {
-        console.log('Refetching user data...')
         DB.collection('Users').doc(uid).get()
         .then(doc => setUserData(doc.data()))
     }   
@@ -100,10 +99,6 @@ const AuthProvider = ({children}) => {
         return unsubscribe
     }, [])
     
-    useEffect(() => {
-        console.log(isNew)
-    }, [isNew])
-
     return (
         <firebaseAuth.Provider value={{
             authMethods,
