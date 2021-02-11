@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
+import axios from 'axios'
 
 const firebaseAuth = React.createContext()
 
@@ -52,12 +53,16 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
-            return AUTH.signInWithPopup(GoogleAUTH).then(res => {
+            return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
 
                 if(res.additionalUserInfo.isNewUser){
                     DB.collection('Users').doc(res.user.uid)
                     .set(profileData(res.user.displayName, res.user.photoURL))
-                
+
+                    axios.post('/api/user/user-data/exams-access', {
+                        authToken: await user.getIdToken()
+                    })
+                    
                     setIsNew(true)
                 }
                 setUser(res.user)

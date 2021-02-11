@@ -16,7 +16,7 @@ const Dashboard = () => {
     const CheckRole = async () => {
         setData(null)
         
-        axios.post('/api/private/cek', {
+        axios.post('/api/user/access', {
             authToken: await user.getIdToken()
         })
         .then(res => {
