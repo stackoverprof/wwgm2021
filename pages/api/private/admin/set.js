@@ -4,7 +4,7 @@ export default async (req, res) => {
   const { userToken, email } = req.body
   
   //CHECKING THE DATA NEEDED
-  if (!email && !userToken) {
+  if (!email || !userToken) {
     return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
   }
 

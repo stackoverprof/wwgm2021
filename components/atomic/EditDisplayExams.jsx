@@ -2,18 +2,19 @@ import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 import { RiShieldFlashLine } from 'react-icons/ri'
 import { MdSettings } from 'react-icons/md'
 import Spinner from '@components/atomic/spinner/Circle'
-import AlertHandler from '@components/atomic/AlertHandler'
 
 const EditDisplayExams = ({i, refreshData}) => {
     const [show, setShow] = useState(false)
     const [examId, setExamId] = useState('')
-    const [alert, setAlert] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const { user } = useAuth()
+    const { setGlobalAlert } = useLayout()
 
     const handleClose = () => {
         setExamId('')
@@ -22,7 +23,7 @@ const EditDisplayExams = ({i, refreshData}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setAlert(null)
+        setLoading(true)
 
         await axios.post('/api/private/exams/edit-displayed-exams', {
             position: i,
@@ -30,12 +31,13 @@ const EditDisplayExams = ({i, refreshData}) => {
             token: await user.getIdToken()
         })
         .then(res => {
-            setAlert({error: false, body: res.data.message})
+            setGlobalAlert({error: false, body: res.data.message})
             setExamId('')
             setShow(false)
             refreshData()
         })
-        .catch(err => setAlert({error: true, body: err.response.data.message}))
+        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        setLoading(false)
     }
 
     return (
@@ -45,14 +47,13 @@ const EditDisplayExams = ({i, refreshData}) => {
             </button>
             {show &&
                 <form onSubmit={handleSubmit} className="flex-cc col">
-                    <input type="text" placeholder="Exam ID" value={examId} onChange={e => setExamId(e.target.value)}/>
+                    <input type="text" placeholder="Exam ID" required value={examId} onChange={e => setExamId(e.target.value)}/>
                     <div className="flex-bc full-w">
-                        <button type="submit">{alert === null ? <Spinner w={64.5} h={26}/> : 'UBAH'}</button>
+                        <button type="submit">{loading ? <Spinner w={64.5} h={26}/> : 'UBAH'}</button>
                         <button type="button" onClick={handleClose} className="bordered">BATAL</button>
                     </div>
                 </form>
             }
-            {alert && <AlertHandler message={alert.body} closeHandler={() => setAlert('')} color={alert.error ? 'red' : 'default'}/>}
         </div>
     )
 }

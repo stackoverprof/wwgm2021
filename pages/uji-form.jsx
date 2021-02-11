@@ -10,14 +10,16 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 import MainLayout from '@components/layouts/MainLayout'
+import Spinner from '@components/atomic/spinner/Circle'
     
 const Dashboard = () => {
     const [provinceList, setProvinceList] = useState([])
     const [cityList, setCityList] = useState([])
     const [selectedProvinceId, setSelectedProvinceId] = useState('')
+    const [loading, setLoading] = useState(false)
     const [inputData, setInputData] = useState({
-        fullname: '',
-        displayname: '',
+        fullName: '',
+        displayName: '',
         contact: '',
         province: '',
         city: '',
@@ -25,17 +27,34 @@ const Dashboard = () => {
     })
     
     const { user, userData } = useAuth()
-    const { setGlobalAlert } = useLayout()
+    const { globalAlert, setGlobalAlert } = useLayout()
 
-    const mutateInput = (e) => {
+    const mutateInputData = (e) => {
         setInputData((prevState) => ({
            ...prevState,
-           [e.target.id]: e.target.value
+           [e.target.name]: e.target.value
         }))
 
-        if (e.target.id === 'province') {
+        if (e.target.name === 'province') {
             handleProvinceChange(e.target.value)
         }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+
+        await DB.collection('Users').doc(user.uid).update({
+            fullName: inputData.fullName,
+            displayName: inputData.displayName,
+            contact: inputData.contact,
+            province: inputData.province,
+            city: inputData.city,
+            school: inputData.school
+        }).then(() => setGlobalAlert({error: false, body: 'Berhasil mengubah data!'}))
+        .catch(() => setGlobalAlert({error: true, body: 'Gagal mengupdate data'}))
+        
+        setLoading(false)
     }
 
     const handleProvinceChange = (name) => {
@@ -45,18 +64,6 @@ const Dashboard = () => {
             return item.nama === name
         })[0]
         setSelectedProvinceId(provinceItem.id)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        DB.collection('Users').doc(user.uid).update({
-            fullName: inputData.fullname,
-            displayName: inputData.displayname,
-            contact: inputData.contact,
-            province: inputData.province,
-            city: inputData.city,
-            school: inputData.school
-        })
     }
 
     const fetchProvince = () => {
@@ -70,29 +77,29 @@ const Dashboard = () => {
         .then(res => setCityList(res.data.kota_kabupaten))
         .catch(err => setGlobalAlert({body: err.message, error: true}))
     }
+
+    const fetchInitial = async () => {
+        await fetchProvince().then(() => {
+            if (Object.keys(userData).length !== 0) {
+                handleProvinceChange(userData.province)
+                setInputData({
+                    fullName: userData.fullName,
+                    displayName: userData.displayName,
+                    contact: userData.contact,
+                    province: userData.province,
+                    city: userData.city,
+                    school: userData.school
+                })
+            }
+        })
+    }
     
     useEffect(() => { 
         fetchCity() 
     }, [selectedProvinceId])
 
     useEffect(() => {
-        const initialFetch = async () => {
-            await fetchProvince().then(() => {
-                if (Object.keys(userData).length !== 0) {
-                    handleProvinceChange(userData.province)
-                    setInputData({
-                        fullname: userData.fullName,
-                        displayname: userData.displayName,
-                        contact: userData.contact,
-                        province: userData.province,
-                        city: userData.city,
-                        school: userData.school
-                    })
-                }
-            })
-        }
-
-        initialFetch()
+        fetchInitial()
     }, [userData])
 
     return (
@@ -102,31 +109,31 @@ const Dashboard = () => {
                     <div className="form-container contain-size-s">
                         <form onSubmit={handleSubmit} className="flex-cc col">
                             <div className="form-item full-w flex-cs col">
-                                <label htmlFor="full-name">NAMA LENGKAP</label>
+                                <label htmlFor="fullName">NAMA LENGKAP</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiIdCard /></div>
-                                    <input type="text" value={inputData.fullname} onChange={mutateInput} name="full-name" id="fullname" placeholder="Nama lengkap sesuai KTP"/>
+                                    <input type="text" value={inputData.fullName} onChange={mutateInputData} name="fullName" id="fullName" placeholder="Nama lengkap sesuai KTP"/>
                                 </div>
                             </div>
                             <div className="form-item full-w flex-cs col">
-                                <label htmlFor="display-name">DISPLAY NAME</label>
+                                <label htmlFor="displayName">DISPLAY NAME</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiUserPin /></div>
-                                    <input type="text" value={inputData.displayname} onChange={mutateInput} name="display-name" id="displayname" placeholder="Nama panggilan"/>
+                                    <input type="text" value={inputData.displayName} onChange={mutateInputData} name="displayName" id="displayName" placeholder="Nama panggilan"/>
                                 </div>
                             </div>
                             <div className="form-item full-w flex-cs col">
                                 <label htmlFor="contact">KONTAK</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiPhone /></div>
-                                    <input type="text" value={inputData.contact} onChange={mutateInput} name="contact" id="contact" placeholder="Id Line / nomor WA yang aktif"/>
+                                    <input type="text" value={inputData.contact} onChange={mutateInputData} name="contact" id="contact" placeholder="Id Line / nomor WA yang aktif"/>
                                 </div>
                             </div>
                             <div className="form-item full-w flex-cs col">
                                 <label htmlFor="province">PROVINSI</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><GiRank2 /></div>
-                                    <select value={inputData.province} onChange={mutateInput} name="province" id="province">
+                                    <select value={inputData.province} onChange={mutateInputData} name="province" id="province">
                                         <option value="" disabled>Pilih provinsi</option>
                                         {provinceList.map((item, i) => (
                                             <option value={item.nama} key={i}>{item.nama}</option>
@@ -138,7 +145,7 @@ const Dashboard = () => {
                                 <label htmlFor="city">KOTA / KAB</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><GiRank1 /></div>
-                                    <select value={inputData.city} onChange={mutateInput} name="city" id="city">
+                                    <select value={inputData.city} onChange={mutateInputData} name="city" id="city">
                                         <option value="" disabled>{cityList.length === 0 ? 'Pilih provinsi terlebih dahulu' : 'Pilih kota'}</option>
                                         {cityList.map((item, i) => (
                                             <option value={item.nama} key={i}>{item.nama}</option>
@@ -150,10 +157,12 @@ const Dashboard = () => {
                                 <label htmlFor="school">SEKOLAH</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiBuildings /></div>
-                                    <input type="text" value={inputData.school} onChange={mutateInput} name="school" id="school" placeholder="Asal sekolah"/>
+                                    <input type="text" value={inputData.school} onChange={mutateInputData} name="school" id="school" placeholder="Asal sekolah"/>
                                 </div>
                             </div>
-                            <button type="submit" className="submit">UPDATE DATA</button>
+                            <button type="submit" className="submit">
+                                {globalAlert === null ? <Spinner w={160} h={26}/> : 'UPDATE DATA'}
+                            </button>
                         </form>
                     </div>
                 </MainLayout>
@@ -163,6 +172,11 @@ const Dashboard = () => {
 }
 const style = ({inputData}) => css`
     padding: 64px 0;
+
+    button.submit {
+        margin-top: 24px;
+        padding: 12px 42px;
+    }
 
     .form-item {
         margin: 16px 0;

@@ -13,6 +13,8 @@ const MainLayout = ({className, css: style, children, directLogin, noClearance})
 
     useEffect(() => {
         setNavHeight(navRef.current.firstChild.offsetHeight)
+
+        return () => setGlobalAlert('')
     }, [])
 
     return (
@@ -28,7 +30,7 @@ const MainLayout = ({className, css: style, children, directLogin, noClearance})
                         initial={{ opacity: 0 }} 
                         animate={{ opacity: 1, transition: { duration: 0.25 }}} 
                         exit={{ opacity: 0, transition: { duration: 0.25 }}}
-                        className="dimm-layer fixed fullscreen flex-cs"
+                        className="dimm-layer fixed fullscreen-vh flex-cs"
                     >
                     </motion.div>
                 )}

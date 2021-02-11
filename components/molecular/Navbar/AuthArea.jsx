@@ -15,7 +15,7 @@ import AlertHandler from '@components/atomic/AlertHandler'
 const AuthArea = ({
     openAuthAction,
     openLoginPop,
-openLogoutPop,
+    openLogoutPop,
     className,
     toggleDropper,
     setOpenLoginPop,

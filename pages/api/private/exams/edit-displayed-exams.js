@@ -2,6 +2,10 @@ import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
     const {body: { position, examId, token }} = req
+    
+    if (!position || !examId || !token) {
+        return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
+    }
 
     //VERIVYING THE CURRENT USER
     const currentUser = await admin.auth().verifyIdToken(token)
