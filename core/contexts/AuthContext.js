@@ -54,13 +54,16 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('email')
 
             return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
-
                 if(res.additionalUserInfo.isNewUser){
-                    DB.collection('Users').doc(res.user.uid)
+                    await DB.collection('Users').doc(res.user.uid)
                     .set(profileData(res.user.displayName, res.user.photoURL))
-
-                    axios.post('/api/user/user-data/exams-access', {
-                        authToken: await user.getIdToken()
+                    .then(async () => {
+                        console.log('init')
+                        await axios.post('/api/user/user-data/exams-access', {
+                            authToken: await res.user.getIdToken()
+                        }).then(() => console.log('success'))
+                        .catch(err => console.log(err.response.data))
+                        console.log('kelewat')
                     })
                     
                     setIsNew(true)

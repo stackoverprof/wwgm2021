@@ -1,10 +1,10 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-    const { authToken } = req.body
+    const { body: { authToken } } = req
 
     if (!authToken) {
-        return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
+        return res.status(400).json({ status: 'ERROR', message: 'Data tidak lengkap' })
     }
     
     //VERIVYING _AUTHENTICATED
@@ -15,8 +15,6 @@ export default async (req, res) => {
     
     const userData = await DB.collection('Users').doc(currentUser.uid).get()
     .then(doc => doc.data())
-
-    console.log(userData)
 
     if (userData.examsAccess) {
         return res.status(403).json({ status: 'ERROR', message: 'Exams access already initiated. forbidden api access' })
