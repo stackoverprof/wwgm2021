@@ -19,7 +19,6 @@ export default async (req, res) => {
     return res.status(403).json({ status: 'error', message: 'anda tidak berhak menambah admin'})
   }
 
-
   //VALIDATING THE ISSUED USER
   const issuedUser = await admin.auth().getUserByEmail(email)
     .catch(err => {
@@ -34,7 +33,6 @@ export default async (req, res) => {
   else if (issuedUser.hasOwnProperty('customClaims') && issuedUser.customClaims['admin']) {
     return res.status(400).json({ status: 'error', message: `${email} sudah menjadi admin` })
   }
-  
 
   //CLAIMING ADMIN STATUS
   return admin.auth().setCustomUserClaims(issuedUser.uid, { admin: true })

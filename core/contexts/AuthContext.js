@@ -12,10 +12,10 @@ const AuthProvider = ({children}) => {
     const [isNew, setIsNew] = useState(false)
     const [errorAuth, setErrorAuth] = useState('')
 
-    const profileData = (displayName, img) => {
+    const profileData = (displayName, photoURL) => {
         return {
             displayName : displayName,
-            photoURL : img,
+            photoURL : photoURL,
             fullName : '',
             contact: '',
             province: '',
@@ -58,14 +58,10 @@ const AuthProvider = ({children}) => {
                     await DB.collection('Users').doc(res.user.uid)
                     .set(profileData(res.user.displayName, res.user.photoURL))
                     .then(async () => {
-                        console.log('init')
-                        await axios.post('/api/user/user-data/exams-access', {
+                        await axios.post('/api/user/user-data/init-exams-access', {
                             authToken: await res.user.getIdToken()
-                        }).then(() => console.log('success'))
-                        .catch(err => console.log(err.response.data))
-                        console.log('kelewat')
+                        })
                     })
-                    
                     setIsNew(true)
                 }
                 setUser(res.user)
@@ -77,16 +73,11 @@ const AuthProvider = ({children}) => {
             return AUTH.signOut()
         }
     }
-
          
     const refreshUserData = (uid = user.uid) => {
         DB.collection('Users').doc(uid).get()
         .then(doc => setUserData(doc.data()))
     }   
-
-    useEffect(() => {
-        console.log(userData)
-    }, [userData])
         
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(user => {
@@ -97,8 +88,7 @@ const AuthProvider = ({children}) => {
                 user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
                 })
-            }
-            else {
+            } else {
                 setAuthState('guest')
                 setUser({})
                 setUserData({})
