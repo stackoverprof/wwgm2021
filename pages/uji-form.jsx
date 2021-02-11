@@ -38,12 +38,11 @@ const Dashboard = () => {
     }
 
     const handleProvinceChange = (name) => {
+        if (name === '') return
+
         const provinceItem = provinceList.filter((item) => {
             return item.nama === name
         })[0]
-        console.log(provinceList)
-        console.log(name)
-        console.log(provinceItem)
         setSelectedProvinceId(provinceItem.id)
     }
 
