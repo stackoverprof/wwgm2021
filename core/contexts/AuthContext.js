@@ -11,9 +11,8 @@ const AuthProvider = ({children}) => {
     const [isNew, setIsNew] = useState(false)
     const [errorAuth, setErrorAuth] = useState('')
 
-    const profileData = (uid, displayName, img) => {
+    const profileData = (displayName, img) => {
         return {
-            uid : uid,
             displayName : displayName,
             photoURL : img,
             fullName : '',
@@ -21,8 +20,7 @@ const AuthProvider = ({children}) => {
             province: '',
             city: '',
             school: '',
-            noPeserta: '',
-            examsAccess: []
+            noPeserta: ''
         }
     }
 
@@ -37,7 +35,7 @@ const AuthProvider = ({children}) => {
                         photoURL : avatar
                     })
 
-                    DB.collection('Users').doc(res.user.uid).set(profileData(res.user.uid, displayName, avatar))
+                    DB.collection('Users').doc(res.user.uid).set(profileData(displayName, avatar))
 
                     setUser(data.user) 
                 })
@@ -58,7 +56,7 @@ const AuthProvider = ({children}) => {
 
                 if(res.additionalUserInfo.isNewUser){
                     DB.collection('Users').doc(res.user.uid)
-                    .set(profileData(res.user.uid, res.user.displayName, res.user.photoURL))
+                    .set(profileData(res.user.displayName, res.user.photoURL))
                 
                     setIsNew(true)
                 }
@@ -77,6 +75,10 @@ const AuthProvider = ({children}) => {
         DB.collection('Users').doc(uid).get()
         .then(doc => setUserData(doc.data()))
     }   
+
+    useEffect(() => {
+        console.log(userData)
+    }, [userData])
         
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(user => {
@@ -98,7 +100,7 @@ const AuthProvider = ({children}) => {
         })
         return unsubscribe
     }, [])
-    
+
     return (
         <firebaseAuth.Provider value={{
             authMethods,

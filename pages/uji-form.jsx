@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import to from '@core/routepath'
+import { DB } from '@core/services/firebase'
 import { useAuth } from '@core/contexts/AuthContext'
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useLayout } from '@core/contexts/LayoutContext'
@@ -46,6 +47,18 @@ const Dashboard = () => {
         setSelectedProvinceId(provinceItem.id)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        DB.collection('Users').doc(user.uid).update({
+            fullName: inputData.fullname,
+            displayName: inputData.displayname,
+            contact: inputData.contact,
+            province: inputData.province,
+            city: inputData.city,
+            school: inputData.school
+        })
+    }
+
     const fetchProvince = () => {
         return axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
         .then(res => setProvinceList(res.data.provinsi))
@@ -58,8 +71,9 @@ const Dashboard = () => {
         .catch(err => setGlobalAlert({body: err.message, error: true}))
     }
     
-    
-    useEffect(() => { fetchCity() }, [selectedProvinceId])
+    useEffect(() => { 
+        fetchCity() 
+    }, [selectedProvinceId])
 
     useEffect(() => {
         const initialFetch = async () => {
@@ -86,29 +100,29 @@ const Dashboard = () => {
             {user && (
                 <MainLayout css={style({inputData})} className="flex-sc col">
                     <div className="form-container contain-size-s">
-                        <form>
-                            <div className="form-item flex-cs col">
+                        <form onSubmit={handleSubmit} className="flex-cc col">
+                            <div className="form-item full-w flex-cs col">
                                 <label htmlFor="full-name">NAMA LENGKAP</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiIdCard /></div>
                                     <input type="text" value={inputData.fullname} onChange={mutateInput} name="full-name" id="fullname" placeholder="Nama lengkap sesuai KTP"/>
                                 </div>
                             </div>
-                            <div className="form-item flex-cs col">
+                            <div className="form-item full-w flex-cs col">
                                 <label htmlFor="display-name">DISPLAY NAME</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiUserPin /></div>
                                     <input type="text" value={inputData.displayname} onChange={mutateInput} name="display-name" id="displayname" placeholder="Nama panggilan"/>
                                 </div>
                             </div>
-                            <div className="form-item flex-cs col">
+                            <div className="form-item full-w flex-cs col">
                                 <label htmlFor="contact">KONTAK</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiPhone /></div>
                                     <input type="text" value={inputData.contact} onChange={mutateInput} name="contact" id="contact" placeholder="Id Line / nomor WA yang aktif"/>
                                 </div>
                             </div>
-                            <div className="form-item flex-cs col">
+                            <div className="form-item full-w flex-cs col">
                                 <label htmlFor="province">PROVINSI</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><GiRank2 /></div>
@@ -120,7 +134,7 @@ const Dashboard = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="form-item flex-cs col">
+                            <div className="form-item full-w flex-cs col">
                                 <label htmlFor="city">KOTA / KAB</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><GiRank1 /></div>
@@ -132,13 +146,14 @@ const Dashboard = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="form-item flex-cs col">
+                            <div className="form-item full-w flex-cs col">
                                 <label htmlFor="school">SEKOLAH</label>
                                 <div className="input-box flex-sc">
                                     <div className="icon flex-cc"><BiBuildings /></div>
                                     <input type="text" value={inputData.school} onChange={mutateInput} name="school" id="school" placeholder="Asal sekolah"/>
                                 </div>
                             </div>
+                            <button type="submit" className="submit">UPDATE DATA</button>
                         </form>
                     </div>
                 </MainLayout>
