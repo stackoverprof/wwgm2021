@@ -23,7 +23,7 @@ const AuthArea = ({
     setOpenAuthAction
 }) => {
 
-    const { user, userData, access, authState, errorAuth, setErrorAuth } = useAuth()
+    const { userData, access, authState, errorAuth, setErrorAuth } = useAuth()
     const { setDimm } = useLayout()
     
     const showLogin = {
@@ -65,7 +65,7 @@ const AuthArea = ({
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
                         <img src={userData.photoURL} alt=""/>
-                        <RunningText offset={26}>R.Bintang Bagus</RunningText>
+                        <RunningText offset={26}>{userData.displayName}</RunningText>
                         <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">

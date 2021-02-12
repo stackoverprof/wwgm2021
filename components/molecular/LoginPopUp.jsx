@@ -10,7 +10,7 @@ import to from '@core/routepath'
 import GoogleAuth from '@components/atomic/GoogleAuth'
 
 const LoginPopUp = ({handleClose}) => {
-    const { user, isNew, authState, setErrorAuth } = useAuth()
+    const { isNew, authState, setErrorAuth } = useAuth()
 
     const { setDimm } = useLayout()
 

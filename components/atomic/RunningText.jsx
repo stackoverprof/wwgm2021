@@ -9,7 +9,7 @@ const RunningText = ({className, children, offset = 0}) => {
 
     useEffect(() => setPWidth(P.current.offsetWidth), [P])
 
-    useEffect(() => setSpanWidth(Span.current.offsetWidth), [Span])
+    useEffect(() => setSpanWidth(Span.current.offsetWidth), [Span, children])
 
     return (
         <p css={style({spanWidth, pWidth, offset})} ref={P} className={className}>
@@ -37,7 +37,7 @@ const style = ({spanWidth, pWidth, offset}) => css`
     
     &:hover span{
         transition: left ${spanWidth/60}s ease-out;
-        left: -${spanWidth - pWidth + offset }px;
+        left: -${spanWidth - (pWidth - offset)}px;
         
     }
     

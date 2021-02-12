@@ -108,3 +108,21 @@ input {
         outline: none;
     }
 }
+
+hr.fade{
+    border: none;
+    background-image: url('/img/assets/hr-fade.webp');
+    background-position: bottom center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 32px;
+    margin-top: -32px;
+}
+
+hr.vr {
+    border: none;
+    width: 1.5px;
+    height: 100%;
+    background: #0005;
+}

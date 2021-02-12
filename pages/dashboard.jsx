@@ -4,6 +4,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 
 import { FiEdit3 } from 'react-icons/fi'
 import MainLayout from '@components/layouts/MainLayout'
+import DashboardContent from '@components/molecular/DashboardContent'
 
 const Dashboard = () => {
     const { user, userData } = useAuth()
@@ -28,9 +29,12 @@ const Dashboard = () => {
                 </div>
             </section>
 
-            <section css={style.content} className="contain-size-s">
-                {/* <DashboardContent /> */}
+            <hr className="fade contain-size-sm"/>
+
+            <section css={style.content} className="contain-size-sm">
+                <DashboardContent />
             </section>
+
         </MainLayout>
     )
 }

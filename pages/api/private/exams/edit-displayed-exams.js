@@ -3,7 +3,7 @@ import admin, { DB } from '@core/services/firebaseAdmin'
 export default async (req, res) => {
     const {body: { position, examId, token }} = req
     
-    if (!position || !examId || !token) {
+    if ((!position && position !== 0) || !examId || !token) {
         return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
     }
 
