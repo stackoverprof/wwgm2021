@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
+import { useRouter } from 'next/router'
 import axios from 'axios'
+import to from '@core/routepath'
 
 const firebaseAuth = React.createContext()
 
@@ -11,6 +13,8 @@ const AuthProvider = ({children}) => {
     const [userData, setUserData] = useState({})
     const [isNew, setIsNew] = useState(false)
     const [errorAuth, setErrorAuth] = useState('')
+
+    const router = useRouter()
 
     const profileData = (displayName, photoURL) => {
         return {
@@ -70,6 +74,7 @@ const AuthProvider = ({children}) => {
         },
 
         signout : () => {
+            router.push(to.home)
             return AUTH.signOut()
         }
     }

@@ -9,7 +9,7 @@ import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 import Spinner from '@components/atomic/spinner/Circle'
     
-const BioEdit = () => {
+const BioEdit = ({setEditSwitch}) => {
     const [provinceList, setProvinceList] = useState([])
     const [cityList, setCityList] = useState([])
     const [selectedProvinceId, setSelectedProvinceId] = useState('')
@@ -23,7 +23,7 @@ const BioEdit = () => {
         school: ''
     })
     
-    const { user, userData } = useAuth()
+    const { user, userData, refreshUserData } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const mutateInputData = (e) => {
@@ -48,7 +48,12 @@ const BioEdit = () => {
             province: inputData.province,
             city: inputData.city,
             school: inputData.school
-        }).then(() => setGlobalAlert({error: false, body: 'Berhasil mengubah data!'}))
+        }).then(() => {
+            refreshUserData().then(() => {
+                setGlobalAlert({error: false, body: 'Berhasil mengubah data!'})
+            })
+            .catch(() => setGlobalAlert({error: false, body: 'Berhasil. Refresh browser sekarang'}))
+        })
         .catch(() => setGlobalAlert({error: true, body: 'Gagal mengupdate data'}))
         
         setLoading(false)
@@ -92,6 +97,8 @@ const BioEdit = () => {
 
     useEffect(() => {
         fetchProvince()
+
+        return () => setEditSwitch(false)
     }, [])
     
     useEffect(() => { 
@@ -103,8 +110,8 @@ const BioEdit = () => {
     }, [userData, provinceList])
 
     return (
-        <div css={style({inputData})} className="contain-size-s">
-            <form onSubmit={handleSubmit} className="flex-cc col">
+        <div css={style({inputData})} className="contain-size-s full-w">
+            <form onSubmit={handleSubmit} className="flex-cc col full-w">
                 <div className="form-item full-w flex-cs col">
                     <label htmlFor="fullName">NAMA LENGKAP</label>
                     <div className="input-box flex-sc">

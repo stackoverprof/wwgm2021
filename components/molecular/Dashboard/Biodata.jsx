@@ -9,7 +9,7 @@ const Biodata = ({editSwitch, setEditSwitch}) => {
     return (
         <div css={style}>
             {editSwitch ?
-                <BioEdit />
+                <BioEdit setEditSwitch={setEditSwitch}/>
             :
                 <BioOverview />
             }
