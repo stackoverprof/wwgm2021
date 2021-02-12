@@ -16,12 +16,14 @@ export default async (req, res) => {
     const userData = await DB.collection('Users').doc(currentUser.uid).get()
     .then(doc => doc.data())
 
-    if (userData.examsAccess) {
-        return res.status(403).json({ status: 'ERROR', message: 'Exams access already initiated. forbidden api access' })
+    if (userData.examsAccess || userData.email || userData.uid) {
+        return res.status(403).json({ status: 'ERROR', message: `Forbidden, user's fixed-data already initiated` })
     }
 
     await DB.collection('Users').doc(currentUser.uid).update({
-        examsAccess: []
+        examsAccess: [],
+        uid: currentUser.uid,
+        email: currentUser.email
     }).then(() => {
         return res.status(200).json({ status: 'OK', message: 'User Data succesfully initiated' })
     })

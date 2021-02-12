@@ -1,41 +1,47 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
+import to from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 
 import { FiEdit3 } from 'react-icons/fi'
 import MainLayout from '@components/layouts/MainLayout'
-import DashboardContent from '@components/molecular/DashboardContent'
+import DashboardContent from '@components/molecular/Dashboard/DashContent'
 
 const Dashboard = () => {
-    const { user, userData } = useAuth()
+    const { userData, authState } = useAuth()
 
     return (
-        <MainLayout css={style.page} className="flex-sc col">
+        <UserOnlyRoute redirect={to.home}>
+            { authState === 'user' && (    
+                <MainLayout css={style.page} className="flex-sc col">
 
-            <section css={style.userCard} className="contain-size-sm flex-cc">
-                <div className="card flex-sc full-w">
-                    <img src={userData.photoURL} alt=""/>
-                    <div>
-                        <p className="display-name">{userData.displayName}</p>
-                        <p className="email">{user.email}</p>
-                    </div>
-                </div>
-            </section>
+                    <section css={style.userCard} className="contain-size-sm flex-cc">
+                        <div className="card flex-sc full-w">
+                            <img src={userData.photoURL} alt=""/>
+                            <div>
+                                <p className="display-name">{userData.displayName}</p>
+                                <p className="email">{userData.email}</p>
+                            </div>
+                        </div>
+                    </section>
 
-            <section css={style.header} className="contain-size-sm flex-cc">
-                <div className="inner full-w flex-bc">
-                    <h1>Dashboard</h1>
-                    <button className="bordered"><FiEdit3 />Ubah Biodata</button>
-                </div>
-            </section>
+                    <section css={style.header} className="contain-size-sm flex-cc">
+                        <div className="inner full-w flex-bc">
+                            <h1>Dashboard</h1>
+                            <button className="bordered"><FiEdit3 />Ubah Biodata</button>
+                        </div>
+                    </section>
 
-            <hr className="fade contain-size-sm"/>
+                    <hr className="fade contain-size-sm"/>
 
-            <section css={style.content} className="contain-size-sm">
-                <DashboardContent />
-            </section>
+                    <section css={style.content} className="contain-size-sm">
+                        <DashboardContent />
+                    </section>
 
-        </MainLayout>
+                </MainLayout>
+            )}
+        </UserOnlyRoute>
     )
 }
 

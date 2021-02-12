@@ -1,21 +1,27 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
 
-const DashboardContent = () => {
+import TryOut from '@components/molecular/Dashboard/TryOut'
+import Biodata from '@components/molecular/Dashboard/Biodata'
+
+const DashContent = () => {
     const [activeTab, setActiveTab] = useState('Try Out')
 
     return (
         <div css={style}>
             <div className="tabs contain-size-sm full-w flex-ec">
-                <h2 onClick={() => setActiveTab('Try Out')} className={`${activeTab === 'Try Out' ? 'active-tab' : ''}`}>
+                <h2 onClick={() => setActiveTab('Try Out')} className={`full ${activeTab === 'Try Out' ? 'active-tab' : ''}`}>
                     Try Out
                 </h2>
                 <hr className="vr"/>
-                <h2 onClick={() => setActiveTab('Biodata')} className={`${activeTab === 'Biodata' ? 'active-tab' : ''}`}>
+                <h2 onClick={() => setActiveTab('Biodata')} className={`full ${activeTab === 'Biodata' ? 'active-tab' : ''}`}>
                     Biodata
                 </h2>
             </div>
-            
+            <div className="frame contain-size-s">
+                { activeTab === 'Try Out' && <TryOut /> }
+                { activeTab === 'Biodata' && <Biodata /> }
+            </div>
         </div>
     )
 }
@@ -45,4 +51,4 @@ const style = css`
     }
 `
 
-export default DashboardContent
+export default DashContent

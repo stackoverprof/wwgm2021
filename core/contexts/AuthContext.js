@@ -58,7 +58,7 @@ const AuthProvider = ({children}) => {
                     await DB.collection('Users').doc(res.user.uid)
                     .set(profileData(res.user.displayName, res.user.photoURL))
                     .then(async () => {
-                        await axios.post('/api/user/user-data/init-exams-access', {
+                        await axios.post('/api/user/user-data/init', {
                             authToken: await res.user.getIdToken()
                         })
                     })
@@ -75,25 +75,25 @@ const AuthProvider = ({children}) => {
     }
          
     const refreshUserData = (uid = user.uid) => {
-        DB.collection('Users').doc(uid).get()
+        return DB.collection('Users').doc(uid).get()
         .then(doc => setUserData(doc.data()))
     }   
         
     useEffect(() => {
-        const unsubscribe = AUTH.onAuthStateChanged(user => {
+        const unsubscribe = AUTH.onAuthStateChanged(async user => {
             if(user) {
-                setAuthState('user')
                 setUser(user) 
-                refreshUserData(user.uid)
-                user.getIdTokenResult().then(res => {
+                await refreshUserData(user.uid)
+                await user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
                 })
+                setAuthState('user')
             } else {
-                setAuthState('guest')
                 setUser({})
                 setUserData({})
                 setAccess({})
                 setIsNew(false)
+                setAuthState('guest')
             }
         })
         return unsubscribe
