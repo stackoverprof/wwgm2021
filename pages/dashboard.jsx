@@ -8,6 +8,7 @@ import { FiEdit3 } from 'react-icons/fi'
 import { CgCloseR } from 'react-icons/cg'
 import MainLayout from '@components/layouts/MainLayout'
 import DashContent from '@components/molecular/Dashboard/DashContent'
+import EditPhotoURL from '@components/molecular/Dashboard/EditPhotoURL'
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('Try Out')
@@ -27,7 +28,7 @@ const Dashboard = () => {
 
                     <section css={style.userCard}>
                         <div className="card contain-size-sm flex-sc">
-                            <img src={userData.photoURL} alt=""/>
+                            <EditPhotoURL />
                             <div>
                                 <p className="display-name">{userData.displayName}</p>
                                 <p className="email">{userData.email}</p>
@@ -109,13 +110,6 @@ const style = {
             box-sizing: border-box;
             box-shadow: 0px 15px 24px -18px rgba(0, 0, 0, 0.25);
             border-radius: 12px;
-
-            img {
-                height: 84px;
-                width: 84px;
-                border-radius: 50%;
-                margin: 20px;
-            }
 
             p.display-name {
                 font-family: Poppins;

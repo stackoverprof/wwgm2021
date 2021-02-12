@@ -45,7 +45,13 @@
   
 .flex{
     display: flex;
-    
+
+    //c - center
+    //s - start
+    //e - end
+    //b - between
+    //v - evenly
+
     &-cc {
         @extend .flex;
         justify-content: center;
@@ -90,11 +96,6 @@
         @extend .flex;
         justify-content: space-between;
         align-items: flex-end;
-    }
-    &-ec {
-        @extend .flex;
-        justify-content: space-evenly;
-        align-items: center;
     }
   
     &.col{
