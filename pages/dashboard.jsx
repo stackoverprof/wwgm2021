@@ -46,7 +46,7 @@ const Dashboard = () => {
                     <hr className="fade contain-size-sm"/>
 
                     <section css={style.content} className="contain-size-sm">
-                        <DashContent activeTab={activeTab} setActiveTab={setActiveTab} editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
+                        <DashContent openEdit={openEdit} activeTab={activeTab} setActiveTab={setActiveTab} editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
                     </section>
 
                 </MainLayout>

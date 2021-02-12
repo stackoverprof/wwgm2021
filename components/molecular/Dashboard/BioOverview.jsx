@@ -5,8 +5,13 @@ import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 import { useAuth } from '@core/contexts/AuthContext'
 
-const BioOverview = () => {
+const BioOverview = ({openEdit}) => {
     const { userData } = useAuth()
+
+    const placehold = (text) => {
+        if (!text) return <span className="placehold">Data belum diisi. <span onClick={openEdit}>Lengkapi data</span></span>
+        else return text
+    }
 
     return (
         <div css={style.main} className="contain-size-s full-w">
@@ -14,42 +19,42 @@ const BioOverview = () => {
                 <p className="label">NAMA LENGKAP</p>
                 <div className="flex-sc">
                     <BiIdCard />
-                    <p className="data">{userData.fullName}</p>
+                    <p className="data">{placehold(userData.fullName)}</p>
                 </div>
             </div>
             <div css={style.data}>
                 <p className="label">DISPLAY NAME</p>
                 <div className="flex-sc">
                     <BiUserPin />
-                    <p className="data">{userData.displayName}</p>
+                    <p className="data">{placehold(userData.displayName)}</p>
                 </div>
             </div>
             <div css={style.data}>
                 <p className="label">KONTAK</p>
                 <div className="flex-sc">
                     <BiPhone />
-                    <p className="data">{userData.contact}</p>
+                    <p className="data">{placehold(userData.contact)}</p>
                 </div>
             </div>
             <div css={style.data}>
                 <p className="label">PROVINSI</p>
                 <div className="flex-sc">
                     <GiRank2 />
-                    <p className="data">{userData.province}</p>
+                    <p className="data">{placehold(userData.province)}</p>
                 </div>
             </div>
             <div css={style.data}>
                 <p className="label">KOTA</p>
                 <div className="flex-sc">
                     <GiRank1 />
-                    <p className="data">{userData.city}</p>
+                    <p className="data">{placehold(userData.city)}</p>
                 </div>
             </div>
             <div css={style.data}>
                 <p className="label">SEKOLAH</p>
                 <div className="flex-sc">
                     <BiBuildings />
-                    <p className="data">{userData.school}</p>
+                    <p className="data">{placehold(userData.school)}</p>
                 </div>
             </div>
         </div>
@@ -83,6 +88,21 @@ const style = {
             font-weight: 700;
             font-size: 24px;
             color: #1A2C1E;
+        }
+
+        .placehold {
+            font-size: 16px;
+            color: #0004;
+            font-weight: 400;
+
+            span {
+                cursor: pointer;
+            }
+
+            &:hover span {
+                color: var(--army);
+                text-decoration: underline;
+            }
         }
     `
 }

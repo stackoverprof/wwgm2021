@@ -4,14 +4,14 @@ import { css } from '@emotion/react'
 import BioOverview from '@components/molecular/Dashboard/BioOverview'
 import BioEdit from '@components/molecular/Dashboard/BioEdit'
 
-const Biodata = ({editSwitch, setEditSwitch}) => {
+const Biodata = ({openEdit, editSwitch, setEditSwitch}) => {
 
     return (
         <div css={style}>
             {editSwitch ?
                 <BioEdit setEditSwitch={setEditSwitch}/>
             :
-                <BioOverview />
+                <BioOverview openEdit={openEdit}/>
             }
         </div>
     )
