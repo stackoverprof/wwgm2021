@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { css } from '@emotion/react'
 
 import TryOut from '@components/molecular/Dashboard/TryOut'
 import Biodata from '@components/molecular/Dashboard/Biodata'
 
-const DashContent = ({editSwitch, setEditSwitch}) => {
-    const [activeTab, setActiveTab] = useState('Try Out')
+const DashContent = ({activeTab, setActiveTab, editSwitch, setEditSwitch}) => {
 
     return (
         <div css={style}>

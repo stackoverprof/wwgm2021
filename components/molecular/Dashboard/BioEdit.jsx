@@ -60,14 +60,13 @@ const BioEdit = () => {
         const provinceItem = provinceList.filter((item) => {
             return item.nama === name
         })[0]
-        console.log(name)
-        console.log(provinceItem)
+        
         setSelectedProvinceId(provinceItem.id)
     }
 
-    const fetchProvince = () => {
-        return axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
-        .then(res => setProvinceList(res.data.provinsi))
+    const fetchProvince = async () => {
+        await axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
+        .then(res =>  setProvinceList(res.data.provinsi))
         .catch(err => setGlobalAlert({body: err.message, error: true}))
     }
 
@@ -78,20 +77,22 @@ const BioEdit = () => {
     }
 
     const fetchInitial = async () => {
-        await fetchProvince().then(() => {
-            if (Object.keys(userData).length !== 0) {
-                handleProvinceChange(userData.province)
-                setInputData({
-                    fullName: userData.fullName,
-                    displayName: userData.displayName,
-                    contact: userData.contact,
-                    province: userData.province,
-                    city: userData.city,
-                    school: userData.school
-                })
-            }
-        })
+        if (Object.keys(userData).length !== 0 && provinceList.length !== 0) {
+            handleProvinceChange(userData.province)
+            setInputData({
+                fullName: userData.fullName,
+                displayName: userData.displayName,
+                contact: userData.contact,
+                province: userData.province,
+                city: userData.city,
+                school: userData.school
+            })
+        }
     }
+
+    useEffect(() => {
+        fetchProvince()
+    }, [])
     
     useEffect(() => { 
         fetchCity() 
@@ -99,7 +100,7 @@ const BioEdit = () => {
 
     useEffect(() => {
         fetchInitial()
-    }, [userData])
+    }, [userData, provinceList])
 
     return (
         <div css={style({inputData})} className="contain-size-s">

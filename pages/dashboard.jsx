@@ -5,12 +5,20 @@ import to from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 
 import { FiEdit3 } from 'react-icons/fi'
+import { CgCloseR } from 'react-icons/cg'
 import MainLayout from '@components/layouts/MainLayout'
-import DashboardContent from '@components/molecular/Dashboard/DashContent'
+import DashContent from '@components/molecular/Dashboard/DashContent'
 
 const Dashboard = () => {
+    const [activeTab, setActiveTab] = useState('Try Out')
     const [editSwitch, setEditSwitch] = useState(false)
+    
     const { userData, authState } = useAuth()
+
+    const openEdit = () => {
+        setActiveTab('Biodata')
+        setEditSwitch(true)
+    }
 
     return (
         <UserOnlyRoute redirect={to.home}>
@@ -30,14 +38,15 @@ const Dashboard = () => {
                     <section css={style.header} className="contain-size-sm flex-cc">
                         <div className="inner full-w flex-bc">
                             <h1>Dashboard</h1>
-                            <button className="bordered"><FiEdit3 />Ubah Biodata</button>
+                            {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 />Ubah Biodata</button>}
+                            {editSwitch && <button onClick={() => setEditSwitch(false)} className="bordered cancel"><CgCloseR />Batal mengubah</button>}
                         </div>
                     </section>
 
                     <hr className="fade contain-size-sm"/>
 
                     <section css={style.content} className="contain-size-sm">
-                        <DashboardContent editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
+                        <DashContent activeTab={activeTab} setActiveTab={setActiveTab} editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
                     </section>
 
                 </MainLayout>
@@ -81,6 +90,16 @@ const style = {
             &:hover {    
                 box-shadow: inset 0 0 0 1px #0005;
                 background: #00000008;
+            }
+
+            &.cancel {
+                border-color: #c72121;
+                color: #c72121;
+
+                &:hover {
+                    background: #c721210c;
+                    box-shadow: inset 0 0 0 1px #c72121;
+                }
             }
         }
     `,
