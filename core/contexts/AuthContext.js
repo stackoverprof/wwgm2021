@@ -17,7 +17,7 @@ const AuthProvider = ({children}) => {
 
     const router = useRouter()
 
-    const profileData = (displayName, photoURL) => {
+    const initialData = (displayName, photoURL) => {
         return {
             displayName : displayName,
             photoURL : photoURL,
@@ -31,7 +31,7 @@ const AuthProvider = ({children}) => {
     }
 
     const authMethods = {
-        emailSignup : (email, password, displayName) => {
+        emailSignUp : (email, password, displayName) => {
             return AUTH.createUserWithEmailAndPassword(email, password)
                 .then(async res => {
                     const avatar = `https://ui-avatars.com/api/?name=${displayName}&background=random&bold=true`
@@ -41,14 +41,14 @@ const AuthProvider = ({children}) => {
                         photoURL : avatar
                     })
 
-                    DB.collection('Users').doc(res.user.uid).set(profileData(displayName, avatar))
+                    DB.collection('Users').doc(res.user.uid).set(initialData(displayName, avatar))
 
                     setUser(data.user) 
                 })
                 .catch(err => setErrorAuth(err.code))
         },
 
-        emailSignin : (email, password) => {
+        emailSignIn : (email, password) => {
             return AUTH.signInWithEmailAndPassword(email, password)
                 .then(res => setUser(res.user))  
                 .catch(err => setErrorAuth(err.code))
@@ -58,23 +58,27 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
-            return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
-                if(res.additionalUserInfo.isNewUser){
-                    await DB.collection('Users').doc(res.user.uid)
-                    .set(profileData(res.user.displayName, res.user.photoURL))
+            const handleSignUp = () => {
+                return DB.collection('Users').doc(res.user.uid)
+                    .set(initialData(res.user.displayName, res.user.photoURL))
                     .then(async () => {
                         await axios.post('/api/user/user-data/init', {
                             authToken: await res.user.getIdToken()
                         })
+                        setIsNew(true)
                     })
-                    setIsNew(true)
+            }
+
+            return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
+                if(res.additionalUserInfo.isNewUser) {
+                    await handleSignUp()
                 }
                 setUser(res.user)
             })
             .catch(err => setErrorAuth(err.code))
         },
 
-        signout : () => {
+        signOut : () => {
             setIsNew(false)
             router.push(to.home)
             return AUTH.signOut()
@@ -86,16 +90,23 @@ const AuthProvider = ({children}) => {
         .then(doc => {
             const data = doc.data()
             setUserData(data)
-            
-            let isCompleted = true
-            const biodata = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
-            for (const each of biodata) {
-                if (!data[each]) isCompleted = false
-            }
-
-            setDataCompleted(isCompleted)
         })
     }   
+
+    const userDataCompletion = () => {
+        let isCompleted = true
+        const biodata = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+
+        for (const each of biodata) {
+            if (!userData[each]) isCompleted = false
+        }
+
+        setDataCompleted(isCompleted)
+    }
+
+    useEffect(() => {
+        userDataCompletion()
+    }, [userData])
         
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(async user => {
@@ -117,10 +128,6 @@ const AuthProvider = ({children}) => {
         })
         return unsubscribe
     }, [])
-
-    useEffect(() => {
-        console.log(dataCompleted)
-    }, [dataCompleted])
 
     return (
         <firebaseAuth.Provider value={{

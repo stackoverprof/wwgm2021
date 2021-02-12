@@ -35,7 +35,7 @@ const LoginPopUp = ({handleClose}) => {
                     <img src="/img/illus/logout.svg" alt=""/>
                     <p className="instruction">Konfirmasi Logout</p>
                     <div className="buttons flex-cc col">
-                        <button onClick={authMethods.signout} className="btn red">LOG OUT</button>
+                        <button onClick={authMethods.signOut} className="btn red">LOG OUT</button>
                         <button onClick={handleClose} className="btn bordered">BATAL</button>
                     </div>
                 </motion.div>

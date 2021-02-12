@@ -35,7 +35,7 @@ const Dashboard = () => {
                     <div className="control">
                         <img src={user.photoURL} alt=""/>
                         <Link href={to.home}><button className="btn">Back Home</button></Link>
-                        <button className="btn red" onClick={authMethods.signout}>LOGOUT</button>
+                        <button className="btn red" onClick={authMethods.signOut}>LOGOUT</button>
                     </div>
                     <p>Admin Status : {access.admin ? 'admin' : 'false'}</p>
                     {access.admin && (

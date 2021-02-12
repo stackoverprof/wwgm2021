@@ -34,7 +34,7 @@ const Dashboard = () => {
                         <img src={user.photoURL} alt=""/>
                         <Link href={to.home}><button>BACK HOME</button></Link>
                         <button onClick={CheckRole}>{data === null ? <Spinner /> : 'api user'}</button>
-                        <button onClick={authMethods.signout} className="red">LOGOUT</button>
+                        <button onClick={authMethods.signOut} className="red">LOGOUT</button>
                     </div>
                     <p>{data}</p>
                 </MainLayout>
