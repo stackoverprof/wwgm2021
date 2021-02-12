@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import to from '@core/routepath'
@@ -9,6 +9,7 @@ import MainLayout from '@components/layouts/MainLayout'
 import DashboardContent from '@components/molecular/Dashboard/DashContent'
 
 const Dashboard = () => {
+    const [editSwitch, setEditSwitch] = useState(false)
     const { userData, authState } = useAuth()
 
     return (
@@ -36,7 +37,7 @@ const Dashboard = () => {
                     <hr className="fade contain-size-sm"/>
 
                     <section css={style.content} className="contain-size-sm">
-                        <DashboardContent />
+                        <DashboardContent editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
                     </section>
 
                 </MainLayout>

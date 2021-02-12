@@ -4,7 +4,7 @@ import { css } from '@emotion/react'
 import TryOut from '@components/molecular/Dashboard/TryOut'
 import Biodata from '@components/molecular/Dashboard/Biodata'
 
-const DashContent = () => {
+const DashContent = ({editSwitch, setEditSwitch}) => {
     const [activeTab, setActiveTab] = useState('Try Out')
 
     return (
@@ -20,7 +20,7 @@ const DashContent = () => {
             </div>
             <div className="frame contain-size-s">
                 { activeTab === 'Try Out' && <TryOut /> }
-                { activeTab === 'Biodata' && <Biodata /> }
+                { activeTab === 'Biodata' && <Biodata editSwitch={editSwitch} setEditSwitch={setEditSwitch}/> }
             </div>
         </div>
     )

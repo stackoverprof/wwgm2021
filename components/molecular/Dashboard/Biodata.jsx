@@ -1,11 +1,18 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
-const Biodata = () => {
+import BioOverview from '@components/molecular/Dashboard/BioOverview'
+import BioEdit from '@components/molecular/Dashboard/BioEdit'
+
+const Biodata = ({editSwitch, setEditSwitch}) => {
 
     return (
         <div css={style}>
-            <h2>biodata tab</h2>
+            {editSwitch ?
+                <BioEdit />
+            :
+                <BioOverview />
+            }
         </div>
     )
 }
