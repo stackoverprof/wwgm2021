@@ -27,7 +27,7 @@ const Dashboard = () => {
     })
     
     const { user, userData } = useAuth()
-    const { globalAlert, setGlobalAlert } = useLayout()
+    const { setGlobalAlert } = useLayout()
 
     const mutateInputData = (e) => {
         setInputData((prevState) => ({
@@ -161,7 +161,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <button type="submit" className="submit">
-                                {globalAlert === null ? <Spinner w={160} h={26}/> : 'UPDATE DATA'}
+                                {loading ? <Spinner w={160} h={26}/> : 'UPDATE DATA'}
                             </button>
                         </form>
                     </div>

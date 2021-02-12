@@ -65,7 +65,7 @@ const Home = () => {
 
 const style = {
     page: css`
-        section{
+        section {
             width: 100%;
         }
     `,
@@ -73,7 +73,7 @@ const style = {
     displayer: css`
         padding: 48px 0;
         
-        > div{
+        > div {
             @media (max-width: 1000px) {
                 justify-content: center;
                 align-items: center;
@@ -102,7 +102,7 @@ const style = {
             }
         }
 
-        h1{
+        h1 {
             max-width: 360px;
             font-family: Poppins;
             font-weight: 800;
@@ -120,12 +120,12 @@ const style = {
             }
         }
 
-        hr{
+        hr {
             width: 300px;
             border: 1px solid #0003;
         }
 
-        .display-fallback{
+        .display-fallback {
             border: 1px solid #0004;
             height: 300px;
             border-radius: 12px;
@@ -138,14 +138,14 @@ const style = {
                 width: 300px;
             }
 
-            p{
+            p {
                 color: #0008;
             }
         }
     `,
 
     hero: css`
-        .background{
+        .background {
             width: 100%;
             height: 100%;
             padding: 76px 0 42px 0;
@@ -154,18 +154,18 @@ const style = {
             background-repeat: no-repeat;
 	        background-attachment: fixed;
 
-            @media (max-width: 790px){
+            @media (max-width: 790px) {
                 background-position: top center, top center, center;
             }
         }
 
-        .hero-img{
+        .hero-img {
             height: 210px;
             margin-bottom: 24px;
             object-fit: contain;
         }
 
-        .hero-button{
+        .hero-button {
             position: relative;
 
             @media (max-width: 720px){
