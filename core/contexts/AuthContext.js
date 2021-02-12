@@ -12,6 +12,7 @@ const AuthProvider = ({children}) => {
     const [access, setAccess] = useState({})
     const [userData, setUserData] = useState({})
     const [isNew, setIsNew] = useState(false)
+    const [dataCompleted, setDataCompleted] = useState(false)
     const [errorAuth, setErrorAuth] = useState('')
 
     const router = useRouter()
@@ -74,6 +75,7 @@ const AuthProvider = ({children}) => {
         },
 
         signout : () => {
+            setIsNew(false)
             router.push(to.home)
             return AUTH.signOut()
         }
@@ -81,7 +83,18 @@ const AuthProvider = ({children}) => {
          
     const refreshUserData = (uid = user.uid) => {
         return DB.collection('Users').doc(uid).get()
-        .then(doc => setUserData(doc.data()))
+        .then(doc => {
+            const data = doc.data()
+            setUserData(data)
+            
+            let isCompleted = true
+            const biodata = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+            for (const each of biodata) {
+                if (!data[each]) isCompleted = false
+            }
+
+            setDataCompleted(isCompleted)
+        })
     }   
         
     useEffect(() => {
@@ -98,11 +111,16 @@ const AuthProvider = ({children}) => {
                 setUserData({})
                 setAccess({})
                 setIsNew(false)
+                setDataCompleted(false)
                 setAuthState('guest')
             }
         })
         return unsubscribe
     }, [])
+
+    useEffect(() => {
+        console.log(dataCompleted)
+    }, [dataCompleted])
 
     return (
         <firebaseAuth.Provider value={{
@@ -114,7 +132,8 @@ const AuthProvider = ({children}) => {
             userData,
             errorAuth,
             setErrorAuth,
-            refreshUserData,
+            dataCompleted,
+            refreshUserData
         }}>
             { children }
         </firebaseAuth.Provider>

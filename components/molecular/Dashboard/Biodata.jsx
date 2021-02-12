@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 
 import BioOverview from '@components/molecular/Dashboard/BioOverview'
 import BioEdit from '@components/molecular/Dashboard/BioEdit'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const Biodata = ({openEdit, editSwitch, setEditSwitch}) => {
+
+    const { setGlobalAlert } = useLayout()
+
+    useEffect(() => {
+
+        return () => setGlobalAlert('')
+    }, [])
 
     return (
         <div css={style}>

@@ -15,46 +15,46 @@ const BioOverview = ({openEdit}) => {
 
     return (
         <div css={style.main} className="contain-size-s full-w">
-            <div css={style.data}>
+            <div css={style.item}>
                 <p className="label">NAMA LENGKAP</p>
                 <div className="flex-sc">
                     <BiIdCard />
-                    <p className="data">{placehold(userData.fullName)}</p>
+                    <p className="data flex-sc">{placehold(userData.fullName)}</p>
                 </div>
             </div>
-            <div css={style.data}>
+            <div css={style.item}>
                 <p className="label">DISPLAY NAME</p>
                 <div className="flex-sc">
                     <BiUserPin />
-                    <p className="data">{placehold(userData.displayName)}</p>
+                    <p className="data flex-sc">{placehold(userData.displayName)}</p>
                 </div>
             </div>
-            <div css={style.data}>
+            <div css={style.item}>
                 <p className="label">KONTAK</p>
                 <div className="flex-sc">
                     <BiPhone />
-                    <p className="data">{placehold(userData.contact)}</p>
+                    <p className="data flex-sc">{placehold(userData.contact)}</p>
                 </div>
             </div>
-            <div css={style.data}>
+            <div css={style.item}>
                 <p className="label">PROVINSI</p>
                 <div className="flex-sc">
                     <GiRank2 />
-                    <p className="data">{placehold(userData.province)}</p>
+                    <p className="data flex-sc">{placehold(userData.province)}</p>
                 </div>
             </div>
-            <div css={style.data}>
+            <div css={style.item}>
                 <p className="label">KOTA</p>
                 <div className="flex-sc">
                     <GiRank1 />
-                    <p className="data">{placehold(userData.city)}</p>
+                    <p className="data flex-sc">{placehold(userData.city)}</p>
                 </div>
             </div>
-            <div css={style.data}>
+            <div css={style.item}>
                 <p className="label">SEKOLAH</p>
                 <div className="flex-sc">
                     <BiBuildings />
-                    <p className="data">{placehold(userData.school)}</p>
+                    <p className="data flex-sc">{placehold(userData.school)}</p>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@ const style = {
     main: css`
         padding: 20px 0;
     `,
-    data: css`
+    item: css`
         margin: 24px 0;
 
         p.label {
@@ -92,7 +92,7 @@ const style = {
 
         .placehold {
             font-size: 16px;
-            color: #0004;
+            color: #0006;
             font-weight: 400;
 
             span {

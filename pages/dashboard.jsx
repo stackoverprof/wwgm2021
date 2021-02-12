@@ -13,7 +13,7 @@ const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('Try Out')
     const [editSwitch, setEditSwitch] = useState(false)
     
-    const { userData, authState } = useAuth()
+    const { userData, authState, dataCompleted } = useAuth()
 
     const openEdit = () => {
         setActiveTab('Biodata')
@@ -23,10 +23,10 @@ const Dashboard = () => {
     return (
         <UserOnlyRoute redirect={to.home}>
             { authState === 'user' && (    
-                <MainLayout css={style.page} className="flex-sc col">
+                <MainLayout css={style.page} title="Dashboard" className="flex-s`c col">
 
-                    <section css={style.userCard} className="contain-size-sm flex-cc">
-                        <div className="card flex-sc full-w">
+                    <section css={style.userCard}>
+                        <div className="card contain-size-sm flex-sc">
                             <img src={userData.photoURL} alt=""/>
                             <div>
                                 <p className="display-name">{userData.displayName}</p>
@@ -35,17 +35,17 @@ const Dashboard = () => {
                         </div>
                     </section>
 
-                    <section css={style.header} className="contain-size-sm flex-cc">
-                        <div className="inner full-w flex-bc">
+                    <section css={style.header}>
+                        <div className="inner contain-size-s flex-bc">
                             <h1>Dashboard</h1>
-                            {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 />Ubah Biodata</button>}
+                            {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 />{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</button>}
                             {editSwitch && <button onClick={() => setEditSwitch(false)} className="bordered cancel"><CgCloseR />Batal mengubah</button>}
                         </div>
                     </section>
 
                     <hr className="fade contain-size-sm"/>
 
-                    <section css={style.content} className="contain-size-sm">
+                    <section css={style.content}>
                         <DashContent openEdit={openEdit} activeTab={activeTab} setActiveTab={setActiveTab} editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
                     </section>
 
@@ -58,17 +58,15 @@ const Dashboard = () => {
 const style = {
     page: css`
         padding: 32px 0;
-
     `,
 
     content: css`
-    
+        
     `,
 
     header: css`
         .inner{
-            padding: 0 50px;
-            margin: 48px 0;
+            padding: 48px 50px;
         }
 
         h1 {

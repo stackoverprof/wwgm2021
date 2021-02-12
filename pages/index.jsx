@@ -33,7 +33,7 @@ const Home = () => {
     }, [])
 
     return (
-        <MainLayout css={style.page} className="flex-sc col" noClearance>
+        <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col" noClearance>
             
             <section css={style.hero}>
                 <div className="background">
@@ -65,9 +65,7 @@ const Home = () => {
 
 const style = {
     page: css`
-        section {
-            width: 100%;
-        }
+
     `,
 
     displayer: css`

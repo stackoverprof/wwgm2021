@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { css } from '@emotion/react'
+import Head from "next/head"
 import Navbar from '@components/molecular/Navbar'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLayout } from '@core/contexts/LayoutContext'
 import AlertHandler from '@components/atomic/AlertHandler'
 
-const MainLayout = ({className, css: style, children, directLogin, noClearance}) => {
+const MainLayout = ({className, title, css: style, children, directLogin, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
@@ -20,6 +21,11 @@ const MainLayout = ({className, css: style, children, directLogin, noClearance})
     return (
         <div css={layer({navHeight, noClearance})} ref={navRef}>
             <Navbar directLogin={directLogin}/>
+
+            <Head>
+                <title>WWGM 2021 {title ? `— ${title}` : ''}</title>
+            </Head>
+
             <div css={style} className={className}>
                 {children}
             </div>
