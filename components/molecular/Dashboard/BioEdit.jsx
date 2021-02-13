@@ -14,6 +14,7 @@ const BioEdit = ({setEditSwitch}) => {
     const [cityList, setCityList] = useState([])
     const [selectedProvinceId, setSelectedProvinceId] = useState('')
     const [loading, setLoading] = useState(false)
+    const [initialLoading, setInitialLoading] = useState(true)
     const [inputData, setInputData] = useState({
         fullName: '',
         displayName: '',
@@ -66,6 +67,11 @@ const BioEdit = ({setEditSwitch}) => {
         const provinceItem = provinceList.filter((item) => {
             return item.nama === name
         })[0]
+
+        setInputData((prevState) => ({
+            ...prevState,
+            city: ''
+        }))
         
         setSelectedProvinceId(provinceItem.id)
     }
@@ -93,6 +99,7 @@ const BioEdit = ({setEditSwitch}) => {
                 city: userData.city,
                 school: userData.school
             })
+            setInitialLoading(false)
         }
     }
 
@@ -106,39 +113,82 @@ const BioEdit = ({setEditSwitch}) => {
         fetchCity() 
     }, [selectedProvinceId])
 
+    useEffect(() => { 
+        console.log(inputData)
+    }, [inputData])
+
     useEffect(() => {
         fetchInitial()
     }, [userData, provinceList])
 
     return (
-        <div css={style({inputData})} className="contain-size-s full-w">
+        <div css={style({inputData})} className="contain-size-s full-w flex-cc col">
+            {initialLoading && (
+                <div className="loading full-w flex-cc">
+                    <p>Loading data user...</p>
+                </div>
+            )}
             <form onSubmit={handleSubmit} className="flex-cc col full-w">
                 <div className="form-item full-w flex-cs col">
                     <label htmlFor="fullName">NAMA LENGKAP</label>
                     <div className="input-box flex-sc">
                         <div className="icon flex-cc"><BiIdCard /></div>
-                        <input required type="text" value={inputData.fullName} onChange={mutateInputData} name="fullName" id="fullName" placeholder="Nama lengkap sesuai KTP"/>
+                        <input
+                            required
+                            disabled={initialLoading}
+                            type="text"
+                            value={inputData.fullName}
+                            onChange={mutateInputData}
+                            name="fullName"
+                            id="fullName"
+                            placeholder="Nama lengkap sesuai KTP"
+                        />
                     </div>
                 </div>
                 <div className="form-item full-w flex-cs col">
                     <label htmlFor="displayName">DISPLAY NAME</label>
                     <div className="input-box flex-sc">
                         <div className="icon flex-cc"><BiUserPin /></div>
-                        <input required type="text" value={inputData.displayName} onChange={mutateInputData} name="displayName" id="displayName" placeholder="Nama panggilan"/>
+                        <input 
+                            required 
+                            disabled={initialLoading} 
+                            type="text" 
+                            value={inputData.displayName} 
+                            onChange={mutateInputData} 
+                            name="displayName" 
+                            id="displayName" 
+                            placeholder="Nama panggilan"
+                        />
                     </div>
                 </div>
                 <div className="form-item full-w flex-cs col">
                     <label htmlFor="contact">KONTAK</label>
                     <div className="input-box flex-sc">
                         <div className="icon flex-cc"><BiPhone /></div>
-                        <input required type="text" value={inputData.contact} onChange={mutateInputData} name="contact" id="contact" placeholder="Id Line / nomor WA yang aktif"/>
+                        <input 
+                            required 
+                            disabled={initialLoading} 
+                            type="text" 
+                            value={inputData.contact} 
+                            onChange={mutateInputData} 
+                            name="contact" 
+                            id="contact" 
+                            placeholder="Id Line / nomor WA yang aktif"
+                        />
                     </div>
                 </div>
                 <div className="form-item full-w flex-cs col">
                     <label htmlFor="province">PROVINSI</label>
                     <div className="input-box flex-sc">
                         <div className="icon flex-cc"><GiRank2 /></div>
-                        <select required value={inputData.province} onChange={mutateInputData} name="province" id="province">
+                        <select 
+                            required 
+                            disabled={initialLoading} 
+                            value={inputData.province} 
+                            onChange={mutateInputData} 
+                            name="province" 
+                            id="province"
+                        >
                             <option value="" disabled>Pilih provinsi</option>
                             {provinceList.map((item, i) => (
                                 <option value={item.nama} key={i}>{item.nama}</option>
@@ -150,7 +200,14 @@ const BioEdit = ({setEditSwitch}) => {
                     <label htmlFor="city">KOTA / KAB</label>
                     <div className="input-box flex-sc">
                         <div className="icon flex-cc"><GiRank1 /></div>
-                        <select required value={inputData.city} onChange={mutateInputData} name="city" id="city">
+                        <select 
+                            required 
+                            disabled={initialLoading} 
+                            value={inputData.city} 
+                            onChange={mutateInputData} 
+                            name="city" 
+                            id="city"
+                        >
                             <option value="" disabled>{cityList.length === 0 ? 'Pilih provinsi terlebih dahulu' : 'Pilih kota'}</option>
                             {cityList.map((item, i) => (
                                 <option value={item.nama} key={i}>{item.nama}</option>
@@ -162,7 +219,16 @@ const BioEdit = ({setEditSwitch}) => {
                     <label htmlFor="school">SEKOLAH</label>
                     <div className="input-box flex-sc">
                         <div className="icon flex-cc"><BiBuildings /></div>
-                        <input required type="text" value={inputData.school} onChange={mutateInputData} name="school" id="school" placeholder="Asal sekolah"/>
+                        <input 
+                            required 
+                            disabled={initialLoading} 
+                            type="text" 
+                            value={inputData.school} 
+                            onChange={mutateInputData} 
+                            name="school" 
+                            id="school" 
+                            placeholder="Asal sekolah"
+                        />
                     </div>
                 </div>
                 <button type="submit" className="submit">
@@ -177,6 +243,14 @@ const style = ({inputData}) => css`
     button.submit {
         margin-top: 24px;
         padding: 12px 42px;
+    }
+
+    .loading {
+        padding: 12px 0;
+        border: 1px solid #0004;
+        background: #00000008;
+        border-radius: 6px;
+        margin: 24px 0;
     }
 
     .form-item {
