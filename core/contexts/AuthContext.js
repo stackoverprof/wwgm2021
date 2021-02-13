@@ -67,8 +67,8 @@ const AuthProvider = ({children}) => {
                             authToken: await res.user.getIdToken()
                         })
                         refreshUserData(res.user.uid)
-                        setIsNew(true)
                     })
+                    setIsNew(true)
                 }
                 setUser(res.user)
             })

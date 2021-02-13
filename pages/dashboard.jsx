@@ -11,6 +11,12 @@ import MainLayout from '@components/layouts/MainLayout'
 import DashContent from '@components/molecular/Dashboard/DashContent'
 import EditPhotoURL from '@components/molecular/Dashboard/EditPhotoURL'
 
+// [TODO] : Change profile pict
+// [TODO] : kelebihan nambah : Pake sistem bobot IRT
+// [TODO] : illus, kelengkapan data harus dipennuhi sebelum menjalani try out
+// [TODO] : Yeay, datamu sudah lengkap. Jangan lupa untuk mengisi nomor peserta disini
+// [TODO] : Nomor peserta didapat pada saat melakukan pembayaran dengan panitia, 
+
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('Try Out')
     const [editSwitch, setEditSwitch] = useState(false)
