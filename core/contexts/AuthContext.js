@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
 import to from '@core/routepath'
+import getAvatar from '@core/utils/getAvatar'
 
 const firebaseAuth = React.createContext()
 
@@ -17,10 +18,12 @@ const AuthProvider = ({children}) => {
 
     const router = useRouter()
 
-    const initialData = (displayName, photoURL) => {
+    const initialData = (displayName) => {
+        const avatar = `${getAvatar()}?initial=${displayName.charAt(0)}`
+
         return {
             displayName : displayName,
-            photoURL : photoURL,
+            photoURL : avatar,
             fullName : '',
             contact: '',
             province: '',
@@ -34,14 +37,12 @@ const AuthProvider = ({children}) => {
         emailSignUp : (email, password, displayName) => {
             return AUTH.createUserWithEmailAndPassword(email, password)
                 .then(async res => {
-                    const avatar = `https://ui-avatars.com/api/?name=${displayName}&background=random&bold=true`
 
                     const data = await res.user.updateProfile({
-                        displayName: displayName,
-                        photoURL : avatar
+                        displayName: displayName
                     })
 
-                    DB.collection('Users').doc(res.user.uid).set(initialData(displayName, avatar))
+                    DB.collection('Users').doc(res.user.uid).set(initialData(displayName))
 
                     setUser(data.user) 
                 })
@@ -60,7 +61,7 @@ const AuthProvider = ({children}) => {
 
             const handleSignUp = () => {
                 return DB.collection('Users').doc(res.user.uid)
-                    .set(initialData(res.user.displayName, res.user.photoURL))
+                    .set(initialData(res.user.displayName))
                     .then(async () => {
                         await axios.post('/api/user/user-data/init', {
                             authToken: await res.user.getIdToken()
@@ -85,33 +86,33 @@ const AuthProvider = ({children}) => {
         }
     }
          
+    const checkCompletion = (data) => {
+        let isCompleted = true
+        const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+
+        for (const field of fields) {
+            if (!data[field]) isCompleted = false
+        }
+        
+        setDataCompleted(isCompleted)
+    }
+    
     const refreshUserData = (uid = user.uid) => {
+        console.log(uid)
         return DB.collection('Users').doc(uid).get()
         .then(doc => {
             const data = doc.data()
+            console.log(data)
             setUserData(data)
+            checkCompletion(data)
         })
     }   
-
-    const userDataCompletion = () => {
-        let isCompleted = true
-        const biodata = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
-
-        for (const each of biodata) {
-            if (!userData[each]) isCompleted = false
-        }
-
-        setDataCompleted(isCompleted)
-    }
-
-    useEffect(() => {
-        userDataCompletion()
-    }, [userData])
         
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(async user => {
             if(user) {
                 setUser(user) 
+                console.log('stateChanged')
                 await refreshUserData(user.uid)
                 await user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
