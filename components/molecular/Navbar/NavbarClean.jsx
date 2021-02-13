@@ -25,7 +25,7 @@ const style = () => css` //Nav tag core style is in globals.scss
     height: 64px;
     z-index: 100;
     background: rgba(255, 255, 255, 1);
-    backdrop-filter: blur(8px);
+    /* backdrop-filter: blur(8px); */
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 
     .inner{

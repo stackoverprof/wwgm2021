@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -48,6 +48,10 @@ const AuthArea = ({
         }
     }
 
+    useEffect(() => {
+        
+        return () => setOpenAuthAction(false)
+    }, [])
 
     return (
     <>
@@ -88,6 +92,7 @@ const AuthArea = ({
 }
 
 const style = ({openAuthAction}) => css`
+    margin-left: 12px;
 
     .auth-area{
         position: relative;
@@ -108,8 +113,12 @@ const style = ({openAuthAction}) => css`
         overflow: hidden;
         transition: all 0.5s, opacity  ${openAuthAction ? '0.5s 0s' : '0.25s 0.25s'};
 
-        a{
+        a {  
+            font-family: Poppins;
+            font-weight: 600;
+            font-size: 18px;
             color: var(--army);
+            text-align: center;
             margin: 6px 0;
             transition: 0.1s;
 
@@ -127,6 +136,7 @@ const style = ({openAuthAction}) => css`
             font-size: 20px;
         }
     }
+    
     button.btn-login{
         background: var(--army-dark);
     }
