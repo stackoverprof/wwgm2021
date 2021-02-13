@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { css } from '@emotion/react'
-import parseURL from 'parse-url'
+import { useAuth } from '@core/contexts/AuthContext'
 
 const InitialAva = ({size, className, src}) => {
-    const [letter, setLetter] = useState('')
-
-    useEffect(() => {
-        setLetter(parseURL(src).query.initial)
-    }, [src])
+    const { userData: { displayName } } = useAuth()
 
     return (
         <div css={style({size})} className={`${className} flex-cc`}>
             <img src={src} alt=""/>
             <div className="initial full flex-cc">
-                <p className="flex-cc">{letter}</p>
+                <p className="flex-cc">{displayName.charAt(0).toUpperCase()}</p>
             </div>
         </div>
     )

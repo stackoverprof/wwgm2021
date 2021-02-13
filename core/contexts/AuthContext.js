@@ -19,7 +19,7 @@ const AuthProvider = ({children}) => {
     const router = useRouter()
 
     const initialData = (displayName) => {
-        const avatar = `${getAvatar()}?initial=${displayName.charAt(0).toUpperCase()}`
+        const avatar = getAvatar()
 
         return {
             displayName : displayName,
