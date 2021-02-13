@@ -59,20 +59,24 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
-            const handleSignUp = () => {
-                return DB.collection('Users').doc(res.user.uid)
+            // const handleSignUp = (res) => {
+            //     console.log('handleSignupMASOK')
+            //     return 
+            // }
+
+            return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
+                if(res.additionalUserInfo.isNewUser) {
+                    console.log('new user')
+                    await DB.collection('Users').doc(res.user.uid)
                     .set(initialData(res.user.displayName))
                     .then(async () => {
+                        console.log('handleSignupResolved')
                         await axios.post('/api/user/user-data/init', {
                             authToken: await res.user.getIdToken()
                         })
                         setIsNew(true)
                     })
-            }
-
-            return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
-                if(res.additionalUserInfo.isNewUser) {
-                    await handleSignUp()
+                    .catch(err => console.log('handleSignupERORRRRRR : ' + err))
                 }
                 setUser(res.user)
             })
@@ -98,7 +102,6 @@ const AuthProvider = ({children}) => {
     }
     
     const refreshUserData = (uid = user.uid) => {
-        console.log(uid)
         return DB.collection('Users').doc(uid).get()
         .then(doc => {
             const data = doc.data()
