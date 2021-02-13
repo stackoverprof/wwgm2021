@@ -112,12 +112,12 @@ const AuthProvider = ({children}) => {
                 })
                 setAuthState('user')
             } else {
+                setAuthState('guest')
                 setUser({})
                 setUserData({})
                 setAccess({})
                 setIsNew(false)
                 setDataCompleted(false)
-                setAuthState('guest')
             }
         })
         return unsubscribe

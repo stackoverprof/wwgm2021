@@ -69,9 +69,7 @@ const AuthArea = ({
             {authState === 'user' && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
-                        <InitialAva size={30} className="ava">    
-                            <img src={userData.photoURL} alt=""/>
-                        </InitialAva >
+                        <InitialAva size={30} className="ava" src={userData.photoURL}/>
                         <RunningText offset={26}>{userData.displayName}</RunningText>
                         <div className="cover"></div>
                     </button>
