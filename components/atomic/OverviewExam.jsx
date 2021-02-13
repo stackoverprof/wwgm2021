@@ -1,13 +1,13 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import Skeleton from 'react-loading-skeleton'
 import { FaPencilAlt, FaRegCalendarAlt, FaBook } from 'react-icons/fa'
-
 import { RiShieldFlashLine } from 'react-icons/ri'
 import { MdTimelapse, MdClass } from 'react-icons/md'
 import { BiTimeFive } from 'react-icons/bi'
-import Skeleton from 'react-loading-skeleton'
-import RunningText from '@components/atomic/RunningText'
+
 import { useAuth } from '@core/contexts/AuthContext'
+import RunningText from '@comps-atomic/RunningText'
 
 const Advantages = ({examId, title, size, duration, sessionsLength, fullDate, time, skeleton}) => {
     const { access } = useAuth()

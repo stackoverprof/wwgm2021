@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-import { useAuth } from '@core/contexts/AuthContext'
-import { useLayout } from '@core/contexts/LayoutContext'
-import to from '@core/routepath'
 import { AnimatePresence } from 'framer-motion'
-
 import { RiShieldFlashLine } from 'react-icons/ri'
-import LoginPopUp from '@components/molecular/LoginPopUp'
-import LogoutPopUp from '@components/molecular/LogoutPopUp'
-import RunningText from '@components/atomic/RunningText'
-import AlertHandler from '@components/atomic/AlertHandler'
+
+import { useLayout } from '@core/contexts/LayoutContext'
+import { useAuth } from '@core/contexts/AuthContext'
+import to from '@core/routepath'
+import RunningText from '@comps-atomic/RunningText'
+import AlertHandler from '@comps-atomic/AlertHandler'
+import LoginPopUp from '@comps-molecular/LoginPopUp'
+import LogoutPopUp from '@comps-molecular/LogoutPopUp'
 
 const AuthArea = ({
     openAuthAction,

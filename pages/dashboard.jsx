@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
+import { CgCloseR } from 'react-icons/cg'
+import { FiEdit3 } from 'react-icons/fi'
+
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
-
-import { FiEdit3 } from 'react-icons/fi'
-import { CgCloseR } from 'react-icons/cg'
-import MainLayout from '@components/layouts/MainLayout'
-import DashContent from '@components/molecular/Dashboard/DashContent'
-import EditPhotoURL from '@components/molecular/Dashboard/EditPhotoURL'
+import MainLayout from '@comps-layouts/MainLayout'
+import DashContent from '@comps-molecular/Dashboard/DashContent'
+import EditPhotoURL from '@comps-molecular/Dashboard/EditPhotoURL'
 
 // [TODO] : Change profile pict
 // [TODO] : kelebihan nambah : Pake sistem bobot IRT

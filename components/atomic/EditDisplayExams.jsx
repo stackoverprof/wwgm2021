@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
-import { useAuth } from '@core/contexts/AuthContext'
-import { useLayout } from '@core/contexts/LayoutContext'
-
 import { RiShieldFlashLine } from 'react-icons/ri'
 import { MdSettings } from 'react-icons/md'
-import Spinner from '@components/atomic/spinner/Circle'
+
+import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
+import Spinner from '@comps-atomic/spinner/Circle'
 
 const EditDisplayExams = ({i, refreshData}) => {
     const [show, setShow] = useState(false)

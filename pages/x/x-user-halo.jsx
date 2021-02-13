@@ -6,8 +6,8 @@ import axios from 'axios'
 import { useAuth } from '@core/contexts/AuthContext'
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 
-import MainLayout from '@components/layouts/MainLayout'
-import Spinner from '@components/atomic/spinner/Circle'
+import MainLayout from '@comps-layouts/MainLayout'
+import Spinner from '@comps-atomic/spinner/Circle'
     
 const Dashboard = () => {
     const { user, authMethods } = useAuth()

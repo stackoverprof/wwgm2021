@@ -3,10 +3,10 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import OutsideClickHandler from 'react-outside-click-handler'
 import useResize from 'use-resizing'
-import to from '@core/routepath'
 
 import { useLayout } from '@core/contexts/LayoutContext'
-import MenuButton from '@components/atomic/MenuButton'
+import to from '@core/routepath'
+import MenuButton from '@comps-atomic/MenuButton'
 import NavbarClean from './NavbarClean'
 import LinkSet from './LinkSet'
 

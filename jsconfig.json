@@ -3,6 +3,9 @@
         "baseUrl": ".",
         "paths": {
             "@components/*": ["components/*"],
+            "@comps-layouts/*": ["components/layouts/*"],
+            "@comps-atomic/*": ["components/atomic/*"],
+            "@comps-molecular/*": ["components/molecular/*"],
             "@core/*": ["core/*"]
         }
     }

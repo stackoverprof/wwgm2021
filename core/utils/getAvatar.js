@@ -11,7 +11,6 @@ const collection = [
     'https://media.giphy.com/media/3oz8xVqnpF68FXOZt6/giphy.gif',
     'https://media.giphy.com/media/26vwcbtjY7cDjuYrqL/giphy-downsized.gif',
     'https://media.giphy.com/media/QLxo890lA6TH0ZlCdC/giphy-downsized.gif',
-    'https://media.giphy.com/media/5bDAc3il2DySZAFGpQ/giphy-downsized.gif',
     'https://media.giphy.com/media/1rN0MKDBKKZdqve43O/giphy-downsized.gif',
     'https://media.giphy.com/media/26ufiHpFsdYFZsGBi/giphy.gif'
 ]

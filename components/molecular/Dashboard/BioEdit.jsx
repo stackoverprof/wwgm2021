@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
+import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
+import { GiRank1, GiRank2 } from 'react-icons/gi'
+
 import { DB } from '@core/services/firebase'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
-
-import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
-import { GiRank1, GiRank2 } from 'react-icons/gi'
-import Spinner from '@components/atomic/spinner/Circle'
+import Spinner from '@comps-atomic/spinner/Circle'
     
 const BioEdit = ({setEditSwitch}) => {
     const [provinceList, setProvinceList] = useState([])

@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
-import TryOut from '@components/molecular/Dashboard/TryOut'
-import Biodata from '@components/molecular/Dashboard/Biodata'
+import TryOut from '@comps-molecular/Dashboard/TryOut'
+import Biodata from '@comps-molecular/Dashboard/Biodata'
 
 const DashContent = ({openEdit, activeTab, setActiveTab, editSwitch, setEditSwitch}) => {
 

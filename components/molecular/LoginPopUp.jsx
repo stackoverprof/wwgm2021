@@ -3,11 +3,11 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { useAuth } from '@core/contexts/AuthContext'
-import { useLayout } from '@core/contexts/LayoutContext'
-import to, { set } from '@core/routepath'
 
-import GoogleAuth from '@components/atomic/GoogleAuth'
+import { useLayout } from '@core/contexts/LayoutContext'
+import { useAuth } from '@core/contexts/AuthContext'
+import to, { set } from '@core/routepath'
+import GoogleAuth from '@comps-atomic/GoogleAuth'
 
 const LoginPopUp = ({handleClose}) => {
     const { isNew, authState, setErrorAuth } = useAuth()

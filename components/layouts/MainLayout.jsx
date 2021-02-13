@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { css } from '@emotion/react'
 import Head from "next/head"
-import Navbar from '@components/molecular/Navbar'
 import { AnimatePresence, motion } from 'framer-motion'
+
 import { useLayout } from '@core/contexts/LayoutContext'
-import AlertHandler from '@components/atomic/AlertHandler'
+import Navbar from '@comps-molecular/Navbar'
+import AlertHandler from '@comps-atomic/AlertHandler'
 
 const MainLayout = ({className, title, css: style, children, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)

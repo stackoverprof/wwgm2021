@@ -2,17 +2,22 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { useAuth } from '@core/contexts/AuthContext'
 
+import InitialAva from '@components-atomic/InitialAva'
+
 const EditPhotoURL = () => {
     const { userData } = useAuth()
 
     return (
         <div css={style}>
-            <img className="profile full" src={userData.photoURL} alt=""/>
-            <div className="edit full flex-ce">
-                <div className="slider">
+            <InitialAva >
+                <img className="profile full" src={userData.photoURL} alt=""/>
+            </InitialAva >
 
+            {/* <div className="edit full flex-ce">
+                <div className="slider">
+                    
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

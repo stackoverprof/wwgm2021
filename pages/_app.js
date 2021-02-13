@@ -2,10 +2,11 @@ import '@core/styles/globals.scss'
 
 import Head from 'next/head'
 import ProgressBar from 'nextjs-progressbar'
+
 import AuthProvider from '@core/contexts/AuthContext'
 import LayoutProvider from '@core/contexts/LayoutContext'
-import LoadScreen from '@components/molecular/LoadScreen'
-import SEOTags from '@components/atomic/SEOTags'
+import LoadScreen from '@comps-molecular/LoadScreen'
+import SEOTags from '@comps-atomic/SEOTags'
 
 const App = ({ Component, pageProps }) => {
   return (

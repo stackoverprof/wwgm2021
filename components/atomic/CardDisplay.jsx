@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import Skeleton from 'react-loading-skeleton'
-import { mainDate, fullDate, getDuration, getSize, time} from '@core/utils/examData'
-import { useAuth } from '@core/contexts/AuthContext'
-
 import { FaRegCalendarAlt } from 'react-icons/fa'
-import OverviewExam from '@components/atomic/OverviewExam'
-import EditDisplayExams from '@components/atomic/EditDisplayExams'
+
+import { mainDate, fullDate, getDuration, getSize, time } from '@core/utils/examData'
+import { useAuth } from '@core/contexts/AuthContext'
+import OverviewExam from '@comps-atomic/OverviewExam'
+import EditDisplayExams from '@comps-atomic/EditDisplayExams'
 
 const CardDisplay = ({examId, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
