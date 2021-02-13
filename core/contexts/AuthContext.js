@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
 import to from '@core/routepath'
 import getAvatar from '@core/utils/getAvatar'
 
@@ -37,7 +37,6 @@ const AuthProvider = ({children}) => {
         emailSignUp : (email, password, displayName) => {
             return AUTH.createUserWithEmailAndPassword(email, password)
                 .then(async res => {
-
                     const data = await res.user.updateProfile({
                         displayName: displayName
                     })
@@ -59,24 +58,20 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
-            // const handleSignUp = (res) => {
-            //     console.log('handleSignupMASOK')
-            //     return 
-            // }
+            const handleSignUp = () => {
+                return DB.collection('Users').doc(res.user.uid)
+                .set(initialData(res.user.displayName))
+                .then(async () => {
+                    await axios.post('/api/user/user-data/init', {
+                        authToken: await res.user.getIdToken()
+                    })
+                })
+            }
 
             return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
-                if(res.additionalUserInfo.isNewUser) {
-                    console.log('new user')
-                    await DB.collection('Users').doc(res.user.uid)
-                    .set(initialData(res.user.displayName))
-                    .then(async () => {
-                        console.log('handleSignupResolved')
-                        await axios.post('/api/user/user-data/init', {
-                            authToken: await res.user.getIdToken()
-                        })
-                        setIsNew(true)
-                    })
-                    .catch(err => console.log('handleSignupERORRRRRR : ' + err))
+                if(res.additionalUserInfo.isNewUser){
+                    await handleSignUp()
+                    setIsNew(true)
                 }
                 setUser(res.user)
             })
@@ -89,24 +84,23 @@ const AuthProvider = ({children}) => {
             return AUTH.signOut()
         }
     }
-         
+
     const checkCompletion = (data) => {
         let isCompleted = true
-        const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+            const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+            for (const field of fields) {
+                if (!data[field]) isCompleted = false
+            }
 
-        for (const field of fields) {
-            if (!data[field]) isCompleted = false
-        }
-        
-        setDataCompleted(isCompleted)
+            setDataCompleted(isCompleted)
     }
-    
+         
     const refreshUserData = (uid = user.uid) => {
         return DB.collection('Users').doc(uid).get()
         .then(doc => {
             const data = doc.data()
-            console.log(data)
             setUserData(data)
+            
             checkCompletion(data)
         })
     }   
@@ -115,7 +109,6 @@ const AuthProvider = ({children}) => {
         const unsubscribe = AUTH.onAuthStateChanged(async user => {
             if(user) {
                 setUser(user) 
-                console.log('stateChanged')
                 await refreshUserData(user.uid)
                 await user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
