@@ -1,12 +1,13 @@
 import React from 'react'
 import { css } from '@emotion/react'
-
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
+import { FiEdit3 } from 'react-icons/fi'
+
 import { useAuth } from '@core/contexts/AuthContext'
 
 const BioOverview = ({openEdit}) => {
-    const { userData } = useAuth()
+    const { userData, dataCompleted } = useAuth()
 
     const placehold = (text) => {
         if (!text) return <span className="placehold">Data belum diisi. <span onClick={openEdit}>Lengkapi data</span></span>
@@ -57,6 +58,7 @@ const BioOverview = ({openEdit}) => {
                     <p className="data flex-sc">{placehold(userData.school)}</p>
                 </div>
             </div>
+            <button onClick={openEdit} className="edit bordered"><FiEdit3 />{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</button>
         </div>
     )
 }
@@ -64,6 +66,32 @@ const BioOverview = ({openEdit}) => {
 const style = {
     main: css`
         padding: 20px 0;
+
+        button.edit {
+            margin-top: 48px;
+            border-color: #0005;
+            color: #0007;
+            font-size: 18px;
+            
+            svg {
+                margin-right: 12px;
+            }
+            
+            &:hover {    
+                box-shadow: inset 0 0 0 1px #0005;
+                background: #00000008;
+            }
+
+            &.cancel {
+                border-color: #c72121;
+                color: #c72121;
+
+                &:hover {
+                    background: #c721210c;
+                    box-shadow: inset 0 0 0 1px #c72121;
+                }
+            }
+        }
     `,
     item: css`
         margin: 24px 0;

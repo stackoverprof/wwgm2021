@@ -113,10 +113,6 @@ const BioEdit = ({setEditSwitch}) => {
         fetchCity() 
     }, [selectedProvinceId])
 
-    useEffect(() => { 
-        console.log(inputData)
-    }, [inputData])
-
     useEffect(() => {
         fetchInitial()
     }, [userData, provinceList])
