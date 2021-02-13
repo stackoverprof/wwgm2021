@@ -8,7 +8,7 @@ const InitialAva = ({size, className, src}) => {
     return (
         <div css={style({size})} className={`${className} flex-cc`}>
             <img src={src} alt=""/>
-            <div className="initial full flex-cc">
+            <div className="ava-cover full flex-cc">
                 <p className="flex-cc">{displayName.charAt(0).toUpperCase()}</p>
             </div>
         </div>
@@ -29,8 +29,9 @@ const style = ({size}) => css`
         border-radius: 50%;
     }
 
-    .initial { 
+    .ava-cover { 
         position: absolute;
+        pointer-events: none;
 
         p {
             font-weight: normal !important;

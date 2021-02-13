@@ -12,6 +12,7 @@ import DashContent from '@comps-molecular/Dashboard/DashContent'
 import EditPhotoURL from '@comps-molecular/Dashboard/EditPhotoURL'
 
 // [TODO] : Change profile pict
+// [TODO] : Responsive belum bener
 // [TODO] : kelebihan nambah : Pake sistem bobot IRT
 // [TODO] : illus, kelengkapan data harus dipennuhi sebelum menjalani try out
 // [TODO] : Yeay, datamu sudah lengkap. Jangan lupa untuk mengisi nomor peserta disini

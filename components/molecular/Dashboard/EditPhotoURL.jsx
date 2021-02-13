@@ -9,7 +9,7 @@ const EditPhotoURL = () => {
 
     return (
         <div css={style}>
-            <InitialAva size={84} src={userData.photoURL}/>
+            <InitialAva size={94} src={userData.photoURL}/>
         </div>
     )
 }
