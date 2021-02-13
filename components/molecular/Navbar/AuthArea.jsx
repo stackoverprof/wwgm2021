@@ -8,6 +8,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 import RunningText from '@comps-atomic/RunningText'
+import InitialAva from '@comps-atomic/InitialAva'
 import AlertHandler from '@comps-atomic/AlertHandler'
 import LoginPopUp from '@comps-molecular/LoginPopUp'
 import LogoutPopUp from '@comps-molecular/LogoutPopUp'
@@ -68,7 +69,9 @@ const AuthArea = ({
             {authState === 'user' && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
-                        <img src={userData.photoURL} alt=""/>
+                        <InitialAva size={30} className="ava">    
+                            <img src={userData.photoURL} alt=""/>
+                        </InitialAva >
                         <RunningText offset={26}>{userData.displayName}</RunningText>
                         <div className="cover"></div>
                     </button>
@@ -155,12 +158,8 @@ const style = ({openAuthAction}) => css`
             height: 100%;
         }
         
-        img{
-            height: 30px;
-            width: 30px;
-            margin-right: 12px;
-            margin-left: 12px;
-            border-radius: 50%;
+        .ava{
+            margin: 0 10px;
         }
 
         .cover{
