@@ -1,4 +1,4 @@
-export const mainDate = (UNIX_timestamp) => {
+const date = (UNIX_timestamp) => {
     const a = new Date(UNIX_timestamp._seconds * 1000)
     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
     const month = months[a.getMonth()]
@@ -6,20 +6,20 @@ export const mainDate = (UNIX_timestamp) => {
     return `${date} ${month}`
 }
 
-export const fullDate = (UNIX_timestamp) => {
+const fullDate = (UNIX_timestamp) => {
     const a = new Date(UNIX_timestamp._seconds * 1000)
     const year = a.getFullYear()
-    return `${mainDate(UNIX_timestamp)} ${year}`
+    return `${date(UNIX_timestamp)} ${year}`
 }
 
-export const time = (UNIX_timestamp) => {
+const time = (UNIX_timestamp) => {
     const a = new Date(UNIX_timestamp._seconds * 1000)
     const hour = a.getHours()
     const min = a.getMinutes()
     return `${hour}:${("0" + min).slice(-2)}`
 }
 
-export const getDuration = (sessions) => {
+const duration = (sessions) => {
     let count = 0
     for (const session of sessions) {
         count += session.duration
@@ -27,10 +27,18 @@ export const getDuration = (sessions) => {
     return count
 }
 
-export const getSize = (sessions) => {
+const size = (sessions) => {
     let count = 0
     for (const session of sessions) {
         count += session.size
     }
     return count
+}
+
+export default {
+    date,
+    fullDate,
+    time,
+    duration,
+    size
 }

@@ -4,7 +4,7 @@ import axios from 'axios'
 import Skeleton from 'react-loading-skeleton'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
-import { mainDate, fullDate, getDuration, getSize, time } from '@core/utils/examData'
+import convert from '@core/utils/covertExamData'
 import { useAuth } from '@core/contexts/AuthContext'
 import OverviewExam from '@comps-atomic/OverviewExam'
 import EditDisplayExams from '@comps-atomic/EditDisplayExams'
@@ -31,17 +31,17 @@ const CardDisplay = ({examId, i, refreshData}) => {
         <div css={style}>
             <div className="header flex-cc col">
                 <p className="title">{examData.cluster}</p>
-                <p className="date flex-cc"><FaRegCalendarAlt />{mainDate(examData.availability.start)}</p>
+                <p className="date flex-cc"><FaRegCalendarAlt />{convert.date(examData.availability.start)}</p>
             </div>
             <div className="body flex-cc col">
                 <OverviewExam
                     examId={examId}
                     title={examData.title}
-                    size={getSize(examData.sessions)}
-                    duration={getDuration(examData.sessions)}
+                    size={convert.size(examData.sessions)}
+                    duration={convert.duration(examData.sessions)}
                     sessionsLength={examData.sessions.length}
-                    fullDate={fullDate(examData.availability.start)}
-                    time={time(examData.availability.start)}
+                    fullDate={convert.fullDate(examData.availability.start)}
+                    time={convert.time(examData.availability.start)}
                 />
                 <button className="mx-auto bordered green">IKUTI TRYOUT</button>
             </div>
