@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useLayout } from '@core/contexts/LayoutContext'
 import AlertHandler from '@components/atomic/AlertHandler'
 
-const MainLayout = ({className, title, css: style, children, directLogin, noClearance}) => {
+const MainLayout = ({className, title, css: style, children, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
@@ -20,16 +20,14 @@ const MainLayout = ({className, title, css: style, children, directLogin, noClea
 
     return (
         <div css={layer({navHeight, noClearance})} ref={navRef}>
-            <Navbar directLogin={directLogin}/>
-
+            <Navbar />
             <Head>
                 <title>WWGM 2021 {title ? `— ${title}` : ''}</title>
             </Head>
-
             <div css={style} className={className}>
                 {children}
             </div>
-            
+
             <AnimatePresence exitBeforeEnter>
                 {dimm && (
                     <motion.div 
@@ -41,8 +39,9 @@ const MainLayout = ({className, title, css: style, children, directLogin, noClea
                     </motion.div>
                 )}
             </AnimatePresence>
-
-            {globalAlert && <AlertHandler message={globalAlert.body} closeHandler={() => setGlobalAlert('')} color={globalAlert.error ? 'red' : 'default'}/>}
+            { globalAlert && (
+                <AlertHandler message={globalAlert.body} closeHandler={() => setGlobalAlert('')} color={globalAlert.error ? 'red' : 'default'}/>
+            )}
         </div>
     )
 }

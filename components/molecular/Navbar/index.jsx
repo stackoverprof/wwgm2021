@@ -10,10 +10,10 @@ import MenuButton from '@components/atomic/MenuButton'
 import NavbarClean from './NavbarClean'
 import LinkSet from './LinkSet'
 
-const Navbar = ({clean, directLogin}) => {
+const Navbar = ({clean}) => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
-    const [openLoginPop, setOpenLoginPop] = useState(directLogin)
+    const [openLoginPop, setOpenLoginPop] = useState(false)
     const [openLogoutPop, setOpenLogoutPop] = useState(false)
 
     const { dimm } = useLayout()
