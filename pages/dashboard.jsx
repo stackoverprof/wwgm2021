@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
+import { useRouter } from 'next/router'
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
-import to from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
+import to from '@core/routepath'
 
 import { FiEdit3 } from 'react-icons/fi'
 import { CgCloseR } from 'react-icons/cg'
@@ -13,6 +14,7 @@ import EditPhotoURL from '@components/molecular/Dashboard/EditPhotoURL'
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('Try Out')
     const [editSwitch, setEditSwitch] = useState(false)
+    const { query: { action } } = useRouter()
     
     const { userData, authState, dataCompleted } = useAuth()
 
@@ -20,6 +22,10 @@ const Dashboard = () => {
         setActiveTab('Biodata')
         setEditSwitch(true)
     }
+
+    useEffect(() => {
+        if (action === 'edit') openEdit()
+    }, [action])
 
     return (
         <UserOnlyRoute redirect={to.home}>

@@ -6,7 +6,7 @@ const AlertHandler = ({message, closeHandler = () => {}, color = 'default'}) => 
     return (
     <>        
         { message && (
-            <div css={style} className="fixed fullscreen flex-ce">
+            <div css={style} className="fixed fullscreen-v flex-ce">
                 <div className={`box flex-bc ${color}`}>
                     <p>{message}</p>
                     <FaWindowClose onClick={() => closeHandler()}/>

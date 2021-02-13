@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
-import to from '@core/routepath'
+import to, { set } from '@core/routepath'
 
 import GoogleAuth from '@components/atomic/GoogleAuth'
 
@@ -23,7 +23,7 @@ const LoginPopUp = ({handleClose}) => {
     }, [])
 
     return (
-        <div css={style} className="fixed fullscreen-vh flex-cs">
+        <div css={style} className="fixed fullscreen-v flex-cs">
             <OutsideClickHandler onOutsideClick={handleClose} display="flex">
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95, y: -10}} 
@@ -48,7 +48,7 @@ const LoginPopUp = ({handleClose}) => {
                         <div className="buttons flex-cc">
                             {authState !== 'user' && <GoogleAuth />}
                             {authState !== 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
-                            {authState === 'user' && isNew && <Link href="//editbiodata"><a className="btn tutup">Lengkapi biodata</a></Link>}
+                            {authState === 'user' && isNew && <Link href={set.dashboard({action: 'edit'})}><a className="btn tutup">Lengkapi biodata</a></Link>}
                             {authState === 'user' && !isNew && <Link href={to.dashboard}><a className="btn tutup">Dashboard</a></Link>}
                             {authState === 'user' && <button onClick={handleClose} className="btn bordered tutup">Tutup</button>}
                         </div>

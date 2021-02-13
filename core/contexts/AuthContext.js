@@ -19,7 +19,7 @@ const AuthProvider = ({children}) => {
     const router = useRouter()
 
     const initialData = (displayName) => {
-        const avatar = `${getAvatar()}?initial=${displayName.charAt(0)}`
+        const avatar = `${getAvatar()}?initial=${displayName.charAt(0).toUpperCase()}`
 
         return {
             displayName : displayName,
@@ -66,8 +66,9 @@ const AuthProvider = ({children}) => {
                         await axios.post('/api/user/user-data/init', {
                             authToken: await res.user.getIdToken()
                         })
+                        refreshUserData(res.user.uid)
+                        setIsNew(true)
                     })
-                    setIsNew(true)
                 }
                 setUser(res.user)
             })

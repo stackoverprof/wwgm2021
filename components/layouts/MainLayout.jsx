@@ -36,7 +36,7 @@ const MainLayout = ({className, title, css: style, children, directLogin, noClea
                         initial={{ opacity: 0 }} 
                         animate={{ opacity: 1, transition: { duration: 0.25 }}} 
                         exit={{ opacity: 0, transition: { duration: 0.25 }}}
-                        className="dimm-layer fixed fullscreen-vh flex-cs"
+                        className="dimm-layer fixed fullscreen-v flex-cs"
                     >
                     </motion.div>
                 )}
