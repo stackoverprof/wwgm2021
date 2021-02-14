@@ -9,7 +9,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 import MainLayout from '@comps-layouts/MainLayout'
 import DashContent from '@comps-molecular/Dashboard/DashContent'
-import UserCard from '@comps-molecular/Dashboard/UserCard'
+import UserCard from '@components/atomic/UserCard'
 
 // [TODO] : Change profile pict
 // [TODO] : Responsive belum bener

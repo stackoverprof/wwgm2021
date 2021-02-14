@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import useResize from 'use-resizing'
 
 import { useAuth } from '@core/contexts/AuthContext'
-import EditPhotoURL from '@comps-molecular/Dashboard/EditPhotoURL'
+import EditPhotoURL from '@components/atomic/EditPhotoURL'
 
 const UserCard = () => {
     const [isWrapped, setIsWrapped] = useState(false)
