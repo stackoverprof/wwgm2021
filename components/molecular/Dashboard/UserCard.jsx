@@ -41,6 +41,10 @@ const style = css`
     box-shadow: 0px 15px 24px -18px rgba(0, 0, 0, 0.25), inset 0 0 0 1px #AFAFAF;
     border-radius: 12px;
 
+    @media (max-width: 600px) {
+        box-shadow: 0px 8px 14px -12px rgba(0, 0, 0, 0.25), inset 0 0 0 1px #AFAFAF;
+    }
+
     .padder {
         flex-wrap: wrap;
         margin: 0 20px;

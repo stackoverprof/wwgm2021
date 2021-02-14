@@ -44,6 +44,11 @@ const style = css`
             &.active-tab {
                 -webkit-text-stroke-width: 1px;
                 color: var(--army);
+                letter-spacing: 0.04em;
+            }
+
+            @media (max-width: 600px) {
+                font-size: 20px;
             }
         }
 

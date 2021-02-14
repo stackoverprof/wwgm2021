@@ -86,7 +86,7 @@ const style = {
             color: #1A2C1E;
 
             
-            @media (max-width: 600px) {
+            @media (max-width: 780px) {
                 margin-left: 24px;
                 font-size: 28px;
             }
@@ -101,7 +101,7 @@ const style = {
                 margin-right: 12px;
             }
             
-            @media (max-width: 600px) {
+            @media (max-width: 780px) {
                 margin-right: 24px;
             }
             

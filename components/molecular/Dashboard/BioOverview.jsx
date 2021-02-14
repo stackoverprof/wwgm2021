@@ -77,7 +77,11 @@ const BioOverview = ({openEdit}) => {
 
 const style = {
     main: css`
-        padding: 20px 0;
+        padding: 12px 0;
+
+        @media (max-width: 600px) {
+            padding: 0;
+        }
 
         button.edit {
             margin-top: 48px;
