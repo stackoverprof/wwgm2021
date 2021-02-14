@@ -4,12 +4,12 @@ import { motion } from 'framer-motion'
 import { v4 as uuid } from 'uuid'
 import OutsideClickHandler from 'react-outside-click-handler'
 
-import { STORAGE } from '@core/services/firebase'
+import { STORAGE, DB } from '@core/services/firebase'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 
 const LoginPopUp = ({handleClose}) => {
-    const { userData, setErrorAuth } = useAuth()
+    const { user, userData, setErrorAuth, refreshUserData } = useAuth()
     const { setDimm } = useLayout()
 
     const fileInput = useRef(null)
@@ -29,6 +29,16 @@ const LoginPopUp = ({handleClose}) => {
         return `${user}-${unique}.${ext}`
     }
 
+    const updateUserData = (url) => {
+        DB.collection('Users').doc(user.uid).update({
+            photoURL: url
+        })
+        .then(() => {
+            refreshUserData()
+            handleClose()
+        })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -44,10 +54,11 @@ const LoginPopUp = ({handleClose}) => {
         const storageRef = STORAGE.ref('/Users/profile-pictures').child(filename)
         await storageRef.put(image)
             .catch(err => console.log(err))
-        const resultURL = await storageRef.getDownloadURL().catch(err => console.log(err))
+        await storageRef.getDownloadURL()
+            .then(url => updateUserData(url))
+            .catch(err => console.log(err))
         
         console.log(filename)
-        console.log(resultURL)
     }
 
     useEffect(() => {
