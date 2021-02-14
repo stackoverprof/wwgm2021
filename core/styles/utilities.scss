@@ -72,6 +72,11 @@
         justify-content: flex-start;
         align-items: center;
     }
+    &-ss {
+        @extend .flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
     &-ec {
         @extend .flex;
         justify-content: flex-end;

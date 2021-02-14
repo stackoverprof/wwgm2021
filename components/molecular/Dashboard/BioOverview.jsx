@@ -18,47 +18,59 @@ const BioOverview = ({openEdit}) => {
         <div css={style.main} className="contain-size-s full-w">
             <div css={style.item}>
                 <p className="label">NAMA LENGKAP</p>
-                <div className="flex-sc">
-                    <BiIdCard />
+                <div className="flex-ss">
+                    <div className="icon flex-cc">
+                        <BiIdCard />
+                    </div>
                     <p className="data flex-sc">{placehold(userData.fullName)}</p>
                 </div>
             </div>
             <div css={style.item}>
                 <p className="label">DISPLAY NAME</p>
-                <div className="flex-sc">
-                    <BiUserPin />
+                <div className="flex-ss">
+                    <div className="icon flex-cc">
+                        <BiUserPin />
+                    </div>
                     <p className="data flex-sc">{placehold(userData.displayName)}</p>
                 </div>
             </div>
             <div css={style.item}>
                 <p className="label">KONTAK</p>
-                <div className="flex-sc">
-                    <BiPhone />
+                <div className="flex-ss">
+                    <div className="icon flex-cc">
+                        <BiPhone />
+                    </div>
                     <p className="data flex-sc">{placehold(userData.contact)}</p>
                 </div>
             </div>
             <div css={style.item}>
                 <p className="label">PROVINSI</p>
-                <div className="flex-sc">
-                    <GiRank2 />
+                <div className="flex-ss">
+                    <div className="icon flex-cc">
+                        <GiRank2 />
+                    </div>
                     <p className="data flex-sc">{placehold(userData.province)}</p>
                 </div>
             </div>
             <div css={style.item}>
                 <p className="label">KOTA</p>
-                <div className="flex-sc">
-                    <GiRank1 />
+                <div className="flex-ss">
+                    <div className="icon flex-cc">
+                        <GiRank1 />
+                    </div>
                     <p className="data flex-sc">{placehold(userData.city)}</p>
                 </div>
             </div>
             <div css={style.item}>
                 <p className="label">SEKOLAH</p>
-                <div className="flex-sc">
-                    <BiBuildings />
+                <div className="flex-ss">
+                    <div className="icon flex-cc">
+                        <BiBuildings />
+                    </div>
                     <p className="data flex-sc">{placehold(userData.school)}</p>
                 </div>
             </div>
-            <button onClick={openEdit} className="edit bordered"><FiEdit3 />{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</button>
+            <button onClick={openEdit} className="edit mx-auto bordered"><FiEdit3 />{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</button>
         </div>
     )
 }
@@ -95,7 +107,7 @@ const style = {
     `,
     item: css`
         margin: 24px 0;
-
+        
         p.label {
             font-family: Poppins;
             font-weight: 700;
@@ -103,12 +115,22 @@ const style = {
             color: #0005;
             
             margin-bottom: 4px;
+
+            @media (max-width: 600px) {
+                font-size: 16px;
+            }
         }
-        
-        svg {
-            font-size: 22px;
-            color: #0005;
-            margin-right: 12px;
+        .icon{
+            min-height: 35px;
+            
+            @media (max-width: 600px) {
+                min-height: 27px;
+            }
+            svg {
+                font-size: 22px;
+                color: #0005;
+                margin-right: 12px;
+            }
         }
 
         p.data {
@@ -116,6 +138,10 @@ const style = {
             font-weight: 700;
             font-size: 24px;
             color: #1A2C1E;
+
+            @media (max-width: 600px) {
+                font-size: 18px;
+            }
         }
 
         .placehold {

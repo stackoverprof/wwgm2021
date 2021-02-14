@@ -46,8 +46,8 @@ const Dashboard = () => {
                     <section css={style.header}>
                         <div className="inner contain-size-s flex-bc">
                             <h1>Dashboard</h1>
-                            {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 />{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</button>}
-                            {editSwitch && <button onClick={() => setEditSwitch(false)} className="bordered cancel"><CgCloseR />Batal mengubah</button>}
+                            {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 /><p>{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</p></button>}
+                            {editSwitch && <button onClick={() => setEditSwitch(false)} className="bordered cancel"><CgCloseR /><p>Batal mengubah</p></button>}
                         </div>
                     </section>
 
@@ -71,7 +71,12 @@ const style = {
 
     header: css`
         .inner{
-            padding: 48px 50px;
+            padding: 48px 0;
+            
+            @media (max-width: 600px) {
+                padding: 32px 0;
+                /* flex-direction: column; */
+            }
         }
 
         h1 {
@@ -79,8 +84,14 @@ const style = {
             font-weight: 600;
             font-size: 40px;
             color: #1A2C1E;
-        }
 
+            
+            @media (max-width: 600px) {
+                margin-left: 24px;
+                font-size: 28px;
+            }
+        }
+        
         button {
             border-color: #0005;
             color: #0007;
@@ -88,6 +99,10 @@ const style = {
             
             svg {
                 margin-right: 12px;
+            }
+            
+            @media (max-width: 600px) {
+                margin-right: 24px;
             }
             
             &:hover {    
@@ -102,6 +117,17 @@ const style = {
                 &:hover {
                     background: #c721210c;
                     box-shadow: inset 0 0 0 1px #c72121;
+                }
+            }
+
+            @media (max-width: 600px) {
+                /* margin-top: 12px; */
+                p {
+                    display: none;
+                }
+
+                svg {
+                    margin: 0;
                 }
             }
         }
