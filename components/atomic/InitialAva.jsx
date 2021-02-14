@@ -21,10 +21,19 @@ const style = ({size}) => css`
     height: ${size}px;
     min-width: ${size}px;
     min-height: ${size}px;
+    max-width: ${size}px;
+    max-height: ${size}px;
 
     img {
         position: relative;
         border-radius: 50%;
+        width: ${size}px;
+        height: ${size}px;
+        min-width: ${size}px;
+        min-height: ${size}px;
+        max-width: ${size}px;
+        max-height: ${size}px;
+        object-fit: cover;
     }
 
     .ava-cover { 

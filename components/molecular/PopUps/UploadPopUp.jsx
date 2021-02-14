@@ -36,17 +36,18 @@ const LoginPopUp = ({handleClose}) => {
 
         if (!validateImage(image)) {
             //seterror invalid type
-            console.log('gambar invalid. gif/jpeg/png max 5mb')
+            console.log('Gambar invalid. Tipe gif/jpeg/png max 5mb')
             return
         }
 
         const filename = generateFileName(image.name)
         const storageRef = STORAGE.ref('/Users/profile-pictures').child(filename)
         await storageRef.put(image)
-            .then(res => console.log(res))
             .catch(err => console.log(err))
-
+        const resultURL = await storageRef.getDownloadURL().catch(err => console.log(err))
+        
         console.log(filename)
+        console.log(resultURL)
     }
 
     useEffect(() => {
