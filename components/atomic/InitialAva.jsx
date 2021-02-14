@@ -7,7 +7,7 @@ const InitialAva = ({size, className, src}) => {
 
     return (
         <div css={style({size})} className={`${className} flex-cc`}>
-            <img src={src} alt=""/>
+            <img width={size} height={size} src={src} alt=""/>
             <div className="ava-cover full flex-cc">
                 <p className="flex-cc">{displayName.charAt(0).toUpperCase()}</p>
             </div>
@@ -24,8 +24,6 @@ const style = ({size}) => css`
 
     img {
         position: relative;
-        width: 100%;
-        height: 100%;
         border-radius: 50%;
     }
 

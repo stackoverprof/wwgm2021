@@ -9,7 +9,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import to from '@core/routepath'
 import MainLayout from '@comps-layouts/MainLayout'
 import DashContent from '@comps-molecular/Dashboard/DashContent'
-import EditPhotoURL from '@comps-molecular/Dashboard/EditPhotoURL'
+import UserCard from '@comps-molecular/Dashboard/UserCard'
 
 // [TODO] : Change profile pict
 // [TODO] : Responsive belum bener
@@ -23,7 +23,7 @@ const Dashboard = () => {
     const [editSwitch, setEditSwitch] = useState(false)
     const { query: { action } } = useRouter()
     
-    const { userData, authState, dataCompleted } = useAuth()
+    const { authState, dataCompleted } = useAuth()
 
     const openEdit = () => {
         setActiveTab('Biodata')
@@ -40,13 +40,7 @@ const Dashboard = () => {
                 <MainLayout css={style.page} title="Dashboard" className="flex-s`c col">
 
                     <section css={style.userCard}>
-                        <div className="card contain-size-sm flex-sc">
-                            <EditPhotoURL />
-                            <div>
-                                <p className="display-name">{userData.displayName}</p>
-                                <p className="email">{userData.email}</p>
-                            </div>
-                        </div>
+                        <UserCard />
                     </section>
 
                     <section css={style.header}>
@@ -74,9 +68,6 @@ const style = {
         padding: 32px 0;
     `,
 
-    content: css`
-        
-    `,
 
     header: css`
         .inner{
@@ -116,28 +107,12 @@ const style = {
         }
     `,
 
+    content: css`
+        
+    `,
+
     userCard: css`
-        .card {
-            background: #FFFFFF;
-            border: 1px solid #AFAFAF;
-            box-sizing: border-box;
-            box-shadow: 0px 15px 24px -18px rgba(0, 0, 0, 0.25);
-            border-radius: 12px;
 
-            p.display-name {
-                font-family: Poppins;
-                font-weight: 600;
-                font-size: 24px;
-                color: #1A2C1E;
-            }
-
-            p.email{
-                font-family: Poppins;
-                font-size: 20px;
-                color: #6C6C6C;
-            }
-        }
-    
     `
 }
 

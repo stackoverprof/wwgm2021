@@ -4,12 +4,12 @@ import { useAuth } from '@core/contexts/AuthContext'
 
 import InitialAva from '@comps-atomic/InitialAva'
 
-const EditPhotoURL = () => {
+const EditPhotoURL = ({size}) => {
     const { userData } = useAuth()
 
     return (
         <div css={style}>
-            <InitialAva size={94} src={userData.photoURL}/>
+            <InitialAva size={size} src={userData.photoURL}/>
         </div>
     )
 }
@@ -17,7 +17,7 @@ const EditPhotoURL = () => {
 const style = css`
     position: relative;
     border-radius: 50%;
-    margin: 20px;
+    margin: 20px 0;
     overflow: hidden;
 `
 
