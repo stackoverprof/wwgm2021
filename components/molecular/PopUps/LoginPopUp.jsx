@@ -121,7 +121,10 @@ const style = css`
 
     .buttons{
         button, .btn{
-            max-height: 25px;
+            max-height: 48px;
+            height: 48px;
+            min-height: 48px;
+            padding: 0 18px !important;
         }
 
         @media (max-width: 720px) {

@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/analytics'
 import 'firebase/firestore'
 import 'firebase/auth'
+import "firebase/storage"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -19,4 +20,5 @@ if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
 export default firebase
 export const DB = firebase.firestore()
 export const AUTH = firebase.auth()
+export const STORAGE = firebase.storage()
 export const GoogleAUTH = new firebase.auth.GoogleAuthProvider()
