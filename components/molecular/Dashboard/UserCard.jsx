@@ -24,8 +24,8 @@ const UserCard = () => {
         <div css={style} ref={container} className="contain-size-sm flex-sc">
             <div ref={inner}>
                 <div className="padder flex-cc">
-                    <EditPhotoURL size={isWrapped ? 128 : 96}/>
-                    <div className={`content ${isWrapped ? 'flex-cc col on-wrap' : 'flex-cs col no-wrap'}`}>
+                    <EditPhotoURL size={isWrapped || screen < 470 ? 128 : 96}/>
+                    <div className={`content ${isWrapped || screen < 470 ? 'flex-cc col on-wrap' : 'flex-cs col no-wrap'}`}>
                         <p className="display-name">{userData.displayName}</p>
                         <p className="email">{userData.email}</p>
                     </div>
@@ -49,8 +49,12 @@ const style = css`
     .on-wrap {
         padding-bottom: 20px;
 
-        p{                
+        p {                
             text-align: center;
+        }
+
+        p.email {
+            margin-top: 8px;
         }
     }
 
