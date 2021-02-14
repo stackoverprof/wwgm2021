@@ -6,7 +6,7 @@ import useResize from 'use-resizing'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import to from '@core/routepath'
-import MenuButton from '@comps-atomic/MenuButton'
+import MenuButton from '@components/atomic/MenuButton'
 import NavbarClean from './NavbarClean'
 import LinkSet from './LinkSet'
 

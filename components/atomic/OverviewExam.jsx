@@ -7,7 +7,7 @@ import { MdTimelapse, MdClass } from 'react-icons/md'
 import { BiTimeFive } from 'react-icons/bi'
 
 import { useAuth } from '@core/contexts/AuthContext'
-import RunningText from '@comps-atomic/RunningText'
+import RunningText from '@components/atomic/RunningText'
 
 const Advantages = ({examId, title, size, duration, sessionsLength, fullDate, time, skeleton}) => {
     const { access } = useAuth()

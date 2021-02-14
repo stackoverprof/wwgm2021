@@ -6,8 +6,8 @@ import to from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 
-import MainLayout from '@comps-layouts/MainLayout'
-import Spinner from '@comps-atomic/spinner/Circle'
+import MainLayout from '@components/layouts/MainLayout'
+import Spinner from '@components/atomic/spinner/Circle'
     
 const Dashboard = () => {
     const { user, access, authMethods } = useAuth()

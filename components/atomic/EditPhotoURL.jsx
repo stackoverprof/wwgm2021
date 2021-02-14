@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import { MdPhotoLibrary } from 'react-icons/md'
 
 import { useAuth } from '@core/contexts/AuthContext'
-import InitialAva from '@comps-atomic/InitialAva'
+import InitialAva from '@components/atomic/InitialAva'
 
 const EditPhotoURL = ({size}) => {
     const { userData } = useAuth()

@@ -9,8 +9,8 @@ import { useLayout } from '@core/contexts/LayoutContext'
 
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
-import MainLayout from '@comps-layouts/MainLayout'
-import Spinner from '@comps-atomic/spinner/Circle'
+import MainLayout from '@components/layouts/MainLayout'
+import Spinner from '@components/atomic/spinner/Circle'
     
 const Dashboard = () => {
     const [provinceList, setProvinceList] = useState([])

@@ -4,8 +4,8 @@ import Head from "next/head"
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLayout } from '@core/contexts/LayoutContext'
-import Navbar from '@comps-molecular/Navbar'
-import AlertHandler from '@comps-atomic/AlertHandler'
+import Navbar from '@components/molecular/Navbar'
+import AlertHandler from '@components/atomic/AlertHandler'
 
 const MainLayout = ({className, title, css: style, children, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)

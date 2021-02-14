@@ -3,10 +3,10 @@ import { css } from '@emotion/react'
 import axios from 'axios'
 
 import { useLayout } from '@core/contexts/LayoutContext'
-import MainLayout from '@comps-layouts/MainLayout'
-import Advantages from '@comps-atomic/Advantages'
-import CardDisplay from '@comps-atomic/CardDisplay'
-import LoginPopUp from '@comps-molecular/LoginPopUp'
+import MainLayout from '@components/layouts/MainLayout'
+import LoginPopUp from '@components/molecular/PopUps/LoginPopUp'
+import Advantages from '@components/atomic/Advantages'
+import CardDisplay from '@components/atomic/CardDisplay'
 
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)

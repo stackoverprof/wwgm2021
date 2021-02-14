@@ -6,7 +6,7 @@ import { MdSettings } from 'react-icons/md'
 
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
-import Spinner from '@comps-atomic/spinner/Circle'
+import Spinner from '@components/atomic/spinner/Circle'
 
 const EditDisplayExams = ({i, refreshData}) => {
     const [show, setShow] = useState(false)

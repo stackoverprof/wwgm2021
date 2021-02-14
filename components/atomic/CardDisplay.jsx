@@ -6,8 +6,8 @@ import { FaRegCalendarAlt } from 'react-icons/fa'
 
 import convert from '@core/utils/covertExamData'
 import { useAuth } from '@core/contexts/AuthContext'
-import OverviewExam from '@comps-atomic/OverviewExam'
-import EditDisplayExams from '@comps-atomic/EditDisplayExams'
+import OverviewExam from '@components/atomic/OverviewExam'
+import EditDisplayExams from '@components/atomic/EditDisplayExams'
 
 const CardDisplay = ({examId, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
