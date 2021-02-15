@@ -1,9 +1,11 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-    const { body: { authToken } } = req
+    const { body: { authToken, issuedNoPeserta } } = req
 
-    if (!authToken) {
+    console.log('called')
+
+    if (!authToken || !issuedNoPeserta) {
         return res.status(400).json({ status: 'ERROR', message: 'Data tidak lengkap' })
     }
     
@@ -16,18 +18,14 @@ export default async (req, res) => {
     const userData = await DB.collection('Users').doc(currentUser.uid).get()
     .then(doc => doc.data())
 
-    if (userData.examsAccess || userData.email || userData.uid || userData.noPeserta || userData.approved) {
-        return res.status(403).json({ status: 'ERROR', message: `Forbidden, user's fixed-data already initiated` })
+    if (userData.approved) {
+        return res.status(403).json({ status: 'ERROR', message: 'Forbidden, user has already been approved by admin' })
     }
 
     await DB.collection('Users').doc(currentUser.uid).update({
-        examsAccess: [],    //admin only
-        uid: currentUser.uid,   //permanent
-        email: currentUser.email, //permanent
-        noPeserta: '', //user with rules || admin 
-        approved: false //admin only
+        noPeserta: issuedNoPeserta, //user with rules || admin
     }).then(() => {
-        return res.status(200).json({ status: 'OK', message: 'User Data succesfully initiated' })
+        return res.status(200).json({ status: 'OK', message: 'No Peserta succesfully changed!' })
     }).catch(() => {
         return res.status(500).json({ status: 'ERROR', message: 'Firebase error. Try again' })
     })
