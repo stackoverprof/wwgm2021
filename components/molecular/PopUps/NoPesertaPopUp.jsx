@@ -17,8 +17,8 @@ const NoPesertaPopUp = ({handleClose}) => {
         number: ''
     })
 
-    const { user, refreshUserData } = useAuth()
-    const { setGlobalAlert ,setDimm } = useLayout()
+    const { user, userData, refreshUserData } = useAuth()
+    const { setGlobalAlert, setDimm } = useLayout()
 
     const mutateInputData = (e) => {
         if (e.target.name === 'number' && !validateNumber(e.target.value, 0, 4)) return
@@ -38,7 +38,7 @@ const NoPesertaPopUp = ({handleClose}) => {
         
         
         if (!validateFormatNoPeserta(issuedNoPeserta)) {
-            setGlobalAlert({error: true, body: 'Format salah (4), cek kembali nomor Anda'})
+            setGlobalAlert({error: true, body: 'Format salah (4 digit), cek kembali nomor Anda'})
             return
         }
         console.log('format aman')
@@ -64,8 +64,15 @@ const NoPesertaPopUp = ({handleClose}) => {
     }, [])
 
     useEffect(() => {
-        console.log(inputData)
-    }, [inputData]) 
+        const splits = userData.noPeserta.split('-')
+
+        setInputData({
+            year0: splits[0].charAt(0),
+            year1: splits[0].charAt(1),
+            classification: splits[1],
+            number: splits[2]
+        })
+    }, [userData])
 
     return (
         <div css={style} className="fixed fullscreen flex-cs">

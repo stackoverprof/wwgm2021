@@ -94,6 +94,7 @@ const AuthProvider = ({children}) => {
     const refreshUserData = (uid = user.uid) => {
         return DB.collection('Users').doc(uid).get()
         .then(doc => {
+            console.log('refreshing...')
             const data = doc.data()
             setUserData(data)
             

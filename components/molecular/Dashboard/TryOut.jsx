@@ -31,6 +31,10 @@ const TryOut = () => {
             })
     }, [])
 
+    useEffect(() => {
+        console.log(userData)
+    }, [userData])
+
     return (
         <div css={style.main} className="full-w">
             <div css={style.noPeserta} className="full-w">
