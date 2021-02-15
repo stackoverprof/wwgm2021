@@ -38,7 +38,7 @@ const NoPesertaPopUp = ({handleClose}) => {
         
         
         if (!validateFormatNoPeserta(issuedNoPeserta)) {
-            setGlobalAlert({error: true, body: 'Format salah (4 digit), cek kembali nomor Anda'})
+            setGlobalAlert({error: true, body: 'Format salah (4), cek kembali nomor Anda'})
             return
         }
         console.log('format aman')
