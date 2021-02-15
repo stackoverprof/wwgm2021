@@ -9,11 +9,13 @@ import { STORAGE, DB } from '@core/services/firebase'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
+import Spinner from '@components/atomic/spinner/Circle'
 
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: '', loading: false})
     const [choiceToShow, setChoiceToShow] = useState(true)
     const [draggedOver, setDraggedOver] = useState(false)
+    const [loading, setLoading] = useState(false)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
     const { setDimm } = useLayout()
 
@@ -41,18 +43,23 @@ const UploadPopUp = ({handleClose}) => {
         return `${user}-${unique}.${ext}`
     }
 
-    const updateUserData = (url) => {
-        DB.collection('Users').doc(user.uid).update({
+    const updateUserData = async (url) => {
+        await DB.collection('Users').doc(user.uid).update({
             photoURL: url
         })
         .then(() => {
             refreshUserData()
             handleClose()
+        }).catch(err => {
+
+            //handleError gagal
         })
+        setLoading(false)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         
         const image = fileInput.current.files[0]
 
@@ -86,6 +93,7 @@ const UploadPopUp = ({handleClose}) => {
 
         if (!image) {
             setPreview({blob: '', name: '', loading: false})
+            return 
         }
 
         const reader = new FileReader()
@@ -155,7 +163,7 @@ const UploadPopUp = ({handleClose}) => {
                             />
                             <label className="label-initial" htmlFor="show-initial">Tampilkan inisial nama</label>
                         </div>
-                        <button type="submit">Update</button>
+                        <button type="submit">{loading ? <Spinner w={158} h={26} /> : 'Perbarui foto'}</button>
                     </form>
                 </motion.div>
             </OutsideClickHandler>
