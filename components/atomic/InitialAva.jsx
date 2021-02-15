@@ -1,14 +1,15 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { useAuth } from '@core/contexts/AuthContext'
-import parseURL from 'parse-url'
+import parse from 'url-parse'
 
 const InitialAva = ({size, className, src, override, overrideValue}) => {
     const { userData: { displayName } } = useAuth()
     
     const showInitial = () => {
         if (override) return overrideValue
-        return parseURL(src).query.initial
+        const parsed = parse(src, true)
+        return JSON.parse(parsed.query.initial)
     }
 
     return (

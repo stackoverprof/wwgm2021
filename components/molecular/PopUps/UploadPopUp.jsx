@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import { v4 as uuid } from 'uuid'
 import OutsideClickHandler from 'react-outside-click-handler'
+import parse from 'url-parse'
 
 import { STORAGE, DB } from '@core/services/firebase'
 import { useLayout } from '@core/contexts/LayoutContext'
@@ -19,6 +20,14 @@ const UploadPopUp = ({handleClose}) => {
     const { setDimm } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
+
+    const modifyInitial = (url) => {
+        const parsed = parse(url, true)
+        parsed.set('query', {...parsed.query, initial: showInitial})
+        console.log(parsed.toString())
+
+        return parsed.toString()
+    }
 
     const validateImage = (file) => {
         const validType = ['image/gif', 'image/jpeg', 'image/png']
@@ -61,10 +70,11 @@ const UploadPopUp = ({handleClose}) => {
         await storageRef.put(image)
             .catch(err => console.log(err))
         await storageRef.getDownloadURL()
-            .then(url => updateUserData(url))
+            .then(res => {
+                const url = modifyInitial(res)
+                updateUserData(url)
+            })
             .catch(err => console.log(err))
-        
-        console.log(filename)
     }
 
     const handleChange = (e) => {
