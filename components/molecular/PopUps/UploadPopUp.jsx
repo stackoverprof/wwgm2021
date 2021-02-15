@@ -17,7 +17,7 @@ const UploadPopUp = ({handleClose}) => {
     const [draggedOver, setDraggedOver] = useState(false)
     const [loading, setLoading] = useState(false)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
-    const { setDimm } = useLayout()
+    const { globalAlert, setGlobalAlert, setDimm } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
 
@@ -44,17 +44,15 @@ const UploadPopUp = ({handleClose}) => {
     }
 
     const updateUserData = async (url) => {
-        await DB.collection('Users').doc(user.uid).update({
-            photoURL: url
-        })
-        .then(() => {
-            refreshUserData()
-            handleClose()
-        }).catch(err => {
-
-            //handleError gagal
-        })
-        setLoading(false)
+        await DB.collection('Users').doc(user.uid).update({ photoURL: url })
+            .then(async () => {
+                await refreshUserData()
+                setGlobalAlert({error: false, body:'Foto profil telah diperbarui'})
+                handleClose()
+            }).catch(()=> {
+                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+            })
+        return setLoading(false)
     }
 
     const handleSubmit = async (e) => {
@@ -66,25 +64,31 @@ const UploadPopUp = ({handleClose}) => {
         if (!image) {
             const url = modifyInitial(userData.photoURL)
             updateUserData(url)
-            return
+            setGlobalAlert({error: false, body:'Foto profil telah diperbarui'})
+            return setLoading(false)
         }
 
         if (!validateImage(image)) {
-            //seterror invalid type
-            console.log('Gambar invalid. Tipe gif/jpeg/png max 5mb')
-            return
+            setGlobalAlert({error: true, body:'Gambar tidak valid. Gunakan gif/jpeg/png (Max: 5MB)'})
+            return setLoading(false)
         }
 
         const filename = generateFileName(image.name)
         const storageRef = STORAGE.ref('/Users/profile-pictures').child(filename)
         await storageRef.put(image)
-            .catch(err => console.log(err))
+            .catch(() => {
+                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+                return setLoading(false)
+            })
         await storageRef.getDownloadURL()
             .then(res => {
                 const url = modifyInitial(res)
                 updateUserData(url)
             })
-            .catch(err => console.log(err))
+            .catch(() => {
+                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+                return setLoading(false)
+            })
     }
 
     const handleChange = (e) => {
@@ -93,7 +97,14 @@ const UploadPopUp = ({handleClose}) => {
 
         if (!image) {
             setPreview({blob: '', name: '', loading: false})
-            return 
+            setGlobalAlert({error: true, body:'File tidak valid, coba lagi'})
+            return e.target.value = '' 
+        }
+        
+        if (!validateImage(image)) {
+            setPreview({blob: '', name: '', loading: false})
+            setGlobalAlert({error: true, body:'Gambar tidak valid. Gunakan gif/jpeg/png (Max: 5MB)'})
+            return e.target.value = ''
         }
 
         const reader = new FileReader()
