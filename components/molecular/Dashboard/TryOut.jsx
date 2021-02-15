@@ -29,7 +29,7 @@ const TryOut = () => {
             <div css={style.noPeserta} className="full-w">
                 <p className="label">NO PESERTA</p>
                 <div className="box full-w flex-cc">
-                    {!userData.noPeserta ?(
+                    {userData.noPeserta ? (
                         <p>{userData.noPeserta}</p>
                     ):(
                         <div className="instruction flex-cc">

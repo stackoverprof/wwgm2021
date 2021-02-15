@@ -24,10 +24,8 @@ export default async (req, res) => {
         examsAccess: [],
         uid: currentUser.uid,
         email: currentUser.email,
-        noPeserta: {
-            body: '',
-            approved: false
-        }
+        noPeserta: '',
+        approved: false
     }).then(() => {
         return res.status(200).json({ status: 'OK', message: 'User Data succesfully initiated' })
     })
