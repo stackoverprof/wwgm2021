@@ -200,6 +200,11 @@ const style = css`
         /* @media (min-width: 720px) {
         } */
     }
+
+    form {
+        width: 100%;
+        padding: 0 24px;
+    }
     
     .pop-up{
         background: #fff;
@@ -214,7 +219,7 @@ const style = css`
 
     .file-drop-area {
         position: relative;
-        width: 450px;
+        width: 100%;
         height: 94px;
         display: flex;
         align-items: center;
