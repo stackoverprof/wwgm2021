@@ -133,6 +133,20 @@
     pointer-events: none;
 }
 
+.no-select {    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.no-arrow {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
 .bg-blur {    
     backdrop-filter: blur(8px);
 }

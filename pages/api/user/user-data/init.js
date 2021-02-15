@@ -23,7 +23,11 @@ export default async (req, res) => {
     await DB.collection('Users').doc(currentUser.uid).update({
         examsAccess: [],
         uid: currentUser.uid,
-        email: currentUser.email
+        email: currentUser.email,
+        noPeserta: {
+            body: '',
+            approved: false
+        }
     }).then(() => {
         return res.status(200).json({ status: 'OK', message: 'User Data succesfully initiated' })
     })

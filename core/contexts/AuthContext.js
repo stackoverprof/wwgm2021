@@ -28,8 +28,7 @@ const AuthProvider = ({children}) => {
             contact: '',
             province: '',
             city: '',
-            school: '',
-            noPeserta: ''
+            school: ''
         }
     }
 
