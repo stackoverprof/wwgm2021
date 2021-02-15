@@ -24,7 +24,6 @@ const UploadPopUp = ({handleClose}) => {
     const modifyInitial = (url) => {
         const parsed = parse(url, true)
         parsed.set('query', {...parsed.query, initial: showInitial})
-        console.log(parsed.toString())
 
         return parsed.toString()
     }
@@ -58,6 +57,13 @@ const UploadPopUp = ({handleClose}) => {
         e.preventDefault()
         
         const image = fileInput.current.files[0]
+
+        if (!image) {
+            const url = modifyInitial(userData.photoURL)
+            updateUserData(url)
+            console.log(url)
+            return
+        }
 
         if (!validateImage(image)) {
             //seterror invalid type
