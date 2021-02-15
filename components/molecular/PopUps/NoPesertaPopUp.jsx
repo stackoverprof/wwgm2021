@@ -48,7 +48,9 @@ const NoPesertaPopUp = ({handleClose}) => {
             issuedNoPeserta: issuedNoPeserta
         })
         .then(async res => {
-            await refreshUserData()
+            await setTimeout(() => {
+                refreshUserData()
+            }, 1000)
             setGlobalAlert({error: false, body: res.data.message})
             handleClose()
         })
