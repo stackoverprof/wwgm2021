@@ -15,7 +15,7 @@ import InitialAva from '@components/atomic/InitialAva'
 
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: ''})
-    const [showInitial, setShowInitial] = useState(true)
+    const [choiceToShow, setChoiceToShow] = useState(true)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
     const { setDimm } = useLayout()
 
@@ -23,7 +23,7 @@ const UploadPopUp = ({handleClose}) => {
 
     const modifyInitial = (url) => {
         const parsed = parse(url, true)
-        parsed.set('query', {...parsed.query, initial: showInitial})
+        parsed.set('query', {...parsed.query, initial: choiceToShow})
 
         return parsed.toString()
     }
@@ -96,12 +96,18 @@ const UploadPopUp = ({handleClose}) => {
     }
 
     useEffect(() => {
+        const parsed = parse(userData.photoURL, true)
+        setChoiceToShow(JSON.parse(parsed.query.initial))
+    }, [])
+    
+    useEffect(() => {
         setDimm(true)
         return () => {
             setDimm(false)
             setErrorAuth('')
         }
     }, [])
+
 
     return (
         <div css={style} className="fixed fullscreen flex-cs">
@@ -112,7 +118,7 @@ const UploadPopUp = ({handleClose}) => {
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
                     className="pop-up full-w flex-cc col"
                 >
-                    <InitialAva size={140} src={preview.blob ? preview.blob : userData.photoURL} override overrideValue={showInitial} className="preview"/>
+                    <InitialAva size={140} src={preview.blob ? preview.blob : userData.photoURL} override overrideValue={choiceToShow} className="preview"/>
                     <form className="flex-cc col" onSubmit={handleSubmit}>
                         <div className="file-drop-area">
                             <span className="fake-btn">{preview.name ? 'Change File' : 'Choose File'}</span>
@@ -130,8 +136,8 @@ const UploadPopUp = ({handleClose}) => {
                         <div className="checkbox-container flex-cc">
                             <input 
                                 type="checkbox" 
-                                checked={showInitial} 
-                                onChange={(e) => setShowInitial(e.target.checked)} 
+                                checked={choiceToShow} 
+                                onChange={(e) => setChoiceToShow(e.target.checked)} 
                                 name="show-initial" 
                                 id="show-initial"
                             />
