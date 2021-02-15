@@ -14,6 +14,7 @@ import InitialAva from '@components/atomic/InitialAva'
 
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: ''})
+    const [showInitial, setShowInitial] = useState(true)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
     const { setDimm } = useLayout()
 
@@ -95,14 +96,32 @@ const UploadPopUp = ({handleClose}) => {
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
                     className="pop-up full-w flex-cc col"
                 >
-                    <InitialAva size={96} src={preview.blob ? preview.blob : userData.photoURL} className="preview"/>
+                    <InitialAva size={140} src={preview.blob ? preview.blob : userData.photoURL} override overrideValue={showInitial} className="preview"/>
                     <form className="flex-cc col" onSubmit={handleSubmit}>
                         <div className="file-drop-area">
                             <span className="fake-btn">{preview.name ? 'Change File' : 'Choose File'}</span>
                             <span className="file-msg">{preview.name ? preview.name : 'or drag and drop files here'}</span>
-                            <input type="file" ref={fileInput} onChange={handleChange} name="avatar" id="avatar" className="file-input"/>
+                            <input 
+                                type="file" 
+                                ref={fileInput} 
+                                onChange={handleChange} 
+                                accept="image/x-png,image/gif,image/jpeg"
+                                name="avatar"
+                                id="avatar" 
+                                className="file-input"
+                            />
                         </div>
-                        <button type="submit">Upload</button>
+                        <div className="checkbox-container flex-cc">
+                            <input 
+                                type="checkbox" 
+                                checked={showInitial} 
+                                onChange={(e) => setShowInitial(e.target.checked)} 
+                                name="show-initial" 
+                                id="show-initial"
+                            />
+                            <label className="label-initial" htmlFor="show-initial">Tampilkan inisial nama</label>
+                        </div>
+                        <button type="submit">Update</button>
                     </form>
                 </motion.div>
             </OutsideClickHandler>
@@ -190,6 +209,14 @@ const style = css`
 
         &:focus {
             outline: none;
+        }
+    }
+
+    .checkbox-container {
+        margin-bottom: 24px;
+
+        .label-initial {
+            margin-left: 6px;
         }
     }
 
