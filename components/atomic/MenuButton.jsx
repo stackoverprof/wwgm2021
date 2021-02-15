@@ -16,9 +16,10 @@ const style =  ({open, breakpoint}) => css`
     height: 32px;
     width: 32px;
     transition: 0.25s;
+    display: none;
 
-    @media (min-width: ${breakpoint}px){
-        display: none;
+    @media (max-width: ${breakpoint}px){
+        display: flex;    
     }
 
     .burger{

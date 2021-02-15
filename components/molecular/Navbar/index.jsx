@@ -54,7 +54,7 @@ const Navbar = ({clean}) => {
                         <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
                     </div>
                 </div>
-                {screen < 950 && (
+                {screen <= 950 && (
                     <div className="dropper links">
                         <div className="dropper-inner contain-size-m flex-cc">
                             <LinkSet
