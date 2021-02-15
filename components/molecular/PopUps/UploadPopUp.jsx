@@ -17,7 +17,7 @@ const UploadPopUp = ({handleClose}) => {
     const [draggedOver, setDraggedOver] = useState(false)
     const [loading, setLoading] = useState(false)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
-    const { globalAlert, setGlobalAlert, setDimm } = useLayout()
+    const { setGlobalAlert, setDimm } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
 
@@ -92,6 +92,7 @@ const UploadPopUp = ({handleClose}) => {
     }
 
     const handleChange = (e) => {
+        setGlobalAlert('')
         setPreview({blob: '', name: '', loading: true})
         const image = e.target.files[0]
 
