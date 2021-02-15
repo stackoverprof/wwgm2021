@@ -1,12 +1,17 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
+import { validateFormatNoPeserta } from '@core/utils/validator'
 
 export default async (req, res) => {
     const { body: { authToken, issuedNoPeserta } } = req
 
-    console.log('called')
-
-    if (!authToken || !issuedNoPeserta) {
-        return res.status(400).json({ status: 'ERROR', message: 'Data tidak lengkap' })
+    
+    if (!authToken || !issuedNoPeserta || typeof issuedNoPeserta !== 'string') {
+        return res.status(400).json({ status: 'ERROR', message: 'Bad Request, data invalid' })
+    }
+    
+    
+    if (!validateFormatNoPeserta(issuedNoPeserta)) {
+        return res.status(400).json({ status: 'ERROR', message: 'Bad Request, data invalid' })
     }
     
     //VERIVYING _AUTHENTICATED
@@ -23,7 +28,7 @@ export default async (req, res) => {
     }
 
     await DB.collection('Users').doc(currentUser.uid).update({
-        noPeserta: issuedNoPeserta, //user with rules || admin
+        noPeserta: issuedNoPeserta //user with rules || admin
     }).then(() => {
         return res.status(200).json({ status: 'OK', message: 'No Peserta succesfully changed!' })
     }).catch(() => {

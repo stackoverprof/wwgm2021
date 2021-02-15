@@ -7,6 +7,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
+import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
 
 const NoPesertaPopUp = ({handleClose}) => {
     const [inputData, setInputData] = useState({
@@ -20,7 +21,7 @@ const NoPesertaPopUp = ({handleClose}) => {
     const { setGlobalAlert ,setDimm } = useLayout()
 
     const mutateInputData = (e) => {
-        if (e.target.name === 'number' && !validateNumber(e.target.value)) return
+        if (e.target.name === 'number' && !validateNumber(e.target.value, 0, 4)) return
 
         setInputData((prevState) => ({
            ...prevState,
@@ -28,20 +29,19 @@ const NoPesertaPopUp = ({handleClose}) => {
         }))
     }
 
-    const validateNumber = (value) => {
-        const isShort = value.length <= 4 
-        const isNumber = value === '' || /^[0-9\b]+$/.test(value)
-        return isNumber && isShort
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         setGlobalAlert('')
-
+        
         const { year0, year1, classification, number } = inputData
         const issuedNoPeserta = `${year0+year1}-${classification}-${number}`
-
-        console.log(issuedNoPeserta)
+        
+        
+        if (!validateFormatNoPeserta(issuedNoPeserta)) {
+            setGlobalAlert({error: true, body: 'Format salah (4 digit), cek kembali nomor Anda'})
+            return
+        }
+        console.log('format aman')
 
         axios.post('/api/user/user-data/edit-no-peserta', {
             authToken: await user.getIdToken(),
@@ -94,7 +94,7 @@ const NoPesertaPopUp = ({handleClose}) => {
                                 >
                                     <option disabled value="">-</option>
                                     <option value="ST">ST</option>
-                                    <option value="CH">CH</option>
+                                    <option value="SH">SH</option>
                                     <option value="CP">CP</option>
                                 </select>
                                 <div className="icon-drop flex-cc">
