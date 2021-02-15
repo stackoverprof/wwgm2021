@@ -2,14 +2,14 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { useAuth } from '@core/contexts/AuthContext'
 
-const InitialAva = ({size, className, src}) => {
+const InitialAva = ({size, className, src, hideInitial}) => {
     const { userData: { displayName } } = useAuth()
 
     return (
         <div css={style({size})} className={`${className} flex-cc`}>
             <img width={size} height={size} src={src} alt=""/>
             <div className="ava-cover full flex-cc">
-                <p className="flex-cc">{displayName.charAt(0).toUpperCase()}</p>
+                {!hideInitial && <p className="flex-cc">{displayName.charAt(0).toUpperCase()}</p>}
             </div>
         </div>
     )

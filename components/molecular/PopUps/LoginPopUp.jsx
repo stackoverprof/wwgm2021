@@ -23,7 +23,7 @@ const LoginPopUp = ({handleClose}) => {
     }, [])
 
     return (
-        <div css={style} className="fixed fullscreen-v flex-cs">
+        <div css={style} className="fixed fullscreen flex-cs">
             <OutsideClickHandler onOutsideClick={handleClose} display="flex">
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95, y: -10}} 
@@ -139,15 +139,6 @@ const style = css`
         @media (max-width: 720px) {
             min-width: 220px;
             margin: 6px 0;
-
-            &.tutup{
-                width: 100%;
-                padding: 12px 0 !important;
-            }
-        }
-        
-        &.tutup{
-            padding: 12px 18px;
         }
     }
 
