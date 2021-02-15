@@ -118,7 +118,7 @@ const BioEdit = ({setEditSwitch}) => {
     }, [userData, provinceList])
 
     return (
-        <div css={style({inputData})} className="contain-size-s full-w flex-cc col">
+        <div css={style({inputData})} className="full-w flex-cc col">
             {initialLoading && (
                 <div className="loading full-w flex-cc">
                     <p>Loading data user...</p>
@@ -235,6 +235,9 @@ const BioEdit = ({setEditSwitch}) => {
     )
 }
 const style = ({inputData}) => css`
+    @media (max-width: 780px) {
+        width: 90%;
+    }
 
     button.submit {
         margin-top: 24px;

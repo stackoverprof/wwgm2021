@@ -1,4 +1,4 @@
-const collection = [
+export const collection = [
     'https://media.giphy.com/media/l4KihuqeuJEi9qLSM/giphy.gif',
     'https://media.giphy.com/media/dAWZiSMbMvObDWP3aA/giphy.gif',
     'https://media.giphy.com/media/8w61HSu6xQjoa2NzKN/giphy.gif',

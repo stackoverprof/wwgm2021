@@ -15,7 +15,7 @@ const BioOverview = ({openEdit}) => {
     }
 
     return (
-        <div css={style.main} className="contain-size-s full-w">
+        <div css={style.main} className="full-w">
             <div css={style.item}>
                 <p className="label">NAMA LENGKAP</p>
                 <div className="flex-ss">
@@ -78,6 +78,10 @@ const BioOverview = ({openEdit}) => {
 const style = {
     main: css`
         padding: 12px 0;
+        
+        @media (max-width: 780px) {
+                width: 90%;
+        }
 
         @media (max-width: 600px) {
             padding: 0;

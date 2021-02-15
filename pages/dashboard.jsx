@@ -44,10 +44,12 @@ const Dashboard = () => {
                     </section>
 
                     <section css={style.header}>
-                        <div className="inner contain-size-s flex-bc">
-                            <h1>Dashboard</h1>
-                            {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 /><p>{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</p></button>}
-                            {editSwitch && <button onClick={() => setEditSwitch(false)} className="bordered cancel"><CgCloseR /><p>Batal mengubah</p></button>}
+                        <div className="inner contain-size-s flex-cc">
+                            <div className="content flex-bc full-w">
+                                <h1>Dashboard</h1>
+                                {!editSwitch && <button onClick={openEdit} className="bordered"><FiEdit3 /><p>{dataCompleted ? 'Ubah' : 'Lengkapi'} Biodata</p></button>}
+                                {editSwitch && <button onClick={() => setEditSwitch(false)} className="bordered cancel"><CgCloseR /><p>Batal mengubah</p></button>}
+                            </div>
                         </div>
                     </section>
 
@@ -75,10 +77,17 @@ const style = {
             
             @media (max-width: 600px) {
                 padding: 32px 0;
-                /* flex-direction: column; */
+                
             }
+
         }
 
+        .content {
+            @media (max-width: 780px) {
+                width: 90%;
+            }
+        }
+        
         h1 {
             font-family: Poppins;
             font-weight: 600;
@@ -87,7 +96,6 @@ const style = {
 
             
             @media (max-width: 780px) {
-                margin-left: 24px;
                 font-size: 28px;
             }
         }
@@ -99,10 +107,6 @@ const style = {
             
             svg {
                 margin-right: 12px;
-            }
-            
-            @media (max-width: 780px) {
-                margin-right: 24px;
             }
             
             &:hover {    

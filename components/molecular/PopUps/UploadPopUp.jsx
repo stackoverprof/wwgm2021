@@ -16,7 +16,7 @@ const UploadPopUp = ({handleClose}) => {
     const [choiceToShow, setChoiceToShow] = useState(true)
     const [draggedOver, setDraggedOver] = useState(false)
     const [loading, setLoading] = useState(false)
-    const { user, userData, setErrorAuth, refreshUserData } = useAuth()
+    const { user, userData, refreshUserData } = useAuth()
     const { setGlobalAlert, setDimm } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
@@ -125,7 +125,6 @@ const UploadPopUp = ({handleClose}) => {
         setDimm(true)
         return () => {
             setDimm(false)
-            setErrorAuth('')
         }
     }, [])
 

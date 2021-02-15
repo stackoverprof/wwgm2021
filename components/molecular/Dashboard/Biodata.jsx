@@ -15,7 +15,7 @@ const Biodata = ({openEdit, editSwitch, setEditSwitch}) => {
     }, [])
 
     return (
-        <div css={style}>
+        <div css={style} className="full-w flex-cc">
             {editSwitch ?
                 <BioEdit setEditSwitch={setEditSwitch}/>
             :
