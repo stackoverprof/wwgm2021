@@ -10,12 +10,10 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
 
-// [TODO] : Show my initial name?
-// [TODO] : initial as url parameter (? ...) &initial=true
-
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: ''})
     const [choiceToShow, setChoiceToShow] = useState(true)
+    const [draggedOver, setDraggedOver] = useState(false)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
     const { setDimm } = useLayout()
 
@@ -61,7 +59,6 @@ const UploadPopUp = ({handleClose}) => {
         if (!image) {
             const url = modifyInitial(userData.photoURL)
             updateUserData(url)
-            console.log(url)
             return
         }
 
@@ -99,7 +96,7 @@ const UploadPopUp = ({handleClose}) => {
         const parsed = parse(userData.photoURL, true)
         setChoiceToShow(JSON.parse(parsed.query.initial))
     }, [])
-    
+
     useEffect(() => {
         setDimm(true)
         return () => {
@@ -120,7 +117,11 @@ const UploadPopUp = ({handleClose}) => {
                 >
                     <InitialAva size={140} src={preview.blob ? preview.blob : userData.photoURL} override overrideValue={choiceToShow} className="preview"/>
                     <form className="flex-cc col" onSubmit={handleSubmit}>
-                        <div className="file-drop-area">
+                        <div 
+                            className={`file-drop-area ${draggedOver || preview.blob ? 'ready' : ''}`} 
+                            onDragEnter={() => setDraggedOver(true)} 
+                            onDragLeave={() => setDraggedOver(false)}
+                        >
                             <span className="fake-btn">{preview.name ? 'Change File' : 'Choose File'}</span>
                             <span className="file-msg">{preview.name ? preview.name : 'or drag and drop files here'}</span>
                             <input 
@@ -181,20 +182,22 @@ const style = css`
     }
 
     .file-drop-area {
-        margin: 24px 0;
         position: relative;
+        width: 450px;
+        height: 94px;
         display: flex;
         align-items: center;
-        width: 450px;
         max-width: 100%;
-        padding: 25px;
+        margin: 24px 0;
+        padding: 0 25px;
         border: 1px dashed #0005;
         border-radius: 3px;
         transition: 0.2s;
         background-color: #0001;
-
-        &:focus {
-            background-color: #0002;
+        
+        &.ready {
+            border: 3px dashed #0005;
+            background: #36a56855;
         }
     }
 
