@@ -11,7 +11,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
 
 const UploadPopUp = ({handleClose}) => {
-    const [preview, setPreview] = useState({blob: '', name: ''})
+    const [preview, setPreview] = useState({blob: '', name: '', loading: false})
     const [choiceToShow, setChoiceToShow] = useState(true)
     const [draggedOver, setDraggedOver] = useState(false)
     const { user, userData, setErrorAuth, refreshUserData } = useAuth()
@@ -81,13 +81,17 @@ const UploadPopUp = ({handleClose}) => {
     }
 
     const handleChange = (e) => {
+        setPreview({blob: '', name: '', loading: true})
         const image = e.target.files[0]
-        const reader = new FileReader()
-        
-        reader.readAsDataURL(image)
 
+        if (!image) {
+            setPreview({blob: '', name: '', loading: false})
+        }
+
+        const reader = new FileReader()
+        reader.readAsDataURL(image)
         reader.onload = (res) => {
-            setPreview({blob: res.target.result, name: image.name})
+            setPreview({blob: res.target.result, name: image.name, loading: false})
         }
 
     }
@@ -115,7 +119,14 @@ const UploadPopUp = ({handleClose}) => {
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
                     className="pop-up full-w flex-cc col"
                 >
-                    <InitialAva size={140} src={preview.blob ? preview.blob : userData.photoURL} override overrideValue={choiceToShow} className="preview"/>
+                    <InitialAva 
+                        size={140} 
+                        src={preview.blob ? preview.blob : userData.photoURL} 
+                        loading={preview.loading}
+                        override 
+                        overrideValue={choiceToShow} 
+                        className="preview"
+                    />
                     <form className="flex-cc col" onSubmit={handleSubmit}>
                         <div 
                             className={`file-drop-area ${draggedOver || preview.blob ? 'ready' : ''}`} 

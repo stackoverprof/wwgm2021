@@ -37,7 +37,7 @@ const Dashboard = () => {
     return (
         <UserOnlyRoute redirect={to.home}>
             { authState === 'user' && (    
-                <MainLayout css={style.page} title="Dashboard" className="flex-s`c col">
+                <MainLayout css={style.page} title="Dashboard" className="flex-sc col">
 
                     <section css={style.userCard}>
                         <UserCard />
