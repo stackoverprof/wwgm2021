@@ -15,7 +15,7 @@ const collection = [
 ]
 
 const getAvatar = () => {
-    return collection[Math.floor(Math.random() * collection.length)]
+    return `${collection[Math.floor(Math.random() * collection.length)]}?initial=true`
 }
 
 export default getAvatar

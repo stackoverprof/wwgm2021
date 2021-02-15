@@ -10,6 +10,7 @@ const InitialAva = ({size, className, src, override, overrideValue, loading}) =>
     const showInitial = () => {
         if (override) return overrideValue
         const parsed = parse(src, true)
+        if (!parsed.query.initial) return false
         return JSON.parse(parsed.query.initial)
     }
 
