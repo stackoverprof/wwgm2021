@@ -24,7 +24,7 @@ const BioEdit = ({setEditSwitch}) => {
         school: ''
     })
     
-    const { user, userData, refreshUserData } = useAuth()
+    const { user, userData } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const mutateInputData = (e) => {
@@ -49,11 +49,8 @@ const BioEdit = ({setEditSwitch}) => {
             province: inputData.province,
             city: inputData.city,
             school: inputData.school
-        }).then(async () => {
-            await refreshUserData().then(() => {
-                setGlobalAlert({error: false, body: 'Berhasil mengubah data!'})
-            })
-            .catch(() => setGlobalAlert({error: false, body: 'Berhasil. Refresh browser sekarang'}))
+        }).then(() => {
+            setGlobalAlert({error: false, body: 'Berhasil mengubah data!'})
             setEditSwitch(false)
         })
         .catch(() => setGlobalAlert({error: true, body: 'Gagal mengupdate data'}))

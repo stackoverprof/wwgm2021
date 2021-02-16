@@ -60,13 +60,12 @@ const AuthProvider = ({children}) => {
             return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
                 if(res.additionalUserInfo.isNewUser){
                     await DB.collection('Users').doc(res.user.uid)
-                    .set(initialData(res.user.displayName))
-                    .then(async () => {
-                        await axios.post('/api/user/user-data/init', {
-                            authToken: await res.user.getIdToken()
+                        .set(initialData(res.user.displayName))
+                        .then(async () => {
+                            axios.post('/api/user/user-data/init', {
+                                authToken: await res.user.getIdToken()
+                            })
                         })
-                        refreshUserData(res.user.uid)
-                    })
                     setIsNew(true)
                 }
                 setUser(res.user)
@@ -91,22 +90,22 @@ const AuthProvider = ({children}) => {
             setDataCompleted(isCompleted)
     }
          
-    const refreshUserData = (uid = user.uid) => {
-        return DB.collection('Users').doc(uid).get()
-        .then(doc => {
-            console.log(doc.data())
-            const data = doc.data()
-            setUserData(data)
-            
-            checkCompletion(data)
-        })
+    const listenUserData = (uid) => {
+        const unlisten = DB.collection('Users').doc(uid)
+            .onSnapshot((doc) => {
+                const data = doc.data()
+                setUserData(data)
+                checkCompletion(data)
+            }, () => {
+                unlisten()
+            })
     }   
         
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(async user => {
             if(user) {
+                listenUserData(user.uid)
                 setUser(user) 
-                await refreshUserData(user.uid)
                 await user.getIdTokenResult().then(res => {
                     setAccess({ admin: res.claims.admin })
                 })
@@ -133,8 +132,7 @@ const AuthProvider = ({children}) => {
             userData,
             errorAuth,
             setErrorAuth,
-            dataCompleted,
-            refreshUserData
+            dataCompleted
         }}>
             { children }
         </firebaseAuth.Provider>

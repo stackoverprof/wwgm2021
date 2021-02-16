@@ -17,7 +17,7 @@ const NoPesertaPopUp = ({handleClose}) => {
         number: ''
     })
 
-    const { user, userData, refreshUserData } = useAuth()
+    const { user, userData } = useAuth()
     const { setGlobalAlert, setDimm } = useLayout()
 
     const mutateInputData = (e) => {
@@ -47,10 +47,7 @@ const NoPesertaPopUp = ({handleClose}) => {
             authToken: await user.getIdToken(),
             issuedNoPeserta: issuedNoPeserta
         })
-        .then(async res => {
-            await setTimeout(() => {
-                refreshUserData()
-            }, 1000)
+        .then(res => {
             setGlobalAlert({error: false, body: res.data.message})
             handleClose()
         })

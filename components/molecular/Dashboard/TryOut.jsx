@@ -10,7 +10,6 @@ import NoPesertaPopUp from '@components/molecular/PopUps/NoPesertaPopUp'
 
 const TryOut = () => {
     const [openPopUp, setOpenPopUp] = useState(false)
-    const [listenApproval, setListenApproval] = useState(false)
     const { userData } = useAuth()
     const { setDimm } = useLayout()
 
@@ -24,13 +23,6 @@ const TryOut = () => {
         }
     }
 
-    useEffect(() => {
-        DB.collection('Users').doc(userData.uid)
-            .onSnapshot((doc) => {
-                setListenApproval(doc.data().approved)
-            })
-    }, [])
-
     return (
         <div css={style.main} className="full-w">
             <div css={style.noPeserta} className="full-w">
@@ -41,15 +33,15 @@ const TryOut = () => {
                             <p className="no-peserta">{userData.noPeserta}</p>
                             
                             <div className="status flex-sc">
-                                {listenApproval ? 
+                                {userData.approved ? 
                                     <MdVerifiedUser color="#37a558" className="icon"/> 
                                 : 
                                     <RiErrorWarningFill color="#fa903a" className="icon"/>}
-                                <p className={`badge ${listenApproval ? 'green' : ''}`}>
-                                    STATUS : {listenApproval ? 'APPROVED' : 'MENUNGGU APPROVAL'}
+                                <p className={`badge ${userData.approved ? 'green' : ''}`}>
+                                    STATUS : {userData.approved ? 'APPROVED' : 'MENUNGGU APPROVAL'}
                                 </p>
                             </div>
-                            {!listenApproval && <button className="edit no-btn" onClick={showPopUp.open}>EDIT</button>}
+                            {!userData.approved && <button className="edit no-btn" onClick={showPopUp.open}>EDIT</button>}
                         </>
                     ):(
                         <div className="instruction flex-cc">
@@ -69,7 +61,7 @@ const TryOut = () => {
             <div css={style.access} className="full-w">
                 <p className="label">AKSES TRYOUT</p>
                 <div className="full-w flex-cc">
-                    {userData.examsAccess.map((exam, i) => (
+                    {userData.examsAccess?.map((exam, i) => (
                         <p key={i}>{exam}</p>
                     ))}
                 </div>

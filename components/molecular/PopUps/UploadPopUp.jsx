@@ -16,7 +16,7 @@ const UploadPopUp = ({handleClose}) => {
     const [choiceToShow, setChoiceToShow] = useState(true)
     const [draggedOver, setDraggedOver] = useState(false)
     const [loading, setLoading] = useState(false)
-    const { user, userData, refreshUserData } = useAuth()
+    const { user, userData } = useAuth()
     const { setGlobalAlert, setDimm } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
@@ -45,8 +45,7 @@ const UploadPopUp = ({handleClose}) => {
 
     const updateUserData = async (url) => {
         await DB.collection('Users').doc(user.uid).update({ photoURL: url })
-            .then(async () => {
-                await refreshUserData()
+            .then(() => {
                 setGlobalAlert({error: false, body:'Foto profil telah diperbarui'})
                 handleClose()
             }).catch(()=> {
