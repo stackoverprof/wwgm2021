@@ -64,12 +64,11 @@ const AuthProvider = ({children}) => {
 
     const checkCompletion = (data) => {
         let isCompleted = true
-            const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
-            for (const field of fields) {
-                if (!data[field]) isCompleted = false
-            }
-
-            setDataCompleted(isCompleted)
+        const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+        for (const field of fields) {
+            if (!data[field]) isCompleted = false
+        }
+        setDataCompleted(isCompleted)
     }
          
     const listenUserData = (uid) => {
