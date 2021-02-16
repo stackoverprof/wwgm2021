@@ -9,6 +9,8 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
 
+// [TODO] : narasi, nomormu akan dicek oleh panitia, input dengan <i class="fa fa-behance-square" aria-hidden="true"></i>
+
 const NoPesertaPopUp = ({handleClose}) => {
     const [inputData, setInputData] = useState({
         year0: '2',
