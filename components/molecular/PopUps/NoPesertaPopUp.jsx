@@ -63,14 +63,16 @@ const NoPesertaPopUp = ({handleClose}) => {
     }, [])
 
     useEffect(() => {
-        const splits = userData.noPeserta.split('-')
-
-        setInputData({
-            year0: splits[0].charAt(0),
-            year1: splits[0].charAt(1),
-            classification: splits[1],
-            number: splits[2]
-        })
+        if (validateFormatNoPeserta(userData.noPeserta)) {
+            const splits = userData.noPeserta.split('-')
+            
+            setInputData({
+                year0: splits[0].charAt(0),
+                year1: splits[0].charAt(1),
+                classification: splits[1],
+                number: splits[2]
+            })
+        }
     }, [userData])
 
     return (
