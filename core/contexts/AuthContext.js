@@ -19,11 +19,9 @@ const AuthProvider = ({children}) => {
     const router = useRouter()
 
     const initialData = (displayName) => {
-        const avatar = getAvatar()
-
         return {
             displayName : displayName,
-            photoURL : avatar,
+            photoURL : getAvatar(),
             fullName : '',
             contact: '',
             province: '',
@@ -33,32 +31,12 @@ const AuthProvider = ({children}) => {
     }
 
     const authMethods = {
-        emailSignUp : (email, password, displayName) => {
-            return AUTH.createUserWithEmailAndPassword(email, password)
-                .then(async res => {
-                    const data = await res.user.updateProfile({
-                        displayName: displayName
-                    })
-
-                    DB.collection('Users').doc(res.user.uid).set(initialData(displayName))
-
-                    setUser(data.user) 
-                })
-                .catch(err => setErrorAuth(err.code))
-        },
-
-        emailSignIn : (email, password) => {
-            return AUTH.signInWithEmailAndPassword(email, password)
-                .then(res => setUser(res.user))  
-                .catch(err => setErrorAuth(err.code))
-        },
-
         google : () => {
             GoogleAUTH.addScope('profile')
             GoogleAUTH.addScope('email')
 
             return AUTH.signInWithPopup(GoogleAUTH).then(async res => {
-                if(res.additionalUserInfo.isNewUser){
+                if (res.additionalUserInfo.isNewUser) {
                     await DB.collection('Users').doc(res.user.uid)
                         .set(initialData(res.user.displayName))
                         .then(async () => {
@@ -91,29 +69,25 @@ const AuthProvider = ({children}) => {
     }
          
     const listenUserData = (uid) => {
-        const unlisten = DB.collection('Users').doc(uid)
-            .onSnapshot((doc) => {
-                const data = doc.data()
-                setUserData(data)
-                checkCompletion(data)
-            }, () => {
-                unlisten()
-            })
+        DB.collection('Users').doc(uid).onSnapshot((doc) => {
+            setUserData(doc.data())
+            checkCompletion(doc.data())
+            console.log('listened...')
+        }, () => {
+            setUserData({})
+        })
     }   
-        
+
     useEffect(() => {
         const unsubscribe = AUTH.onAuthStateChanged(async user => {
             if(user) {
+                setAccess({ admin: await user.getIdTokenResult().then(res => res.claims.admin)})
                 listenUserData(user.uid)
                 setUser(user) 
-                await user.getIdTokenResult().then(res => {
-                    setAccess({ admin: res.claims.admin })
-                })
                 setAuthState('user')
             } else {
                 setAuthState('guest')
                 setUser({})
-                setUserData({})
                 setAccess({})
                 setIsNew(false)
                 setDataCompleted(false)

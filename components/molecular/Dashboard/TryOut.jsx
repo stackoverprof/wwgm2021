@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import { RiErrorWarningFill } from 'react-icons/ri'
 import { MdVerifiedUser } from 'react-icons/md'
 
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
-import { DB } from '@core/services/firebase'
 import NoPesertaPopUp from '@components/molecular/PopUps/NoPesertaPopUp'
 
 const TryOut = () => {
