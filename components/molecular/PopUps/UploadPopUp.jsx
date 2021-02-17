@@ -5,11 +5,12 @@ import { v4 as uuid } from 'uuid'
 import OutsideClickHandler from 'react-outside-click-handler'
 import parse from 'url-parse'
 
-import { STORAGE, DB } from '@core/services/firebase'
+import { STORAGE } from '@core/services/firebase'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
 import Spinner from '@components/atomic/spinner/Circle'
+import FireFetcher from '@core/services/FireFetcher'
 
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: '', loading: false})
@@ -44,7 +45,7 @@ const UploadPopUp = ({handleClose}) => {
     }
 
     const updateUserData = async (url) => {
-        await DB.collection('Users').doc(user.uid).update({ photoURL: url })
+        await FireFetcher.editPhoto(user.uid, { photoURL: url })
             .then(() => {
                 setGlobalAlert({error: false, body:'Foto profil telah diperbarui'})
                 handleClose()

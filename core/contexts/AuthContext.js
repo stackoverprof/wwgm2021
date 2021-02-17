@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AUTH, GoogleAUTH, DB } from '@core/services/firebase'
+import { AUTH, GoogleAUTH } from '@core/services/firebase'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import to from '@core/routepath'
 import getAvatar from '@core/utils/getAvatar'
+import FireFetcher from '@core/services/FireFetcher'
 
 const firebaseAuth = React.createContext()
 
@@ -36,8 +37,7 @@ const AuthProvider = ({children}) => {
             GoogleAUTH.addScope('email')
 
             const handleSignUp = async (res) => {
-                await DB.collection('Users').doc(res.user.uid)
-                    .set(initialData(res.user.displayName))
+                await FireFetcher.initUserDatabase(res.user.uid, initialData(res.user.displayName))
                     .then(async () => {
                         axios.post('/api/user/user-data/init', {
                             authToken: await res.user.getIdToken()
@@ -72,7 +72,7 @@ const AuthProvider = ({children}) => {
     }
          
     const listenUserData = (uid) => {
-        DB.collection('Users').doc(uid).onSnapshot((doc) => {
+        FireFetcher.listen.userData(uid, (doc) => {
             setUserData(doc.data())
             checkCompletion(doc.data())
             console.log('listened...')

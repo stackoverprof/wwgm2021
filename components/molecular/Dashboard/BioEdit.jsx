@@ -4,7 +4,8 @@ import axios from 'axios'
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 
-import { DB } from '@core/services/firebase'
+
+import FireFetcher from '@core/services/FireFetcher'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
 import Spinner from '@components/atomic/spinner/Circle'
@@ -42,14 +43,15 @@ const BioEdit = ({setEditSwitch}) => {
         e.preventDefault()
         setLoading(true)
 
-        await DB.collection('Users').doc(user.uid).update({
+        await FireFetcher.editBiodata(user.uid, {
             fullName: inputData.fullName,
             displayName: inputData.displayName,
             contact: inputData.contact,
             province: inputData.province,
             city: inputData.city,
             school: inputData.school
-        }).then(() => {
+        })
+        .then(() => {
             setGlobalAlert({error: false, body: 'Berhasil mengubah data!'})
             setEditSwitch(false)
         })
