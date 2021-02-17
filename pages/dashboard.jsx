@@ -81,9 +81,7 @@ const style = {
             
             @media (max-width: 600px) {
                 padding: 32px 0;
-                
             }
-
         }
 
         .content {
@@ -98,7 +96,6 @@ const style = {
             font-size: 40px;
             color: #1A2C1E;
 
-            
             @media (max-width: 780px) {
                 font-size: 28px;
             }
@@ -129,7 +126,7 @@ const style = {
             }
 
             @media (max-width: 600px) {
-                /* margin-top: 12px; */
+
                 p {
                     display: none;
                 }

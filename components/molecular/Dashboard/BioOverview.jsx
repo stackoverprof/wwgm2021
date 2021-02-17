@@ -21,11 +21,11 @@ const BioOverview = ({openEdit, setActiveTab}) => {
                     {!dataCompleted ?
                         <p>Sebelum mengerjakan try out pastikan seluruh datamu telah dilengkapi</p>
                     : !userData.noPeserta ?
-                        <p>Yeay! data sudah lengkap. Sekarang input nomor pesertamu <span onClick={() => setActiveTab('Try Out')}>di sini</span></p>
+                        <p>Yeay! Data sudah lengkap. Sekarang input nomor pesertamu <span onClick={() => setActiveTab('Try Out')}>di sini</span></p>
                     : !userData.approved ?
-                        <p>Yeay! data sudah lengkap. Tunggu approval untuk mengikuti tryout. Semangat!</p>
+                        <p>Yeay! Data sudah lengkap. Tunggu approval untuk mengikuti tryout. Semangat!</p>
                     :
-                        <p>Yeay! data sudah lengkap. Bersiaplah untuk mengikuti tryout. Semangat!</p>
+                        <p>Yeay! Data sudah lengkap. Bersiaplah untuk mengikuti tryout. Semangat!</p>
                     }
                     <img src="/img/illus/checkerboard.svg" alt=""/>
                 </div>

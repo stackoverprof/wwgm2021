@@ -92,8 +92,8 @@ const AuthProvider = ({children}) => {
                 setAuthState('user')
             } else {
                 setAuthState('guest')
-                setUser({})
                 setAccess({})
+                setUser({})
                 setIsNew(false)
                 setDataCompleted(false)
             }
