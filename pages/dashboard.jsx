@@ -11,10 +11,6 @@ import MainLayout from '@components/layouts/MainLayout'
 import DashContent from '@components/molecular/Dashboard/DashContent'
 import UserCard from '@components/atomic/UserCard'
 
-// [TODO] : kelebihan nambah : Pake sistem bobot IRT
-// [TODO] : illus, kelengkapan data harus dipennuhi sebelum menjalani try out
-// [TODO] : Yeay, datamu sudah lengkap. Jangan lupa untuk mengisi nomor peserta disini
-
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('Try Out')
     const [editSwitch, setEditSwitch] = useState(false)

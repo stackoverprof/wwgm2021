@@ -8,6 +8,8 @@ import LoginPopUp from '@components/molecular/PopUps/LoginPopUp'
 import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 
+// [TODO] : kelebihan nambah : Pake sistem bobot IRT
+
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
     const [displayedExams, setDisplayedExams] = useState([])
