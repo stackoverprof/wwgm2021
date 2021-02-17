@@ -6,7 +6,7 @@ const AlertHandler = ({message, closeHandler = () => {}, color = 'default'}) => 
     return (
     <>        
         { message && (
-            <div css={style} className="fixed fullscreen-v flex-ce">
+            <div css={style} className="fixed fullscreen flex-ce">
                 <div className={`box flex-bc ${color}`}>
                     <p>{message}</p>
                     <FaWindowClose onClick={() => closeHandler()}/>
@@ -26,6 +26,7 @@ const style = css`
         margin-bottom: 32px;
         border-radius: 8px;
         pointer-events: all;
+        max-width: 95%;
         
         &.default{
             background: #7fa6f0aa;

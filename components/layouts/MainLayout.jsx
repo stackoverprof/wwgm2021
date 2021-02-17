@@ -25,9 +25,9 @@ const MainLayout = ({className, title, css: style, children, noClearance}) => {
             <Head>
                 <title>WWGM 2021 {title ? `— ${title}` : ''}</title>
             </Head>
-            <div css={style} className={className}>
+            <main css={style} className={className}>
                 {children}
-            </div>
+            </main>
 
             <AnimatePresence exitBeforeEnter>
                 {dimm && (

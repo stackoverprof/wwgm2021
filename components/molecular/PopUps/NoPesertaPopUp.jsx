@@ -43,7 +43,6 @@ const NoPesertaPopUp = ({handleClose}) => {
             setGlobalAlert({error: true, body: 'Format salah (4 digit), cek kembali nomor Anda'})
             return
         }
-        console.log('format aman')
 
         axios.post('/api/user/user-data/edit-no-peserta', {
             authToken: await user.getIdToken(),

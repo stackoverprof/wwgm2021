@@ -76,11 +76,9 @@ const AuthProvider = ({children}) => {
             attach: (doc) => {
                 setUserData(doc.data())
                 checkCompletion(doc.data())
-                console.log('listening...')
             },
             detach: () => {
                 setUserData({})
-                console.log('unlisten')
             }
         })
     }   

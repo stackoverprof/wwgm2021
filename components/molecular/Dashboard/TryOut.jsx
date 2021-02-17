@@ -35,7 +35,7 @@ const TryOut = () => {
                     {(!userData.approved || userData.examsAccess.length === 0) && 
                         <div className="information-access full-w flex-cc col">
                             <p>Akses TryOut akan muncul setelah Anda di-approve oleh panitia</p>
-                            <p>Hubungi <Link href={to.contact}>panitia</Link> bila terdapat kesalahan</p>
+                            {userData.approved && <p>Hubungi <Link href={to.contact}>panitia</Link> bila terdapat kesalahan</p>}
                         </div>
                     }
                     {userData.approved && userData.examsAccess?.map((exam, i) => (
@@ -76,7 +76,7 @@ const style = {
 
     access: css`
         .information-access {
-            padding: 24px 0;
+            padding: 24px 12px;
             border: 1px solid #0005;
             border-radius: 8px;
 
