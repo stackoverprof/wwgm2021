@@ -12,6 +12,7 @@ import EditDisplayExams from '@components/atomic/EditDisplayExams'
 const CardDisplay = ({examId, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
     const { access } = useAuth()
+    const { setGlobalAlert } = useLayout()
     
     useEffect(() => {
         if (!examId) return
@@ -19,7 +20,9 @@ const CardDisplay = ({examId, i, refreshData}) => {
         const fetchData = async () => {
             await axios.post('/api/public/exams/get-exam-data', {
                 examId: examId
-            }).then(res => setExamData(res.data.body))
+            })
+            .then(res => setExamData(res.data.body))
+            .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         }
 
         fetchData()
