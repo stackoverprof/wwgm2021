@@ -30,13 +30,7 @@ const style = ({skeleton}) => css`
     max-width: 300px;
     width: 100%;
 
-    .react-loading-skeleton{
-        position: relative;
-        width: 100%;
-        transform: scaleY(1.2);
-    }
-
-    li{
+    li {
         position: relative;
         font-family: Poppins;
         font-weight: normal;
@@ -47,26 +41,33 @@ const style = ({skeleton}) => css`
         white-space: nowrap;
         overflow: hidden;
 
-        .title{
+        .title {
             max-width: 220px;
             margin-right: 20px;
         }
 
-        p{
+        p {
             position: relative;
             width: 100%;
             max-width: 80%;
         }
 
-        &:hover{
+        &:hover {
             color: ${skeleton ? '' : 'var(--army)'};
             -webkit-text-stroke-width: 1px;
         }
 
-        svg{
+        svg {
             margin-right: 12px;
             min-width: 20px;
         }
+    }
+    
+    .react-loading-skeleton {
+        position: relative;
+        width: 100%;
+        transform: scaleY(1.2);
+        margin-bottom: 0;
     }
 `
 

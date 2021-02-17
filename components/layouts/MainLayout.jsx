@@ -25,25 +25,37 @@ const MainLayout = ({className, title, css: style, children, noClearance}) => {
             <Head>
                 <title>WWGM 2021 {title ? `— ${title}` : ''}</title>
             </Head>
+            
             <main css={style} className={className}>
                 {children}
             </main>
 
-            <AnimatePresence exitBeforeEnter>
-                {dimm && (
-                    <motion.div 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1, transition: { duration: 0.25 }}} 
-                        exit={{ opacity: 0, transition: { duration: 0.25 }}}
-                        className="dimm-layer fixed fullscreen-v flex-cs"
-                    >
-                    </motion.div>
-                )}
-            </AnimatePresence>
-            { globalAlert && (
-                <AlertHandler message={globalAlert.body} closeHandler={() => setGlobalAlert('')} color={globalAlert.error ? 'red' : 'default'}/>
-            )}
+            <ShadowLayer dimm={dimm} />
+            { globalAlert &&
+                <AlertHandler 
+                    message={globalAlert.body} 
+                    closeHandler={() => setGlobalAlert('')} 
+                    color={globalAlert.error ? 'red' : 'default'}
+                />
+            }
         </div>
+    )
+}
+
+const ShadowLayer = ({dimm}) => {
+
+    return (
+        <AnimatePresence exitBeforeEnter>
+            {dimm && (
+                <motion.div 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1, transition: { duration: 0.25 }}} 
+                    exit={{ opacity: 0, transition: { duration: 0.25 }}}
+                    className="dimm-layer fixed fullscreen-v flex-cs"
+                >
+                </motion.div>
+            )}
+        </AnimatePresence>
     )
 }
 

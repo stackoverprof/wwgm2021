@@ -37,6 +37,7 @@ const EditDisplayExams = ({i, refreshData}) => {
             refreshData()
         })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        
         setLoading(false)
     }
 
@@ -60,33 +61,33 @@ const EditDisplayExams = ({i, refreshData}) => {
 
 const style = css`
 
-    form{
+    form {
         margin-top: 4px;
         width: 100%;
         max-width: 222px;
     }
-    input{
+    input {
         margin-bottom: 12px;
         width: calc(100% - 20px);
     }
 
-    button.edit{
+    button.edit {
         padding: 12px;
         width: calc(100% - 24px);
         border-radius: 10px;
         margin-top: 6px;
         color: #0004;
         
-        &:hover{            
+        &:hover {            
             color: #000a;
             box-shadow: inset 0 0 0 1px #0004;
 
         }
 
-        &.active{
+        &.active {
             color: #000a;
 
-            &:hover{
+            &:hover {
                 box-shadow: none;
             }
         }

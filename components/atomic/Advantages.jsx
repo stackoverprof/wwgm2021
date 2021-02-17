@@ -19,7 +19,7 @@ const Advantages = () => {
 const style = css`
     padding: 16px 0;
 
-    li{
+    li {
         font-family: Poppins;
         font-weight: 500;
         font-size: 28px;
@@ -31,7 +31,7 @@ const style = css`
             justify-content: center;
         }
 
-        svg{
+        svg {
             margin-right: 24px;
         }
     }

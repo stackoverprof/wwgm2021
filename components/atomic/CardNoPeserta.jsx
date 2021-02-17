@@ -3,12 +3,13 @@ import { css } from '@emotion/react'
 import { RiErrorWarningFill } from 'react-icons/ri'
 import { MdVerifiedUser } from 'react-icons/md'
 
-import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 import NoPesertaPopUp from '@components/molecular/PopUps/NoPesertaPopUp'
 
 const CardNoPeserta = () => {
     const [openPopUp, setOpenPopUp] = useState(false)
+
     const { setDimm } = useLayout()
     const { userData } = useAuth()
     

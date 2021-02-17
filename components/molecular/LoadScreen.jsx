@@ -24,7 +24,13 @@ const LoadScreen = () => {
     return (
         <AnimatePresence exitBeforeEnter>
             {!loaded && 
-                <motion.div css={style} initial="visible" animate={{ opacity: 0.2, transition: { duration: 1 }}} exit={{ opacity: 0, transition: { duration: 0.5 }}}>
+                <motion.div
+                    css={style}
+                    className="flex-cc"
+                    initial="visible"
+                    animate={{ opacity: 0.2, transition: { duration: 1 }}} 
+                    exit={{ opacity: 0, transition: { duration: 0.5 }}}
+                >
                     <motion.div initial="visible" animate={{ opacity: 0, transition: { duration: 1 }}}>
                         <img src="/img/logo-wwgm.webp" alt=""/>
                     </motion.div>
@@ -40,15 +46,12 @@ const style = css`
     left: 0;
     height: 100%;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: white;
     transition: 1s;
     z-index: 200;
     padding-bottom: 10%;
 
-    img{
+    img {
         position: relative;
         top: -40px;
         height: 140px;

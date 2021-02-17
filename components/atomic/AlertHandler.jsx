@@ -21,14 +21,14 @@ const style = css`
     pointer-events: none;
     z-index: 99;
 
-    .box{
+    .box {
         padding: 12px 8px 12px 24px;
         margin-bottom: 32px;
         border-radius: 8px;
         pointer-events: all;
         max-width: 95%;
         
-        &.default{
+        &.default {
             background: #7fa6f0aa;
             border: 1px solid #335ba5;
             
@@ -38,7 +38,7 @@ const style = css`
             }
         }
         
-        &.red{
+        &.red {
             background: #f07f7faa;
             border: 1px solid #cf2727;
             

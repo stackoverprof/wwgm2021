@@ -28,19 +28,17 @@ const style = ({spanWidth, pWidth, offset}) => css`
     height: 100%;
     width: 100%;
 
-    span{
+    span {
         position: relative;
         top: 0;
         left: 0;
         white-space: nowrap;
     }
     
-    &:hover span{
+    &:hover span {
         transition: left ${spanWidth/60}s ease-out;
         left: -${spanWidth - (pWidth - offset)}px;
-        
     }
-    
 `
 
 export default RunningText

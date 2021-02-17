@@ -10,10 +10,11 @@ const InitialAva = ({size, className, src, override, overrideValue, loading}) =>
     const { userData: { displayName } } = useAuth()
     
     const showInitial = () => {
-        if (override) return overrideValue
         const parsed = parse(src, true)
-        if (!parsed.query.initial) return false
-        return JSON.parse(parsed.query.initial)
+        
+        if (override) return overrideValue
+        else if (parsed.query.initial) return JSON.parse(parsed.query.initial)
+        else return false
     }
 
     if (loading) return <ContentLoader size={size} />

@@ -5,11 +5,12 @@ import { MdPhotoLibrary } from 'react-icons/md'
 
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
-import InitialAva from '@components/atomic/InitialAva'
 import UploadPopUp from '@components/molecular/PopUps/UploadPopUp'
+import InitialAva from '@components/atomic/InitialAva'
 
 const EditPhotoURL = ({size}) => {
     const [openUploadPopUp, setOpenUploadPopUp] = useState(false)
+    
     const { userData } = useAuth()
     const { setDimm } = useLayout()
 

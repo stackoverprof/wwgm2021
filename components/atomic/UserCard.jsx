@@ -73,7 +73,7 @@ const style = css`
         color: #1A2C1E;
     }
 
-    p.email{
+    p.email {
         font-family: Poppins;
         font-size: 20px;
         color: #6C6C6C;

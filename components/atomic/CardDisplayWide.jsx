@@ -9,17 +9,15 @@ import convert from '@core/utils/covertExamData'
 const CardDisplayWide = ({examId}) => {
     const [examData, setExamData] = useState(null)
     
-    useEffect(() => {
-        if (!examId) return
-        
-        const fetchData = async () => {
-            await axios.post('/api/public/exams/get-exam-data', {
-                examId: examId
-            })
-            .then(res => setExamData(res.data.body))
-        }
+    const fetchData = async () => {
+        await axios.post('/api/public/exams/get-exam-data', {
+            examId: examId
+        })
+        .then(res => setExamData(res.data.body))
+    }
 
-        fetchData()
+    useEffect(() => {
+        if (examId) fetchData()
     }, [examId])
 
     if (!examId || !examData) return <ContentLoader />
@@ -45,7 +43,7 @@ const ContentLoader = () => {
                 <Skeleton className="header-skeleton"/>
             </div>
             <div className="body flex-ec">
-                <Skeleton className="body-skeleton"/>
+                <Skeleton className="btn-skeleton"/>
             </div>
         </div>
     )
@@ -68,14 +66,14 @@ const style = {
             }
         }
         
-        .header{
+        .header {
             background: var(--army);
             border-radius: 12px;
             box-shadow: 0 10px 12px -10px #0008;
             min-width: 240px;
             height: 80px;
 
-            .title{
+            .title {
                 font-family: Poppins;
                 font-weight: 600;
                 font-size: 42px;
@@ -99,7 +97,7 @@ const style = {
                 margin-left: 0;
             }
 
-            p.date{
+            p.date {
                 font-family: Poppins;
                 font-weight: 500;
                 font-size: 21px;
@@ -108,12 +106,12 @@ const style = {
                 color: #000a;
                 transition: 0.1s;
 
-                &:hover{
+                &:hover {
                     color: var(--army);
                     -webkit-text-stroke-width: 0.1px;
                 }
 
-                svg{
+                svg {
                     margin-right: 8px;
                     margin-bottom: 3px;
                 }
@@ -136,7 +134,7 @@ const style = {
             }
         }
 
-        .header{ 
+        .header { 
             min-width: 240px;
             height: 80px;
             border-radius: 12px;
@@ -161,7 +159,7 @@ const style = {
                 margin-left: 0;
             }
 
-            .body-skeleton {
+            .btn-skeleton {
                 line-height: unset;
                 padding-top: 0;
                 width: 115.5px;
