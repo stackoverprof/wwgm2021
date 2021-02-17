@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 
 import { useAuth } from '@core/contexts/AuthContext'
 import CardNoPeserta from '@components/atomic/CardNoPeserta'
+import CardDisplayWide from '@components/atomic/CardDisplayWide'
 
 const TryOut = () => {
     const { userData } = useAuth()
@@ -23,7 +24,7 @@ const TryOut = () => {
                 <p className="label">AKSES TRYOUT</p>
                 <div className="full-w flex-cc">
                     {userData.examsAccess?.map((exam, i) => (
-                        <p key={i}>{exam}</p>
+                        <CardDisplayWide examId={'SAINTEK-a10bd8a1-0c56-4a7f-a76e-3c1c4d65995d'} key={i} />
                     ))}
                 </div>
             </div>
