@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 import { useLayout } from '@core/contexts/LayoutContext'
+import to from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
 
-// [TODO] : narasi, nomormu akan dicek oleh panitia, input dengan <i class="fa fa-behance-square" aria-hidden="true"></i>
+// [TODO] : narasi, nomormu akan dicek oleh panitia, input dengan 
 
 const NoPesertaPopUp = ({handleClose}) => {
     const [inputData, setInputData] = useState({
@@ -123,8 +125,21 @@ const NoPesertaPopUp = ({handleClose}) => {
                                 />
                             </div>
                         </div>
-                        <button type="submit">Submit</button>
+                        <p className="instruction">No Peserta didapat dari panitia ketika menyelesaikan pembayaran</p>
+                        <div className="buttons flex-cc">
+                            <button type="submit" className="submit">Submit</button>
+                            <button type="button" onClick={handleClose} className="no-btn">Batal</button>
+                        </div>
                     </form>
+                </motion.div>
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.98, y: -2}} 
+                    animate={{ opacity: 1, scale: 1, y: 0, transition: { duration: 0.25, delay: 0.2}}} 
+                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
+                    className="pop-up flex-ec col"
+                >
+                    <p className="instruction bigger">No Peserta akan dicek panitia dan mendapatkan approval jika sesuai</p>
+                    <p className="instruction">Hubungi <Link href={to.contact}>panitia</Link> jika tak kunjung di approve</p>
                 </motion.div>
             </OutsideClickHandler>
         </div>    
@@ -141,9 +156,15 @@ const style = css`
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+        
+        width: 90%;
+        max-width: 800px;
+        min-width: 320px;
     }
 
     form {
+        margin-top: 12px;
 
         input, select {
             padding: 0;
@@ -207,6 +228,13 @@ const style = css`
                 width: 32px;
             }
         }
+
+        .buttons {
+            margin-bottom: 12px;
+            button {
+                margin: 0 6px;
+            }
+        }
         
         .longer {
             width: 100px;
@@ -222,10 +250,34 @@ const style = css`
         background: #fff;
         padding: 24px;
         border-radius: 8px;
+        margin-bottom: 12px;
 
         img{
             height: 200px;
             margin-bottom: 24px;
+        }
+    }
+
+    p.instruction {
+        margin-bottom: 12px;
+        font-family: Poppins;
+        max-width: 362px;
+        text-align: center;
+        color: #0007;
+        font-size: 14px;;
+
+        a {
+            color: var(--army);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &.bigger {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--army)
         }
     }
 `
