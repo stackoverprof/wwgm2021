@@ -71,7 +71,7 @@ const AuthArea = ({
                     </button>
                     <div className="auth-dropper flex-cc col">
                         {access.admin && (
-                            <Link href={to.dashboard}>
+                            <Link href={to.adminArea}>
                                 <a className="flex-cc">
                                     ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" />
                                 </a>

@@ -12,11 +12,7 @@ const GuestOnlyRoute = ({children, redirect}) => {
         }
     }, [authState])
 
-    return (
-        <div>
-           {authState === 'guest' && children}
-        </div>
-    )
+    return <> {authState === 'guest' && children} </>
 }
 
 export default GuestOnlyRoute

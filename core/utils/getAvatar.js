@@ -14,6 +14,8 @@ export const collection = [
     'https://media.giphy.com/media/26ufiHpFsdYFZsGBi/giphy.gif'
 ]
 
+// [TODO] : save the array in database
+
 const getAvatar = () => {
     return `${collection[Math.floor(Math.random() * collection.length)]}?initial=true`
 }

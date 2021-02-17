@@ -1,6 +1,7 @@
 const RoutePath = {
     home: '/',
     dashboard: '/dashboard',
+    adminArea: '/area-admin',
     tryOut: '/tryout',
     contact: '/kontak',
     aboutUs: '/tentang-kami'
