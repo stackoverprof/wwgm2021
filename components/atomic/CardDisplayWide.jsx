@@ -55,6 +55,19 @@ const style = {
     main: css`
         margin: 12px 0;
         
+        @media (max-width: 700px) {
+            flex-direction: column;
+
+            .header {
+                width: 100%;
+                margin-bottom: 12px;
+            }
+
+            .body {
+                width: calc(100% - 32px) !important;
+            }
+        }
+        
         .header{
             background: var(--army);
             border-radius: 12px;
@@ -109,6 +122,20 @@ const style = {
     `,
 
     skeleton: css`
+
+        @media (max-width: 700px) {
+            flex-direction: column;
+
+            .header {
+                width: 100%;
+                margin-bottom: 12px;
+            }
+
+            .body {
+                width: calc(100% - 32px) !important;
+            }
+        }
+
         .header{ 
             min-width: 240px;
             height: 80px;
