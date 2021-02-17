@@ -10,6 +10,13 @@ import CardDisplayWide from '@components/atomic/CardDisplayWide'
 const TryOut = () => {
     const { userData } = useAuth()
 
+    const message = () => {
+        if (!userData.noPeserta) return 'Input dahulu nomor pesertamu dan tunggu approval dari panitia'
+        else if (!userData.approved) return 'Status akunmu menunggu approval dari panitia'
+        else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <Link href={to.contact}>panitia</Link> untuk meminta akses ke tryoutmu</>
+        else return 'Informasi mengenai try out yang kamu ikuti ada di bawah sini'
+    }
+
     return (
         <div css={style.main} className="full-w">
             <div css={style.noPeserta} className="full-w">
@@ -18,20 +25,20 @@ const TryOut = () => {
             </div>
 
             <div css={style.illus} className="flex-cc mx-auto">
+                <p>{message()}</p>
                 <img src="/img/illus/dash-tryout.svg" alt=""/>
-                <p>Informasi mengenai try out yang kamu ikuti ada disini</p>
             </div>
 
             <div css={style.access} className="full-w">
                 <p className="label">AKSES TRYOUT</p>
                 <div className="full-w flex-cc">
-                    {userData.examsAccess?.length === 0 && 
+                    {(!userData.approved || userData.examsAccess.length === 0) && 
                         <div className="information-access full-w flex-cc col">
-                            <p>Akses ujian akan muncul setelah Anda di-approve oleh admin</p>
+                            <p>Akses TryOut akan muncul setelah Anda di-approve oleh panitia</p>
                             <p>Hubungi <Link href={to.contact}>panitia</Link> bila terdapat kesalahan</p>
                         </div>
                     }
-                    {userData.examsAccess?.map((exam, i) => (
+                    {userData.approved && userData.examsAccess?.map((exam, i) => (
                         <CardDisplayWide examId={exam} key={i} />
                     ))}
                 </div>
@@ -94,13 +101,10 @@ const style = {
         width: 90%;
         margin-bottom: 32px;
         
-        img {
-            margin-right: 24px;
-        }
-        
         p {
+            margin-right: 24px;
             font-family: Poppins;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 20px;
             color: #75AA87;
         }

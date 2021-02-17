@@ -1,10 +1,12 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 import { FiEdit3 } from 'react-icons/fi'
 
 import { useAuth } from '@core/contexts/AuthContext'
+import { set } from '@core/routepath'
 
 const BioOverview = ({openEdit}) => {
     const { userData, dataCompleted } = useAuth()
@@ -16,6 +18,20 @@ const BioOverview = ({openEdit}) => {
 
     return (
         <div css={style.main} className="full-w">
+            <div css={style.illus} className="flex-cc">
+                <div className="inner flex-cc">
+                    {!dataCompleted ?
+                        <p>Sebelum mengerjakan try out pastikan seluruh datamu telah dilengkapi</p>
+                    : !userData.noPeserta ?
+                        <p>Yeay! data sudah lengkap. Sekarang input nomor pesertamu <Link href={set.dashboard({action: 'no-peserta'})}>di sini</Link></p>
+                    : !userData.approved ?
+                        <p>Yeay! data sudah lengkap. Tunggu approval untuk mengikuti tryout. Semangat!</p>
+                    :
+                        <p>Yeay! data sudah lengkap. Bersiaplah untuk mengikuti tryout. Semangat!</p>
+                    }
+                    <img src="/img/illus/checkerboard.svg" alt=""/>
+                </div>
+            </div>
             <div css={style.item}>
                 <p className="label">NAMA LENGKAP</p>
                 <div className="flex-ss">
@@ -164,6 +180,42 @@ const style = {
             &:hover span {
                 color: var(--army);
                 text-decoration: underline;
+            }
+        }
+    `,
+
+    illus: css`
+        border: 1px solid #0005;
+        border-radius: 12px;
+        margin-bottom: 32px;
+
+        .inner {
+            margin: 32px;
+        }
+        
+        img {
+            width: 90px;
+            height: 90px;
+        }
+        
+        p {
+            font-family: Poppins;
+            font-weight: 700;
+            font-size: 20px;
+            color: #75AA87;
+            margin-right: 24px;
+        }
+        
+        @media (max-width: 500px) {
+            padding: 0;
+            
+            img {
+                width: 88px;
+            }
+            
+            p {
+                line-height: 20px;
+                font-size: 16px;
             }
         }
     `

@@ -11,8 +11,6 @@ import to from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
 
-// [TODO] : narasi, nomormu akan dicek oleh panitia, input dengan 
-
 const NoPesertaPopUp = ({handleClose}) => {
     const [inputData, setInputData] = useState({
         year0: '2',
