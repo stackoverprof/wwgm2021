@@ -5,7 +5,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import BioOverview from '@components/molecular/Dashboard/BioOverview'
 import BioEdit from '@components/molecular/Dashboard/BioEdit'
 
-const Biodata = ({openEdit, editSwitch, setEditSwitch}) => {
+const Biodata = ({openEdit, editSwitch, setEditSwitch, setActiveTab}) => {
 
     const { setGlobalAlert } = useLayout()
 
@@ -19,7 +19,7 @@ const Biodata = ({openEdit, editSwitch, setEditSwitch}) => {
             {editSwitch ?
                 <BioEdit setEditSwitch={setEditSwitch}/>
             :
-                <BioOverview openEdit={openEdit}/>
+                <BioOverview openEdit={openEdit} setActiveTab={setActiveTab}/>
             }
         </div>
     )

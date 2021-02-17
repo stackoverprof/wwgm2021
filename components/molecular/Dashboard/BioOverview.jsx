@@ -1,14 +1,12 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import Link from 'next/link'
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 import { FiEdit3 } from 'react-icons/fi'
 
 import { useAuth } from '@core/contexts/AuthContext'
-import { set } from '@core/routepath'
 
-const BioOverview = ({openEdit}) => {
+const BioOverview = ({openEdit, setActiveTab}) => {
     const { userData, dataCompleted } = useAuth()
 
     const placehold = (text) => {
@@ -23,7 +21,7 @@ const BioOverview = ({openEdit}) => {
                     {!dataCompleted ?
                         <p>Sebelum mengerjakan try out pastikan seluruh datamu telah dilengkapi</p>
                     : !userData.noPeserta ?
-                        <p>Yeay! data sudah lengkap. Sekarang input nomor pesertamu <Link href={set.dashboard({action: 'no-peserta'})}>di sini</Link></p>
+                        <p>Yeay! data sudah lengkap. Sekarang input nomor pesertamu <span onClick={() => setActiveTab('Try Out')}>di sini</span></p>
                     : !userData.approved ?
                         <p>Yeay! data sudah lengkap. Tunggu approval untuk mengikuti tryout. Semangat!</p>
                     :
@@ -204,6 +202,11 @@ const style = {
             font-size: 20px;
             color: #75AA87;
             margin-right: 24px;
+
+            span {
+                text-decoration: underline;
+                cursor: pointer;
+            }
         }
         
         @media (max-width: 500px) {

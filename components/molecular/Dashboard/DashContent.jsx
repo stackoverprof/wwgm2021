@@ -19,7 +19,14 @@ const DashContent = ({openEdit, activeTab, setActiveTab, editSwitch, setEditSwit
             </div>
             <div className="frame contain-size-s full-w flex-cc">
                 { activeTab === 'Try Out' && <TryOut /> }
-                { activeTab === 'Biodata' && <Biodata openEdit={openEdit} editSwitch={editSwitch} setEditSwitch={setEditSwitch}/> }
+                { activeTab === 'Biodata' && (
+                    <Biodata
+                        openEdit={openEdit}
+                        editSwitch={editSwitch}
+                        setEditSwitch={setEditSwitch}
+                        setActiveTab={setActiveTab}
+                    />
+                )}
             </div>
         </div>
     )

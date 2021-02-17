@@ -29,6 +29,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (action === 'edit') openEdit()
+        else setActiveTab('Try Out')
     }, [action])
 
     return (
@@ -53,7 +54,13 @@ const Dashboard = () => {
                     <hr className="fade contain-size-sm"/>
 
                     <section css={style.content}>
-                        <DashContent openEdit={openEdit} activeTab={activeTab} setActiveTab={setActiveTab} editSwitch={editSwitch} setEditSwitch={setEditSwitch}/>
+                        <DashContent
+                            openEdit={openEdit}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                            editSwitch={editSwitch}
+                            setEditSwitch={setEditSwitch}
+                        />
                     </section>
 
                 </MainLayout>

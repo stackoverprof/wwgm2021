@@ -107,6 +107,10 @@ const style = {
             font-weight: 700;
             font-size: 20px;
             color: #75AA87;
+
+            a {
+                text-decoration: underline;
+            }
         }
         
         @media (max-width: 500px) {
