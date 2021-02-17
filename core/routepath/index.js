@@ -1,5 +1,3 @@
-import set from './set'
-
 const RoutePath = {
     home: '/',
     dashboard: '/dashboard',
@@ -8,5 +6,12 @@ const RoutePath = {
     aboutUs: '/tentang-kami'
 }
 
-export default RoutePath
-export { set }
+const RouteSet = {
+    dashboard: ({action}) => `/dashboard?action=${action}`,
+    get: param => `/get/${param}`
+}
+
+export { 
+    RoutePath as to,
+    RouteSet as set 
+}

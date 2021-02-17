@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import MainLayout from '@components/layouts/MainLayout'
-import to from '@core/routepath'
+import { to }from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 
 

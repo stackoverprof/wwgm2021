@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 
 import { useAuth } from '@core/contexts/AuthContext'
-import to from '@core/routepath'
+import { to }from '@core/routepath'
 import CardNoPeserta from '@components/atomic/CardNoPeserta'
 import CardDisplayWide from '@components/atomic/CardDisplayWide'
 

@@ -6,7 +6,7 @@ import { FiEdit3 } from 'react-icons/fi'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
-import to from '@core/routepath'
+import { to }from '@core/routepath'
 import MainLayout from '@components/layouts/MainLayout'
 import DashContent from '@components/molecular/Dashboard/DashContent'
 import UserCard from '@components/atomic/UserCard'

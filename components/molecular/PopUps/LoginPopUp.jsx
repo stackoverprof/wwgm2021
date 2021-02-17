@@ -6,7 +6,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
-import to, { set } from '@core/routepath'
+import { to, set } from '@core/routepath'
 import GoogleAuth from '@components/atomic/GoogleAuth'
 
 const LoginPopUp = ({handleClose}) => {

@@ -7,7 +7,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 import { useLayout } from '@core/contexts/LayoutContext'
-import to from '@core/routepath'
+import { to }from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
 

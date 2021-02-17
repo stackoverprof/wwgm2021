@@ -9,7 +9,7 @@ const AlertHandler = ({message, closeHandler = () => {}, color = 'default'}) => 
             <div css={style} className="fixed fullscreen flex-ce">
                 <div className={`box flex-bc ${color}`}>
                     <p>{message}</p>
-                    <FaWindowClose onClick={() => closeHandler()}/>
+                    <FaWindowClose className="icon" onClick={() => closeHandler()}/>
                 </div>
             </div>
         )}
@@ -32,7 +32,7 @@ const style = css`
             background: #7fa6f0aa;
             border: 1px solid #335ba5;
             
-            p, button, svg {
+            p, button, .icon {
                 font-weight: bold;
                 color: #164191;
             }
@@ -42,14 +42,14 @@ const style = css`
             background: #f07f7faa;
             border: 1px solid #cf2727;
             
-            p, button, svg {
+            p, button, .icon {
                 font-weight: bold;
                 color: #941010;
             }
         }
     }
 
-    svg{
+    .icon {
         margin-left: 24px;
         margin-right: 8px;
     }

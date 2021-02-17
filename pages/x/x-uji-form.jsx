@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
-import to from '@core/routepath'
+import { to }from '@core/routepath'
 import { DB } from '@core/services/firebase'
 import { useAuth } from '@core/contexts/AuthContext'
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'

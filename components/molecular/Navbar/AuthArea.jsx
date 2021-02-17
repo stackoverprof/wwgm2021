@@ -6,7 +6,7 @@ import { RiShieldFlashLine } from 'react-icons/ri'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
-import to from '@core/routepath'
+import { to }from '@core/routepath'
 import RunningText from '@components/atomic/RunningText'
 import InitialAva from '@components/atomic/InitialAva'
 import AlertHandler from '@components/atomic/AlertHandler'
