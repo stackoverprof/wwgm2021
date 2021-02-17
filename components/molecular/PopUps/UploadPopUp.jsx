@@ -5,16 +5,16 @@ import { v4 as uuid } from 'uuid'
 import OutsideClickHandler from 'react-outside-click-handler'
 import parse from 'url-parse'
 
-import { STORAGE } from '@core/services/firebase'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
+import FireFetcher from '@core/services/FireFetcher'
+import { STORAGE } from '@core/services/firebase'
 import InitialAva from '@components/atomic/InitialAva'
 import Spinner from '@components/atomic/spinner/Circle'
-import FireFetcher from '@core/services/FireFetcher'
 
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: '', loading: false})
-    const [choiceToShow, setChoiceToShow] = useState(true)
+    const [makeInitial, setMakeInitial] = useState(true)
     const [draggedOver, setDraggedOver] = useState(false)
     const [loading, setLoading] = useState(false)
     const { user, userData } = useAuth()
@@ -24,7 +24,7 @@ const UploadPopUp = ({handleClose}) => {
 
     const modifyInitial = (url) => {
         const parsed = parse(url, true)
-        parsed.set('query', {...parsed.query, initial: choiceToShow})
+        parsed.set('query', {...parsed.query, initial: makeInitial})
 
         return parsed.toString()
     }
@@ -52,6 +52,7 @@ const UploadPopUp = ({handleClose}) => {
             }).catch(()=> {
                 setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
             })
+
         return setLoading(false)
     }
 
@@ -118,10 +119,8 @@ const UploadPopUp = ({handleClose}) => {
 
     useEffect(() => {
         const parsed = parse(userData.photoURL, true)
-        setChoiceToShow(JSON.parse(parsed.query.initial))
-    }, [])
-
-    useEffect(() => {
+        setMakeInitial(JSON.parse(parsed.query.initial))
+    
         setDimm(true)
         return () => {
             setDimm(false)
@@ -143,7 +142,7 @@ const UploadPopUp = ({handleClose}) => {
                         src={preview.blob ? preview.blob : userData.photoURL} 
                         loading={preview.loading}
                         override 
-                        overrideValue={choiceToShow} 
+                        overrideValue={makeInitial} 
                         className="preview"
                     />
                     <form className="flex-cc col" onSubmit={handleSubmit}>
@@ -167,8 +166,8 @@ const UploadPopUp = ({handleClose}) => {
                         <div className="checkbox-container flex-cc">
                             <input 
                                 type="checkbox" 
-                                checked={choiceToShow} 
-                                onChange={(e) => setChoiceToShow(e.target.checked)} 
+                                checked={makeInitial} 
+                                onChange={(e) => setMakeInitial(e.target.checked)} 
                                 name="show-initial" 
                                 id="show-initial"
                             />
@@ -195,9 +194,6 @@ const style = css`
         width: 90%;
         max-width: 600px;
         min-width: 320px;
-
-        /* @media (min-width: 720px) {
-        } */
     }
 
     form {
@@ -205,14 +201,14 @@ const style = css`
         padding: 0 24px;
     }
     
-    .pop-up{
+    .pop-up {
         background: #fff;
         padding: 54px 0;
         width: 100%;
         border-radius: 12px;
     }
 
-    img.preview{
+    img.preview {
         border: 1px solid #0003;
     }
 

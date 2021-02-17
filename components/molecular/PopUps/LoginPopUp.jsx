@@ -77,7 +77,7 @@ const style = css`
         }
     }
 
-    img.illus{
+    img.illus {
         height: 200px;
         margin-left: 24px;
 
@@ -87,7 +87,7 @@ const style = css`
         }
     }
     
-    .pop-up{
+    .pop-up {
         background: #fff;
         padding: 54px 0;
         width: 100%;
@@ -100,8 +100,8 @@ const style = css`
         }
     }
 
-    .partition{
-        &-40{
+    .partition {
+        &-40 {
             width: 40%;
 
             @media (max-width: 720px) {
@@ -109,7 +109,7 @@ const style = css`
             }
         }
 
-        &-60{
+        &-60 {
             width: 60%;
 
             @media (max-width: 720px) {
@@ -119,8 +119,8 @@ const style = css`
         }
     }
 
-    .buttons{
-        button, .btn{
+    .buttons {
+        button, .btn {
             max-height: 48px;
             height: 48px;
             min-height: 48px;
@@ -132,7 +132,7 @@ const style = css`
         }
     }
 
-    .btn{
+    .btn {
         font-size: 16px;
         margin-right: 12px;
 
@@ -142,7 +142,7 @@ const style = css`
         }
     }
 
-    p.instruction{
+    p.instruction {
         max-width: 320px;
         font-family: Poppins;
         font-style: normal;
@@ -150,8 +150,9 @@ const style = css`
         font-size: 24px;
         margin-bottom: 32px;
 
-        &.bigger{
+        &.bigger {
             font-size: 16px;
+            
             @media (min-width: 720px){
                 font-size: 28px;
             }

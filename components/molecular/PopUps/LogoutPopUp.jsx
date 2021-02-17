@@ -56,19 +56,19 @@ const style = css`
         align-items: center;
     }
 
-    .pop-up{
+    .pop-up {
         background: #fff;
         width: 272px;
         padding: 24px;
         border-radius: 8px;
 
-        img{
+        img {
             height: 200px;
             margin-bottom: 24px;
         }
     }
 
-    p.instruction{
+    p.instruction {
         font-family: Poppins;
         font-style: normal;
         font-weight: 800;
@@ -76,10 +76,10 @@ const style = css`
         margin-bottom: 24px;
     }
 
-    .buttons{
+    .buttons {
         width: 100%;
 
-        button{
+        button {
             padding: 10px 0;
             margin: 8px;
             width: 100%;

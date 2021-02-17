@@ -63,7 +63,7 @@ const style = css`
         padding-left: 12px;
         padding-right: 0;
 
-        button{
+        button {
             padding: 8px 24px;
         }
     }

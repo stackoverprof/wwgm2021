@@ -20,12 +20,12 @@ const Navbar = ({clean}) => {
     )
 }
 
-const style = () => css` //Nav tag core style is in globals.scss
+const style = () => css` 
+    //Nav tag core style is in globals.scss
     width: 100%;
     height: 64px;
     z-index: 100;
     background: rgba(255, 255, 255, 1);
-    /* backdrop-filter: blur(8px); */
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 
     .inner{
@@ -35,11 +35,12 @@ const style = () => css` //Nav tag core style is in globals.scss
     .brand{
         cursor: pointer;
 
-        img{
+        img {
             height: 45px;
             margin-right: 12px;
         }
-        p{
+        
+        p {
             font-family: Poppins;
             font-weight: bold;
             font-size: 27px;

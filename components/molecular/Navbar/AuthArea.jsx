@@ -58,11 +58,7 @@ const AuthArea = ({
     <>
         <div css={style({openAuthAction})} className={className}>
             {authState !== 'user' && (
-                <button 
-                    onClick={showLogin.open} 
-                    disabled={openLoginPop} 
-                    className="btn-login"
-                >
+                <button onClick={showLogin.open} disabled={openLoginPop} className="btn-login">
                     LOGIN 
                 </button>
             )}
@@ -74,7 +70,13 @@ const AuthArea = ({
                         <div className="cover"></div>
                     </button>
                     <div className="auth-dropper flex-cc col">
-                        {access.admin && <Link href={to.dashboard}><a className="flex-cc">ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" /></a></Link>}
+                        {access.admin && (
+                            <Link href={to.dashboard}>
+                                <a className="flex-cc">
+                                    ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" />
+                                </a>
+                            </Link>
+                        )}
                         <Link href={to.dashboard}>DASHBOARD</Link>
                         <button onClick={showLogout.open} className="btn red" disabled={openLogoutPop}>LOG OUT</button>
                     </div>
@@ -95,7 +97,7 @@ const AuthArea = ({
 const style = ({openAuthAction}) => css`
     margin-left: 12px;
 
-    .auth-area{
+    .auth-area {
         position: relative;
         height: 46px;
         max-width: 200px;
@@ -128,7 +130,7 @@ const style = ({openAuthAction}) => css`
             }
         }
         
-        button{
+        button {
             margin: 6px 0;
             padding: 8px 10px !important;
             transition: 0.5s ${openAuthAction ? '0s' : '.5s'};
@@ -138,11 +140,11 @@ const style = ({openAuthAction}) => css`
         }
     }
     
-    button.btn-login{
+    button.btn-login {
         background: var(--army-dark);
     }
     
-    button.user-action{
+    button.user-action {
         position: relative;
         padding: 0 !important;
         height: 100%;
@@ -150,17 +152,17 @@ const style = ({openAuthAction}) => css`
         overflow: hidden;
         background: var(--army-dark);
 
-        p{
+        p {
             font-size: 16px;
             font-weight: 600;
             height: 100%;
         }
         
-        .ava{
+        .ava {
             margin: 0 10px;
         }
 
-        .cover{
+        .cover {
             position: absolute;
             height: 100%;
             width: 20%;

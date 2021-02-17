@@ -138,7 +138,7 @@ const style = ({openDropper, dimm}) => css`
             .pop-up {
                 opacity: 1;
                 
-                *{
+                * {
                     opacity: 1;
                 }
             }
@@ -166,6 +166,7 @@ const style = ({openDropper, dimm}) => css`
         .wider {
             position: relative;
             height: 100%;
+
             @media (max-width: 950px) {
                 display: none;
             }
@@ -174,11 +175,12 @@ const style = ({openDropper, dimm}) => css`
         .brand {
             cursor: pointer;
 
-            img{
+            img {
                 height: 45px;
                 margin-right: 12px;
             }
-            p{
+
+            p {
                 font-family: Poppins;
                 font-weight: bold;
                 font-size: 27px;

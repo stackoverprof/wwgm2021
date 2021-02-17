@@ -58,9 +58,8 @@ const NoPesertaPopUp = ({handleClose}) => {
 
     useEffect(() => {
         setDimm(true)
-        return () => {
-            setDimm(false)
-        }
+
+        return () => setDimm(false)
     }, [])
 
     useEffect(() => {
@@ -243,13 +242,13 @@ const style = css`
         }
     }
 
-    .pop-up{
+    .pop-up {
         background: #fff;
         padding: 24px;
         border-radius: 8px;
         margin-bottom: 12px;
 
-        img{
+        img {
             height: 200px;
             margin-bottom: 24px;
         }

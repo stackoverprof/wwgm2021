@@ -4,10 +4,9 @@ import axios from 'axios'
 import { BiIdCard, BiUserPin, BiPhone, BiBuildings } from 'react-icons/bi'
 import { GiRank1, GiRank2 } from 'react-icons/gi'
 
-
-import FireFetcher from '@core/services/FireFetcher'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
+import FireFetcher from '@core/services/FireFetcher'
 import Spinner from '@components/atomic/spinner/Circle'
     
 const BioEdit = ({setEditSwitch}) => {
@@ -61,7 +60,7 @@ const BioEdit = ({setEditSwitch}) => {
     }
 
     const handleProvinceChange = (name) => {
-        if (name === '') return
+        if (!name) return
 
         const provinceItem = provinceList.filter((item) => {
             return item.nama === name
@@ -274,7 +273,7 @@ const style = ({inputData}) => css`
             border-radius: 8px;
             overflow: hidden;
 
-            .icon{
+            .icon {
                 height: 100%;
                 padding: 0 6px 0 12px;
                 
@@ -294,26 +293,26 @@ const style = ({inputData}) => css`
                 font-size: 16px;
                 line-height: 37px;
 
-                &:focus{
+                &:focus {
                     outline: none;
                 }
 
-                &::placeholder{
+                &::placeholder {
                     color: #0005;
                 }
             }
 
-            select{
+            select {
                 margin-right: 12px;
 
-                &:focus{
+                &:focus {
                     color: var(--army) !important;
                 }
                 
-                &:nth-of-type(1){
+                &:nth-of-type(1) {
                     ${inputData.province ? '' : 'color: #0005;'}
                 }
-                &:nth-of-type(2){
+                &:nth-of-type(2) {
                     ${inputData.city ? '' : 'color: #0005;'}
                 }
             }

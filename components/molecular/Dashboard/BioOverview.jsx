@@ -14,19 +14,18 @@ const BioOverview = ({openEdit, setActiveTab}) => {
         else return text
     }
 
+    const message = () => {
+        if (!dataCompleted) return 'Sebelum mengerjakan try out pastikan seluruh datamu telah dilengkapi'
+        else if (!userData.noPeserta) return <>Yeay! Data sudah lengkap. Sekarang input nomor pesertamu <span onClick={() => setActiveTab('Try Out')}>di sini</span></>
+        else if (!userData.approved) return 'Yeay! Data sudah lengkap. Tunggu approval untuk mengikuti tryout. Semangat!'
+        else return 'Yeay! Data sudah lengkap. Bersiaplah untuk mengikuti tryout. Semangat!'
+    }
+
     return (
         <div css={style.main} className="full-w">
             <div css={style.illus} className="flex-cc">
                 <div className="inner flex-cc">
-                    {!dataCompleted ?
-                        <p>Sebelum mengerjakan try out pastikan seluruh datamu telah dilengkapi</p>
-                    : !userData.noPeserta ?
-                        <p>Yeay! Data sudah lengkap. Sekarang input nomor pesertamu <span onClick={() => setActiveTab('Try Out')}>di sini</span></p>
-                    : !userData.approved ?
-                        <p>Yeay! Data sudah lengkap. Tunggu approval untuk mengikuti tryout. Semangat!</p>
-                    :
-                        <p>Yeay! Data sudah lengkap. Bersiaplah untuk mengikuti tryout. Semangat!</p>
-                    }
+                   <p>{message()}</p>
                     <img src="/img/illus/checkerboard.svg" alt=""/>
                 </div>
             </div>

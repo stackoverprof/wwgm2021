@@ -143,6 +143,7 @@ const style = {
             }
         }
 
-    `,    
+    `
 }
+
 export default TryOut
