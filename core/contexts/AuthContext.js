@@ -72,12 +72,16 @@ const AuthProvider = ({children}) => {
     }
          
     const listenUserData = (uid) => {
-        FireFetcher.listen.userData(uid, (doc) => {
-            setUserData(doc.data())
-            checkCompletion(doc.data())
-            console.log('listened...')
-        }, () => {
-            setUserData({})
+        FireFetcher.listen.userData(uid, {
+            attach: (doc) => {
+                setUserData(doc.data())
+                checkCompletion(doc.data())
+                console.log('listening...')
+            },
+            detach: () => {
+                setUserData({})
+                console.log('unlisten')
+            }
         })
     }   
 

@@ -12,10 +12,9 @@ const initUserDatabase = (uid, query) => {
     return DB.collection('Users').doc(uid).set(query)
 }
 
-
 //LISTENER - Realtime
 const userData = (uid, action) => {
-    return DB.collection('Users').doc(uid).onSnapshot(action)
+    return DB.collection('Users').doc(uid).onSnapshot(action.attach, action.detach)
 }
 
 export default {
