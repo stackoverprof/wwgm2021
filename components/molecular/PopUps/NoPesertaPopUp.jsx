@@ -135,7 +135,7 @@ const NoPesertaPopUp = ({handleClose}) => {
                     className="pop-up flex-ec col"
                 >
                     <p className="instruction bigger">No Peserta akan dicek panitia dan mendapatkan approval jika sesuai</p>
-                    <p className="instruction">Hubungi <Link href={to.contact}>panitia</Link> jika tak kunjung di approve</p>
+                    <p className="instruction">Hubungi <Link href={to._404}>panitia</Link> jika tak kunjung di approve</p>
                 </motion.div>
             </OutsideClickHandler>
         </div>    

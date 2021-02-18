@@ -13,7 +13,7 @@ const TryOut = () => {
     const message = () => {
         if (!userData.noPeserta) return 'Input dahulu nomor pesertamu dan tunggu approval dari panitia'
         else if (!userData.approved) return 'Status akunmu menunggu approval dari panitia'
-        else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <Link href={to.contact}>panitia</Link> untuk meminta akses ke tryoutmu</>
+        else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <Link href={to._404}>panitia</Link> untuk meminta akses ke tryoutmu</>
         else return 'Informasi mengenai try out yang kamu ikuti ada di bawah sini'
     }
 
@@ -35,7 +35,7 @@ const TryOut = () => {
                     {(!userData.approved || userData.examsAccess.length === 0) && 
                         <div className="information-access full-w flex-cc col">
                             <p>Akses TryOut akan muncul setelah Anda di-approve oleh panitia</p>
-                            {userData.approved && <p>Hubungi <Link href={to.contact}>panitia</Link> bila terdapat kesalahan</p>}
+                            {userData.approved && <p>Hubungi <Link href={to._404}>panitia</Link> bila terdapat kesalahan</p>}
                         </div>
                     }
                     {userData.approved && userData.examsAccess?.map((exam, i) => (

@@ -7,15 +7,15 @@ import AuthArea from './AuthArea'
 
 const defaultItems = [
     {
-        route: to.tryOut,
+        route: to._404,
         label: 'Try Out'
     },
     {
-        route: to.home,
+        route: to._404,
         label: 'Dokumentasi'
     },
     {
-        route: to.home,
+        route: to._404,
         label: 'Tentang Kami'
     }
 ]

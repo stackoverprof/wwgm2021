@@ -21,11 +21,11 @@ const Navbar = () => {
 
     const items = [
         {
-            route: to.home,
+            route: to.manageUsers,
             label: 'Manage Users'
         },
         {
-            route: to.home,
+            route: to.manageExams,
             label: 'Manage Exams'
         }
     ]
@@ -41,10 +41,9 @@ const Navbar = () => {
                 <div className="navbar-main">
                     <div className="bg-provider bg-blur"></div>
                     <div className="inner contain-size-xl flex-bc">
-                        <Link href={to.home}>
+                        <Link href={to.adminArea}>
                             <div className="brand flex-cc">   
                                 <AdminBadge className="nav-admin-badge"/>
-                                {/* <img src="/img/sgm-icon.png" className="no-pointer" alt=""/> */}
                                 <p>ADMIN AREA</p>
                             </div>
                         </Link>

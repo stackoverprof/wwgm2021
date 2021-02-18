@@ -2,9 +2,9 @@ const RoutePath = {
     home: '/',
     dashboard: '/dashboard',
     adminArea: '/area-admin',
-    tryOut: '/tryout',
-    contact: '/kontak',
-    aboutUs: '/tentang-kami'
+    manageUsers: '/area-admin/manage-users',
+    manageExams: '/area-admin/manage-exams',
+    _404: '/404'
 }
 
 const RouteSet = {

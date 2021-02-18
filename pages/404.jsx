@@ -6,7 +6,7 @@ import { to }from '@core/routepath'
 const error404 = () => {
 
     return (
-        <div css={style}>
+        <div css={style} className="flex-cc col">
             <h1>404 | Not Found</h1>
             <Link href={to.home}><button>BACK HOME</button></Link>
         </div>
@@ -14,13 +14,11 @@ const error404 = () => {
 }
 
 const style = css`
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
 `
 
 export default error404
