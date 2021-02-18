@@ -42,10 +42,10 @@ const Navbar = () => {
                     <div className="bg-provider bg-blur"></div>
                     <div className="inner contain-size-xl flex-bc">
                         <Link href={to.adminArea}>
-                            <div className="brand flex-cc">   
+                            <a className="brand flex-cc">   
                                 <AdminBadge className="nav-admin-badge"/>
                                 <p>ADMIN AREA</p>
-                            </div>
+                            </a>
                         </Link>
                         {screen > 950 && (
                             <div className="wider links flex-cc">

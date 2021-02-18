@@ -9,10 +9,10 @@ const Navbar = () => {
         <nav css={style} className="flex-cc">
             <div className="contain-size-xl flex-bc inner">
                 <Link href={to.home}>
-                    <div className="brand flex-cc">
+                    <a className="brand flex-cc">
                         <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
                         <p>WWGM 2021</p>
-                    </div>
+                    </a>
                 </Link>
             </div> 
         </nav>

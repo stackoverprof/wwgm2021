@@ -37,10 +37,10 @@ const Navbar = ({variant}) => {
                         <div className="bg-provider bg-blur"></div>
                         <div className="inner contain-size-xl flex-bc">
                             <Link href={to.home}>
-                                <div className="brand flex-cc">
+                                <a className="brand flex-cc">
                                     <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
                                     <p>WWGM 2021</p>
-                                </div>
+                                </a>
                             </Link>
                             {screen > 950 && (
                                 <div className="wider links flex-cc">

@@ -54,10 +54,10 @@ const LinkItem = ({route, children}) => {
 
     return (
         <Link href={route}>
-            <div css={style} className="flex-cc">
-                <a>{children}</a>
+            <a css={style} className="flex-cc">
+                <p>{children}</p>
                 <div className="bar"></div> 
-            </div>
+            </a>
         </Link>
     )
 }
@@ -66,14 +66,17 @@ const LinkItem = ({route, children}) => {
 const style = css`
     position: relative;
     height: 100%;
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--army);
-    text-align: center;
     padding: 0 12px;
     cursor: pointer;
     transition: 0.1s;
+
+    p {
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--army);
+        text-align: center;
+    }
 
     &.login {
         padding-left: 12px;
@@ -109,7 +112,7 @@ const style = css`
             display: none;
         }
 
-        &:hover a {    
+        &:hover p {    
             transform: scale(1.02);
         }
     }
