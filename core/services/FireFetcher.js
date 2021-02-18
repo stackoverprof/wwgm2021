@@ -17,11 +17,16 @@ const userData = (uid, action) => {
     return DB.collection('Users').doc(uid).onSnapshot(action.attach, action.detach)
 }
 
+const allUsers = (action) => {
+    return DB.collection("Users").onSnapshot(action)
+}
+
 export default {
     editBiodata,
     editPhoto,
     initUserDatabase,
     listen : {
-        userData
+        userData,
+        allUsers
     }
 }
