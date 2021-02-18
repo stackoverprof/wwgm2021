@@ -5,7 +5,23 @@ import { to }from '@core/routepath'
 
 import AuthArea from './AuthArea'
 
+const defaultItems = [
+    {
+        route: to.tryOut,
+        label: 'Try Out'
+    },
+    {
+        route: to.home,
+        label: 'Dokumentasi'
+    },
+    {
+        route: to.home,
+        label: 'Tentang Kami'
+    }
+]
+
 const LinkSet = ({
+    items = defaultItems,
     openAuthAction,
     openLoginPop,
     openLogoutPop,
@@ -17,9 +33,9 @@ const LinkSet = ({
     
     return (
     <>
-        <LinkItem route={to.tryOut}>Try Out</LinkItem>
-        <LinkItem route={to.home}>Dokumentasi</LinkItem>
-        <LinkItem route={to.home}>Tentang Kami</LinkItem>
+        {items.map((item, i) => (
+            <LinkItem route={item.route} key={i}>{item.label}</LinkItem>
+        ))}
         <AuthArea 
             className="login flex-cc" 
             openAuthAction={openAuthAction}

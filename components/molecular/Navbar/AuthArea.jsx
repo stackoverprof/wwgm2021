@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import { AnimatePresence } from 'framer-motion'
-import { RiShieldFlashLine } from 'react-icons/ri'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -12,6 +11,7 @@ import InitialAva from '@components/atomic/InitialAva'
 import AlertHandler from '@components/atomic/AlertHandler'
 import LoginPopUp from '@components/molecular/PopUps/LoginPopUp'
 import LogoutPopUp from '@components/molecular/PopUps/LogoutPopUp'
+import AdminBadge from '@components/atomic/AdminBadge'
 
 const AuthArea = ({
     openAuthAction,
@@ -73,7 +73,7 @@ const AuthArea = ({
                         {access.admin && (
                             <Link href={to.adminArea}>
                                 <a className="flex-cc">
-                                    ADMIN AREA &nbsp;<RiShieldFlashLine color="orange" />
+                                    ADMIN AREA &nbsp;<AdminBadge />
                                 </a>
                             </Link>
                         )}

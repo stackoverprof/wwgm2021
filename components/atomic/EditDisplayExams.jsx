@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
-import { RiShieldFlashLine } from 'react-icons/ri'
 import { MdSettings } from 'react-icons/md'
 
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
 import Spinner from '@components/atomic/spinner/Circle'
+import AdminBadge from '@components/atomic/AdminBadge'
 
 const EditDisplayExams = ({i, refreshData}) => {
     const [show, setShow] = useState(false)
@@ -44,7 +44,7 @@ const EditDisplayExams = ({i, refreshData}) => {
     return (
         <div css={style} className="flex-cc col">
             <button onClick={() => setShow(!show)} className={`edit no-btn flex-bc mx-auto ${show ? 'active' : ''}`}>
-                Ganti display <span className="flex-cc"><MdSettings /><RiShieldFlashLine color="orange" /></span>
+                Ganti display <span className="flex-cc"><MdSettings /><AdminBadge /></span>
             </button>
             {show &&
                 <form onSubmit={handleSubmit} className="flex-cc col">

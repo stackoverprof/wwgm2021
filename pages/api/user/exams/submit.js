@@ -6,6 +6,8 @@
 //param : array asnwer (per sesi)
 //param : kode sesi
 
+//availibity time range true
+
 //dari kode sesi, get array kunci (utk sesi tsb)
 
 //cocokin

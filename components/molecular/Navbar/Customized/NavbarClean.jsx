@@ -3,8 +3,7 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import { to }from '@core/routepath'
 
-const Navbar = ({clean}) => {
-    if (clean) return <NavbarClean />
+const Navbar = () => {
     
     return (
         <nav css={style} className="flex-cc">

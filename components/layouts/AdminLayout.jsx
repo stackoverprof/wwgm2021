@@ -25,7 +25,7 @@ const MainLayout = ({className, title, css: style, children, noClearance}) => {
                 <title>WWGM 2021 {title ? `— ${title}` : ''}</title>
             </Head>
             
-            <Navbar />
+            <Navbar variant="admin"/>
             <main css={style} className={className}>
                 {children}
             </main>
