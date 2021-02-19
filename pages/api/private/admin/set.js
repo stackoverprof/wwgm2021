@@ -1,15 +1,15 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-  const { userToken, email } = req.body
+  const { authToken, email } = req.body
   
   //CHECKING THE DATA NEEDED
-  if (!email || !userToken) {
+  if (!email || !authToken) {
     return res.status(400).json({ status: 'ERROR', message: 'data tidak lengkap' })
   }
 
   //VERIVYING THE CURRENT USER
-  const currentUser = await admin.auth().verifyIdToken(userToken)
+  const currentUser = await admin.auth().verifyIdToken(authToken)
     .catch(err => {
       console.log('problem with : ' + err)
       return res.status(500).json({ status: 'ERROR', message: 'token tidak valid, coba login ulang' })
@@ -40,7 +40,7 @@ export default async (req, res) => {
       console.log(`new admin set : ${email}`)
 
       await DB.collection("Private").doc("Data").update({
-          ListAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
+          listAdmin: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
         })
       await DB.collection("Private").doc("Data").collection("AdminSecurityRecords").doc(issuedUser.uid).set({
           issued: issuedUser.uid,

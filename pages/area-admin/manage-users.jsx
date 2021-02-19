@@ -1,43 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
+import axios from 'axios'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
-import { to }from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 import FireFetcher from '@core/services/FireFetcher'
 import AdminLayout from '@components/layouts/AdminLayout'
 import CardManageUser from '@components/atomic/CardManageUser'
 
 const ManageUsers = () => {
     const [allUsers, setAllUsers] = useState([])
-    const { authState, access } = useAuth()
+    const [listAdmin, setListAdmin] = useState([])
+    const { user, authState, access } = useAuth()
+    const { setGlobalAlert } = useLayout()
+
+    const fetchListAdmin = async () => {
+        const res = await axios.post('/api/private/admin/list-admin', {
+            authToken: await user.getIdToken()
+        }).catch(err => setGlobalAlert({body: err.response.data.message, error: true}))
+        setListAdmin(res.data.body)
+    }
 
     useEffect(() => {
-        const detacher = FireFetcher.listen.allUsers(docs => {
-            let filler = []
-            docs.forEach((doc) => {
-                filler.push(doc.data())
-            })
+        if (Object.keys(user).length !== 0) {
+            fetchListAdmin()
+        }
+    }, [user])
+    
+    useEffect(() => {
+        console.log(listAdmin)
+    }, [listAdmin])
 
-            const resorting = (array) => {
-                let pass = [], fail = []
-                array.forEach(item => {
-                    if (item.noPeserta !== '') pass.push(item)
-                    else fail.push(item)
+    useEffect(() => {
+        const unlisten = FireFetcher.listen.allUsers({
+            attach: async (docs) => { 
+                let filler = [], a = [], b = []
+                docs.forEach(doc => filler.push(doc.data()))
+                filler.forEach(doc => {
+                    if (doc.noPeserta !== '') a.push(doc)
+                    else b.push(doc)
                 })
-                return pass.concat(fail)
+                setAllUsers(a.concat(b))
+            },
+            detach: () => {
+                setAllUsers([])
             }
-
-            filler = resorting(filler)
-
-            setAllUsers(filler)
         })
-
-        return () => detacher()
+        
+        return () => unlisten()
     }, [])
 
     return (
-        <AdminOnlyRoute redirect={to._404}>
+        <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Dashboard" className="flex-sc col">
                     <section css={style.usersList} className="users-list">

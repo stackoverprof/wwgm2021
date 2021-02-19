@@ -7,7 +7,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import Navbar from '@components/molecular/Navbar'
 import AlertHandler from '@components/atomic/AlertHandler'
 
-const MainLayout = ({className, title, css: style, children, noClearance}) => {
+const AdminLayout = ({className, title, css: style, children, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
@@ -70,4 +70,4 @@ const layer = ({navHeight, noClearance}) => css`
     }
 `
 
-export default MainLayout
+export default AdminLayout

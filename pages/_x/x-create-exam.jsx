@@ -17,7 +17,7 @@ const Dashboard = () => {
         setData(null)
         
         axios.post('/api/private/exams/new', {
-                userToken: await user.getIdToken(),
+                authToken: await user.getIdToken(),
                 title: 'TRY OUT NASIONAL SOSHUM 2021',
                 cluster: 'SOSHUM',
                 status: 'limited',

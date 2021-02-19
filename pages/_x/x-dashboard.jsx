@@ -20,7 +20,7 @@ const Dashboard = () => {
         setAlert(null)
         
         axios.post('/api/private/admin/set', {
-            userToken: await user.getIdToken(),
+            authToken: await user.getIdToken(),
             email: issuedEmail
         })
         .then(res => setAlert({error: false, body: res.data.message}))

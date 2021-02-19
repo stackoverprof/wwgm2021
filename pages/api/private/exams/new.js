@@ -9,7 +9,7 @@ export default async (req, res) => {
     const Req = req.body
 
     //VERIVYING THE CURRENT USER
-    const currentUser = await admin.auth().verifyIdToken(Req.userToken)
+    const currentUser = await admin.auth().verifyIdToken(Req.authToken)
         .catch(() => {
             return res.status(500).json({ status: 'ERROR', message: 'token tidak valid, coba login ulang' })
     })
