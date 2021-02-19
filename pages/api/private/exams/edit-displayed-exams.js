@@ -1,14 +1,14 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-    const {body: { position, examId, token }} = req
+    const {body: { position, examId, authToken }} = req
     
-    if ((!position && position !== 0) || !examId || !token) {
+    if ((!position && position !== 0) || !examId || !authToken) {
         return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
     }
 
     //VERIVYING THE CURRENT USER
-    const currentUser = await admin.auth().verifyIdToken(token)
+    const currentUser = await admin.auth().verifyIdToken(authToken)
     .catch(err => {
         console.log('problem with : ' + err)
         return res.status(500).json({ status: 'ERROR', message: 'Token tidak valid, coba login ulang' })

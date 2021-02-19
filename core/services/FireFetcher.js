@@ -18,7 +18,7 @@ const userData = (uid, action) => {
 }
 
 const allUsers = (action) => {
-    return DB.collection("Users").onSnapshot(action)
+    return DB.collection('Users').orderBy('noPeserta').onSnapshot(action)
 }
 
 export default {

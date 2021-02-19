@@ -28,7 +28,7 @@ const EditDisplayExams = ({i, refreshData}) => {
         await axios.post('/api/private/exams/edit-displayed-exams', {
             position: i,
             examId: examId,
-            token: await user.getIdToken()
+            authToken: await user.getIdToken()
         })
         .then(res => {
             setGlobalAlert({error: false, body: res.data.message})

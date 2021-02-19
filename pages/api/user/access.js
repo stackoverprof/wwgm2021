@@ -4,7 +4,7 @@ export default async (req, res) => {
     const { authToken } = req.body
 
     if (!authToken) {
-        return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
+        return res.status(400).json({ status: 'ERROR', message: 'data tidak lengkap' })
     }
     
     //VERIVYING _AUTHENTICATED

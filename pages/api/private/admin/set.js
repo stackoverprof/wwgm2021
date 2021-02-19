@@ -5,33 +5,33 @@ export default async (req, res) => {
   
   //CHECKING THE DATA NEEDED
   if (!email || !userToken) {
-    return res.status(400).json({ status: 'error', message: 'data tidak lengkap' })
+    return res.status(400).json({ status: 'ERROR', message: 'data tidak lengkap' })
   }
 
   //VERIVYING THE CURRENT USER
   const currentUser = await admin.auth().verifyIdToken(userToken)
     .catch(err => {
       console.log('problem with : ' + err)
-      return res.status(500).json({ status: 'error', message: 'token tidak valid, coba login ulang' })
+      return res.status(500).json({ status: 'ERROR', message: 'token tidak valid, coba login ulang' })
     })
 
   if (!currentUser.admin) {
-    return res.status(403).json({ status: 'error', message: 'anda tidak berhak menambah admin'})
+    return res.status(403).json({ status: 'ERROR', message: 'anda tidak berhak menambah admin'})
   }
 
   //VALIDATING THE ISSUED USER
   const issuedUser = await admin.auth().getUserByEmail(email)
     .catch(err => {
       console.log('problem with : ' + err)
-      return res.status(400).json({ status: 'error', message: `akun ${email} tidak ditemukan`})
+      return res.status(400).json({ status: 'ERROR', message: `akun ${email} tidak ditemukan`})
     })
     
   if (!issuedUser) return
   else if (issuedUser.uid === currentUser.uid) {
-    return res.status(400).json({ status: 'error', message: `tidak bisa menambahkan diri sendiri` })
+    return res.status(400).json({ status: 'ERROR', message: `tidak bisa menambahkan diri sendiri` })
   }
   else if (issuedUser.hasOwnProperty('customClaims') && issuedUser.customClaims['admin']) {
-    return res.status(400).json({ status: 'error', message: `${email} sudah menjadi admin` })
+    return res.status(400).json({ status: 'ERROR', message: `${email} sudah menjadi admin` })
   }
 
   //CLAIMING ADMIN STATUS
@@ -55,6 +55,6 @@ export default async (req, res) => {
     })
     .catch(err => {
       console.log('problem with : ' + err)
-      return res.status(500).json({ status: 'error', message: 'server gagal menambahkan admin' })
+      return res.status(500).json({ status: 'ERROR', message: 'server gagal menambahkan admin' })
     })
 }

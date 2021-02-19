@@ -7,7 +7,7 @@ const AdminOnlyRoute = ({children, redirect}) => {
 
     return (
     <> 
-        { authState === 'user' && access.admin ? children : <_404 />} 
+        { authState === 'user' ? access.admin ? children : <_404 /> : '' } 
     </>
     )
 }
