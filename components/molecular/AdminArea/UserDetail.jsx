@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import { FaPlus } from 'react-icons/fa'
+import { TiDelete } from 'react-icons/ti'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
 
@@ -25,9 +26,18 @@ const UserDetail = ({item}) => {
             })
             .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         },
-        remove: e => {
-            e.preventDefault()
-            alert('rem')
+
+        remove: async (examId) => {            
+            axios.post('/api/private/users/exam-access-remove', {
+                authToken: await user.getIdToken(),
+                issuedEmail: item.email,
+                examId: examId
+            })
+            .then(res => {
+                setInputExamId('')
+                setGlobalAlert({error: false, body: res.data.message})
+            })
+            .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         }
     }
 
@@ -67,9 +77,9 @@ const UserDetail = ({item}) => {
             <div className="bottom">
                 <p><strong>Akses Try Out :</strong></p>
                 {item.examsAccess.map((examId, i) => (
-                    <p className="exam" key={i}>
-                        
+                    <p className="exam flex-sc" key={i}>
                         {examId}
+                        <TiDelete onClick={() => handleExamAccess.remove(examId)} className="icon" color="#ca2a2a"/>
                     </p>
                 ))}
                 {item.examsAccess.length === 0 &&
@@ -108,6 +118,12 @@ const style = css`
 
     p.exam {
         margin: 6px 0;
+        font-size: 16px;
+
+        .icon {
+            margin-left: 6px;
+            cursor: pointer;
+        }
     }
 
     table {

@@ -25,19 +25,16 @@ export default async (req, res) => {
     
     if (!issuedUser) return
 
-    //CHECKING EXAM AVAILABILITY
-    const allExamsRef = await admin.firestore().collection('Exams').listDocuments()
-    if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+    //FETCH FIRST
+    const currentAccess = await DB.collection('Users').doc(issuedUser.uid).get().then(doc => doc.data().examsAccess)
+    .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
     
-    const allExams = allExamsRef.map(item => item.id)
-    if (!allExams.includes(examId)) return res.status(500).json({ status: 'ERROR', message: 'Ujian terkait tidak ditemukan' })
-
-    
+    console.log(currentAccess)
 
     //BEGIN UPDATE PROCESS
     return await DB.collection('Users').doc(issuedUser.uid).update({
-        examsAccess: admin.firestore.FieldValue.arrayUnion(examId)
+        examsAccess: currentAccess.filter(item => item !== examId)
     })
-    .then(() => res.status(200).json({ status: 'OK', message: `Berhasil menambahkan akses ujian untuk ${issuedEmail}` }))
+    .then(() => res.status(200).json({ status: 'OK', message: `Berhasil menghapus akses ujian ${issuedEmail}` }))
     .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
 }
