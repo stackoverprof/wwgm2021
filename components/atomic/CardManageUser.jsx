@@ -7,16 +7,18 @@ import { RiFileShield2Line } from 'react-icons/ri'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
+import AdminBadge from '@components/atomic/AdminBadge'
+import UserDetail from '@components/molecular/AdminArea/UserDetail'
 
 const CardManageUser = ({item}) => {
-    const [openDetail, setOpenDetail] = useState(false)
+    const [openDetail, setOpenDetail] = useState(false) 
 
     const { user } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const handleApproval = async (item, value) => {
         if (!item.noPeserta) {
-            setGlobalAlert({error: true, body: 'User belum mengaaisi no peserta'})
+            setGlobalAlert({error: true, body: 'User belum mengisi no peserta'})
             return
         }
 
@@ -45,6 +47,11 @@ const CardManageUser = ({item}) => {
                     <p className="no-peserta">{item.noPeserta ? item.noPeserta : '—'}</p>
                 </div>
                 <div className="right flex-bc">
+                    {item.adminLabeled && (
+                        <div className="admin-badge flex-cc">
+                            <AdminBadge />
+                        </div>
+                    )}
                     <button onClick={() => handleApproval(item, !item.approved)} className={`approval btn-icon ${item.approved ? 'green' : 'gray'}`}>
                         <MdVerifiedUser className="icon"/> 
                     </button>
@@ -54,51 +61,7 @@ const CardManageUser = ({item}) => {
                 </div>
             </div>
 
-            {openDetail && 
-            <>
-                <hr className="fade"/>
-
-                <div className="inner detail full flex-bs">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><strong>UID</strong></td>
-                                <td className="data">&nbsp; : &nbsp; {item.uid}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Display Name</strong></td>
-                                <td className="data">&nbsp; : &nbsp; {item.displayName}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Kontak</strong></td>
-                                <td className="data">&nbsp; : &nbsp; {item.contact}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Provinsi</strong></td>
-                                <td className="data">&nbsp; : &nbsp; {item.province}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Kota/Kab</strong></td>
-                                <td className="data">&nbsp; : &nbsp; {item.city}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sekolah</strong></td>
-                                <td className="data">&nbsp; : &nbsp; {item.school}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="bottom">
-                        <p><strong>Akses Try Out :</strong></p>
-                        {item.examsAccess.map((examId, i) => (
-                            <p key={i}>{examId}</p>
-                            ))}
-                        {item.examsAccess.length === 0 && 
-                            <p>—</p>
-                        }
-                    </div>
-                </div>
-            </>
-            }
+            {openDetail &&  <UserDetail item={item} />}
         </div>
     )
 }
@@ -108,19 +71,12 @@ const style = css`
     box-shadow: 0px 15px 24px -18px rgba(0, 0, 0, 0.25), inset 0 0 0 1px #AFAFAF;
     border-radius: 12px;
     margin: 12px 0;
-
-    .inner {
-        margin: 24px 0;
-        width: calc(100% - 48px);
-
-        @media (max-width: 950px) {
-            flex-direction: column;
-        }
-    }
     
-    .right {
-        width: 84px;
-        
+    .right {        
+        @media (min-width: 950px) {
+            justify-content: flex-end;
+            min-width: 124px;
+        }
         @media (max-width: 950px) {
             margin-top: 6px;
         }
@@ -130,9 +86,25 @@ const style = css`
         margin-right: 16px;
     }
 
+    .admin-badge {
+        width: 24px;
+        margin: 0 4px;
+        font-size: 24px;
+    }
+    
+    .inner {
+        margin: 24px 0;
+        width: calc(100% - 48px);
+
+        @media (max-width: 950px) {
+            flex-direction: column;
+        }
+    }
+
     .btn-icon {
         padding: 8px;
         border-radius: 6px;
+        margin: 0 4px;
 
         box-shadow: 0 6px 8px -8px #000a;
 
@@ -212,20 +184,6 @@ const style = css`
         }
     }
 
-    .detail {
-        margin-top: 0;
-        padding-top: 24px;
-    }
-
-    .bottom {
-        width: 45%;
-    }
-
-    table {
-        td.data {
-            word-break: break-all;
-        }
-    }
 `
 
 export default CardManageUser

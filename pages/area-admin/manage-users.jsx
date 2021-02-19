@@ -12,6 +12,7 @@ import CardManageUser from '@components/atomic/CardManageUser'
 const ManageUsers = () => {
     const [allUsers, setAllUsers] = useState([])
     const [listAdmin, setListAdmin] = useState([])
+
     const { user, authState, access } = useAuth()
     const { setGlobalAlert } = useLayout()
 
@@ -27,10 +28,20 @@ const ManageUsers = () => {
             fetchListAdmin()
         }
     }, [user])
-    
+
     useEffect(() => {
-        console.log(listAdmin)
-    }, [listAdmin])
+        const filler = allUsers
+        filler.forEach(item => {
+            if (listAdmin.includes(item.uid)) {
+                item.adminLabeled = true
+            }
+        })
+        setAllUsers(filler)
+    }, [listAdmin, allUsers])
+
+    useEffect(() => {
+        console.log(allUsers)
+    }, [allUsers])
 
     useEffect(() => {
         const unlisten = FireFetcher.listen.allUsers({
