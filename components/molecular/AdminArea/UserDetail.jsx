@@ -20,6 +20,7 @@ const UserDetail = ({item}) => {
                 examId: inputExamId
             })
             .then(res => {
+                setInputExamId('')
                 setGlobalAlert({error: false, body: res.data.message})
             })
             .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
