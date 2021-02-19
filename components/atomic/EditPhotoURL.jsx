@@ -26,7 +26,7 @@ const EditPhotoURL = ({size}) => {
 
     return (
         <div css={style}>
-            <InitialAva size={size} src={userData.photoURL}/>
+            <InitialAva size={size} src={userData.photoURL} displayName={userData.displayName}/>
             <div className="edit-cover full flex-ce">
                 <div className="circle flex-cc" onClick={showUploadPopUp.open}>
                     <MdPhotoLibrary />

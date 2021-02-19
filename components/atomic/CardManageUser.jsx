@@ -1,13 +1,15 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
-
 import { MdVerifiedUser } from 'react-icons/md'
+import { RiFileShield2Line } from 'react-icons/ri'
+
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
+import InitialAva from '@components/atomic/InitialAva'
 
 const CardManageUser = ({item}) => {
-    const { user } = useAuth()
+    const { user, userData } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const handleApproval = async (item, value) => {
@@ -28,25 +30,67 @@ const CardManageUser = ({item}) => {
     }
 
     return (
-        <div css={style} className="full-w flex-cc">
+        <div css={style} className="full-w flex-cc col">
             <div className="inner full flex-bc">
-                <div className="left">
-                    <p className="name">{item.fullName}</p>
-                    <p className="email">{item.email}</p>
+                <div className="left flex-sc">
+                    <InitialAva size={54} src={item.photoURL} displayName={item.displayName} className="ava"/>
+                    <div>
+                        <p className="name">{item.fullName}</p>
+                        <p className="email">{item.email}</p>
+                    </div>
                 </div>
                 <div className="middle">
                     <p className="no-peserta">{item.noPeserta ? item.noPeserta : '—'}</p>
                 </div>
-                <div className="right flex-cc">
+                <div className="right flex-bc">
                     <button onClick={() => handleApproval(item, !item.approved)} className={`approval btn-icon ${item.approved ? 'green' : 'gray'}`}>
                         <MdVerifiedUser className="icon"/> 
                     </button>
-                    <button className="edit-nopes btn-icon">
-                        
+                    <button className="edit-nopes btn-icon orange">
+                        <RiFileShield2Line className="icon"/> 
                     </button>
-                    <button className="access-exams btn-icon">
-                        
-                    </button>
+                </div>
+            </div>
+
+            <hr className="fade"/>
+
+            <div className="inner detail full flex-bs">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>UID</strong></td>
+                            <td>&nbsp; : &nbsp; {item.uid}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Display Name</strong></td>
+                            <td>&nbsp; : &nbsp; {item.displayName}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kontak</strong></td>
+                            <td>&nbsp; : &nbsp; {item.contact}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Provinsi</strong></td>
+                            <td>&nbsp; : &nbsp; {item.province}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kota/Kab</strong></td>
+                            <td>&nbsp; : &nbsp; {item.city}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sekolah</strong></td>
+                            <td>&nbsp; : &nbsp; {item.school}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="bottom">
+                    <p><strong>Akses Try Out :</strong></p>
+                    {item.examsAccess.map((examId, i) => (
+                        <p key={i}>{examId}</p>
+                    ))}
+                    {item.examsAccess.length === 0 && 
+                        <p>—</p>
+                    }
                 </div>
             </div>
         </div>
@@ -60,12 +104,23 @@ const style = css`
     margin: 12px 0;
 
     .inner {
-        margin: 24px;
+        margin: 24px 0;
+        width: calc(100% - 48px);
+    }
+
+    .right {
+        width: 84px;
+    }
+
+    .ava {
+        margin-right: 16px;
     }
 
     .btn-icon {
         padding: 8px;
         border-radius: 6px;
+
+        box-shadow: 0 6px 8px -8px #000a;
 
         .icon {
             margin: 0;
@@ -75,7 +130,7 @@ const style = css`
             background: #fa903a;
 
             &:hover{
-                box-shadow: 0 8px 12px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #fa903a;
+                box-shadow: 0 6px 8px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #fa903a;
             }
         }
         
@@ -83,7 +138,7 @@ const style = css`
             background: #da4342;
 
             &:hover{
-                box-shadow: 0 8px 12px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #da4342;
+                box-shadow: 0 6px 8px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #da4342;
             }
         }
 
@@ -91,7 +146,7 @@ const style = css`
             background: #0005;
 
             &:hover{
-                box-shadow: 0 8px 12px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #0005;
+                box-shadow: 0 6px 8px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #0005;
             }
         }
 
@@ -99,16 +154,16 @@ const style = css`
             background: #37a558;
 
             &:hover{
-                box-shadow: 0 8px 12px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #37a558;
+                box-shadow: 0 6px 8px -8px #000a, 0 0 0 2px white, 0 0 0 2.8px #37a558;
             }
         }
 
     }
 
     .left {
-        width: 300px;
-
+        
         p {
+            width: 300px;
             font-family: Poppins;
             font-weight: normal;
             font-size: 16px;
@@ -132,6 +187,16 @@ const style = css`
             font-size: 24px;
             color: #0005;
         }
+    }
+
+    .detail {
+        margin-top: 0;
+        padding-top: 24px;
+        /* border-top: 1px solid #0003; */
+    }
+
+    .bottom {
+        width: 45%;
     }
 `
 

@@ -144,6 +144,7 @@ const UploadPopUp = ({handleClose}) => {
                         override 
                         overrideValue={makeInitial} 
                         className="preview"
+                        displayName={userData.displayName}
                     />
                     <form className="flex-cc col" onSubmit={handleSubmit}>
                         <div 

@@ -1,13 +1,11 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { useAuth } from '@core/contexts/AuthContext'
 import parse from 'url-parse'
 import Skeleton from 'react-loading-skeleton'
 
 // [TODO] : a little 'edit' seeking out for mobile
 
-const InitialAva = ({size, className, src, override, overrideValue, loading}) => {
-    const { userData: { displayName } } = useAuth()
+const InitialAva = ({size, className, src, override, overrideValue, loading, displayName}) => {
     
     const showInitial = () => {
         const parsed = parse(src, true)
