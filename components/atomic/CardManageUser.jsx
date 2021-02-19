@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import { MdVerifiedUser } from 'react-icons/md'
@@ -9,7 +9,9 @@ import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
 
 const CardManageUser = ({item}) => {
-    const { user, userData } = useAuth()
+    const [openDetail, setOpenDetail] = useState(false)
+
+    const { user } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const handleApproval = async (item, value) => {
@@ -46,53 +48,57 @@ const CardManageUser = ({item}) => {
                     <button onClick={() => handleApproval(item, !item.approved)} className={`approval btn-icon ${item.approved ? 'green' : 'gray'}`}>
                         <MdVerifiedUser className="icon"/> 
                     </button>
-                    <button className="edit-nopes btn-icon orange">
+                    <button onClick={() => setOpenDetail(!openDetail)} className="edit-nopes btn-icon orange">
                         <RiFileShield2Line className="icon"/> 
                     </button>
                 </div>
             </div>
 
-            <hr className="fade"/>
+            {openDetail && 
+            <>
+                <hr className="fade"/>
 
-            <div className="inner detail full flex-bs">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td><strong>UID</strong></td>
-                            <td>&nbsp; : &nbsp; {item.uid}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Display Name</strong></td>
-                            <td>&nbsp; : &nbsp; {item.displayName}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Kontak</strong></td>
-                            <td>&nbsp; : &nbsp; {item.contact}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Provinsi</strong></td>
-                            <td>&nbsp; : &nbsp; {item.province}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Kota/Kab</strong></td>
-                            <td>&nbsp; : &nbsp; {item.city}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Sekolah</strong></td>
-                            <td>&nbsp; : &nbsp; {item.school}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div className="bottom">
-                    <p><strong>Akses Try Out :</strong></p>
-                    {item.examsAccess.map((examId, i) => (
-                        <p key={i}>{examId}</p>
-                    ))}
-                    {item.examsAccess.length === 0 && 
-                        <p>—</p>
-                    }
+                <div className="inner detail full flex-bs">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><strong>UID</strong></td>
+                                <td className="data">&nbsp; : &nbsp; {item.uid}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Display Name</strong></td>
+                                <td className="data">&nbsp; : &nbsp; {item.displayName}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kontak</strong></td>
+                                <td className="data">&nbsp; : &nbsp; {item.contact}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Provinsi</strong></td>
+                                <td className="data">&nbsp; : &nbsp; {item.province}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kota/Kab</strong></td>
+                                <td className="data">&nbsp; : &nbsp; {item.city}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sekolah</strong></td>
+                                <td className="data">&nbsp; : &nbsp; {item.school}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className="bottom">
+                        <p><strong>Akses Try Out :</strong></p>
+                        {item.examsAccess.map((examId, i) => (
+                            <p key={i}>{examId}</p>
+                            ))}
+                        {item.examsAccess.length === 0 && 
+                            <p>—</p>
+                        }
+                    </div>
                 </div>
-            </div>
+            </>
+            }
         </div>
     )
 }
@@ -106,10 +112,18 @@ const style = css`
     .inner {
         margin: 24px 0;
         width: calc(100% - 48px);
-    }
 
+        @media (max-width: 950px) {
+            flex-direction: column;
+        }
+    }
+    
     .right {
         width: 84px;
+        
+        @media (max-width: 950px) {
+            margin-top: 6px;
+        }
     }
 
     .ava {
@@ -176,6 +190,15 @@ const style = css`
                 font-weight: 600;
             }
         }
+
+        @media (max-width: 950px) {
+            flex-direction: column;
+
+            p {
+                text-align: center;
+                margin: 6px 0;
+            }
+        }
     }
 
     .middle {
@@ -192,11 +215,16 @@ const style = css`
     .detail {
         margin-top: 0;
         padding-top: 24px;
-        /* border-top: 1px solid #0003; */
     }
 
     .bottom {
         width: 45%;
+    }
+
+    table {
+        td.data {
+            word-break: break-all;
+        }
     }
 `
 
