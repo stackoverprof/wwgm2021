@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
+import axios from 'axios'
 import { FaPlus } from 'react-icons/fa'
+import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const UserDetail = ({item}) => {
+    const [inputExamId, setInputExamId] = useState('')
+    const { user } = useAuth()
+    const { setGlobalAlert } = useLayout()
 
     const handleExamAccess = {
-        add: e => {
+        add: async e => {
             e.preventDefault()
-            alert('ha')
+            
+            axios.post('/api/private/users/exam-access-add', {
+                authToken: await user.getIdToken(),
+                issuedEmail: item.email,
+                examId: inputExamId
+            })
+            .then(res => {
+                setGlobalAlert({error: false, body: res.data.message})
+            })
+            .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         },
         remove: e => {
             e.preventDefault()
@@ -57,7 +72,7 @@ const UserDetail = ({item}) => {
                     <p className="exam">—</p>
                 }
                 <form className="flex-sc" onSubmit={handleExamAccess.add}>
-                    <input type="text"/>
+                    <input value={inputExamId} onChange={e => setInputExamId(e.target.value)} type="text"/>
                     <button className="btn-icon green">
                         <FaPlus className="icon"/> 
                     </button>
