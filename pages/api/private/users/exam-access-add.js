@@ -25,6 +25,13 @@ export default async (req, res) => {
     
     if (!issuedUser) return
 
+    //CHECKING EXAM AVAILABILITY
+    const allExamsRef = await admin.firestore().collection('Exams').listDocuments()
+    if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+    
+    const allExams = allExamsRef.map(item => item.id)
+    if (!allExams.includes(examId)) return res.status(500).json({ status: 'ERROR', message: 'Ujian terkait tidak ditemukan' })
+
     //BEGIN UPDATE PROCESS
     return await DB.collection('Users').doc(issuedUser.uid).update({
         examsAccess: admin.firestore.FieldValue.arrayUnion(examId)

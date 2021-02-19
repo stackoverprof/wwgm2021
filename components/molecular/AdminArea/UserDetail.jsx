@@ -67,13 +67,16 @@ const UserDetail = ({item}) => {
             <div className="bottom">
                 <p><strong>Akses Try Out :</strong></p>
                 {item.examsAccess.map((examId, i) => (
-                    <p className="exam" key={i}>{examId}</p>
-                    ))}
-                {item.examsAccess.length === 0 && 
+                    <p className="exam" key={i}>
+                        
+                        {examId}
+                    </p>
+                ))}
+                {item.examsAccess.length === 0 &&
                     <p className="exam">—</p>
                 }
                 <form className="flex-sc" onSubmit={handleExamAccess.add}>
-                    <input value={inputExamId} onChange={e => setInputExamId(e.target.value)} type="text"/>
+                    <input value={inputExamId} onChange={e => setInputExamId(e.target.value)} type="text" placeholder="Masukan ExamId"/>
                     <button className="btn-icon green">
                         <FaPlus className="icon"/> 
                     </button>
