@@ -73,7 +73,8 @@ export default async (req, res) => {
                 editor: currentUser.uid,
                 timestamp: admin.firestore.Timestamp.now()
             }
-        ]
+        ],
+        created_at : admin.firestore.Timestamp.now()
     }
 
     if (_dataInvalid) {
@@ -88,7 +89,7 @@ export default async (req, res) => {
             if (i < divider) break
             count++
         }
-        return count
+        return count + 1
     }
     
     const questionFiller = () => {
@@ -96,6 +97,7 @@ export default async (req, res) => {
 
         for (let i = 0; i < totalQuestions; i++) {
             questionList.push({
+                id: i+1,
                 body: '',
                 options: [
                     {
@@ -131,6 +133,7 @@ export default async (req, res) => {
 
         for (let i = 0; i < totalQuestions; i++) {
             answerList.push({
+                id: i+1,
                 body: '',
                 explanation: '',
                 session: countSession(i)

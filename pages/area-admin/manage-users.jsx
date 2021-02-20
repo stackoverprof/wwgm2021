@@ -66,6 +66,13 @@ const ManageUsers = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Dashboard" className="flex-sc col">
+
+                    <section css={style.header}>
+                        <div className="inner contain-size-s flex-cc">
+                            <h1>Manage All Users</h1>
+                        </div>
+                    </section>
+
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
                             {allUsers.map((item, i) => (
@@ -73,6 +80,7 @@ const ManageUsers = () => {
                             ))}
                         </div>
                     </section>
+
                 </AdminLayout>
             )}
         </AdminOnlyRoute>
@@ -82,6 +90,26 @@ const ManageUsers = () => {
 const style = {
     page: css`
 
+    `,
+    header: css`
+        .inner{
+            padding: 48px 0;
+            
+            @media (max-width: 600px) {
+                padding: 32px 0;
+            }
+        }
+        
+        h1 {
+            font-family: Poppins;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A2C1E;
+
+            @media (max-width: 780px) {
+                font-size: 28px;
+            }
+        }
     `,
 
     usersList: css`

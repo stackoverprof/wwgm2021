@@ -18,61 +18,7 @@ const Dashboard = () => {
         
         axios.post('/api/private/exams/new', {
                 authToken: await user.getIdToken(),
-                title: 'TRY OUT NASIONAL SOSHUM 2021',
-                cluster: 'SOSHUM',
-                status: 'limited',
-                availability: {
-                    start: 1614999600000,
-                    end: 1615017600000
-                },
-                sessions: [
-                    {
-                        name: 'Penalaran Umum',
-                        size: 20,
-                        duration: 35
-                    },
-                    {
-                        name: 'Pemahaman Bacaan dan Menulis',
-                        size: 20,
-                        duration: 25
-                    },
-                    {
-                        name: 'Pengetahuan dan Pemahaman Umum',
-                        size: 20,
-                        duration: 25
-                    },
-                    {
-                        name: 'Pengetahuan Kuantitatif',
-                        size: 20,
-                        duration: 35
-                    },
-                    {
-                        name: 'Matematika',
-                        size: 20,
-                        duration: 18
-                    },
-                    {
-                        name: 'Sejarah',
-                        size: 20,
-                        duration: 18
-                    },
-                    {
-                        name: 'Geografi',
-                        size: 20,
-                        duration: 18
-                    },
-                    {
-                        name: 'Sosiologi',
-                        size: 20,
-                        duration: 18
-                    },
-                    {
-                        name: 'Ekonomi',
-                        size: 20,
-                        duration: 18
-                    }
-                ]
-            })
+                })
         .then(res => setData(res.data.message))
         .catch(err => setData(err.response.data.message))
     }

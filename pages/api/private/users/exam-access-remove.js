@@ -28,8 +28,6 @@ export default async (req, res) => {
     //FETCH FIRST
     const currentAccess = await DB.collection('Users').doc(issuedUser.uid).get().then(doc => doc.data().examsAccess)
     .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
-    
-    console.log(currentAccess)
 
     //BEGIN UPDATE PROCESS
     return await DB.collection('Users').doc(issuedUser.uid).update({

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 import axios from 'axios'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
 import convert from '@core/utils/covertExamData'
+import { to } from '@core/routepath'
 
-const CardDisplayWide = ({examId}) => {
+const CardDisplayWide = ({examId, showId, onButton}) => {
     const [examData, setExamData] = useState(null)
     
     const fetchData = async () => {
@@ -21,15 +23,25 @@ const CardDisplayWide = ({examId}) => {
     }, [examId])
 
     if (!examId || !examData) return <ContentLoader />
-
+    
     return (
         <div css={style.main} className="full-w flex-cc">
             <div className="header flex-cc col">
                 <p className="title">{examData.cluster}</p>
             </div>
             <div className="body flex-bc">
-                <p className="date flex-cc"><FaRegCalendarAlt />{convert.date(examData.availability.start)}</p>
-                <button className="bordered">DETAIL</button>
+                {showId ?
+                    <p className="date flex-cc smaller">{examId}</p>
+                :
+                    <p className="date flex-cc"><FaRegCalendarAlt />{convert.date(examData.availability.start)}</p>
+                }
+                {onButton ?
+                    <button className="bordered" onClick={onButton}>DETAIL</button>
+                    :
+                    <Link href={to._404}>
+                        <button className="bordered">DETAIL</button>
+                    </Link>
+                }
             </div>
         </div>
     )
@@ -85,6 +97,10 @@ const style = {
             }
         }    
 
+        .smaller {
+            font-size: 16px !important;
+        }
+
         .body {
             width: 100%;
             border: 1px solid #0005;
@@ -101,7 +117,6 @@ const style = {
                 font-family: Poppins;
                 font-weight: 500;
                 font-size: 21px;
-                text-align: center;
                 line-height: 24px;
                 color: #000a;
                 transition: 0.1s;
