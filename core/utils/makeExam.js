@@ -4,8 +4,8 @@ const initialFormat = {
         cluster: 'SAINTEK',
         status: 'limited',
         availability: {
-            start: 1614999600000,
-            end: 1615017600000
+            start: new Date(),
+            end: new Date()
         },
         sessions: [
             {
@@ -56,8 +56,8 @@ const initialFormat = {
         cluster: 'SOSHUM',
         status: 'limited',
         availability: {
-            start: 1614999600000,
-            end: 1615017600000
+            start: new Date(),
+            end: new Date()
         },
         sessions: [
             {

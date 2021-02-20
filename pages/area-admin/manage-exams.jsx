@@ -94,37 +94,29 @@ const DetailForm = ({examId}) => {
     const [inputData, setInputData] = useState({
         title: '',
         status: '',
-        start: '',
-        end: ''
+        start: new Date(),
+        end: new Date()
     })
     const { setGlobalAlert } = useLayout()
 
-    const mutateInputData = (e) => {
+    const mutateInputData = ({target: { name, value }}) => {
         setInputData((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value
-        }))
-    }
-    const mutateTimestamp = (e) => {
-        setInputData((prevState) => ({
-            ...prevState,
-            [e.target.name]: {
-                ...prevState[e.target.name], 
-                _seconds: (new Date(e.target.value)).getTime()}
+            [name]: name === 'start' || name === 'end' ? new Date(value).toISOString() : value
         }))
     }
 
     useEffect(() => {
+        
         axios.post('/api/public/exams/get-exam-data', {
             examId: examId
         }).then(res => res.data.body)
         .then(data => {
-            console.log(data)
             setInputData({
                 title: data.title,
                 status: data.status,
                 start: data.availability.start,
-                end: data.availability.start
+                end: data.availability.end
             })
         })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
@@ -155,11 +147,11 @@ const DetailForm = ({examId}) => {
                 </div>
                 <div className="input-group flex-cs col full-w">
                     <label htmlFor="start">Pembukaan</label>
-                    <input value={convert.withPicker(inputData.start)} onChange={mutateTimestamp} type="datetime-local" id="start" name="start"/>
+                    <input value={convert.viewLocal(inputData.start)} onChange={mutateInputData} type="datetime-local" id="start" name="start"/>
                 </div>
                 <div className="input-group flex-cs col full-w">
                     <label htmlFor="end">Penutupan</label>
-                    <input value={convert.withPicker(inputData.end)} onChange={mutateTimestamp} type="datetime-local" id="end" name="end"/>
+                    <input value={convert.viewLocal(inputData.end)} onChange={mutateInputData} type="datetime-local" id="end" name="end"/>
                 </div>
             </form>
         }

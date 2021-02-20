@@ -37,18 +37,12 @@ const size = (sessions) => {
     return count
 }
 
-const withPicker = (UNIX_timestamp) => {
-    // console.log(UNIX_timestamp)
-    const a = new Date(UNIX_timestamp._seconds * 1000)
-    // console.log(a)
-    const yyyy = a.getFullYear()
-    const MM = a.getMonth()
-    const dd = a.getDate()
-    const hh = a.getHours()
-    const mm = a.getMinutes()
-    // console.log(a.getTimezoneOffset())
-    const make2 = (val) => ("0" + val).slice(-2)
-    return `${yyyy}-${make2(MM)}-${make2(dd)}T${make2(hh)}:${make2(mm)}`
+const viewLocal = (value) => {
+    const a = new Date(value)
+    const z = a.getTimezoneOffset() * 60 * 1000
+    const local = new Date(a.getTime() - z)
+
+    return local.toISOString().slice(0,16)
 }
 
 export default {
@@ -57,5 +51,5 @@ export default {
     time,
     duration,
     size,
-    withPicker
+    viewLocal
 }

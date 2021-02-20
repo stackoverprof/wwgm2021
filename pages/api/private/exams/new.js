@@ -7,6 +7,7 @@ export default async (req, res) => {
     }
     
     const Req = req.body
+    console.log(Req);
 
     //VERIVYING THE CURRENT USER
     const currentUser = await admin.auth().verifyIdToken(Req.authToken)
@@ -27,14 +28,6 @@ export default async (req, res) => {
             _dataInvalid = true
         }
         return data
-    }
-
-    const validateTimeStamp = (data) => {
-        if (typeof data !== 'number') {
-            _dataInvalid = true
-            return
-        }
-        return admin.firestore.Timestamp.fromMillis(data)
     }
 
     let totalQuestions = 0
@@ -63,8 +56,8 @@ export default async (req, res) => {
         cluster: validate(Req.cluster.toUpperCase(), 'string'),
         status: validate(Req.status, 'string'),
         availability: {
-            start: validateTimeStamp(Req.availability.start),
-            end: validateTimeStamp(Req.availability.end)
+            start: validate(Req.availability.start, 'string'),
+            end: validate(Req.availability.end, 'string')
         },
         sessions: validateSession(Req.sessions),
         participants: [],
