@@ -26,7 +26,7 @@ export default async (req, res) => {
     if (!issuedUser) return
 
     //CHECKING EXAM AVAILABILITY
-    const allExamsRef = await admin.firestore().collection('Exams').listDocuments()
+    const allExamsRef = await DB.collection('Exams').listDocuments()
     if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
     
     const allExams = allExamsRef.map(item => item.id)

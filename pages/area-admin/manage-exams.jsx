@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
-import axios from 'axios'
-import { FaPlus } from 'react-icons/fa'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import AdminLayout from '@components/layouts/AdminLayout'
 import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
 import CardDisplayWide from '@components/atomic/CardDisplayWide'
-import initialFormat from '@core/utils/makeExam'
-import { useLayout } from '@core/contexts/LayoutContext'
-import convert from '@core/utils/convertExamData'
+import MakeNewExams from '@components/molecular/AdminArea/MakeNewExams'
+import DetailForm from '@components/molecular/AdminArea/DetailForm'
 
 const ManageExams = () => {
     const [examIdList, setExamIdList] = useState([])
@@ -42,120 +39,27 @@ const ManageExams = () => {
                             <h1>Manage All Exams</h1>
                         </div>
                     </section>
+                    
+                    <section css={style.form}>
+                        <div className="inner contain-size-s flex-cc">
+                            {active && <DetailForm examId={active} handleClose={() => setActive('')}/>}
+                        </div>
+                    </section>
 
                     <section css={style.cards}>
                         <div className="inner contain-size-m flex-cc col">
                             {examIdList.map((item, i) => (
                                 <CardDisplayWide showId examId={item} key={i} onButton={() => setActive(item)}/>
                             ))}
-                            <MakeExams />
+                            <p className="label">Buat TryOut baru</p>
+                            <MakeNewExams />
                         </div>
                     </section>
 
-                    <section css={style.form}>
-                        <div className="inner contain-size-s flex-cc">
-                            {active && <DetailForm examId={active}/>}
-                        </div>
-                    </section>
 
                 </AdminLayout>
             )}
         </AdminOnlyRoute>
-    )
-}
-
-const MakeExams = () => {
-    const { setGlobalAlert } = useLayout()
-    const { user } = useAuth()
-
-    const newExam = async (cluster) => {
-        setGlobalAlert('')
-
-        axios.post('/api/private/exams/new', {
-            authToken: await user.getIdToken(),
-            ...initialFormat[cluster]
-        })
-        .then(res => setGlobalAlert({error: false, body: res.data.message}))
-        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
-    }
-
-    return (
-    <>
-        <p className="label">Buat TryOut baru</p>
-        <div className="buttons flex-cc">                                
-            <button className="add" onClick={() => newExam('SAINTEK')}><FaPlus />SAINTEK</button>
-            <button className="add" onClick={() => newExam('SOSHUM')}><FaPlus />SOSHUM</button>
-        </div>
-    </>
-    )
-}
-
-const DetailForm = ({examId}) => {
-    const [inputData, setInputData] = useState({
-        title: '',
-        status: '',
-        start: new Date(),
-        end: new Date()
-    })
-    const { setGlobalAlert } = useLayout()
-
-    const mutateInputData = ({target: { name, value }}) => {
-        setInputData((prevState) => ({
-            ...prevState,
-            [name]: name === 'start' || name === 'end' ? new Date(value).toISOString() : value
-        }))
-    }
-
-    useEffect(() => {
-        
-        axios.post('/api/public/exams/get-exam-data', {
-            examId: examId
-        }).then(res => res.data.body)
-        .then(data => {
-            setInputData({
-                title: data.title,
-                status: data.status,
-                start: data.availability.start,
-                end: data.availability.end
-            })
-        })
-        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
-
-    }, [examId])
-
-    useEffect(() => {
-        console.log(inputData)
-    }, [inputData])
-
-    return (
-        <>
-        {Object.keys(inputData).length !== 0 &&
-            <form className="full-w flex-cc col">
-                <p>Edit data {examId}</p>
-                <div className="input-group flex-cs col full-w">
-                    <label htmlFor="title">Judul Ujian</label>
-                    <input value={inputData.title} onChange={mutateInputData} type="text" id="title" name="title"/>
-                </div>
-                <div className="input-group flex-cs col full-w">
-                    <label htmlFor="status">Status</label>
-                    <select value={inputData.status} onChange={mutateInputData} name="status" id="status">
-                        <option value="limited">Limited - Mengkuti waktu ketersediaan</option>
-                        <option value="open">Open - Terbuka tanpa batas waktu</option>
-                        <option value="closed">Closed - Tidak diedarkan</option>
-                        <option value="public">Public - Terbuka untuk publik (termasuk non-user)</option>
-                    </select>
-                </div>
-                <div className="input-group flex-cs col full-w">
-                    <label htmlFor="start">Pembukaan</label>
-                    <input value={convert.viewLocal(inputData.start)} onChange={mutateInputData} type="datetime-local" id="start" name="start"/>
-                </div>
-                <div className="input-group flex-cs col full-w">
-                    <label htmlFor="end">Penutupan</label>
-                    <input value={convert.viewLocal(inputData.end)} onChange={mutateInputData} type="datetime-local" id="end" name="end"/>
-                </div>
-            </form>
-        }
-        </>
     )
 }
 
@@ -167,15 +71,8 @@ const style = {
         .label {
             margin: 24px 0;   
         }
-
-        button.add {
-            margin: 0 6px;
-
-            svg {
-                margin-right: 8px;
-            }
-        }
     `,
+
     header: css`
         .inner{
             padding: 48px 0;
@@ -241,20 +138,6 @@ const style = {
 
     form: css`
         margin: 32px 0;
-
-        .input-group {
-            margin: 6px 0;
-        }
-
-        input, select {
-            width: calc(100% - 20px);
-        }
-
-        select {
-            height: 40px;
-            padding: 0 10px;
-            border-radius: 8px;
-        }
     `
 
 }

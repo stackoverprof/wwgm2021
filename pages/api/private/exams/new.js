@@ -7,7 +7,6 @@ export default async (req, res) => {
     }
     
     const Req = req.body
-    console.log(Req);
 
     //VERIVYING THE CURRENT USER
     const currentUser = await admin.auth().verifyIdToken(Req.authToken)

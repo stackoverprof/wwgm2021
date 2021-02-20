@@ -17,7 +17,7 @@ export default async (req, res) => {
     if (!currentUser.admin) return res.status(403).json({ status: 'ERROR', message: 'Anda tidak berhak merubah data'})
 
     //CHECKING EXAM AVAILABILITY
-    const allExamsRef = await admin.firestore().collection('Exams').listDocuments()
+    const allExamsRef = await DB.collection('Exams').listDocuments()
     if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
     
     const allExams = allExamsRef.map(item => item.id)
