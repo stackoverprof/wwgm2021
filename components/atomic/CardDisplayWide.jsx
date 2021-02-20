@@ -5,7 +5,7 @@ import axios from 'axios'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
-import convert from '@core/utils/covertExamData'
+import convert from '@core/utils/convertExamData'
 import { to } from '@core/routepath'
 
 const CardDisplayWide = ({examId, showId, onButton}) => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
+import axios from 'axios'
 import { FaPlus } from 'react-icons/fa'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
@@ -9,7 +10,7 @@ import FireFetcher from '@core/services/FireFetcher'
 import CardDisplayWide from '@components/atomic/CardDisplayWide'
 import initialFormat from '@core/utils/makeExam'
 import { useLayout } from '@core/contexts/LayoutContext'
-import axios from 'axios'
+import convert from '@core/utils/convertExamData'
 
 const ManageExams = () => {
     const [examIdList, setExamIdList] = useState([])
@@ -96,6 +97,7 @@ const DetailForm = ({examId}) => {
         start: '',
         end: ''
     })
+    const { setGlobalAlert } = useLayout()
 
     const mutateInputData = (e) => {
         setInputData((prevState) => ({
@@ -103,9 +105,19 @@ const DetailForm = ({examId}) => {
             [e.target.name]: e.target.value
         }))
     }
+    const mutateTimestamp = (e) => {
+        setInputData((prevState) => ({
+            ...prevState,
+            [e.target.name]: {
+                ...prevState[e.target.name], 
+                _seconds: (new Date(e.target.value)).getTime()}
+        }))
+    }
 
     useEffect(() => {
-        FireFetcher.getExamData(examId).then(doc => doc.data())
+        axios.post('/api/public/exams/get-exam-data', {
+            examId: examId
+        }).then(res => res.data.body)
         .then(data => {
             console.log(data)
             setInputData({
@@ -115,34 +127,43 @@ const DetailForm = ({examId}) => {
                 end: data.availability.start
             })
         })
+        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
 
     }, [examId])
 
+    useEffect(() => {
+        console.log(inputData)
+    }, [inputData])
+
     return (
-        <form className="full-w flex-cc col">
-            <p>Edit data {examId}</p>
-            <div className="input-group flex-cs col full-w">
-                <label htmlFor="title">Judul Ujian</label>
-                <input value={inputData.title} onChange={mutateInputData} type="text" id="title" name="title"/>
-            </div>
-            <div className="input-group flex-cs col full-w">
-                <label htmlFor="status">Status</label>
-                <select value={inputData.status} onChange={mutateInputData} name="status" id="status">
-                    <option value="limited">Limited - Mengkuti waktu ketersediaan</option>
-                    <option value="open">Open - Terbuka tanpa batas waktu</option>
-                    <option value="closed">Closed - Tidak diedarkan</option>
-                    <option value="public">Public - Terbuka untuk publik (termasuk non-user)</option>
-                </select>
-            </div>
-            <div className="input-group flex-cs col full-w">
-                <label htmlFor="start">Pembukaan</label>
-                <input value={inputData.start} onChange={mutateInputData} type="text" id="start" name="start"/>
-            </div>
-            <div className="input-group flex-cs col full-w">
-                <label htmlFor="end">Penutupan</label>
-                <input value={inputData.end} onChange={mutateInputData} type="text" id="end" name="end"/>
-            </div>
-        </form>
+        <>
+        {Object.keys(inputData).length !== 0 &&
+            <form className="full-w flex-cc col">
+                <p>Edit data {examId}</p>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="title">Judul Ujian</label>
+                    <input value={inputData.title} onChange={mutateInputData} type="text" id="title" name="title"/>
+                </div>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="status">Status</label>
+                    <select value={inputData.status} onChange={mutateInputData} name="status" id="status">
+                        <option value="limited">Limited - Mengkuti waktu ketersediaan</option>
+                        <option value="open">Open - Terbuka tanpa batas waktu</option>
+                        <option value="closed">Closed - Tidak diedarkan</option>
+                        <option value="public">Public - Terbuka untuk publik (termasuk non-user)</option>
+                    </select>
+                </div>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="start">Pembukaan</label>
+                    <input value={convert.withPicker(inputData.start)} onChange={mutateTimestamp} type="datetime-local" id="start" name="start"/>
+                </div>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="end">Penutupan</label>
+                    <input value={convert.withPicker(inputData.end)} onChange={mutateTimestamp} type="datetime-local" id="end" name="end"/>
+                </div>
+            </form>
+        }
+        </>
     )
 }
 

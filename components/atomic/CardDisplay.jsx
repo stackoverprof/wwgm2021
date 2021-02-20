@@ -6,7 +6,7 @@ import { FaRegCalendarAlt } from 'react-icons/fa'
 
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
-import convert from '@core/utils/covertExamData'
+import convert from '@core/utils/convertExamData'
 import OverviewExam from '@components/atomic/OverviewExam'
 import EditDisplayExams from '@components/atomic/EditDisplayExams'
 
@@ -27,6 +27,12 @@ const CardDisplay = ({examId, i, refreshData}) => {
     useEffect(() => {
         if (examId) fetchData()
     }, [examId])
+
+    useEffect(() => {
+        if (examData) {
+            console.log(typeof examData.availability.start)
+        }
+    }, [examData])
 
     if (!examId || !examData) return <ContentLoader />
 

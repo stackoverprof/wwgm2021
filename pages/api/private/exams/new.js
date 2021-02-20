@@ -67,7 +67,7 @@ export default async (req, res) => {
             end: validateTimeStamp(Req.availability.end)
         },
         sessions: validateSession(Req.sessions),
-        participans: [],
+        participants: [],
         security: [
             {
                 editor: currentUser.uid,
