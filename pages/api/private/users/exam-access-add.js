@@ -35,10 +35,10 @@ export default async (req, res) => {
     
 
     //BEGIN UPDATE PROCESS
-    return await DB.collection('Users').doc(issuedUser.uid).update({
+    await DB.collection('Users').doc(issuedUser.uid).update({
         examsAccess: admin.firestore.FieldValue.arrayUnion(examId)
-    }).then(() => {
-        DB.collection('Exams').doc(examId).update({
+    }).then(async () => {
+        return await DB.collection('Exams').doc(examId).update({
             participants: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
         })
         .then(() => res.status(200).json({ status: 'OK', message: `Berhasil menambahkan akses ujian untuk ${issuedEmail}` }))

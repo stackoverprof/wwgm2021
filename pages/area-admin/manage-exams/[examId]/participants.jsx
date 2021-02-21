@@ -4,9 +4,10 @@ import { useRouter } from 'next/router'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
-import AdminLayout from '@components/layouts/AdminLayout'
 import FireFetcher from '@core/services/FireFetcher'
+import AdminLayout from '@components/layouts/AdminLayout'
 import CardManageUser from '@components/atomic/CardManageUser'
+import QuickAddAccess from '@components/atomic/QuickAddAccess'
 
 const Participants = () => {
     const [allParticipants, setAllParticipants] = useState([])
@@ -40,6 +41,7 @@ const Participants = () => {
                         <div className="inner contain-size-s flex-cc col">
                             <h1>Manage Participants</h1>
                             <p>{examId}</p>
+                            <QuickAddAccess examId={examId} />
                         </div>
                     </section>
 
@@ -62,7 +64,7 @@ const style = {
     `,
     header: css`
         .inner{
-            padding: 48px 0;
+            padding: 48px 0 24px 0;
             
             @media (max-width: 600px) {
                 padding: 32px 0;
