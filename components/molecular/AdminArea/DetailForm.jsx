@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 import axios from 'axios'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import convert from '@core/utils/convertExamData'
+import { to } from '@core/routepath'
 
 const DetailForm = ({examId, handleClose}) => {
     const [inputData, setInputData] = useState({
@@ -80,7 +82,11 @@ const DetailForm = ({examId, handleClose}) => {
                     <label htmlFor="end">Penutupan</label>
                     <input value={convert.viewLocal(inputData.end)} onChange={mutateInputData} type="datetime-local" id="end" name="end"/>
                 </div>
-                <button>SUBMIT</button>
+                <button type="submit">SUBMIT</button>
+                <div className="flex-cc">
+                    <Link href={to._404}><a className="action">Manage Peserta</a></Link>
+                    <Link href={to._404}><a className="action">Manage Soal</a></Link>
+                </div>
             </form>
         }
         </>
@@ -105,6 +111,14 @@ const style = css`
         height: 40px;
         padding: 0 10px;
         border-radius: 8px;
+    }
+
+    button {
+        margin: 4px 0 12px 0;
+    }
+
+    a.action {
+        margin: 0 4px;
     }
 `
 

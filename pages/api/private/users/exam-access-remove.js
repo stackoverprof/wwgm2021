@@ -28,11 +28,18 @@ export default async (req, res) => {
     //FETCH FIRST
     const currentAccess = await DB.collection('Users').doc(issuedUser.uid).get().then(doc => doc.data().examsAccess)
     .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
+    
+    const currentParticipants = await DB.collection('Exams').doc(examId).get().then(doc => doc.data().participants)
+    .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
 
     //BEGIN UPDATE PROCESS
     return await DB.collection('Users').doc(issuedUser.uid).update({
         examsAccess: currentAccess.filter(item => item !== examId)
+    }).then(() => {
+        DB.collection('Exams').doc(examId).update({
+            participants: currentParticipants.filter(item => item !== issuedUser.uid)
+        })
+        .then(() => res.status(200).json({ status: 'OK', message: `Berhasil menghapus akses ujian ${issuedEmail}` }))
+        .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
     })
-    .then(() => res.status(200).json({ status: 'OK', message: `Berhasil menghapus akses ujian ${issuedEmail}` }))
-    .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
 }

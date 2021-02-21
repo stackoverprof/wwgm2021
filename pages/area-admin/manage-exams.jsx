@@ -137,7 +137,7 @@ const style = {
     `,
 
     form: css`
-        margin: 32px 0;
+    
     `
 
 }
