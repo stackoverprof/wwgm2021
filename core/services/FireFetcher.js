@@ -25,9 +25,12 @@ const allUsers = (action) => {
     return DB.collection('Users').orderBy('noPeserta').onSnapshot(action.attach, action.detach)
 }
 
-
 const allExams = (action) => {
     return DB.collection('Exams').orderBy('created_at').onSnapshot(action.attach, action.detach)
+}
+
+const examParticipants = (examId, action) => {
+    return DB.collection('Exams').doc(examId).onSnapshot(action.attach, action.detach)
 }
 
 export default {
@@ -39,6 +42,7 @@ export default {
     listen : {
         userData,
         allUsers,
-        allExams
+        allExams,
+        examParticipants
     }
 }

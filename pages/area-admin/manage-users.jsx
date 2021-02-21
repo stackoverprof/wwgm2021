@@ -43,10 +43,10 @@ const ManageUsers = () => {
         const unlisten = FireFetcher.listen.allUsers({
             attach: async (docs) => { 
                 let filler = [], a = [], b = []
-                docs.forEach(doc => filler.push(doc.data()))
-                filler.forEach(doc => {
-                    if (doc.noPeserta !== '') a.push(doc)
-                    else b.push(doc)
+                docs.forEach(doc => filler.push(doc.id))
+                filler.forEach(id => {
+                    if (id !== '') a.push(id)
+                    else b.push(id)
                 })
                 setAllUsers(a.concat(b))
             },
@@ -72,7 +72,7 @@ const ManageUsers = () => {
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
                             {allUsers.map((item, i) => (
-                                <CardManageUser item={item} key={i} />
+                                <CardManageUser itemId={item} key={i} />
                             ))}
                         </div>
                     </section>

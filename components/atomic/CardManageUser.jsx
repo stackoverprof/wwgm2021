@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import { MdVerifiedUser } from 'react-icons/md'
@@ -9,22 +9,24 @@ import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
 import AdminBadge from '@components/atomic/AdminBadge'
 import UserDetail from '@components/molecular/AdminArea/UserDetail'
+import FireFetcher from '@core/services/FireFetcher'
 
-const CardManageUser = ({item}) => {
+const CardManageUser = ({itemId}) => {
+    const [itemData, setItemData] = useState({})
     const [openDetail, setOpenDetail] = useState(false) 
 
     const { user } = useAuth()
     const { setGlobalAlert } = useLayout()
 
-    const handleApproval = async (item, value) => {
-        if (!item.noPeserta) {
+    const handleApproval = async (itemData, value) => {
+        if (!itemData.noPeserta) {
             setGlobalAlert({error: true, body: 'User belum mengisi no peserta'})
             return
         }
 
         axios.post('/api/private/users/approval', {
             authToken: await user.getIdToken(),
-            issuedEmail: item.email,
+            issuedEmail: itemData.email,
             value: value
         })
         .then(res => {
@@ -33,35 +35,47 @@ const CardManageUser = ({item}) => {
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
+    useEffect(() => {
+        FireFetcher.listen.userData(itemId, {
+            attach: (doc) => {
+                setItemData(doc.data())
+            },
+            detach: () => {
+                setItemData({})
+            }
+        })
+    }, [])
+
     return (
         <div css={style} className="full-w flex-cc col">
-            <div className="inner full flex-bc">
-                <div className="left flex-sc">
-                    <InitialAva size={54} src={item.photoURL} displayName={item.displayName} className="ava"/>
-                    <div>
-                        <p className="name">{item.fullName}</p>
-                        <p className="email">{item.email}</p>
+           {itemData &&
+                <div className="inner full flex-bc">
+                    <div className="left flex-sc">
+                        <InitialAva size={54} src={itemData.photoURL} displayName={itemData.displayName} className="ava"/>
+                        <div>
+                            <p className="name">{itemData.fullName}</p>
+                            <p className="email">{itemData.email}</p>
+                        </div>
+                    </div>
+                    <div className="middle">
+                        <p className="no-peserta">{itemData.noPeserta ? itemData.noPeserta : '—'}</p>
+                    </div>
+                    <div className="right flex-bc">
+                        {itemData.adminLabeled && (
+                            <div className="admin-badge flex-cc">
+                                <AdminBadge />
+                            </div>
+                        )}
+                        <button onClick={() => handleApproval(itemData, !itemData.approved)} className={`approval btn-icon ${itemData.approved ? 'green' : 'gray'}`}>
+                            <MdVerifiedUser className="icon"/> 
+                        </button>
+                        <button onClick={() => setOpenDetail(!openDetail)} className="edit-nopes btn-icon orange">
+                            <RiFileShield2Line className="icon"/> 
+                        </button>
                     </div>
                 </div>
-                <div className="middle">
-                    <p className="no-peserta">{item.noPeserta ? item.noPeserta : '—'}</p>
-                </div>
-                <div className="right flex-bc">
-                    {item.adminLabeled && (
-                        <div className="admin-badge flex-cc">
-                            <AdminBadge />
-                        </div>
-                    )}
-                    <button onClick={() => handleApproval(item, !item.approved)} className={`approval btn-icon ${item.approved ? 'green' : 'gray'}`}>
-                        <MdVerifiedUser className="icon"/> 
-                    </button>
-                    <button onClick={() => setOpenDetail(!openDetail)} className="edit-nopes btn-icon orange">
-                        <RiFileShield2Line className="icon"/> 
-                    </button>
-                </div>
-            </div>
-
-            {openDetail &&  <UserDetail item={item} />}
+            }
+            {openDetail &&  <UserDetail item={itemData} />}
         </div>
     )
 }

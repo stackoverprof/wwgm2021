@@ -9,6 +9,7 @@ const RoutePath = {
 
 const RouteSet = {
     dashboard: ({action}) => `/dashboard?action=${action}`,
+    examParticipants: ({examId}) => `/area-admin/manage-exams/${examId}/participants`,
     get: param => `/get/${param}`
 }
 
