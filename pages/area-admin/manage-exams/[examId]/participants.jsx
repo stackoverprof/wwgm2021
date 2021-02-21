@@ -47,8 +47,8 @@ const Participants = () => {
 
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
-                            {allParticipants.map((item) => (
-                                <CardManageUser itemId={item} key={item} />
+                            {allParticipants.map((item, i) => (
+                                <CardManageUser itemId={item} key={item} i={i}/>
                             ))}
                         </div>
                     </section>

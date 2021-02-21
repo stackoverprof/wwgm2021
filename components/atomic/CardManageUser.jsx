@@ -11,7 +11,7 @@ import AdminBadge from '@components/atomic/AdminBadge'
 import UserDetail from '@components/molecular/AdminArea/UserDetail'
 import FireFetcher from '@core/services/FireFetcher'
 
-const CardManageUser = ({itemId}) => {
+const CardManageUser = ({itemId, i}) => {
     const [itemData, setItemData] = useState({})
     const [openDetail, setOpenDetail] = useState(false) 
 
@@ -53,7 +53,7 @@ const CardManageUser = ({itemId}) => {
                     <div className="left flex-sc">
                         <InitialAva size={54} src={itemData.photoURL} displayName={itemData.displayName} className="ava"/>
                         <div>
-                            <p className="name">{itemData.fullName}</p>
+                            <p className="name">{i + 1}. {itemData.fullName}</p>
                             <p className="email">{itemData.email}</p>
                         </div>
                     </div>

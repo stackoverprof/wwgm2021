@@ -4,7 +4,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import axios from 'axios'
 
-const QuickAddExamAccess = ({examId}) => {
+const QuickAddAccess = ({examId}) => {
     const [inputData, setInputData] = useState({
         email: '',
         examId: examId ? examId : ''
@@ -39,9 +39,9 @@ const QuickAddExamAccess = ({examId}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} css={style} className="flex-cc col">
-            <input value={inputData.email} onChange={mutateInputData} type="text" name="email"/>
-            <input disabled={examId} value={inputData.examId} onChange={mutateInputData} type="text" name="examId"/>
+        <form onSubmit={handleSubmit} css={style} className="flex-cc">
+            <input value={inputData.email} onChange={mutateInputData} placeholder="email user" type="text" name="email"/>
+            <input disabled={examId} value={inputData.examId} onChange={mutateInputData} placeholder="examId" type="text" name="examId"/>
             <button>ADD</button>
         </form>
     )
@@ -50,9 +50,13 @@ const QuickAddExamAccess = ({examId}) => {
 const style = css`
     margin-top: 12px;
 
+    @media (max-width: 600px) {
+        flex-direction: column;
+    }
+
     input, button {
-        margin: 4px 0;
+        margin: 4px;
     }
 `
 
-export default QuickAddExamAccess
+export default QuickAddAccess

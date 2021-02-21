@@ -8,6 +8,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import FireFetcher from '@core/services/FireFetcher'
 import AdminLayout from '@components/layouts/AdminLayout'
 import CardManageUser from '@components/atomic/CardManageUser'
+import QuickAddAccess from '@components/atomic/QuickAddAccess'
 
 const ManageUsers = () => {
     const [allUsers, setAllUsers] = useState([])
@@ -64,15 +65,16 @@ const ManageUsers = () => {
                 <AdminLayout css={style.page} title="Dashboard" className="flex-sc col">
 
                     <section css={style.header}>
-                        <div className="inner contain-size-s flex-cc">
+                        <div className="inner contain-size-s flex-cc col">
                             <h1>Manage All Users</h1>
+                            <QuickAddAccess />
                         </div>
                     </section>
 
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
                             {allUsers.map((item, i) => (
-                                <CardManageUser itemId={item} key={i} />
+                                <CardManageUser itemId={item} key={i} i={i} />
                             ))}
                         </div>
                     </section>
