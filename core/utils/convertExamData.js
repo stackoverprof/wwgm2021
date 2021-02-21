@@ -1,21 +1,19 @@
-const date = (UNIX_timestamp) => {
-    const a = new Date(UNIX_timestamp._seconds * 1000)
+const date = (value) => {
+    const a = new Date(value)
     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
     const month = months[a.getMonth()]
     const date = a.getDate()
     return `${date} ${month}`
 }
 
-const fullDate = (UNIX_timestamp) => {
-    const a = new Date(UNIX_timestamp._seconds * 1000)
+const fullDate = (value) => {
+    const a = new Date(value)
     const year = a.getFullYear()
-    return `${date(UNIX_timestamp)} ${year}`
+    return `${date(value)} ${year}`
 }
 
-const time = (UNIX_timestamp) => {
-    // console.log(UNIX_timestamp)
-    const a = new Date(UNIX_timestamp._seconds * 1000)
-    // console.log(a)
+const time = (value) => {
+    const a = new Date(value)
     const hour = a.getHours()
     const min = a.getMinutes()
     return `${hour}:${("0" + min).slice(-2)}`

@@ -7,7 +7,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
 import CardDisplayWide from '@components/atomic/CardDisplayWide'
 import MakeNewExams from '@components/molecular/AdminArea/MakeNewExams'
-import DetailForm from '@components/molecular/AdminArea/DetailForm'
+import ExamDetailPopUp from '@components/molecular/PopUps/ExamDetailPopUp'
 
 const ManageExams = () => {
     const [examIdList, setExamIdList] = useState([])
@@ -42,7 +42,7 @@ const ManageExams = () => {
                     
                     <section css={style.form}>
                         <div className="inner contain-size-s flex-cc">
-                            {active && <DetailForm examId={active} handleClose={() => setActive('')}/>}
+                            {active && <ExamDetailPopUp examId={active} handleClose={() => setActive('')}/>}
                         </div>
                     </section>
 

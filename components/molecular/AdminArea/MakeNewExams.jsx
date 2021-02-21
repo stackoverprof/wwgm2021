@@ -13,10 +13,15 @@ const MakeNewExams = () => {
 
     const newExam = async (cluster) => {
         setGlobalAlert('')
+        const now = new Date()
 
         axios.post('/api/private/exams/new', {
+            ...initialFormat[cluster],
+            availabilty: {
+                start: now.toISOString(),
+                end: now.toISOString()
+            },
             authToken: await user.getIdToken(),
-            ...initialFormat[cluster]
         })
         .then(res => setGlobalAlert({error: false, body: res.data.message}))
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))

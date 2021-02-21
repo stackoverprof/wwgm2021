@@ -61,7 +61,8 @@ const DetailForm = ({examId, handleClose}) => {
         <>
         {Object.keys(inputData).length !== 0 &&
             <form css={style} onSubmit={handleSubmit} className="full-w flex-cc col">
-                <p>Edit data {examId}</p>
+                <p className="header">Edit data</p>
+                <p className="header">{examId}</p>
                 <div className="input-group flex-cs col full-w">
                     <label htmlFor="title">Judul Ujian</label>
                     <input value={inputData.title} onChange={mutateInputData} type="text" id="title" name="title"/>
@@ -91,6 +92,11 @@ const DetailForm = ({examId, handleClose}) => {
 }
 
 const style = css`
+
+    .header {
+        text-align: center;    
+    }
+
     .input-group {
         margin: 6px 0;
     }
