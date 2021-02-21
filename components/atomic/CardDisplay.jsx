@@ -28,12 +28,6 @@ const CardDisplay = ({examId, i, refreshData}) => {
         if (examId) fetchData()
     }, [examId])
 
-    useEffect(() => {
-        if (examData) {
-            console.log(typeof examData.availability.start)
-        }
-    }, [examData])
-
     if (!examId || !examData) return <ContentLoader />
 
     return (

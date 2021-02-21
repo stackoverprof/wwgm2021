@@ -53,10 +53,6 @@ const DetailForm = ({examId, handleClose}) => {
 
     }, [examId])
 
-    useEffect(() => {
-        console.log(inputData)
-    }, [inputData])
-
     return (
         <>
         {Object.keys(inputData).length !== 0 &&

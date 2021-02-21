@@ -43,11 +43,17 @@ const viewLocal = (value) => {
     return local.toISOString().slice(0,16)
 }
 
+const later = (now) => {
+    now.setHours(now.getHours() + 2)
+    return now.toISOString()
+}
+
 export default {
     date,
     fullDate,
     time,
     duration,
     size,
-    viewLocal
+    viewLocal,
+    later
 }

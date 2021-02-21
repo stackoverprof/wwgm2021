@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import { FaPlus } from 'react-icons/fa'
 
 import initialFormat from '@core/utils/makeExam'
+import convert from '@core/utils/convertExamData'
 import axios from 'axios'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
@@ -17,9 +18,9 @@ const MakeNewExams = () => {
 
         axios.post('/api/private/exams/new', {
             ...initialFormat[cluster],
-            availabilty: {
+            availability: {
                 start: now.toISOString(),
-                end: now.toISOString()
+                end: convert.later(now)
             },
             authToken: await user.getIdToken(),
         })

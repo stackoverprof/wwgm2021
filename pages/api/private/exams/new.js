@@ -8,6 +8,8 @@ export default async (req, res) => {
     
     const Req = req.body
 
+    console.log(Req.availability)
+
     //VERIVYING THE CURRENT USER
     const currentUser = await admin.auth().verifyIdToken(Req.authToken)
         .catch(() => {

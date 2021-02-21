@@ -40,10 +40,6 @@ const ManageUsers = () => {
     }, [listAdmin, allUsers])
 
     useEffect(() => {
-        console.log(allUsers)
-    }, [allUsers])
-
-    useEffect(() => {
         const unlisten = FireFetcher.listen.allUsers({
             attach: async (docs) => { 
                 let filler = [], a = [], b = []
