@@ -32,7 +32,12 @@ export default async (req, res) => {
         availability: {
             start: start,
             end: end
-        }
+        },
+        security: admin.firestore.FieldValue.arrayUnion({
+            editor: currentUser.uid,
+            timestamp: admin.firestore.Timestamp.now(),
+            req: JSON.stringify({title, status, start, end, examId})
+        })
     })
     .then(() => res.status(200).json({ status: 'OK', message: 'Berhasil mengubah detail ujian' }))
     .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
