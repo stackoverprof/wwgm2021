@@ -47,6 +47,11 @@ const Edit = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
+                    <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">    
+                        {questions.map((item, i) => (
+                            <option value={item.id - 1} key={i}>{item.id}</option>
+                        ))}
+                    </select>
                     {questions.length !== 0 && answers.length !== 0 &&
                         <>
                             <h1>{questions[activeIndex].id}</h1>
