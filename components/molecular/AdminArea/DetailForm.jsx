@@ -6,7 +6,7 @@ import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import convert from '@core/utils/convertExamData'
-import { to, set } from '@core/routepath'
+import { set } from '@core/routepath'
 
 // [TODO] : Delete exam cleanly
 
@@ -87,7 +87,7 @@ const DetailForm = ({examId, handleClose}) => {
                 <button type="submit">SUBMIT</button>
                 <div className="flex-cc">
                     <Link href={set.examParticipants({examId: examId})}><a className="action">Manage Peserta</a></Link>
-                    <Link href={to._404}><a className="action">Manage Soal</a></Link>
+                    <Link href={set.examEdit({examId: examId})}><a className="action">Manage Soal</a></Link>
                 </div>
             </form>
         }
