@@ -130,7 +130,8 @@ export default async (req, res) => {
                 id: i+1,
                 body: 'A',
                 explanation: 'karena ya sementara kuncinya A buat no ' + (i + 1),
-                session: countSession(i)
+                session: countSession(i),
+                level: 1
             })
         }
 
