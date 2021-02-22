@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -7,8 +7,15 @@ import axios from 'axios'
 const QuickAddAccess = ({examId}) => {
     const [inputData, setInputData] = useState({
         email: '',
-        examId: examId ? examId : ''
+        examId: ''
     })
+
+    useEffect(() => {
+        setInputData({
+            email: '',
+            examId: examId
+        })
+    }, [examId])
 
     const { user } = useAuth()
     const { setGlobalAlert } = useLayout()

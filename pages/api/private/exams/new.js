@@ -21,7 +21,7 @@ export default async (req, res) => {
     }
 
     //REQUEST BODY STRUCTURE VALIDATION
-    const examId = `${Req.cluster.toUpperCase()}-${uuid()}`
+    const examId = `${Req.cluster.toUpperCase()}-${uuid().split('-')[0]}`
     let _dataInvalid = false
 
     const validate = (data, type) => {
