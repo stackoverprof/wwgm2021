@@ -11,7 +11,7 @@ const AreaAdmin = () => {
     return (
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
-                <AdminLayout css={style.page} title="Dashboard" className="flex-sc col">
+                <AdminLayout css={style.page} title="Admin Area" className="flex-sc col">
                     <h1>You made it to be here in admin control, but will never with the server</h1>
                 </AdminLayout>
             )}

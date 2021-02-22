@@ -6,52 +6,53 @@ import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
 import AdminLayout from '@components/layouts/AdminLayout'
-import CardManageUser from '@components/atomic/CardManageUser'
-import QuickAddAccess from '@components/atomic/QuickAddAccess'
 
 const Edit = () => {
-    const [allParticipants, setAllParticipants] = useState([])
+    const [questions, setQuestions] = useState([])
+    const [answers, setAnswers] = useState([])
+    const [activeIndex, setActiveIndex] = useState(0)
     const { authState, access } = useAuth()
     const { query: { examId } } = useRouter()
 
     useEffect(() => {
         if (examId) {
-            FireFetcher.listen.examParticipants(examId, {
+            FireFetcher.listen.examQuestions(examId, {
                 attach: doc => {
-                    setAllParticipants(doc.data().participants)
+                    setQuestions(doc.data().list)
                 },
                 detach: () => {
-                    setAllParticipants([])
+                    setQuestions([])
                 }
             })
-
+            FireFetcher.listen.examAnswers(examId, {
+                attach: doc => {
+                    setAnswers(doc.data().list)
+                },
+                detach: () => {
+                    setAnswers([])
+                }
+            })
         }
     }, [examId])
 
     useEffect(() => {
-        console.log(allParticipants)
-    }, [allParticipants])
+        console.log(questions)
+    }, [questions])
+    
+    useEffect(() => {
+        console.log(answers)
+    }, [answers])
 
     return (
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
-                <AdminLayout css={style.page} title="Dashboard" className="flex-sc col">
-
-                    <section css={style.header}>
-                        <div className="inner contain-size-s flex-cc col">
-                            <h1>Manage Participants</h1>
-                            <p>{examId}</p>
-                            <QuickAddAccess examId={examId} />
-                        </div>
-                    </section>
-
-                    <section css={style.usersList} className="users-list">
-                        <div className="contain-size-l">
-                            {allParticipants.map((item, i) => (
-                                <CardManageUser itemId={item} key={item} i={i}/>
-                            ))}
-                        </div>
-                    </section>
+                <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
+                    {questions.length !== 0 && answers.length !== 0 &&
+                        <>
+                            <h1>{questions[activeIndex].id}</h1>
+                            <h2>{answers[activeIndex].id}</h2>
+                        </>
+                    }
                 </AdminLayout>
             )}
         </AdminOnlyRoute>

@@ -33,6 +33,13 @@ const examParticipants = (examId, action) => {
     return DB.collection('Exams').doc(examId).onSnapshot(action.attach, action.detach)
 }
 
+const examQuestions = (examId, action) => {
+    return DB.collection('Exams').doc(examId).collection('Content').doc('Questions').onSnapshot(action.attach, action.detach)
+}
+const examAnswers = (examId, action) => {
+    return DB.collection('Exams').doc(examId).collection('Content').doc('Answers').onSnapshot(action.attach, action.detach)
+}
+
 export default {
     editBiodata,
     editPhoto,
@@ -43,6 +50,8 @@ export default {
         userData,
         allUsers,
         allExams,
-        examParticipants
+        examParticipants,
+        examQuestions,
+        examAnswers
     }
 }

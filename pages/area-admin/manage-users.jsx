@@ -62,7 +62,7 @@ const ManageUsers = () => {
     return (
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
-                <AdminLayout css={style.page} title="Dashboard" className="flex-sc col">
+                <AdminLayout css={style.page} title="Admin Area" className="flex-sc col">
 
                     <section css={style.header}>
                         <div className="inner contain-size-s flex-cc col">
