@@ -4,10 +4,12 @@ import { useRouter } from 'next/router'
 
 import MainLayout from '@components/layouts/MainLayout'
 import axios from 'axios'
+import { useAuth } from '@core/contexts/AuthContext'
 
 const Home = () => {
     const [examData, setExamData] = useState(null)
     const { query: { examId, sessionCode } } = useRouter()
+    const { userData } = useAuth()
 
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -35,6 +37,26 @@ const Home = () => {
                     </div>
                 </section>
             }
+            {examData !== null &&
+                <section css={style.card}>
+                    <div className="inner contain-size-s flex-cc">
+                        <div className="top">
+                            <div className="text-group">
+                                <p className="label">NAMA</p>
+                                <p className="data">{userData.fullName}</p>
+                            </div>
+                            <div className="text-group">
+                                <p className="label">NO. PESERTA</p>
+                                <p className="data">{userData.noPeserta}</p>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="bottom">
+
+                        </div>
+                    </div>
+                </section>
+            }
         </MainLayout>
     )
 }
@@ -43,6 +65,35 @@ const style = {
     page: css`
         padding: 24px 0;
     `,
+
+    card: css`
+
+        .inner {
+            margin-top: 12px;
+            min-height: 400px;
+            width: 100%;
+            box-shadow: 0 0 4px 0 #0005;
+            background: white;
+            border-radius: 8px;
+
+            .text-group{
+                margin: 10px 0;
+            }
+            
+            p {
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                color: var(--army);
+
+                &.data {
+                    font-weight: normal;
+                }
+            }
+        }
+    `,
+
     header: css`
 
         .inner {
@@ -53,8 +104,8 @@ const style = {
         }
         
         .kluster-box {
-            height: 40px;
-            width: 140px;
+            height: 60px;
+            min-width: 132px;
             background: var(--army);
             border-radius: 6px;
             
@@ -74,7 +125,7 @@ const style = {
         }
         
         .sesi-box {
-            height: 40px;
+            height: 60px;
             width: 100%;
             border: 1px solid var(--army);
             border-radius: 6px;
