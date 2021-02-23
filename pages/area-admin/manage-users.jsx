@@ -74,7 +74,7 @@ const ManageUsers = () => {
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
                             {allUsers.map((item, i) => (
-                                <CardManageUser itemId={item} key={i} i={i} />
+                                <CardManageUser itemId={item} key={item} i={i} />
                             ))}
                         </div>
                     </section>
