@@ -9,6 +9,8 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import convert from '@core/utils/convertExamData'
 import OverviewExam from '@components/atomic/OverviewExam'
 import EditDisplayExams from '@components/atomic/EditDisplayExams'
+import Link from 'next/link'
+import { set } from '@core/routepath'
 
 const CardDisplay = ({examId, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
@@ -46,7 +48,9 @@ const CardDisplay = ({examId, i, refreshData}) => {
                     fullDate={convert.fullDate(examData.availability.start)}
                     time={convert.time(examData.availability.start)}
                 />
-                <button className="action mx-auto bordered green">IKUTI TRYOUT</button>
+                <Link href={set.tryOutOverview({examId: examId})}>    
+                    <button className="action mx-auto bordered green">IKUTI TRYOUT</button>
+                </Link>
             </div>
             {access.admin && <EditDisplayExams i={i} refreshData={refreshData}/>}
         </div>
