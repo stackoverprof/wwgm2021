@@ -6,6 +6,7 @@ import AdminLayout from '@components/layouts/AdminLayout'
 import { useAuth } from '@core/contexts/AuthContext'
 import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
+import UserCard from '@components/atomic/UserCard'
 
 const AreaAdmin = () => {
     const [issuedEmail, setIssuedEmail] = useState('')
@@ -31,9 +32,20 @@ const AreaAdmin = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Admin Area" className="flex-sc col">
-                    <section>
+                    
+                    <section css={style.userCard}>
+                        <UserCard />
+                    </section>
+                    
+                    <section css={style.header}>
                         <div className="inner contain-size-s flex-cc col">
-                            <form onSubmit={handleSetAdmin} className="full-w">
+                            <h1>SET ADMIN</h1>
+                        </div>
+                    </section>
+                    
+                    <section css={style.setAdmin}>
+                        <div className="inner contain-size-s flex-cc col">
+                            <form onSubmit={handleSetAdmin} className="full-w flex-cc">
                                 <input type="email" value={issuedEmail} required onChange={e => setIssuedEmail(e.target.value)}/>
                                 <button className="btn" type="submit">{alert === null ? <Spinner /> : 'set admin'}</button>
                             </form>
@@ -47,7 +59,37 @@ const AreaAdmin = () => {
 
 const style = {
     page: css`
+        padding-top: 24px;
+    `,
+    setAdmin: css`
+        form {
+            input, button {
+                margin: 6px;
+            }
+        }
+    `,
+    userCard: css`
+    
+    `,
+    header: css`
+        .inner{
+            padding: 48px 0;
+            
+            @media (max-width: 600px) {
+                padding: 32px 0;
+            }
+        }
         
+        h1 {
+            font-family: Poppins;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A2C1E;
+
+            @media (max-width: 780px) {
+                font-size: 28px;
+            }
+        }
     `,
 }
 export default AreaAdmin
