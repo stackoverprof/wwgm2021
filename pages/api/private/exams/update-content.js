@@ -1,11 +1,76 @@
-//double action
+import admin, { DB } from '@core/services/firebaseAdmin'
 
-//get index terkait
-//retrieve .list dari db (buat filler)
-//methodnya diisi filler lalu replace index terkait
-//insert kembali ke db
+export default async (req, res) => {
+    const {body: { authToken, examId, index, data }, body} = req
 
-//perihal delete soal, prinsipnya mengosongkan data saja
+    console.log(body)
+    
+    if (!authToken || !examId || (!index && index !== 0) || !data) {
+        return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
+    }
 
-//update (overwrite) the questions list, admin only
-//update (overwrite) the answer list, admin only
+    //VERIVYING THE CURRENT USER
+    const currentUser = await admin.auth().verifyIdToken(authToken)
+    .catch(err => {
+        console.log('problem with : ' + err)
+        return res.status(500).json({ status: 'ERROR', message: 'Token tidak valid, coba login ulang' })
+    })
+
+    if (!currentUser.admin) return res.status(403).json({ status: 'ERROR', message: 'Anda tidak berhak merubah data'})
+
+    //CHECKING EXAM AVAILABILITY
+    const allExamsRef = await DB.collection('Exams').listDocuments()
+    if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+    
+    const allExams = allExamsRef.map(item => item.id)
+    if (!allExams.includes(examId)) return res.status(500).json({ status: 'ERROR', message: 'Ujian terkait tidak ditemukan' })
+
+    //RETRIEVE FILLER
+    let qfiller = await DB.collection('Exams').doc(examId).collection('Content').doc('Questions').get().then(doc => doc.data().list)
+    let afiller = await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').get().then(doc => doc.data().list)
+    
+    qfiller[index] = {
+        ...qfiller[index],
+        body: data.question,
+        options: [
+            {
+                body: data.optionA,
+                key: 'A'
+            },
+            {
+                body: data.optionB,
+                key: 'A'
+            },
+            {
+                body: data.optionC,
+                key: 'A'
+            },
+            {
+                body: data.optionD,
+                key: 'A'
+            },
+            {
+                body: data.optionE,
+                key: 'A'
+            }
+        ]
+    }
+
+    afiller[index] = {
+        ...afiller[index],
+        body: data.key,
+        explanation: data.explanation,
+        level: parseInt(data.level)
+    }
+
+    //BEGIN INSERTION PROCESS
+    await DB.collection('Exams').doc(examId).collection('Content').doc('Questions').update({
+        list: qfiller
+    }).then(async () => {
+        return await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').update({
+            list: afiller
+        })
+        .then(() => res.status(200).json({ status: 'OK', message: 'Berhasil mengubah detail ujian' }))
+        .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
+    })
+}

@@ -7,15 +7,16 @@ import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
 import AdminLayout from '@components/layouts/AdminLayout'
 import axios from 'axios'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
-    const [examData, setExamData] = useState(null)
     const [inputData, setInputData] = useState({})
     
-    const { authState, access } = useAuth()
+    const { setGlobalAlert } = useLayout()
+    const { user, authState, access } = useAuth()
     const { query: { examId } } = useRouter()
 
     const mutateInputData = ({target: { name, value }}) => {
@@ -25,17 +26,24 @@ const Edit = () => {
         }))
     }
 
-    const fetchData = async () => {
-        await axios.post('/api/public/exams/get-exam-data', {
-            examId: examId
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setGlobalAlert('')
+
+        axios.post('/api/private/exams/update-content', {
+            authToken: await user.getIdToken(),
+            examId: examId,
+            index: activeIndex,
+            data: inputData
         })
-        .then(res => setExamData(res.data.body))
+        .then(res => {
+            setGlobalAlert({error: false, body: res.data.message})
+        })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
     useEffect(() => {
         if (examId) {
-            fetchData()
             FireFetcher.listen.examQuestions(examId, {
                 attach: doc => {
                     setQuestions(doc.data().list)
@@ -58,12 +66,15 @@ const Edit = () => {
     useEffect(() => { 
         if (questions.length !== 0 && answers.length !== 0){
             setInputData({
-                body: questions[activeIndex].body,
+                question: questions[activeIndex].body,
                 optionA: questions[activeIndex].options[0].body,
                 optionB: questions[activeIndex].options[1].body,
                 optionC: questions[activeIndex].options[2].body,
                 optionD: questions[activeIndex].options[3].body,
-                optionE: questions[activeIndex].options[4].body
+                optionE: questions[activeIndex].options[4].body,
+                key: answers[activeIndex].body,
+                explanation: answers[activeIndex].explanation,
+                level: answers[activeIndex].level
             })
         }
     }, [questions, answers, activeIndex])
@@ -72,8 +83,7 @@ const Edit = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
-                    <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">    
-                   
+                    <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">
                          {questions.map((item, i) => (
                             <option value={item.id - 1} key={i}>{item.id}</option>
                         ))}
@@ -81,25 +91,45 @@ const Edit = () => {
                     <section css={style.form}>
                         <div className="inner contain-size-s">
                             {questions.length !== 0 && answers.length !== 0 &&
-                                <form className="flex-cc col">
+                                <form onSubmit={handleSubmit} className="flex-cc col">
                                     <div className="input-group">
-                                        <textarea value={inputData.body} onChange={mutateInputData} name="body" id="body"></textarea>
+                                        <textarea value={inputData.question} onChange={mutateInputData} name="question" id="question"></textarea>                                    
                                     </div>
                                     <div className="input-group">
-                                        <textarea value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>
+                                        <textarea value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>                                    
                                     </div>
                                     <div className="input-group">
-                                        <textarea value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>
+                                        <textarea value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>                                    
                                     </div>
                                     <div className="input-group">
-                                        <textarea value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>
+                                        <textarea value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>                                    
                                     </div>
                                     <div className="input-group">
-                                        <textarea value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>
+                                        <textarea value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>                                    
                                     </div>
                                     <div className="input-group">
                                         <textarea value={inputData.optionE} onChange={mutateInputData} name="optionE" id="optionE"></textarea>
                                     </div>
+                                    <div className="input-group">
+                                        <select value={inputData.key} onChange={mutateInputData} name="key" id="key">
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>
+                                    </div>
+                                    <div className="input-group">
+                                        <textarea value={inputData.explanation} onChange={mutateInputData} name="explanation" id="explanation"></textarea>
+                                    </div>
+                                    <div className="input-group">
+                                        <select value={inputData.level} onChange={mutateInputData} name="level" id="level">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit">SIMPAN</button>
                                 </form>
                             }
                         </div>
