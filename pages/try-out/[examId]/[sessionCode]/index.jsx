@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-
-import MainLayout from '@components/layouts/MainLayout'
 import axios from 'axios'
+
+import { to } from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
+import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
+import MainLayout from '@components/layouts/MainLayout'
 
 const Home = () => {
     const [examData, setExamData] = useState(null)
     const { query: { examId, sessionCode } } = useRouter()
-    const { userData } = useAuth()
+    const { dataCompleted, userData, authState } = useAuth()
 
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -24,40 +27,48 @@ const Home = () => {
     }, [examId])
 
     return (
-        <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
-            {examData !== null &&
-                <section css={style.header}>
-                    <div className="inner contain-size-s flex-cc">
-                        <div className="kluster-box flex-cc">
-                            <p>{examData.cluster}</p>
-                        </div>
-                        <div className="sesi-box flex-cc">
-                            <p>SESI {sessionCode} : {examData.sessions[sessionCode - 1].name}</p>
-                        </div>
-                    </div>
-                </section>
-            }
-            {examData !== null &&
-                <section css={style.card}>
-                    <div className="inner contain-size-s flex-cc">
-                        <div className="top">
-                            <div className="text-group">
-                                <p className="label">NAMA</p>
-                                <p className="data">{userData.fullName}</p>
+        <UserOnlyRoute redirect={to.home}>
+            { authState === 'user' && (    
+                <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
+                    {examData !== null &&
+                        <section css={style.header}>
+                            <div className="inner contain-size-s flex-cc">
+                                <div className="kluster-box flex-cc">
+                                    <p>{examData.cluster}</p>
+                                </div>
+                                <div className="sesi-box flex-cc">
+                                    <p>SESI {sessionCode} : {examData.sessions[sessionCode - 1].name}</p>
+                                </div>
                             </div>
-                            <div className="text-group">
-                                <p className="label">NO. PESERTA</p>
-                                <p className="data">{userData.noPeserta}</p>
+                        </section>
+                    }
+                    <section css={style.card}>
+                        <div className="card contain-size-s flex-cc">
+                            <div className="inner flex-bs col full">
+                                <div className="top">
+                                    <div className="text-group">
+                                        <p className="label">DATA DIRI</p>
+                                        <p className="data">{userData.fullName ? userData.fullName : 'Nama lengkap belum diisi'}</p>
+                                        {!dataCompleted && <p className="data">Data belum lengkap</p>}
+                                    </div>
+                                    <div className="text-group">
+                                        <p className="label">NO. PESERTA</p>
+                                        <p className="data">{userData.noPeserta ? userData.noPeserta : 'No peserta belum ada'}</p>
+                                        {!userData.approved && <p className="data">No peserta belum diapprove panitia</p>}
+                                    </div>
+                                </div>
+                                <div className="bottom flex-bc full-w">
+                                    <p className="access">Access : {userData.examsAccess?.includes(examId) && dataCompleted && userData.allowed ? 'Allowed' : 'Not Allowed'}</p>
+                                    <Link href={to._404}>
+                                        <button>MASUK</button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                        <hr/>
-                        <div className="bottom">
-
-                        </div>
-                    </div>
-                </section>
-            }
-        </MainLayout>
+                    </section>
+                </MainLayout>
+            )}
+        </UserOnlyRoute>
     )
 }
 
@@ -68,13 +79,17 @@ const style = {
 
     card: css`
 
-        .inner {
+        .card {
             margin-top: 12px;
-            min-height: 400px;
+            height: 350px;
             width: 100%;
             box-shadow: 0 0 4px 0 #0005;
             background: white;
             border-radius: 8px;
+
+            .inner {    
+                padding: 0 32px;
+            }
 
             .text-group{
                 margin: 10px 0;
@@ -90,6 +105,14 @@ const style = {
                 &.data {
                     font-weight: normal;
                 }
+            }
+            .top {
+                margin-top: 32px;
+            }
+
+            .bottom {
+                height: 80px;
+                border-top: solid 1px #0005;
             }
         }
     `,
