@@ -18,10 +18,11 @@ const ManageUsers = () => {
     const { setGlobalAlert } = useLayout()
 
     const fetchListAdmin = async () => {
-        const res = await axios.post('/api/private/admin/list-admin', {
+        await axios.post('/api/private/admin/list-admin', {
             authToken: await user.getIdToken()
-        }).catch(err => setGlobalAlert({body: err.response.data.message, error: true}))
-        setListAdmin(res.data.body)
+        })
+        .then(res => setListAdmin(res.data.body))
+        .catch(err => setGlobalAlert({body: err.response.data.message, error: true}))
     }
 
     useEffect(() => {

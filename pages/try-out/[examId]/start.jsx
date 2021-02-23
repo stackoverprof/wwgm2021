@@ -2,65 +2,52 @@ import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
 
-import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
+import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
-import FireFetcher from '@core/services/FireFetcher'
-import AdminLayout from '@components/layouts/AdminLayout'
+import MainLayout from '@components/layouts/MainLayout'
+import { to } from '@core/routepath'
+import axios from 'axios'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
-    const [answers, setAnswers] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
-    const { authState, access } = useAuth()
-    const { query: { examId } } = useRouter()
+    const { user, authState } = useAuth()
+    const { query: { examId, sesi } } = useRouter()
+    const { setGlobalAlert } = useLayout()
+
+    const fetchQuestions = async () => {
+        axios.post('/api/user/exams/get-questions', {
+            authToken: await user.getIdToken(),
+            examId: examId,
+            sesi: sesi
+        }).then(res => setQuestions(res.data.body))
+        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+    }
 
     useEffect(() => {
-        if (examId) {
-            FireFetcher.listen.examQuestions(examId, {
-                attach: doc => {
-                    setQuestions(doc.data().list)
-                },
-                detach: () => {
-                    setQuestions([])
-                }
-            })
-            FireFetcher.listen.examAnswers(examId, {
-                attach: doc => {
-                    setAnswers(doc.data().list)
-                },
-                detach: () => {
-                    setAnswers([])
-                }
-            })
+        if (examId && typeof user.getIdToken === 'function') {
+            fetchQuestions()
         }
-    }, [examId])
+    }, [examId, user])
 
-    useEffect(() => {
-        console.log(questions)
-    }, [questions])
-    
-    useEffect(() => {
-        console.log(answers)
-    }, [answers])
+    // useEffect(() => {
+    //     console.log(questions)
+    // }, [questions])
 
     return (
-        <AdminOnlyRoute>
-            { authState === 'user' && access.admin && (
-                <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
+        <UserOnlyRoute redirect={to.home}>
+            { authState === 'user' && questions.length !== 0 && (
+                <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
                     <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">    
                         {questions.map((item, i) => (
                             <option value={item.id - 1} key={i}>{item.id}</option>
                         ))}
                     </select>
-                    {questions.length !== 0 && answers.length !== 0 &&
-                        <>
-                            <h1>{questions[activeIndex].id}</h1>
-                            <h2>{answers[activeIndex].id}</h2>
-                        </>
-                    }
-                </AdminLayout>
+                    <h1>{questions[activeIndex].id}</h1>
+                </MainLayout>
             )}
-        </AdminOnlyRoute>
+        </UserOnlyRoute>
     )
 }
 
