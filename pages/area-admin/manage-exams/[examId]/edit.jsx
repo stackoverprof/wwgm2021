@@ -46,7 +46,7 @@ const Edit = () => {
 
         if (image) {
             const filename = generateFileName(image.name)
-            const storageRef = STORAGE.ref('/Users/profile-pictures').child(filename)
+            const storageRef = STORAGE.ref(`/Exams/${examId}`).child(filename)
             await storageRef.put(image)
                 .catch(() => {
                     setGlobalAlert({error: true, body:'Gagal input image'})
