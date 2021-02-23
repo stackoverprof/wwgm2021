@@ -10,11 +10,11 @@ import convert from '@core/utils/convertExamData'
 import { to, set } from '@core/routepath'
 import MainLayout from '@components/layouts/MainLayout'
 
-const TryOutStart = () => {
+const TryOutOverview = () => {
     const [examData, setExamData] = useState(null)
 
     const { query: { examId, sesi = 1 } } = useRouter()
-    const { authState } = useAuth()
+    const { dataCompleted, userData, authState } = useAuth()
 
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -32,7 +32,48 @@ const TryOutStart = () => {
         <UserOnlyRoute redirect={to.home}>
             { authState === 'user' && examData !== null && (    
                 <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
-                    
+                    <section css={style.header}>
+                        <div className="inner contain-size-s flex-cc">
+                            <div className="kluster-box flex-cc">
+                                <p>{examData.cluster}</p>
+                            </div>
+                            <div className="sesi-box flex-cc">
+                                <p>SESI {sesi} : {examData.sessions[sesi - 1].name}</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section css={style.card}>
+                        <div className="card contain-size-s flex-cc">
+                            <div className="inner flex-bs col full">
+                                <div className="top">
+                                    <div className="text-group">
+                                        <p className="label">DATA DIRI</p>
+                                        <p className="data">{userData.fullName ? userData.fullName : 'Nama lengkap belum diisi'}</p>
+                                        {!dataCompleted && <p className="data">Data belum lengkap</p>}
+                                    </div>
+                                    <div className="text-group">
+                                        <p className="label">NO. PESERTA</p>
+                                        <p className="data">{userData.noPeserta ? userData.noPeserta : 'No peserta belum ada'}</p>
+                                        {!userData.approved && <p className="data">No peserta belum diapprove panitia</p>}
+                                    </div>
+                                    <div className="text-group">
+                                        <p className="label">MULAI</p>
+                                        <p className="data">{convert.time(examData.availability.start)} - {convert.fullDate(examData.availability.start)}</p>
+                                    </div>
+                                    <div className="text-group">
+                                        <p className="label">AKHIR</p>
+                                        <p className="data">{convert.time(examData.availability.end)} - {convert.fullDate(examData.availability.end)}</p>
+                                    </div>
+                                </div>
+                                <div className="bottom flex-bc full-w">
+                                    <p className="access">Access : {userData.examsAccess?.includes(examId) && dataCompleted && userData.approved ? 'Allowed' : 'Not Allowed'}</p>
+                                    <Link href={set.tryOutStart({examId: examId, sesi: sesi})}>
+                                        <button>MASUK</button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </MainLayout>
             )}
         </UserOnlyRoute>
@@ -140,4 +181,4 @@ const style = {
 }
 
     
-export default TryOutStart
+export default TryOutOverview
