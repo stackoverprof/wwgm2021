@@ -10,13 +10,6 @@ const QuickAddAccess = ({examId}) => {
         examId: ''
     })
 
-    useEffect(() => {
-        setInputData({
-            email: '',
-            examId: examId
-        })
-    }, [examId])
-
     const { user } = useAuth()
     const { setGlobalAlert } = useLayout()
 
@@ -44,6 +37,13 @@ const QuickAddAccess = ({examId}) => {
         })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
+    
+    useEffect(() => {
+        setInputData({
+            email: '',
+            examId: examId ? examId : ''
+        })
+    }, [examId])
 
     return (
         <form onSubmit={handleSubmit} css={style} className="flex-cc">

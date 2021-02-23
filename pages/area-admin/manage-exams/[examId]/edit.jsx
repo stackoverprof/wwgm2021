@@ -127,35 +127,35 @@ const Edit = () => {
                             {questions.length !== 0 && answers.length !== 0 &&
                                 <form onSubmit={handleSubmit} className="flex-cc col">
                                     <img src={inputData.imageURL} alt=""/>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Ganti gambar</label>
                                         <input type="file" ref={fileInput} name="imageURL" id="imageURL"/>
                                     </div>
-                                    <div className="input-group">
-                                        <label>pertanyaan</label>
+                                    <div className="input-group flex-cs col">
+                                        <label>Pertanyaan</label>
                                         <textarea value={inputData.question} onChange={mutateInputData} name="question" id="question"></textarea>                                    
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Opsi A</label>
                                         <textarea value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>                                    
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Opsi B</label>
                                         <textarea value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>                                    
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Opsi C</label>
                                         <textarea value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>                                    
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Opsi D</label>
                                         <textarea value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>                                    
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Opsi E</label>
                                         <textarea value={inputData.optionE} onChange={mutateInputData} name="optionE" id="optionE"></textarea>
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Kunci Jawaban</label>
                                         <select value={inputData.key} onChange={mutateInputData} name="key" id="key">
                                             <option value="A">A</option>
@@ -165,11 +165,11 @@ const Edit = () => {
                                             <option value="E">E</option>
                                         </select>
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Pembahasan</label>
                                         <textarea value={inputData.explanation} onChange={mutateInputData} name="explanation" id="explanation"></textarea>
                                     </div>
-                                    <div className="input-group">
+                                    <div className="input-group flex-cs col">
                                         <label>Level kesulitan</label>
                                         <select value={inputData.level} onChange={mutateInputData} name="level" id="level">
                                             <option value="1">1</option>
@@ -217,9 +217,20 @@ const style = {
         form {
             width: 100%;
 
+            img {
+                max-height: 400px;
+            }
+
+            select {
+                width: 100%;
+                height: 32px;
+            }
+
             .input-group {
                 width: 100%;
+                margin: 6px 0;
             }
+
             textarea {
                 width: 100%;
                 height: 100px;
