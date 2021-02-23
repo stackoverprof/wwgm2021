@@ -31,6 +31,7 @@ export default async (req, res) => {
     
     qfiller[index] = {
         ...qfiller[index],
+        imageURL: data.imageURL,
         body: data.question,
         options: [
             {

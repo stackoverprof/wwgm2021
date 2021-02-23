@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
+import { v4 as uuid } from 'uuid'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -8,12 +9,15 @@ import FireFetcher from '@core/services/FireFetcher'
 import AdminLayout from '@components/layouts/AdminLayout'
 import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
+import { STORAGE } from '@core/services/firebase'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
     const [inputData, setInputData] = useState({})
+
+    const fileInput = useRef({current: {file: [{name: ''}]}})
     
     const { setGlobalAlert } = useLayout()
     const { user, authState, access } = useAuth()
@@ -26,15 +30,43 @@ const Edit = () => {
         }))
     }
 
+    const generateFileName = (prevName) => {
+        const unique = uuid().split('-').shift()
+        const ext = prevName.split('.').pop()
+
+        return `${prevName}-${unique}.${ext}`
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setGlobalAlert('')
+        
+        const image = fileInput.current.files[0]
+        let imageLink = ''
+
+        if (image) {
+            const filename = generateFileName(image.name)
+            const storageRef = STORAGE.ref('/Users/profile-pictures').child(filename)
+            await storageRef.put(image)
+                .catch(() => {
+                    setGlobalAlert({error: true, body:'Gagal input image'})
+                    return
+                })
+            imageLink = await storageRef.getDownloadURL()
+                .catch(() => {
+                    setGlobalAlert({error: true, body:'Gagal input image'})
+                    return 
+                })
+        }
 
         axios.post('/api/private/exams/update-content', {
             authToken: await user.getIdToken(),
             examId: examId,
             index: activeIndex,
-            data: inputData
+            data: {
+                ...inputData,
+                imageURL: imageLink ? imageLink : inputData.imageURL
+            }
         })
         .then(res => {
             setGlobalAlert({error: false, body: res.data.message})
@@ -63,8 +95,9 @@ const Edit = () => {
         }
     }, [examId])
 
-    useEffect(() => { 
+    useEffect(() => {
         if (questions.length !== 0 && answers.length !== 0){
+            fileInput.current.value = ''
             setInputData({
                 question: questions[activeIndex].body,
                 optionA: questions[activeIndex].options[0].body,
@@ -72,6 +105,7 @@ const Edit = () => {
                 optionC: questions[activeIndex].options[2].body,
                 optionD: questions[activeIndex].options[3].body,
                 optionE: questions[activeIndex].options[4].body,
+                imageURL: questions[activeIndex].imageURL,
                 key: answers[activeIndex].body,
                 explanation: answers[activeIndex].explanation,
                 level: answers[activeIndex].level
@@ -92,6 +126,10 @@ const Edit = () => {
                         <div className="inner contain-size-s">
                             {questions.length !== 0 && answers.length !== 0 &&
                                 <form onSubmit={handleSubmit} className="flex-cc col">
+                                    <img src={inputData.imageURL} alt=""/>
+                                    <div className="input-group">
+                                        <input type="file" ref={fileInput} name="imageURL" id="imageURL"/>
+                                    </div>
                                     <div className="input-group">
                                         <textarea value={inputData.question} onChange={mutateInputData} name="question" id="question"></textarea>                                    
                                     </div>

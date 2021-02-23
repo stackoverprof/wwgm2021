@@ -93,6 +93,7 @@ export default async (req, res) => {
             questionList.push({
                 id: i+1,
                 body: 'Contoh soal nomor ' + (i + 1),
+                imageURL: '',
                 options: [
                     {
                         body: 'Opsi A ' + (i + 1),
