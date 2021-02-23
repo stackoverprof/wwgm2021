@@ -11,7 +11,7 @@ import MainLayout from '@components/layouts/MainLayout'
 
 const Home = () => {
     const [examData, setExamData] = useState(null)
-    const { query: { examId, sessionCode } } = useRouter()
+    const { query: { examId, sesi = 1 } } = useRouter()
     const { dataCompleted, userData, authState } = useAuth()
 
     const fetchData = async () => {
@@ -37,7 +37,7 @@ const Home = () => {
                                     <p>{examData.cluster}</p>
                                 </div>
                                 <div className="sesi-box flex-cc">
-                                    <p>SESI {sessionCode} : {examData.sessions[sessionCode - 1].name}</p>
+                                    <p>SESI {sesi} : {examData.sessions[sesi - 1].name}</p>
                                 </div>
                             </div>
                         </section>
