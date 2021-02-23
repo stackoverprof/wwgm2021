@@ -9,7 +9,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import RunningText from '@components/atomic/RunningText'
 import AdminBadge from '@components/atomic/AdminBadge'
 
-const Advantages = ({examId, title, size, duration, sessionsLength, fullDate, time, skeleton}) => {
+const OverviewExam = ({examId, title, size, duration, sessionsLength, fullDate, time, skeleton}) => {
     const { access } = useAuth()
 
     return (
@@ -71,4 +71,4 @@ const style = ({skeleton}) => css`
     }
 `
 
-export default Advantages
+export default OverviewExam
