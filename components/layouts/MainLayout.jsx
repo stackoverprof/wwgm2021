@@ -62,9 +62,10 @@ const ShadowLayer = ({dimm}) => {
 const layer = ({navHeight, noClearance}) => css`
     padding-top: ${noClearance ? 0 : navHeight}px;
     padding-bottom: 54px;
+    height: 100%;
 
     .dimm-layer{
-        background:  #000c;
+        background: #000c;
         z-index: 50;
     }
 `

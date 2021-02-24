@@ -103,9 +103,6 @@ const style = {
         margin: 24px 0;
     `,
     main: css`
-        .inner {
-            height: 1000px;
-        }
     `,
     navigator: css`
     `,

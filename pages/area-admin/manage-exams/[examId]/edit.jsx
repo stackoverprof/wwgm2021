@@ -101,16 +101,19 @@ const Edit = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
+                    
                     <section css={style.header}>
                         <div className="inner contain-size-m flex-cc col">
                             <h1>EDIT SOAL</h1>
                         </div>
                     </section>
+
                     <section css={style.navigator}>
                         <div className="inner contain-size-m flex-cc">
                             <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
                         </div>
                     </section>
+
                     <section css={style.form}>
                         <div className="inner contain-size-m">
                             {questions.length !== 0 && answers.length !== 0 &&
@@ -166,6 +169,7 @@ const Edit = () => {
                             }
                         </div>
                     </section>
+
                 </AdminLayout>
             )}
         </AdminOnlyRoute>
