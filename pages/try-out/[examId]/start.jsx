@@ -28,10 +28,17 @@ const Edit = () => {
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
+    const safeLocal = (filler) => {
+        localStorage.setItem('user', user.email)
+        localStorage.setItem('examId', examId)
+        localStorage.setItem('answers', JSON.stringify(filler))
+    }
+
     const mutateChange = (e) => {
         setInputData(prev => {
             let filler = [...prev]
-            filler[activeIndex] = e.target.value
+            filler[activeIndex] = filler[activeIndex] === e.target.value ? '' : e.target.value
+            safeLocal(filler)
             return filler
         })
     }
@@ -45,6 +52,16 @@ const Edit = () => {
     useEffect(() => {
         console.log(inputData)
     }, [inputData])
+
+    useEffect(() => {
+        const savedExamId = localStorage.getItem('examId')
+        const savedUser = localStorage.getItem('user')
+        const savedAnswers = JSON.parse(localStorage.getItem('answers'))
+
+        if(user.email && examId && savedExamId === examId && savedUser === user.email) {
+            setInputData(savedAnswers)
+        }
+    }, [user, examId])
 
     return (
         <UserOnlyRoute redirect={to.home}>

@@ -31,6 +31,8 @@ const style = css`
             border-radius: 8px;
             padding: 0;
 
+            transition: 0.15s;
+
             font-family: Poppins;
             font-weight: 600;
             font-size: 22px;
