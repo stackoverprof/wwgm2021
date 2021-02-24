@@ -36,23 +36,23 @@ export default async (req, res) => {
         options: [
             {
                 body: data.optionA,
-                key: 'A'
+                option: 'A'
             },
             {
                 body: data.optionB,
-                key: 'B'
+                option: 'B'
             },
             {
                 body: data.optionC,
-                key: 'C'
+                option: 'C'
             },
             {
                 body: data.optionD,
-                key: 'D'
+                option: 'D'
             },
             {
                 body: data.optionE,
-                key: 'E'
+                option: 'E'
             }
         ]
     }

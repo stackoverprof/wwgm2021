@@ -60,7 +60,6 @@ const Edit = () => {
             <section css={style.main}>
                 <div className="inner contain-size-m">
                     <QuestionUI question={questions[activeIndex]} current={inputData[activeIndex]} mutateChange={mutateChange} />
-                    <p>{inputData.join(" ")}</p>
                 </div>
             </section>
         </>
