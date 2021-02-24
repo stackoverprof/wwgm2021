@@ -9,6 +9,7 @@ import { to } from '@core/routepath'
 import { useLayout } from '@core/contexts/LayoutContext'
 import MainLayout from '@components/layouts/MainLayout'
 import QuizNav from '@components/atomic/QuizNav'
+import QuestionUI from '@components/atomic/QuestionUI'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
@@ -27,11 +28,23 @@ const Edit = () => {
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
+    const mutateChange = (e) => {
+        setInputData(prev => {
+            let filler = [...prev]
+            filler[activeIndex] = e.target.value
+            return filler
+        })
+    }
+
     useEffect(() => {
         if (examId && typeof user.getIdToken === 'function') {
             fetchQuestions()
         }
     }, [examId, user])
+
+    useEffect(() => {
+        console.log(inputData)
+    }, [inputData])
 
     return (
         <UserOnlyRoute redirect={to.home}>
@@ -45,8 +58,9 @@ const Edit = () => {
                 </div>
             </section>
             <section css={style.main}>
-                <div className="inner contain-size-l">
-                    <h1>{questions[activeIndex].body}</h1>
+                <div className="inner contain-size-m">
+                    <QuestionUI question={questions[activeIndex]} current={inputData[activeIndex]} mutateChange={mutateChange} />
+                    <p>{inputData.join(" ")}</p>
                 </div>
             </section>
         </>

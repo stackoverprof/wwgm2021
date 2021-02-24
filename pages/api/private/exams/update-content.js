@@ -40,19 +40,19 @@ export default async (req, res) => {
             },
             {
                 body: data.optionB,
-                key: 'A'
+                key: 'B'
             },
             {
                 body: data.optionC,
-                key: 'A'
+                key: 'C'
             },
             {
                 body: data.optionD,
-                key: 'A'
+                key: 'D'
             },
             {
                 body: data.optionE,
-                key: 'A'
+                key: 'E'
             }
         ]
     }
