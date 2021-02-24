@@ -16,9 +16,8 @@ export default async (req, res) => {
     
     const userData = await DB.collection('Users').doc(currentUser.uid).get().then(doc => doc.data())
     
-    if (!userData.examsAccess.includes(examId)) {
-        return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
-    }
+    if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
+    else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
 
     // [TODO] : VALIDATE SESI HARUS URUT
     const examData = await DB.collection('Exams').doc(examId).get().then(doc => doc.data())

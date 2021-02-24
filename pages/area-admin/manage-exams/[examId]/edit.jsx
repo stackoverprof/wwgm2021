@@ -18,6 +18,7 @@ const Edit = () => {
     const [inputData, setInputData] = useState({})
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
+    const fileInput2 = useRef({current: {file: [{name: ''}]}})
     
     const { setGlobalAlert } = useLayout()
     const { user, authState, access } = useAuth()
@@ -42,7 +43,9 @@ const Edit = () => {
         setGlobalAlert('')
         
         const image = fileInput.current.files[0]
+        const image2 = fileInput2.current.files[0]
         let imageLink = ''
+        let imageLink2 = ''
 
         if (image) {
             const filename = generateFileName(image.name)
@@ -59,13 +62,29 @@ const Edit = () => {
                 })
         }
 
+        if (image2) {
+            const filename2 = generateFileName(image2.name)
+            const storageRef2 = STORAGE.ref(`/Exams/${examId}`).child(filename2)
+            await storageRef2.put(image2)
+                .catch(() => {
+                    setGlobalAlert({error: true, body:'Gagal input image'})
+                    return
+                })
+            imageLink2 = await storageRef2.getDownloadURL()
+                .catch(() => {
+                    setGlobalAlert({error: true, body:'Gagal input image'})
+                    return 
+                })
+        }
+
         axios.post('/api/private/exams/update-content', {
             authToken: await user.getIdToken(),
             examId: examId,
             index: activeIndex,
             data: {
                 ...inputData,
-                imageURL: imageLink ? imageLink : inputData.imageURL
+                imageURL: imageLink ? imageLink : inputData.imageURL,
+                imageURL2: imageLink2 ? imageLink2 : inputData.imageURL2
             }
         })
         .then(res => {
@@ -107,6 +126,7 @@ const Edit = () => {
                 optionE: questions[activeIndex].options[4].body,
                 imageURL: questions[activeIndex].imageURL,
                 key: answers[activeIndex].body,
+                imageURL2: answers[activeIndex].imageURL,
                 explanation: answers[activeIndex].explanation,
                 level: answers[activeIndex].level
             })
@@ -164,6 +184,11 @@ const Edit = () => {
                                             <option value="D">D</option>
                                             <option value="E">E</option>
                                         </select>
+                                    </div>
+                                    <img src={inputData.imageURL2} alt=""/>
+                                    <div className="input-group flex-cs col">
+                                        <label>Ganti gambar pembahasan</label>
+                                        <input type="file" ref={fileInput2} name="imageURL" id="imageURL"/>
                                     </div>
                                     <div className="input-group flex-cs col">
                                         <label>Pembahasan</label>

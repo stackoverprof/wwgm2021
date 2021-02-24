@@ -132,7 +132,8 @@ export default async (req, res) => {
                 body: 'A',
                 explanation: 'karena ya sementara kuncinya A buat no ' + (i + 1),
                 session: countSession(i),
-                level: 1
+                level: 1,
+                imageURL: ''
             })
         }
 
