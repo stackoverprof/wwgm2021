@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
-import MainLayout from '@components/layouts/MainLayout'
 import { to } from '@core/routepath'
-import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
+import MainLayout from '@components/layouts/MainLayout'
+import QuizNav from '@components/atomic/QuizNav'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
+    const [inputData, setInputData] = useState(Array(20).fill(''))
     const [activeIndex, setActiveIndex] = useState(0)
     const { user, authState } = useAuth()
     const { query: { examId, sesi } } = useRouter()
@@ -31,32 +33,42 @@ const Edit = () => {
         }
     }, [examId, user])
 
-    // useEffect(() => {
-    //     console.log(questions)
-    // }, [questions])
-
     return (
         <UserOnlyRoute redirect={to.home}>
-            { authState === 'user' && (
-                <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
-                    {questions.length !== 0 && (
-                    <>  
-                        <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">    
-                            {questions.map((item, i) => (
-                                <option value={item.id - 1} key={i}>{item.id}</option>
-                                ))}
-                        </select>
-                        <h1>{questions[activeIndex].id}</h1>
-                    </>
-                    )}
-                </MainLayout>
-            )}
+        { authState === 'user' && (
+        <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
+        {questions.length !== 0 && (
+        <>  
+            <section css={style.navigator}>
+                <div className="inner contain-size-l flex-cc">
+                    <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex} inputData={inputData}/>
+                </div>
+            </section>
+            <section css={style.main}>
+                <div className="inner contain-size-l">
+                    <h1>{questions[activeIndex].body}</h1>
+                </div>
+            </section>
+        </>
+        )}
+        </MainLayout>
+        )}
         </UserOnlyRoute>
     )
 }
 
 const style = {
     page: css`
+        margin: 24px 0;
+    `,
+    main: css`
+        .inner {
+            height: 1000px;
+        }
+    `,
+    navigator: css`
+        .inner {
+        }
     `,
     header: css`
         .inner{

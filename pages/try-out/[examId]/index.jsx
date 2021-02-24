@@ -4,10 +4,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 
-import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
 import convert from '@core/utils/convertExamData'
-import { to, set } from '@core/routepath'
+import { set } from '@core/routepath'
 import MainLayout from '@components/layouts/MainLayout'
 
 const TryOutOverview = () => {
@@ -28,24 +27,30 @@ const TryOutOverview = () => {
         if (examId) fetchData()
     }, [examId])
 
-    return (
-        <UserOnlyRoute redirect={to.home}>
-            { authState === 'user' && examData !== null && (    
-                <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
-                    <section css={style.header}>
-                        <div className="inner contain-size-s flex-cc">
-                            <div className="kluster-box flex-cc">
-                                <p>{examData.cluster}</p>
-                            </div>
-                            <div className="sesi-box flex-cc">
-                                <p>SESI {sesi} : {examData.sessions[sesi - 1].name}</p>
-                            </div>
+    return ( 
+        <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
+            {examData !== null && (
+            <>
+                <section css={style.header}>
+                    <div className="inner contain-size-s flex-cc">
+                        <div className="kluster-box flex-cc">
+                            <p>{examData.cluster}</p>
                         </div>
-                    </section>
-                    <section css={style.card}>
-                        <div className="card contain-size-s flex-cc">
-                            <div className="inner flex-bs col full">
-                                <div className="top">
+                        <div className="sesi-box flex-cc">
+                            <p>SESI {sesi} : {examData.sessions[sesi - 1].name}</p>
+                        </div>
+                    </div>
+                </section>
+                <section css={style.card}>
+                    <div className="card contain-size-s flex-cc">
+                        <div className="inner flex-bs col full">
+                            <div className="top">
+                                {authState !== 'user' ? (
+                                    <div className="text-group">
+                                        <p className="label">LOGIN TERLEBIH DAHULU</p>
+                                    </div>
+                                ):(
+                                <>
                                     <div className="text-group">
                                         <p className="label">DATA DIRI</p>
                                         <p className="data">{userData.fullName ? userData.fullName : 'Nama lengkap belum diisi'}</p>
@@ -55,28 +60,30 @@ const TryOutOverview = () => {
                                         <p className="label">NO. PESERTA</p>
                                         <p className="data">{userData.noPeserta ? userData.noPeserta : 'No peserta belum ada'}</p>
                                         {!userData.approved && <p className="data">No peserta belum diapprove panitia</p>}
-                                    </div>
-                                    <div className="text-group">
-                                        <p className="label">MULAI</p>
-                                        <p className="data">{convert.time(examData.availability.start)} - {convert.fullDate(examData.availability.start)}</p>
-                                    </div>
-                                    <div className="text-group">
-                                        <p className="label">AKHIR</p>
-                                        <p className="data">{convert.time(examData.availability.end)} - {convert.fullDate(examData.availability.end)}</p>
-                                    </div>
+                                    </div>     
+                                </>
+                                )}
+                                <div className="text-group">
+                                    <p className="label">MULAI</p>
+                                    <p className="data">{convert.time(examData.availability.start)} - {convert.fullDate(examData.availability.start)}</p>
                                 </div>
-                                <div className="bottom flex-bc full-w">
-                                    <p className="access">Access : {userData.examsAccess?.includes(examId) && dataCompleted && userData.approved ? 'Allowed' : 'Not Allowed'}</p>
-                                    <Link href={set.tryOutStart({examId: examId, sesi: sesi})}>
-                                        <button>MASUK</button>
-                                    </Link>
+                                <div className="text-group">
+                                    <p className="label">AKHIR</p>
+                                    <p className="data">{convert.time(examData.availability.end)} - {convert.fullDate(examData.availability.end)}</p>
                                 </div>
                             </div>
+                            <div className="bottom flex-bc full-w">
+                                <p className="access">Access : {userData.examsAccess?.includes(examId) && dataCompleted && userData.approved ? 'Allowed' : 'Not Allowed'}</p>
+                                <Link href={set.tryOutStart({examId: examId, sesi: sesi})}>
+                                    <button>MASUK</button>
+                                </Link>
+                            </div>
                         </div>
-                    </section>
-                </MainLayout>
+                    </div>
+                </section>
+            </>
             )}
-        </UserOnlyRoute>
+        </MainLayout>
     )
 }
 
