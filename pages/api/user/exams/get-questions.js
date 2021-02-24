@@ -21,6 +21,14 @@ export default async (req, res) => {
     }
 
     // [TODO] : VALIDATE SESI HARUS URUT
+    const examData = await DB.collection('Exams').doc(examId).get().then(doc => doc.data())
+
+    const currentTime = (new Date()).getTime()
+    const start = (new Date(examData.availability.start)).getTime()
+    const end = (new Date(examData.availability.end)).getTime()
+
+    if (examData.status === 'closed')  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
+    else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Tidak pada waktunya' })
 
     const allQuestions = await DB.collection('Exams').doc(examId).collection('Content').doc('Questions').get().then(doc => doc.data().list)
     const questions = allQuestions.filter(item => item.session === parseInt(sesi))

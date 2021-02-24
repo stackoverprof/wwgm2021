@@ -73,7 +73,6 @@ const DetailForm = ({examId, handleClose}) => {
                         <option value="limited">Limited - Mengkuti waktu ketersediaan</option>
                         <option value="open">Open - Terbuka tanpa batas waktu</option>
                         <option value="closed">Closed - Tidak diedarkan</option>
-                        <option value="public">Public - Terbuka untuk publik (termasuk non-user)</option>
                     </select>
                 </div>
                 <div className="input-group flex-cs col full-w">

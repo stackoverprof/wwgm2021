@@ -37,14 +37,18 @@ const Edit = () => {
 
     return (
         <UserOnlyRoute redirect={to.home}>
-            { authState === 'user' && questions.length !== 0 && (
+            { authState === 'user' && (
                 <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
-                    <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">    
-                        {questions.map((item, i) => (
-                            <option value={item.id - 1} key={i}>{item.id}</option>
-                        ))}
-                    </select>
-                    <h1>{questions[activeIndex].id}</h1>
+                    {questions.length !== 0 && (
+                    <>  
+                        <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">    
+                            {questions.map((item, i) => (
+                                <option value={item.id - 1} key={i}>{item.id}</option>
+                                ))}
+                        </select>
+                        <h1>{questions[activeIndex].id}</h1>
+                    </>
+                    )}
                 </MainLayout>
             )}
         </UserOnlyRoute>
