@@ -62,7 +62,7 @@ const AuthArea = ({
                     LOGIN 
                 </button>
             )}
-            {authState === 'user' && (
+            {authState === 'user' && Object.keys(userData).length !== 0 && (
                 <div className="auth-area">
                     <button onClick={() => setOpenAuthAction(!openAuthAction)} className="user-action btn flex-sc">
                         <InitialAva size={30} className="ava" src={userData.photoURL} displayName={userData.displayName}/>

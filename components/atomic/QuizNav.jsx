@@ -53,6 +53,10 @@ const style = css`
             p {
                 font-weight: bold;
             }
+
+            &.green {
+                background: #0d723a;
+            }
         }
 
         &.green {

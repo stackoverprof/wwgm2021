@@ -110,8 +110,8 @@ const Edit = () => {
                         <section css={style.navigator}>
                             <div className="inner contain-size-m flex-cc col">
                                 <div className="buttons full-w flex-bc">
-                                    <button onClick={() => setActiveIndex(activeIndex - 1)} className="bordered">Previous</button>
-                                    <button onClick={() => setActiveIndex(activeIndex + 1)}>Next &nbsp; <FaArrowRight /></button>
+                                    <button onClick={() => setActiveIndex(activeIndex > 0 ? activeIndex - 1 : 0)} className="bordered">Previous</button>
+                                    <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
                                 </div>
                                 <QuizNav
                                     activeIndex={activeIndex}

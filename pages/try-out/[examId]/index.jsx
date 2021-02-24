@@ -29,7 +29,7 @@ const TryOutOverview = () => {
 
     return ( 
         <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
-            {examData !== null && (
+            {examData && (
             <>
                 <section css={style.header}>
                     <div className="inner contain-size-s flex-cc">
@@ -41,6 +41,7 @@ const TryOutOverview = () => {
                         </div>
                     </div>
                 </section>
+
                 <section css={style.card}>
                     <div className="card contain-size-s flex-cc">
                         <div className="inner flex-bs col full">
@@ -72,15 +73,24 @@ const TryOutOverview = () => {
                                     <p className="data">{convert.time(examData.availability.end)} - {convert.fullDate(examData.availability.end)}</p>
                                 </div>
                             </div>
-                            <div className="bottom flex-bc full-w">
+                            <div className="bottom flex-sc full-w">
                                 <p className="access">Access : {userData.examsAccess?.includes(examId) && dataCompleted && userData.approved ? 'Allowed' : 'Not Allowed'}</p>
-                                <Link href={set.tryOutStart({examId: examId, sesi: sesi})}>
-                                    <button>MASUK</button>
-                                </Link>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <section css={style.sessions}>
+                    {examData.sessions.map((item, i) => (
+                        <div className="card contain-size-s flex-bc" key={i}>
+                            <p className="access">SESI {i + 1} : {item.name}</p>
+                            <Link href={set.tryOutStart({examId: examId, sesi: i + 1})}>
+                                <button className="bordered">MASUK</button>
+                            </Link>
+                        </div>
+                    ))}
+                </section>
+
             </>
             )}
         </MainLayout>
@@ -90,6 +100,17 @@ const TryOutOverview = () => {
 const style = {
     page: css`
         padding: 24px 0;
+    `,
+
+    sessions: css`
+        .card {
+            margin-top: 12px;
+            width: calc(100% - 48px);
+            box-shadow: 0 0 4px 0 #0005;
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+        }
     `,
 
     card: css`
