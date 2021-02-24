@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { FaArrowRight } from 'react-icons/fa'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -109,8 +110,8 @@ const Edit = () => {
                         <section css={style.navigator}>
                             <div className="inner contain-size-m flex-cc col">
                                 <div className="buttons full-w flex-bc">
-                                    <button>Previous</button>
-                                    <button>Next</button>
+                                    <button onClick={() => setActiveIndex(activeIndex - 1)} className="bordered">Previous</button>
+                                    <button onClick={() => setActiveIndex(activeIndex + 1)}>Next &nbsp; <FaArrowRight /></button>
                                 </div>
                                 <QuizNav
                                     activeIndex={activeIndex}
