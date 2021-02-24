@@ -18,6 +18,22 @@ const Edit = () => {
     const { user, authState } = useAuth()
     const { query: { examId, sesi } } = useRouter()
     const { setGlobalAlert } = useLayout()
+    
+    const safeLocal = (filler) => {
+        localStorage.setItem('user', user.email)
+        localStorage.setItem('examId', examId)
+        localStorage.setItem('sesi', sesi)
+        localStorage.setItem('answers', JSON.stringify(filler))
+    }
+    
+    const mutateChange = (e) => {
+        setInputData(prev => {
+            let filler = [...prev]
+            filler[activeIndex] = filler[activeIndex] === e.target.value ? '' : e.target.value
+            safeLocal(filler)
+            return filler
+        })
+    }
 
     const fetchQuestions = async () => {
         axios.post('/api/user/exams/get-questions', {
@@ -28,40 +44,22 @@ const Edit = () => {
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
-    const safeLocal = (filler) => {
-        localStorage.setItem('user', user.email)
-        localStorage.setItem('examId', examId)
-        localStorage.setItem('answers', JSON.stringify(filler))
-    }
-
-    const mutateChange = (e) => {
-        setInputData(prev => {
-            let filler = [...prev]
-            filler[activeIndex] = filler[activeIndex] === e.target.value ? '' : e.target.value
-            safeLocal(filler)
-            return filler
-        })
-    }
-
     useEffect(() => {
-        if (examId && typeof user.getIdToken === 'function') {
+        if (examId && sesi && typeof user.getIdToken === 'function') {
             fetchQuestions()
         }
-    }, [examId, user])
-
-    useEffect(() => {
-        console.log(inputData)
-    }, [inputData])
+    }, [examId, user, sesi])
 
     useEffect(() => {
         const savedExamId = localStorage.getItem('examId')
+        const savedSesi = localStorage.getItem('sesi')
         const savedUser = localStorage.getItem('user')
         const savedAnswers = JSON.parse(localStorage.getItem('answers'))
 
-        if(user.email && examId && savedExamId === examId && savedUser === user.email) {
+        if(user.email && sesi && examId && savedExamId === examId && savedSesi === sesi && savedUser === user.email) {
             setInputData(savedAnswers)
         }
-    }, [user, examId])
+    }, [user, examId, sesi])
 
     return (
         <UserOnlyRoute redirect={to.home}>
