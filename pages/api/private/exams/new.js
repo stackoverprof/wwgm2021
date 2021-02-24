@@ -92,27 +92,26 @@ export default async (req, res) => {
         for (let i = 0; i < totalQuestions; i++) {
             questionList.push({
                 id: i+1,
-                body: 'Contoh soal nomor ' + (i + 1),
-                imageURL: '',
+                body: '',
                 options: [
                     {
-                        body: 'Opsi A ' + (i + 1),
+                        body: '',
                         option: 'A'
                     },
                     {
-                        body: 'Opsi B ' + (i + 1),
+                        body: '',
                         option: 'B'
                     },
                     {
-                        body: 'Opsi C ' + (i + 1),
+                        body: '',
                         option: 'C'
                     },
                     {
-                        body: 'Opsi D ' + (i + 1),
+                        body: '',
                         option: 'D'
                     },
                     {
-                        body: 'Opsi E ' + (i + 1),
+                        body: '',
                         option: 'E'
                     }
                 ],
@@ -129,11 +128,10 @@ export default async (req, res) => {
         for (let i = 0; i < totalQuestions; i++) {
             answerList.push({
                 id: i+1,
-                body: 'A',
-                explanation: 'karena ya sementara kuncinya A buat no ' + (i + 1),
+                body: '',
+                explanation: '',
                 session: countSession(i),
-                level: 1,
-                imageURL: ''
+                level: ''
             })
         }
 

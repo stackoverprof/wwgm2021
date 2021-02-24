@@ -13,12 +13,7 @@ const QuestionUI = ({question}) => {
 
 const style = css`
     margin: 24px 0;
-
-    img {
-        max-width: 600px;
-        width: 100%;
-        margin-bottom: 12px;
-    }
+    user-select: none;
 `
 
 export default QuestionUI

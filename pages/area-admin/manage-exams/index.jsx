@@ -49,7 +49,7 @@ const ManageExams = () => {
                     <section css={style.cards}>
                         <div className="inner contain-size-m flex-cc col">
                             {examIdList.map((item, i) => (
-                                <CardDisplayWide showId examId={item} key={i} onButton={() => setActive(item)}/>
+                                <CardDisplayWide showId examId={item} key={item} onButton={() => setActive(item)}/>
                             ))}
                             <p className="label">Buat TryOut baru</p>
                             <MakeNewExams />

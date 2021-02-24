@@ -68,15 +68,14 @@ const Edit = () => {
                 <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
                     {questions.length !== 0 && (
                     <>  
-                
-                        <section css={style.navigator}>
-                            <div className="inner contain-size-m flex-cc">
-                                <QuizNav
-                                    activeIndex={activeIndex}
-                                    setActiveIndex={setActiveIndex}
-                                    inputData={inputData}
-                                />
-                           </div>
+
+                        <section css={style.header}>
+                            <div className="inner contain-size-m">
+                                <div className="no">
+                                    
+                                </div>
+                                <div className="detail"></div>
+                            </div>
                         </section>
 
                         <section css={style.main}>
@@ -90,6 +89,16 @@ const Edit = () => {
                             </div>
                         </section>
 
+                        <section css={style.navigator}>
+                            <div className="inner contain-size-m flex-cc">
+                                <QuizNav
+                                    activeIndex={activeIndex}
+                                    setActiveIndex={setActiveIndex}
+                                    inputData={inputData}
+                                />
+                           </div>
+                        </section>
+                        
                     </>
                     )}
                 </MainLayout>
@@ -103,27 +112,12 @@ const style = {
         margin: 24px 0;
     `,
     main: css`
+        margin-bottom: 32px;
     `,
     navigator: css`
     `,
     header: css`
-        .inner{
-            padding: 48px 0 24px 0;
-            
-            @media (max-width: 600px) {
-                padding: 32px 0;
-            }
-        }
         
-        h1 {
-            font-family: Poppins;
-            font-weight: 600;
-            font-size: 40px;
-            color: #1A2C1E;
-            @media (max-width: 780px) {
-                font-size: 28px;
-            }
-        }
     `,
     userList: css`
     

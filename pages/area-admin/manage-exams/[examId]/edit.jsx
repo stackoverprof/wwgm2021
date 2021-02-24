@@ -36,6 +36,12 @@ const Edit = () => {
                 ...prevState,
                 ['question']: value
             }))
+        },
+        explanation: (value) => {
+            setInputData((prevState) => ({
+                ...prevState,
+                ['explanation']: value
+            }))
         }
     }
 
@@ -101,75 +107,79 @@ const Edit = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
-                    
-                    <section css={style.header}>
-                        <div className="inner contain-size-m flex-cc col">
-                            <h1>EDIT SOAL</h1>
-                        </div>
-                    </section>
+                    {questions.length !== 0 && answers.length !== 0 && (
+                    <>
+                        <section css={style.header}>
+                            <div className="inner contain-size-m flex-cc col">
+                                <h1>EDIT SOAL</h1>
+                            </div>
+                        </section>
 
-                    <section css={style.navigator}>
-                        <div className="inner contain-size-m flex-cc">
-                            <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
-                        </div>
-                    </section>
+                        <section css={style.navigator}>
+                            <div className="inner contain-size-m flex-cc">
+                                <QuizNav inputData={Array(questions.length).fill('')} activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
+                            </div>
+                        </section>
 
-                    <section css={style.form}>
-                        <div className="inner contain-size-m">
-                            {questions.length !== 0 && answers.length !== 0 &&
-                                <form onSubmit={handleSubmit} className="flex-cc col">
-                                    <div className="input-group flex-cs col">
-                                        <label>Pertanyaan</label>
-                                        <InputMCE value={inputData.question} onChange={mutateMCE.question}/>
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Opsi A</label>
-                                        <textarea value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>                                    
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Opsi B</label>
-                                        <textarea value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>                                    
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Opsi C</label>
-                                        <textarea value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>                                    
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Opsi D</label>
-                                        <textarea value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>                                    
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Opsi E</label>
-                                        <textarea value={inputData.optionE} onChange={mutateInputData} name="optionE" id="optionE"></textarea>
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Kunci Jawaban</label>
-                                        <select value={inputData.key} onChange={mutateInputData} name="key" id="key">
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                            <option value="E">E</option>
-                                        </select>
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Pembahasan</label>
-                                        <textarea value={inputData.explanation} onChange={mutateInputData} name="explanation" id="explanation"></textarea>
-                                    </div>
-                                    <div className="input-group flex-cs col">
-                                        <label>Level kesulitan</label>
-                                        <select value={inputData.level} onChange={mutateInputData} name="level" id="level">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit">{loading ? <Spinner /> : 'SIMPAN'}</button>
-                                </form>
-                            }
-                        </div>
-                    </section>
-
+                        <section css={style.form}>
+                            <div className="inner contain-size-m">
+                                {questions.length !== 0 && answers.length !== 0 &&
+                                    <form onSubmit={handleSubmit} className="flex-cc col">
+                                        <div className="input-group flex-cs col">
+                                            <label>Pertanyaan</label>
+                                            <InputMCE value={inputData.question} onChange={mutateMCE.question}/>
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Opsi A</label>
+                                            <textarea value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>                                    
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Opsi B</label>
+                                            <textarea value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>                                    
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Opsi C</label>
+                                            <textarea value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>                                    
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Opsi D</label>
+                                            <textarea value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>                                    
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Opsi E</label>
+                                            <textarea value={inputData.optionE} onChange={mutateInputData} name="optionE" id="optionE"></textarea>
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Kunci Jawaban</label>
+                                            <select value={inputData.key} onChange={mutateInputData} name="key" id="key">
+                                                <option disabled value="">-</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                                <option value="E">E</option>
+                                            </select>
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Pembahasan</label>
+                                            <InputMCE value={inputData.explanation} onChange={mutateMCE.explanation}/>
+                                        </div>
+                                        <div className="input-group flex-cs col">
+                                            <label>Level kesulitan</label>
+                                            <select value={inputData.level} onChange={mutateInputData} name="level" id="level">
+                                                <option disabled value="">-</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit">{loading ? <Spinner /> : 'SIMPAN'}</button>
+                                    </form>
+                                }
+                            </div>
+                        </section>
+                    </>
+                    )}
                 </AdminLayout>
             )}
         </AdminOnlyRoute>
