@@ -1,28 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios'
-import { useRouter } from 'next/router'
-import { v4 as uuid } from 'uuid'
-import { Editor } from '@tinymce/tinymce-react'
+import { useRouter } from 'next/router' 
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
-import { STORAGE } from '@core/services/firebase'
-import UploadMCE from '@core/utils/uploadMCE'
 import AdminLayout from '@components/layouts/AdminLayout'
 import QuizNav from '@components/atomic/QuizNav'
+import InputMCE from '@components/atomic/InputMCE'
+import Spinner from '@components/atomic/spinner/Circle'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
     const [inputData, setInputData] = useState({})
+    const [loading, setLoading] = useState(false)
 
-    const fileInput = useRef({current: {file: [{name: ''}]}})
-    const fileInput2 = useRef({current: {file: [{name: ''}]}})
-    
     const { setGlobalAlert } = useLayout()
     const { user, authState, access } = useAuth()
     const { query: { examId } } = useRouter()
@@ -34,73 +30,34 @@ const Edit = () => {
         }))
     }
 
-    const mutateMCE1 = (value) => {
-        setInputData((prevState) => ({
-            ...prevState,
-            ['question']: value
-        }))
-    }
-
-    const generateFileName = (prevName) => {
-        const unique = uuid().split('-').shift()
-        const ext = prevName.split('.').pop()
-
-        return `${prevName}-${unique}.${ext}`
+    const mutateMCE = {
+        question: (value) => {
+            setInputData((prevState) => ({
+                ...prevState,
+                ['question']: value
+            }))
+        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         setGlobalAlert('')
-        
-        const image = fileInput.current.files[0]
-        const image2 = fileInput2.current.files[0]
-        let imageLink = ''
-        let imageLink2 = ''
-
-        if (image) {
-            const filename = generateFileName(image.name)
-            const storageRef = STORAGE.ref(`/Exams/${examId}`).child(filename)
-            await storageRef.put(image)
-                .catch(() => {
-                    setGlobalAlert({error: true, body:'Gagal input image'})
-                    return
-                })
-            imageLink = await storageRef.getDownloadURL()
-                .catch(() => {
-                    setGlobalAlert({error: true, body:'Gagal input image'})
-                    return 
-                })
-        }
-
-        if (image2) {
-            const filename2 = generateFileName(image2.name)
-            const storageRef2 = STORAGE.ref(`/Exams/${examId}`).child(filename2)
-            await storageRef2.put(image2)
-                .catch(() => {
-                    setGlobalAlert({error: true, body:'Gagal input image'})
-                    return
-                })
-            imageLink2 = await storageRef2.getDownloadURL()
-                .catch(() => {
-                    setGlobalAlert({error: true, body:'Gagal input image'})
-                    return 
-                })
-        }
 
         axios.post('/api/private/exams/update-content', {
             authToken: await user.getIdToken(),
             examId: examId,
             index: activeIndex,
-            data: {
-                ...inputData,
-                imageURL: imageLink ? imageLink : inputData.imageURL,
-                imageURL2: imageLink2 ? imageLink2 : inputData.imageURL2
-            }
+            data: inputData
         })
         .then(res => {
             setGlobalAlert({error: false, body: res.data.message})
+            setLoading(false)
         })
-        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        .catch(err => {
+            setGlobalAlert({error: true, body: err.response.data.message})
+            setLoading(false)
+        })
     }
 
     useEffect(() => {
@@ -126,7 +83,6 @@ const Edit = () => {
 
     useEffect(() => {
         if (questions.length !== 0 && answers.length !== 0){
-            fileInput.current.value = ''
             setInputData({
                 question: questions[activeIndex].body,
                 optionA: questions[activeIndex].options[0].body,
@@ -134,9 +90,7 @@ const Edit = () => {
                 optionC: questions[activeIndex].options[2].body,
                 optionD: questions[activeIndex].options[3].body,
                 optionE: questions[activeIndex].options[4].body,
-                imageURL: questions[activeIndex].imageURL,
                 key: answers[activeIndex].body,
-                imageURL2: answers[activeIndex].imageURL,
                 explanation: answers[activeIndex].explanation,
                 level: answers[activeIndex].level
             })
@@ -148,51 +102,22 @@ const Edit = () => {
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
                     <section css={style.header}>
-                        <div className="inner contain-size-s flex-cc col">
+                        <div className="inner contain-size-m flex-cc col">
                             <h1>EDIT SOAL</h1>
                         </div>
                     </section>
                     <section css={style.navigator}>
-                        <div className="inner contain-size-s flex-cc">
+                        <div className="inner contain-size-m flex-cc">
                             <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
                         </div>
                     </section>
                     <section css={style.form}>
-                        <div className="inner contain-size-s">
+                        <div className="inner contain-size-m">
                             {questions.length !== 0 && answers.length !== 0 &&
                                 <form onSubmit={handleSubmit} className="flex-cc col">
-                                    <img src={inputData.imageURL} alt=""/>
-                                    <div className="input-group flex-cs col">
-                                        <label>Ganti gambar</label>
-                                        <input type="file" ref={fileInput} name="imageURL" id="imageURL"/>
-                                    </div>
                                     <div className="input-group flex-cs col">
                                         <label>Pertanyaan</label>
-
-                                        <Editor
-                                            apiKey = 'oknir2yye4thse3gsqfj4ghubcgo51astnzvozba42kqh0pv'
-                                            init = {{
-                                                menubar: false,
-                                                min_height:400,
-                                                plugins: [
-                                                    'advlist autolink lists link image charmap print preview anchor',
-                                                    'searchreplace visualblocks code fullscreen',
-                                                    'insertdatetime media table paste code help wordcount image '
-                                                ],
-                                                toolbar: 'undo redo | formatselect | ' +
-                                                'bold italic backcolor | alignleft aligncenter ' +
-                                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                'removeformat | image ',
-                                                images_upload_handler: function (blobInfo, success, failure) {
-                                                    const image = blobInfo.blob()
-                                                    UploadMCE(image, success, failure)
-                                                },
-                                                branding: false,
-                                            }}
-                                            value={inputData.question}
-                                            onEditorChange={mutateMCE1}
-                                        />
-
+                                        <InputMCE value={inputData.question} onChange={mutateMCE.question}/>
                                     </div>
                                     <div className="input-group flex-cs col">
                                         <label>Opsi A</label>
@@ -224,11 +149,6 @@ const Edit = () => {
                                             <option value="E">E</option>
                                         </select>
                                     </div>
-                                    <img src={inputData.imageURL2} alt=""/>
-                                    <div className="input-group flex-cs col">
-                                        <label>Ganti gambar pembahasan</label>
-                                        <input type="file" ref={fileInput2} name="imageURL" id="imageURL"/>
-                                    </div>
                                     <div className="input-group flex-cs col">
                                         <label>Pembahasan</label>
                                         <textarea value={inputData.explanation} onChange={mutateInputData} name="explanation" id="explanation"></textarea>
@@ -241,7 +161,7 @@ const Edit = () => {
                                             <option value="3">3</option>
                                         </select>
                                     </div>
-                                    <button type="submit">SIMPAN</button>
+                                    <button type="submit">{loading ? <Spinner /> : 'SIMPAN'}</button>
                                 </form>
                             }
                         </div>

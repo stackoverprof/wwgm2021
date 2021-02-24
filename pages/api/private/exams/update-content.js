@@ -1,10 +1,8 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-    const {body: { authToken, examId, index, data }, body} = req
+    const {body: { authToken, examId, index, data }} = req
 
-    console.log(body)
-    
     if (!authToken || !examId || (!index && index !== 0) || !data) {
         return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
     }
@@ -31,7 +29,6 @@ export default async (req, res) => {
     
     qfiller[index] = {
         ...qfiller[index],
-        imageURL: data.imageURL,
         body: data.question,
         options: [
             {
@@ -62,7 +59,6 @@ export default async (req, res) => {
         body: data.key,
         explanation: data.explanation,
         level: parseInt(data.level),
-        imageURL: data.imageURL2
     }
 
     //BEGIN INSERTION PROCESS

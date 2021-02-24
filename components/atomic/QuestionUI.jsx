@@ -6,12 +6,7 @@ const QuestionUI = ({question}) => {
 
     return (
         <div css={style}>
-            {/* {question.imageURL && (
-                <div className="full-w flex-cc">
-                    <img src={question.imageURL} alt=""/>
-                </div>
-            )} */}
-            <div>{parseHTML(question.body)}</div>
+            {parseHTML(question.body)}
         </div>
     )
 }
