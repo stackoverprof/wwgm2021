@@ -10,6 +10,7 @@ import AdminLayout from '@components/layouts/AdminLayout'
 import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { STORAGE } from '@core/services/firebase'
+import QuizNav from '@components/atomic/QuizNav'
 
 const Edit = () => {
     const [questions, setQuestions] = useState([])
@@ -137,11 +138,16 @@ const Edit = () => {
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
                 <AdminLayout css={style.page} title="Exam Control" className="flex-sc col">
-                    <select value={activeIndex} onChange={e => setActiveIndex(e.target.value)} name="index-pad" id="index-pad">
-                         {questions.map((item, i) => (
-                            <option value={item.id - 1} key={i}>{item.id}</option>
-                        ))}
-                    </select>
+                    <section css={style.header}>
+                        <div className="inner contain-size-s flex-cc col">
+                            <h1>EDIT SOAL</h1>
+                        </div>
+                    </section>
+                    <section css={style.navigator}>
+                        <div className="inner contain-size-s flex-cc">
+                            <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
+                        </div>
+                    </section>
                     <section css={style.form}>
                         <div className="inner contain-size-s">
                             {questions.length !== 0 && answers.length !== 0 &&
@@ -215,7 +221,9 @@ const Edit = () => {
 
 const style = {
     page: css`
-
+    `,
+    navigator: css`
+        margin-bottom: 24px;
     `,
     header: css`
         .inner{

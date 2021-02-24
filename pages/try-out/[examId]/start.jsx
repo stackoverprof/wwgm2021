@@ -40,7 +40,7 @@ const Edit = () => {
         {questions.length !== 0 && (
         <>  
             <section css={style.navigator}>
-                <div className="inner contain-size-l flex-cc">
+                <div className="inner contain-size-m flex-cc">
                     <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex} inputData={inputData}/>
                 </div>
             </section>
@@ -67,8 +67,6 @@ const style = {
         }
     `,
     navigator: css`
-        .inner {
-        }
     `,
     header: css`
         .inner{

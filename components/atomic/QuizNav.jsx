@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { css } from '@emotion/react'
 
-const QuizNav = ({activeIndex, setActiveIndex, inputData}) => {
-    useEffect(() => {
-        console.log(inputData)
-    }, [inputData])
+const QuizNav = ({activeIndex, setActiveIndex, inputData = Array(20).fill('')}) => {
+    
     return (
         <div css={style} className="full-w flex-sc">
             <div className="slider flex-sc">
