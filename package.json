@@ -12,10 +12,12 @@
   "dependencies": {
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
+    "@tinymce/tinymce-react": "^3.10.2",
     "axios": "^0.21.1",
     "firebase": "^8.1.1",
     "firebase-admin": "^9.4.2",
     "framer-motion": "^3.3.0",
+    "html-react-parser": "^1.2.4",
     "next": "^10.0.3",
     "nextjs-progressbar": "0.0.7",
     "node-sass": "^5.0.0",

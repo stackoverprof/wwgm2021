@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 import { v4 as uuid } from 'uuid'
+import { Editor } from '@tinymce/tinymce-react'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
+import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
-import AdminLayout from '@components/layouts/AdminLayout'
-import axios from 'axios'
-import { useLayout } from '@core/contexts/LayoutContext'
 import { STORAGE } from '@core/services/firebase'
+import UploadMCE from '@core/utils/uploadMCE'
+import AdminLayout from '@components/layouts/AdminLayout'
 import QuizNav from '@components/atomic/QuizNav'
 
 const Edit = () => {
@@ -29,6 +31,13 @@ const Edit = () => {
         setInputData((prevState) => ({
             ...prevState,
             [name]: value
+        }))
+    }
+
+    const mutateMCE1 = (value) => {
+        setInputData((prevState) => ({
+            ...prevState,
+            ['question']: value
         }))
     }
 
@@ -159,7 +168,31 @@ const Edit = () => {
                                     </div>
                                     <div className="input-group flex-cs col">
                                         <label>Pertanyaan</label>
-                                        <textarea value={inputData.question} onChange={mutateInputData} name="question" id="question"></textarea>                                    
+
+                                        <Editor
+                                            apiKey = 'oknir2yye4thse3gsqfj4ghubcgo51astnzvozba42kqh0pv'
+                                            init = {{
+                                                menubar: false,
+                                                min_height:400,
+                                                plugins: [
+                                                    'advlist autolink lists link image charmap print preview anchor',
+                                                    'searchreplace visualblocks code fullscreen',
+                                                    'insertdatetime media table paste code help wordcount image '
+                                                ],
+                                                toolbar: 'undo redo | formatselect | ' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | image ',
+                                                images_upload_handler: function (blobInfo, success, failure) {
+                                                    const image = blobInfo.blob()
+                                                    UploadMCE(image, success, failure)
+                                                },
+                                                branding: false,
+                                            }}
+                                            value={inputData.question}
+                                            onEditorChange={mutateMCE1}
+                                        />
+
                                     </div>
                                     <div className="input-group flex-cs col">
                                         <label>Opsi A</label>

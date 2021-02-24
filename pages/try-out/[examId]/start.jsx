@@ -9,6 +9,7 @@ import { to } from '@core/routepath'
 import { useLayout } from '@core/contexts/LayoutContext'
 import MainLayout from '@components/layouts/MainLayout'
 import QuizNav from '@components/atomic/QuizNav'
+import OptionsUI from '@components/atomic/OptionsUI'
 import QuestionUI from '@components/atomic/QuestionUI'
 
 const Edit = () => {
@@ -63,24 +64,36 @@ const Edit = () => {
 
     return (
         <UserOnlyRoute redirect={to.home}>
-        { authState === 'user' && (
-        <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
-        {questions.length !== 0 && (
-        <>  
-            <section css={style.navigator}>
-                <div className="inner contain-size-m flex-cc">
-                    <QuizNav activeIndex={activeIndex} setActiveIndex={setActiveIndex} inputData={inputData}/>
-                </div>
-            </section>
-            <section css={style.main}>
-                <div className="inner contain-size-m">
-                    <QuestionUI question={questions[activeIndex]} current={inputData[activeIndex]} mutateChange={mutateChange} />
-                </div>
-            </section>
-        </>
-        )}
-        </MainLayout>
-        )}
+            { authState === 'user' && (
+                <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
+                    {questions.length !== 0 && (
+                    <>  
+                
+                        <section css={style.navigator}>
+                            <div className="inner contain-size-m flex-cc">
+                                <QuizNav
+                                    activeIndex={activeIndex}
+                                    setActiveIndex={setActiveIndex}
+                                    inputData={inputData}
+                                />
+                           </div>
+                        </section>
+
+                        <section css={style.main}>
+                            <div className="inner contain-size-m">
+                                <QuestionUI question={questions[activeIndex]}/>
+                                <OptionsUI
+                                    options={questions[activeIndex].options}
+                                    value={inputData[activeIndex]}
+                                    onChange={mutateChange}
+                                />
+                            </div>
+                        </section>
+
+                    </>
+                    )}
+                </MainLayout>
+            )}
         </UserOnlyRoute>
     )
 }
