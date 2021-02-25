@@ -24,6 +24,14 @@ export default async (req, res) => {
     if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
     else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
 
+    //CHECK TIME
+    const currentTime = (new Date()).getTime()
+    const start = (new Date(examData.availability.start)).getTime()
+    const end = (new Date(examData.availability.end)).getTime()
+
+    if (examData.status === 'closed')  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
+    else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Sudah melebihi batas waktu pengumpulan' })
+    
     // [TODO] : CHECK IF ALREADY EXIST DONT UPDATE
     
     const keyAnswers = await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').get().then(doc => doc.data().list)
