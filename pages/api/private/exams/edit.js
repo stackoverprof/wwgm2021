@@ -1,7 +1,7 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-    const {body: { title, status, start, end, examId, authToken }} = req
+    const {body: { status, start, end, duration, successor, predecessor, examId, authToken }} = req
     
     if (!authToken || !examId) {
         return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
@@ -27,16 +27,18 @@ export default async (req, res) => {
 
     //BEGIN INSERTION PROCESS
     return await DB.collection('Exams').doc(examId).update({
-        title: title,
         status: status,
         availability: {
             start: start,
             end: end
         },
+        duration: duration,
+        successor: successor,
+        predecessor: predecessor,
         security: admin.firestore.FieldValue.arrayUnion({
             editor: currentUser.uid,
             timestamp: admin.firestore.Timestamp.now(),
-            req: JSON.stringify({title, status, start, end, examId})
+            req: JSON.stringify({status, start, end, successor, predecessor, duration})
         })
     })
     .then(() => res.status(200).json({ status: 'OK', message: 'Berhasil mengubah detail ujian' }))

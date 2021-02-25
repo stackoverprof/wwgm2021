@@ -12,10 +12,12 @@ import { set } from '@core/routepath'
 
 const DetailForm = ({examId, handleClose}) => {
     const [inputData, setInputData] = useState({
-        title: '',
         status: '',
         start: new Date(),
-        end: new Date()
+        end: new Date(),
+        duration: 0,
+        predecessor: '',
+        successor: ''
     })
     const { setGlobalAlert } = useLayout()
     const { user } = useAuth()
@@ -47,10 +49,12 @@ const DetailForm = ({examId, handleClose}) => {
         }).then(res => res.data.body)
         .then(data => {
             setInputData({
-                title: data.title,
                 status: data.status,
                 start: data.availability.start,
-                end: data.availability.end
+                end: data.availability.end,
+                duration: data.duration,
+                predecessor: data.predecessor,
+                successor: data.successor
             })
         })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
@@ -63,10 +67,6 @@ const DetailForm = ({examId, handleClose}) => {
             <form css={style} onSubmit={handleSubmit} className="full-w flex-cc col">
                 <p className="header">Edit data</p>
                 <p className="header">{examId}</p>
-                <div className="input-group flex-cs col full-w">
-                    <label htmlFor="title">Judul Ujian</label>
-                    <input value={inputData.title} onChange={mutateInputData} type="text" id="title" name="title"/>
-                </div>
                 <div className="input-group flex-cs col full-w">
                     <label htmlFor="status">Status</label>
                     <select value={inputData.status} onChange={mutateInputData} name="status" id="status">
@@ -82,6 +82,18 @@ const DetailForm = ({examId, handleClose}) => {
                 <div className="input-group flex-cs col full-w">
                     <label htmlFor="end">Penutupan</label>
                     <input value={convert.viewLocal(inputData.end)} onChange={mutateInputData} type="datetime-local" id="end" name="end"/>
+                </div>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="duration">Duration</label>
+                    <input value={inputData.duration} onChange={mutateInputData} type="number" id="duration" name="duration"/>
+                </div>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="predecessor">Predecessor</label>
+                    <input value={inputData.predecessor} onChange={mutateInputData} type="text" id="predecessor" name="predecessor"/>
+                </div>
+                <div className="input-group flex-cs col full-w">
+                    <label htmlFor="successor">Successor</label>
+                    <input value={inputData.successor} onChange={mutateInputData} type="text" id="successor" name="successor"/>
                 </div>
                 <button type="submit">SUBMIT</button>
                 <div className="flex-cc">

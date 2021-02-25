@@ -26,6 +26,48 @@ const UserDetail = ({item}) => {
             })
             .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         },
+        add_cp: async e => {
+            e.preventDefault()
+            
+            axios.post('/api/private/users/exam-access-add', {
+                authToken: await user.getIdToken(),
+                issuedEmail: item.email,
+                examId: inputExamId
+            })
+            .then(res => {
+                setInputExamId('')
+                setGlobalAlert({error: false, body: res.data.message})
+            })
+            .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        },
+        add_st: async e => {
+            e.preventDefault()
+            
+            axios.post('/api/private/users/exam-access-add', {
+                authToken: await user.getIdToken(),
+                issuedEmail: item.email,
+                examId: inputExamId
+            })
+            .then(res => {
+                setInputExamId('')
+                setGlobalAlert({error: false, body: res.data.message})
+            })
+            .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        },
+        add_sh: async e => {
+            e.preventDefault()
+            
+            axios.post('/api/private/users/exam-access-add', {
+                authToken: await user.getIdToken(),
+                issuedEmail: item.email,
+                examId: inputExamId
+            })
+            .then(res => {
+                setInputExamId('')
+                setGlobalAlert({error: false, body: res.data.message})
+            })
+            .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        },
 
         remove: async (examId) => {            
             axios.post('/api/private/users/exam-access-remove', {
