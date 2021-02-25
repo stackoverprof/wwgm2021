@@ -25,24 +25,39 @@ export default async (req, res) => {
     else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
 
     // [TODO] : CHECK IF ALREADY EXIST DONT UPDATE
-
-    
-    console.log(userAnswers)
     
     const keyAnswers = await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').get().then(doc => doc.data().list)
     
-    console.log(keyAnswers)
-
-    let correct = 0
+    let counter = 0
+    let correctness = []
 
     for (let i = 0; i < 20; i++) {
-        if (userAnswers[i] === keyAnswers[i].body) correct++
-        else console.log(i + ' salah')
+        if (userAnswers[i] === keyAnswers[i].body) {
+            correctness.push(1)
+            counter++
+        }
+        else correctness.push(0)
     }
 
-    console.log(correct)
+    const savedData = await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).get().then(doc => doc.data())
 
-    //CORRECTION ALGORTIHM
+    if (savedData) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Sudah pernah mengumpulkan` })
+    
+    return await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).set({
+        uid: userData.uid,
+        noPeserta: userData.noPeserta,
+        email: userData.email,
+        fullName: userData.fullName,
+        correctness: correctness,
+        userAnswers: userAnswers,
+        nonIRTResult: counter,
+        timestamp: admin.firestore.Timestamp.now()
+    })
+    .then(() => {
+        res.status(200).json({ status: 'OK', message: 'Aman' })
+    })
+    .catch(err => {
+        res.status(500).json({ status: 'ERROR', message: `Firebase related error : ${err}` })
+    })
 
-    res.status(200).json({ status: 'OK', body: 'questions', message: 'Aman' })
 }
