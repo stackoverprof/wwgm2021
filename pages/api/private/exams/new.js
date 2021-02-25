@@ -39,6 +39,8 @@ export default async (req, res) => {
             start: validate(Req.availability.start, 'string'),
             end: validate(Req.availability.end, 'string')
         },
+        predecessor: '',
+        successor: '',
         participants: [],
         security: [
             {
