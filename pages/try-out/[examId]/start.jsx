@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { FaArrowRight } from 'react-icons/fa'
+import { BiCloudUpload } from 'react-icons/bi'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -24,7 +25,7 @@ const Edit = () => {
     const { setGlobalAlert } = useLayout()
     
     const safeLocal = (filler) => {
-        localStorage.setItem('user', user.email)
+        localStorage.setItem('user', user.uid)
         localStorage.setItem('examId', examId)
         localStorage.setItem('answers', JSON.stringify(filler))
     }
@@ -36,6 +37,15 @@ const Edit = () => {
             safeLocal(filler)
             return filler
         })
+    }
+
+    const handleSubmission = async () => {
+        axios.post('/api/user/exams/submit', {
+            authToken: await user.getIdToken(),
+            examId: examId,
+            answers: inputData
+        }).then(res => setGlobalAlert({error: false, body: res.data.message}))
+        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
     const fetchQuestions = async () => {
@@ -69,7 +79,10 @@ const Edit = () => {
         const savedUser = localStorage.getItem('user')
         const savedAnswers = JSON.parse(localStorage.getItem('answers'))
 
-        if(user.email && examId && savedExamId === examId && savedUser === user.email) {
+        if  (   user.uid && examId && 
+                savedExamId && savedUser && savedAnswers && 
+                savedExamId === examId && savedUser === user.uid
+            ) {
             setInputData(savedAnswers)
         }
     }, [user, examId])
@@ -108,7 +121,11 @@ const Edit = () => {
                             <div className="inner contain-size-m flex-cc col">
                                 <div className="buttons full-w flex-bc">
                                     <button onClick={() => setActiveIndex(activeIndex > 0 ? activeIndex - 1 : 0)} className="bordered">Previous</button>
-                                    <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
+                                    {activeIndex < 19 ?
+                                        <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
+                                    : 
+                                        <button onClick={handleSubmission}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
+                                    }
                                 </div>
                                 <QuizNav
                                     activeIndex={activeIndex}

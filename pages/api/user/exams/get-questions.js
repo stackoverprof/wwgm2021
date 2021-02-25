@@ -34,6 +34,9 @@ export default async (req, res) => {
     else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Tidak pada waktunya' })
 
     const questions = await DB.collection('Exams').doc(examId).collection('Content').doc('Questions').get().then(doc => doc.data().list)
+        .catch(err => {
+            return res.status(500).json({ status: 'ERROR', message: `Firebase related error : ${err}` })
+        })
 
-    res.status(200).json({ status: 'OK', body: questions, message: 'Aman' })
+    return res.status(200).json({ status: 'OK', body: questions, message: 'Aman' })
 }
