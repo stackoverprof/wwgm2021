@@ -116,8 +116,9 @@ const Edit = () => {
                         </section>
 
                         <section css={style.navigator}>
-                            <div className="inner contain-size-m flex-cc">
+                            <div className="inner contain-size-m flex-cc col">
                                 <QuizNav inputData={Array(questions.length).fill('')} activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
+                                <p className="instruction mx-auto">pastikan sudah menyimpan perubahan sebelum pindah2 soal</p>
                             </div>
                         </section>
 
@@ -131,27 +132,27 @@ const Edit = () => {
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Opsi A</label>
-                                            <textarea value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>                                    
+                                            <textarea required value={inputData.optionA} onChange={mutateInputData} name="optionA" id="optionA"></textarea>                                    
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Opsi B</label>
-                                            <textarea value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>                                    
+                                            <textarea required value={inputData.optionB} onChange={mutateInputData} name="optionB" id="optionB"></textarea>                                    
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Opsi C</label>
-                                            <textarea value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>                                    
+                                            <textarea required value={inputData.optionC} onChange={mutateInputData} name="optionC" id="optionC"></textarea>                                    
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Opsi D</label>
-                                            <textarea value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>                                    
+                                            <textarea required value={inputData.optionD} onChange={mutateInputData} name="optionD" id="optionD"></textarea>                                    
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Opsi E</label>
-                                            <textarea value={inputData.optionE} onChange={mutateInputData} name="optionE" id="optionE"></textarea>
+                                            <textarea required value={inputData.optionE} onChange={mutateInputData} name="optionE" id="optionE"></textarea>
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Kunci Jawaban</label>
-                                            <select value={inputData.key} onChange={mutateInputData} name="key" id="key">
+                                            <select required value={inputData.key} onChange={mutateInputData} name="key" id="key">
                                                 <option disabled value="">-</option>
                                                 <option value="A">A</option>
                                                 <option value="B">B</option>
@@ -166,7 +167,7 @@ const Edit = () => {
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Level kesulitan</label>
-                                            <select value={inputData.level} onChange={mutateInputData} name="level" id="level">
+                                            <select required value={inputData.level} onChange={mutateInputData} name="level" id="level">
                                                 <option disabled value="">-</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -191,6 +192,12 @@ const style = {
     `,
     navigator: css`
         margin-bottom: 24px;
+        
+        p.instruction {
+            margin-top: 12px;
+            color: #ad1212;
+        }
+        
     `,
     header: css`
         .inner{

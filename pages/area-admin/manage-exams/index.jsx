@@ -6,7 +6,6 @@ import AdminLayout from '@components/layouts/AdminLayout'
 import { useAuth } from '@core/contexts/AuthContext'
 import FireFetcher from '@core/services/FireFetcher'
 import CardDisplayWide from '@components/atomic/CardDisplayWide'
-import MakeNewExams from '@components/molecular/AdminArea/MakeNewExams'
 import ExamDetailPopUp from '@components/molecular/PopUps/ExamDetailPopUp'
 
 const ManageExams = () => {
@@ -51,8 +50,7 @@ const ManageExams = () => {
                             {examIdList.map((item, i) => (
                                 <CardDisplayWide showId examId={item} key={item} onButton={() => setActive(item)}/>
                             ))}
-                            <p className="label">Buat TryOut baru</p>
-                            <MakeNewExams />
+                            {/* <MakeNewExams /> */}
                         </div>
                     </section>
 

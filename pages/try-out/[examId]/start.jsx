@@ -20,13 +20,12 @@ const Edit = () => {
     const [examData, setExamData] = useState(null)
     
     const { user, authState } = useAuth()
-    const { query: { examId, sesi } } = useRouter()
+    const { query: { examId } } = useRouter()
     const { setGlobalAlert } = useLayout()
     
     const safeLocal = (filler) => {
         localStorage.setItem('user', user.email)
         localStorage.setItem('examId', examId)
-        localStorage.setItem('sesi', sesi)
         localStorage.setItem('answers', JSON.stringify(filler))
     }
     
@@ -60,21 +59,20 @@ const Edit = () => {
     }, [examId])
 
     useEffect(() => {
-        if (examId && sesi && typeof user.getIdToken === 'function') {
+        if (examId && typeof user.getIdToken === 'function') {
             fetchQuestions()
         }
-    }, [examId, user, sesi])
+    }, [examId, user])
 
     useEffect(() => {
         const savedExamId = localStorage.getItem('examId')
-        const savedSesi = localStorage.getItem('sesi')
         const savedUser = localStorage.getItem('user')
         const savedAnswers = JSON.parse(localStorage.getItem('answers'))
 
-        if(user.email && sesi && examId && savedExamId === examId && savedSesi === sesi && savedUser === user.email) {
+        if(user.email && examId && savedExamId === examId && savedUser === user.email) {
             setInputData(savedAnswers)
         }
-    }, [user, examId, sesi])
+    }, [user, examId])
 
     return (
         <UserOnlyRoute redirect={to.home}>
@@ -89,7 +87,7 @@ const Edit = () => {
                                     {questions[activeIndex].id}
                                 </div>
                                 <div className="detail flex-bc">
-                                    <p>SESI {sesi} <span className="hide">: {examData.sessions[sesi - 1].name}</span></p>
+                                    <p>{examData.title}</p>
                                     <p className="kluster"><strong>{examData.cluster}</strong></p>
                                 </div>
                             </div>
