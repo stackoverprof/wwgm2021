@@ -9,8 +9,8 @@ const RoutePath = {
 
 const RouteSet = {
     dashboard: ({action}) => `/dashboard?action=${action}`,
-    tryOutOverview: ({examId, sesi = 1}) => `/try-out/${examId}?sesi=${sesi}`,
-    tryOutStart: ({examId, sesi = 1}) => `/try-out/${examId}/start?sesi=${sesi}`,
+    tryOutOverview: ({examId}) => `/try-out/${examId}`,
+    tryOutStart: ({examId}) => `/try-out/${examId}/start`,
     examParticipants: ({examId}) => `/area-admin/manage-exams/${examId}/participants`,
     examEdit: ({examId}) => `/area-admin/manage-exams/${examId}/edit`
 }

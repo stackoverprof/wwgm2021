@@ -5,7 +5,7 @@ import axios from 'axios'
 import { FaBook } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
-import { to } from '@core/routepath'
+import { set } from '@core/routepath'
 
 const CardDisplayWide = ({examId, onButton}) => {
     const [examData, setExamData] = useState(null)
@@ -31,7 +31,7 @@ const CardDisplayWide = ({examId, onButton}) => {
                 {onButton ?
                     <button className="bordered" onClick={onButton}>DETAIL</button>
                     :
-                    <Link href={to._404}>
+                    <Link href={set.tryOutOverview({examId: examId})}>
                         <button className="bordered">DETAIL</button>
                     </Link>
                 }
