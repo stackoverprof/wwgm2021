@@ -3,6 +3,8 @@ import admin, { DB } from '@core/services/firebaseAdmin'
 export default async (req, res) => {
     const {body: { authToken, issuedEmail, code }} = req
 
+    console.log('trig')
+
     if (!authToken || !issuedEmail || !code) {
         return res.status(400).json({ status: 'ERROR', message: 'Parameter tidak lengkap' })
     }
@@ -26,22 +28,28 @@ export default async (req, res) => {
     if (!issuedUser) return
 
     //CHECKING EXAM AVAILABILITY
-    const allExamsRef = await DB.collection('Exams').listDocuments()
-    if (!allExamsRef) return res.status(500).json({ status: 'ERROR', message: 'Gagal. Firebase error' })
+    const packageExam = await DB.collection('Private').doc('Data').get().then(doc => doc.data().package)
     
-    const allExams = allExamsRef.map(item => item.id)
-    if (!allExams.includes(examId)) return res.status(500).json({ status: 'ERROR', message: 'Ujian terkait tidak ditemukan' })
+    let listExamId
 
-    
+    if (code === 'CP') listExamId = (packageExam['CP'].concat(packageExam['ST'])).concat(packageExam['SH'])
+    else if (code === 'ST') listExamId = packageExam['CP'].concat(packageExam['ST'])
+    else if (code === 'SH') listExamId = packageExam['CP'].concat(packageExam['SH'])
+
+    console.log(listExamId)
 
     //BEGIN UPDATE PROCESS
     await DB.collection('Users').doc(issuedUser.uid).update({
-        examsAccess: admin.firestore.FieldValue.arrayUnion(examId)
+        examsAccess: listExamId
     }).then(async () => {
-        return await DB.collection('Exams').doc(examId).update({
-            participants: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
-        })
-        .then(() => res.status(200).json({ status: 'OK', message: `Berhasil menambahkan akses ujian untuk ${issuedEmail}` }))
-        .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))
+        let safe = true
+        for (const examId of listExamId) {
+            await DB.collection('Exams').doc(examId).update({
+                participants: admin.firestore.FieldValue.arrayUnion(issuedUser.uid)
+            })
+            .catch(() => safe = false)
+        }
+        if (safe) res.status(200).json({ status: 'OK', message: `Berhasil menambahkan akses ujian untuk ${issuedEmail}` })
+        else res.status(500).json({ status: 'ERROR', message: 'Kegagalan server, hubungi erbin' })
     })
 }

@@ -26,13 +26,11 @@ const UserDetail = ({item}) => {
             })
             .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         },
-        add_cp: async e => {
-            e.preventDefault()
-            
-            axios.post('/api/private/users/exam-access-add', {
+        add_cp: async () => {     
+            axios.post('/api/private/users/exam-access-add-bulk', {
                 authToken: await user.getIdToken(),
                 issuedEmail: item.email,
-                examId: inputExamId
+                code: 'CP'
             })
             .then(res => {
                 setInputExamId('')
@@ -40,13 +38,11 @@ const UserDetail = ({item}) => {
             })
             .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         },
-        add_st: async e => {
-            e.preventDefault()
-            
-            axios.post('/api/private/users/exam-access-add', {
+        add_st: async () => {     
+            axios.post('/api/private/users/exam-access-add-bulk', {
                 authToken: await user.getIdToken(),
                 issuedEmail: item.email,
-                examId: inputExamId
+                code: 'ST'
             })
             .then(res => {
                 setInputExamId('')
@@ -54,13 +50,11 @@ const UserDetail = ({item}) => {
             })
             .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
         },
-        add_sh: async e => {
-            e.preventDefault()
-            
-            axios.post('/api/private/users/exam-access-add', {
+        add_sh: async () => {     
+            axios.post('/api/private/users/exam-access-add-bulk', {
                 authToken: await user.getIdToken(),
                 issuedEmail: item.email,
-                examId: inputExamId
+                code: 'SH'
             })
             .then(res => {
                 setInputExamId('')
@@ -133,6 +127,11 @@ const UserDetail = ({item}) => {
                         <FaPlus className="icon"/> 
                     </button>
                 </form>
+                <div className="buttons">
+                    <button onClick={handleExamAccess.add_cp} className="bordered"><FaPlus className="icon"/> PAKET CP</button>
+                    <button onClick={handleExamAccess.add_st} className="bordered"><FaPlus className="icon"/> PAKET ST</button>
+                    <button onClick={handleExamAccess.add_sh} className="bordered"><FaPlus className="icon"/> PAKET SH</button>
+                </div>
             </div>
         </div>
     </>
@@ -145,6 +144,12 @@ const style = css`
 
     @media (max-width: 950px) {
         flex-direction: column;
+    }
+    .buttons {
+        button {
+            margin: 6px 0;
+            font-size: 18px;
+        }
     }
 
     margin-top: 0;

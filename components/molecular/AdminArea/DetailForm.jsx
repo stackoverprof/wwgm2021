@@ -107,6 +107,7 @@ const DetailForm = ({examId, handleClose}) => {
 }
 
 const style = css`
+    padding-top: 80px;
 
     .header {
         text-align: center;    

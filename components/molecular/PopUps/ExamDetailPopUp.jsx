@@ -42,12 +42,14 @@ const style = css`
         display: flex;
         justify-content: center;
         align-items: center;
+        max-height: 80vh;
+        overflow-y: scroll;
     }
 
     .pop-up {
         background: #fff;
         width: 272px;
-        padding: 24px;
+        padding: 48px 24px;
         border-radius: 8px;
 
         img {
