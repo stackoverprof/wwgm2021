@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useAuth } from '@core/contexts/AuthContext'
 import { to }from '@core/routepath'
 import CardNoPeserta from '@components/atomic/CardNoPeserta'
-import CardDisplayWide from '@components/atomic/CardDisplayWide'
+import CardDisplayWide2 from '@components/atomic/CardDisplayWide2'
 
 const TryOut = () => {
     const { userData } = useAuth()
@@ -31,7 +31,7 @@ const TryOut = () => {
 
             <div css={style.access} className="full-w">
                 <p className="label">AKSES TRYOUT</p>
-                <div className="full-w flex-cc">
+                <div className="full-w flex-cc col">
                     {(!userData.approved || userData.examsAccess.length === 0) && 
                         <div className="information-access full-w flex-cc col">
                             <p>Akses TryOut akan muncul setelah Anda di-approve oleh panitia</p>
@@ -39,7 +39,7 @@ const TryOut = () => {
                         </div>
                     }
                     {userData.approved && userData.examsAccess?.map((exam, i) => (
-                        <CardDisplayWide examId={exam} key={i} />
+                        <CardDisplayWide2 examId={exam} key={i} />
                     ))}
                 </div>
             </div>
