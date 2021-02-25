@@ -31,7 +31,7 @@ export default async (req, res) => {
 
     if (examData.status === 'closed')  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
     else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Sudah melebihi batas waktu pengumpulan' })
-    
+
     // [TODO] : CHECK IF ALREADY EXIST DONT UPDATE
     
     const keyAnswers = await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').get().then(doc => doc.data().list)
@@ -51,7 +51,7 @@ export default async (req, res) => {
 
     if (savedData) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Sudah pernah mengumpulkan` })
     
-    return await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).set({
+    await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).set({
         uid: userData.uid,
         noPeserta: userData.noPeserta,
         email: userData.email,
@@ -62,10 +62,10 @@ export default async (req, res) => {
         timestamp: admin.firestore.Timestamp.now()
     })
     .then(() => {
-        res.status(200).json({ status: 'OK', message: 'Aman' })
+        return res.status(200).json({ status: 'OK', message: 'Try Out berhasil dikumpulkan' })
     })
     .catch(err => {
-        res.status(500).json({ status: 'ERROR', message: `Firebase related error : ${err}` })
+        return res.status(500).json({ status: 'ERROR', message: `Firebase related error : ${err}` })
     })
 
 }
