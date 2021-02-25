@@ -26,7 +26,21 @@ export default async (req, res) => {
 
     // [TODO] : CHECK IF ALREADY EXIST DONT UPDATE
 
+    
     console.log(userAnswers)
+    
+    const keyAnswers = await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').get().then(doc => doc.data().list)
+    
+    console.log(keyAnswers)
+
+    let correct = 0
+
+    for (let i = 0; i < 20; i++) {
+        if (userAnswers[i] === keyAnswers[i].body) correct++
+        else console.log(i + ' salah')
+    }
+
+    console.log(correct)
 
     //CORRECTION ALGORTIHM
 
