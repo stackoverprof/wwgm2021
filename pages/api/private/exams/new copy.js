@@ -8,6 +8,8 @@ export default async (req, res) => {
     
     const Req = req.body
 
+    console.log(Req.availability)
+
     //VERIVYING THE CURRENT USER
     const currentUser = await admin.auth().verifyIdToken(Req.authToken)
         .catch(() => {
@@ -19,7 +21,7 @@ export default async (req, res) => {
     }
 
     //REQUEST BODY STRUCTURE VALIDATION
-    const examId = `${Req.cluster.toUpperCase()}-${Req.subtest.toUpperCase()}-${uuid().split('-')[0]}`
+    const examId = `${Req.cluster.toUpperCase()}-${uuid().split('-')[0]}`
     let _dataInvalid = false
 
     const validate = (data, type) => {
@@ -28,17 +30,37 @@ export default async (req, res) => {
         }
         return data
     }
-        
+
+    let totalQuestions = 0
+    let divideSession = []
+
+    const validateSession = (data) => {
+        if (!Array.isArray(Req.sessions)) {
+            _dataInvalid = true
+            return
+        }
+
+        for (const each of data) {
+            validate(each.name, 'string')
+            validate(each.size, 'number')
+            validate(each.duration, 'number')
+            totalQuestions += each.size
+            divideSession.push(totalQuestions)
+        }
+
+        return data
+    }
+    
     const ExamFormat = {
         examId: examId,
         title: validate(Req.title, 'string'),
         cluster: validate(Req.cluster.toUpperCase(), 'string'),
-        subtest: validate(Req.subtest.toUpperCase(), 'string'),
         status: validate(Req.status, 'string'),
         availability: {
             start: validate(Req.availability.start, 'string'),
             end: validate(Req.availability.end, 'string')
         },
+        sessions: validateSession(Req.sessions),
         participants: [],
         security: [
             {
@@ -53,11 +75,21 @@ export default async (req, res) => {
         return res.status(400).json({status: 'ERROR', message: `Bad Request: Invalid Parametes`})
     }
     //END OF VALIDATION PROCESS
+
+    //FILLING UP INITIAL EXAMS STORING
+    const countSession = (i) => {
+        let count = 0
+        for (const divider of divideSession) {
+            if (i < divider) break
+            count++
+        }
+        return count + 1
+    }
     
     const questionFiller = () => {
         let questionList = []
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < totalQuestions; i++) {
             questionList.push({
                 id: i+1,
                 body: '',
@@ -82,7 +114,8 @@ export default async (req, res) => {
                         body: '',
                         option: 'E'
                     }
-                ]
+                ],
+                session: countSession(i)
             })
         }
 
@@ -92,11 +125,12 @@ export default async (req, res) => {
     const answerFiller = () => {
         let answerList = []
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < totalQuestions; i++) {
             answerList.push({
                 id: i+1,
                 body: '',
                 explanation: '',
+                session: countSession(i),
                 level: ''
             })
         }

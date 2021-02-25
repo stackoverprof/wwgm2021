@@ -1,113 +1,76 @@
 const initialFormat = {
-    SAINTEK: {
-        title: '',
-        cluster: 'SAINTEK',
-        status: 'limited',
-        availability: {
-            start: new Date(),
-            end: new Date()
-        },
-        sessions: [
-            {
-                name: 'Penalaran Umum',
-                size: 20,
-                duration: 35
-            },
-            {
-                name: 'Pemahaman Bacaan dan Menulis',
-                size: 20,
-                duration: 25
-            },
-            {
-                name: 'Pengetahuan dan Pemahaman Umum',
-                size: 20,
-                duration: 25
-            },
-            {
-                name: 'Pengetahuan Kuantitatif',
-                size: 20,
-                duration: 35
-            },
-            {
-                name: 'Matematika',
-                size: 20,
-                duration: 22.5
-            },
-            {
-                name: 'Fisika',
-                size: 20,
-                duration: 22.5
-            },
-            {
-                name: 'Kimia',
-                size: 20,
-                duration: 22.5
-            },
-            {
-                name: 'Biologi',
-                size: 20,
-                duration: 22.5
-            }
-        ]
+    UMUM_PU: {
+        title: 'Penalaran Umum',
+        cluster: 'UMUM',
+        subtest: 'PU',
+        status: 'limited'
     },
-
-    SOSHUM: {
-        title: '',
+    UMUM_PBM: {
+        title: 'Pemahaman Bacaan dan Menulis',
+        cluster: 'UMUM',
+        subtest: 'PBM',
+        status: 'limited'
+    },
+    UMUM_PPU: {
+        title: 'Pengetahuan dan Pemahaman Umum',
+        cluster: 'UMUM',
+        subtest: 'PPU',
+        status: 'limited'
+    },
+    UMUM_PK: {
+        title: 'Pengetahuan Kuantitatif',
+        cluster: 'UMUM',
+        subtest: 'PK',
+        status: 'limited'
+    },
+    SAINTEK_MATEMATIKA: {
+        title: 'Matematika',
+        cluster: 'SAINTEK',
+        subtest: 'MATEMATIKA',
+        status: 'limited'
+    },
+    SAINTEK_FISIKA: {
+        title: 'Fisika',
+        cluster: 'SAINTEK',
+        subtest: 'FISIKA',
+        status: 'limited'
+    },
+    SAINTEK_KIMIA: {
+        title: 'Kimia',
+        cluster: 'SAINTEK',
+        subtest: 'KIMIA',
+        status: 'limited'
+    },
+    SAINTEK_BIOLOGI: {
+        title: 'Biologi',
+        cluster: 'SAINTEK',
+        subtest: 'BIOLOGI',
+        status: 'limited'
+    },
+    SOSHUM_SEJARAH: {
+        title: 'Sejarah',
         cluster: 'SOSHUM',
-        status: 'limited',
-        availability: {
-            start: new Date(),
-            end: new Date()
-        },
-        sessions: [
-            {
-                name: 'Penalaran Umum',
-                size: 20,
-                duration: 35
-            },
-            {
-                name: 'Pemahaman Bacaan dan Menulis',
-                size: 20,
-                duration: 25
-            },
-            {
-                name: 'Pengetahuan dan Pemahaman Umum',
-                size: 20,
-                duration: 25
-            },
-            {
-                name: 'Pengetahuan Kuantitatif',
-                size: 20,
-                duration: 35
-            },
-            {
-                name: 'Matematika',
-                size: 20,
-                duration: 18
-            },
-            {
-                name: 'Sejarah',
-                size: 20,
-                duration: 18
-            },
-            {
-                name: 'Geografi',
-                size: 20,
-                duration: 18
-            },
-            {
-                name: 'Sosiologi',
-                size: 20,
-                duration: 18
-            },
-            {
-                name: 'Ekonomi',
-                size: 20,
-                duration: 18
-            }
-        ]
-
-    }
+        subtest: 'SEJARAH',
+        status: 'limited'
+    },
+    SOSHUM_GEOGRAFI: {
+        title: 'Geografi',
+        cluster: 'SOSHUM',
+        subtest: 'GEOGRAFI',
+        status: 'limited'
+    },
+    SOSHUM_SOSIOLOGI: {
+        title: 'Sosiologi',
+        cluster: 'SOSHUM',
+        subtest: 'SOSIOLOGI',
+        status: 'limited'
+    },
+    SOSHUM_EKONOMI: {
+        title: 'Ekonomi',
+        cluster: 'SOSHUM',
+        subtest: 'EKONOMI',
+        status: 'limited'
+    },
 }
 
 export default initialFormat
