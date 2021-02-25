@@ -1,5 +1,7 @@
-//check-access//koreksi//insert nilai, provinsi dan berbagai data terkait filtering ranking ke Result di Exam//called setiap sesi berakhir//param : array asnwer (per sesi)//param : kode sesi//availibity time range true//dari kode sesi, get array kunci (utk sesi tsb)//cocokin//store ke sub coll Result di Exams//return _safelyStored
 import admin, { DB } from '@core/services/firebaseAdmin'
+import { checkCompletion } from '@core/utils/validator'
+
+// [TODO] : checking predecessor validation
 
 export default async (req, res) => {
     const { body: { authToken, examId, answers: userAnswers } } = req
@@ -21,9 +23,10 @@ export default async (req, res) => {
     //CHECK EXAM ACCESS
     const userData = await DB.collection('Users').doc(currentUser.uid).get().then(doc => doc.data())
     
-    if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
+    if (!checkCompletion(userData)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Biodata Anda belum dilengkapi (di dashboard)` })
+    else if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
     else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
-
+    
     //CHECK TIME
     const currentTime = (new Date()).getTime()
     const start = (new Date(examData.availability.start)).getTime()
@@ -32,8 +35,6 @@ export default async (req, res) => {
     if (examData.status === 'closed')  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
     else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Sudah melebihi batas waktu pengumpulan' })
 
-    // [TODO] : CHECK IF ALREADY EXIST DONT UPDATE
-    
     const keyAnswers = await DB.collection('Exams').doc(examId).collection('Content').doc('Answers').get().then(doc => doc.data().list)
     
     let counter = 0

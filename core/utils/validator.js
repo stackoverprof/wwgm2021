@@ -14,3 +14,13 @@ export const validateFormatNoPeserta = (value) => {
 
     return structure && isNumber && isOnEnum
 }
+
+export const checkCompletion = (data) => {
+    let isCompleted = true
+    const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
+    for (const field of fields) {
+        if (!data[field]) isCompleted = false
+    }
+    
+    return isCompleted
+}

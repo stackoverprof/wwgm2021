@@ -5,6 +5,7 @@ import axios from 'axios'
 import { to }from '@core/routepath'
 import getAvatar from '@core/utils/getAvatar'
 import FireFetcher from '@core/services/FireFetcher'
+import { checkCompletion } from '@core/utils/validator'
 
 const firebaseAuth = React.createContext()
 
@@ -61,21 +62,12 @@ const AuthProvider = ({children}) => {
             return AUTH.signOut()
         }
     }
-
-    const checkCompletion = (data) => {
-        let isCompleted = true
-        const fields = ['fullName', 'displayName', 'contact', 'province', 'city', 'school']
-        for (const field of fields) {
-            if (!data[field]) isCompleted = false
-        }
-        setDataCompleted(isCompleted)
-    }
-         
+    
     const listenUserData = (uid) => {
         FireFetcher.listen.userData(uid, {
             attach: (doc) => {
                 setUserData(doc.data())
-                checkCompletion(doc.data())
+                setDataCompleted(checkCompletion(doc.data()))
             },
             detach: () => {
                 setUserData({})
