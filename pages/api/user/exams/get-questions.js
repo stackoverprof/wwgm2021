@@ -2,9 +2,9 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
 export default async (req, res) => {
-    const { body: { authToken, examId, sesi } } = req
+    const { body: { authToken, examId } } = req
 
-    if (!authToken || !examId || !sesi) {
+    if (!authToken || !examId) {
         return res.status(400).json({ status: 'ERROR', message: 'Data tidak lengkap' })
     }
     
@@ -33,8 +33,7 @@ export default async (req, res) => {
     if (examData.status === 'closed')  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
     else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Tidak pada waktunya' })
 
-    const allQuestions = await DB.collection('Exams').doc(examId).collection('Content').doc('Questions').get().then(doc => doc.data().list)
-    const questions = allQuestions.filter(item => item.session === parseInt(sesi))
+    const questions = await DB.collection('Exams').doc(examId).collection('Content').doc('Questions').get().then(doc => doc.data().list)
 
     res.status(200).json({ status: 'OK', body: questions, message: 'Aman' })
 }

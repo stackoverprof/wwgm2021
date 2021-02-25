@@ -42,8 +42,7 @@ const Edit = () => {
     const fetchQuestions = async () => {
         axios.post('/api/user/exams/get-questions', {
             authToken: await user.getIdToken(),
-            examId: examId,
-            sesi: sesi
+            examId: examId
         }).then(res => setQuestions(res.data.body))
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
