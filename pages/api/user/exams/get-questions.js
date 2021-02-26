@@ -4,9 +4,7 @@ import { checkCompletion } from '@core/utils/validator'
 export default async (req, res) => {
     const { body: { authToken, examId } } = req
 
-    if (!authToken || !examId) {
-        return res.status(400).json({ status: 'ERROR', message: 'Data tidak lengkap' })
-    }
+    if (!authToken || !examId) return res.status(400).json({ status: 'ERROR', message: 'Data tidak lengkap' })
     
     //VERIVYING _AUTHENTICATED
     const currentUser = await admin.auth().verifyIdToken(authToken)
@@ -22,9 +20,10 @@ export default async (req, res) => {
     const userData = await DB.collection('Users').doc(currentUser.uid).get().then(doc => doc.data())
     
     if (!checkCompletion(userData)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Biodata Anda belum dilengkapi (di dashboard)` })
-    else if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
-    else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
-    else if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
+    if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
+    if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
+    if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
+    if (userData.examsHistory.includes(examId)) return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Sudah pernah dikerjakan dan terkumpul' })
 
     const currentTime = (new Date()).getTime()
     const start = (new Date(examData.availability.start)).getTime()

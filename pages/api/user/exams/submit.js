@@ -22,9 +22,10 @@ export default async (req, res) => {
     const userData = await DB.collection('Users').doc(currentUser.uid).get().then(doc => doc.data())
     
     if (!checkCompletion(userData)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Biodata Anda belum dilengkapi (di dashboard)` })
-    else if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
-    else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
-    else if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
+    if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
+    if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
+    if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
+    if (userData.examsHistory.includes(examId)) return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Sudah pernah mengumpulkan' })
 
     //CHECK TIME
     const currentTime = (new Date()).getTime()
@@ -46,11 +47,6 @@ export default async (req, res) => {
         }
         else correctness.push(0)
     }
-
-    const savedData = await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).get().then(doc => doc.data())
-
-    if (savedData) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Sudah pernah mengumpulkan` })
-    
 
     await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).set({
         uid: userData.uid,
