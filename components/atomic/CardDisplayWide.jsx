@@ -135,6 +135,7 @@ const style = {
     `,
 
     skeleton: css`
+        margin: 12px 0;
 
         @media (max-width: 700px) {
             flex-direction: column;

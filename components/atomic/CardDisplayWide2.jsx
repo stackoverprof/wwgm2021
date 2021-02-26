@@ -6,9 +6,11 @@ import { FaBook } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
 import { set } from '@core/routepath'
+import { useAuth } from '@core/contexts/AuthContext'
 
 const CardDisplayWide = ({examId, onButton}) => {
     const [examData, setExamData] = useState(null)
+    const { userData } = useAuth()
     
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -32,7 +34,12 @@ const CardDisplayWide = ({examId, onButton}) => {
                     <button className="bordered" onClick={onButton}>DETAIL</button>
                     :
                     <Link href={set.tryOutOverview({examId: examId})}>
-                        <button className="bordered">DETAIL</button>
+                        <button 
+                            className="bordered"
+                            disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} 
+                        >
+                            DETAIL
+                        </button>
                     </Link>
                 }
             </div>
@@ -122,6 +129,14 @@ const style = {
                 svg {
                     margin-right: 8px;
                     margin-bottom: 3px;
+                }
+            }
+
+            button:disabled {
+                opacity: 0.25;
+
+                &:hover {            
+                    box-shadow: 0 0 0 0 #000;
                 }
             }
         }
