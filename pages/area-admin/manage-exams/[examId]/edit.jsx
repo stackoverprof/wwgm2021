@@ -167,8 +167,8 @@ const Edit = () => {
                                         </div>
                                         <div className="input-group flex-cs col">
                                             <label>Level kesulitan</label>
-                                            <select required value={inputData.level} onChange={mutateInputData} name="level" id="level">
-                                                <option disabled value="">-</option>
+                                            <select value={inputData.level} onChange={mutateInputData} name="level" id="level">
+                                                <option value="">-</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
