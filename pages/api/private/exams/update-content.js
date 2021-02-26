@@ -54,11 +54,12 @@ export default async (req, res) => {
         ]
     }
 
+    console.log(data.level)
     afiller[index] = {
         ...afiller[index],
         body: data.key,
         explanation: data.explanation,
-        level: data.level,
+        level: data.level === null ? '' : parseInt(data.level)
     }
 
     //BEGIN INSERTION PROCESS
