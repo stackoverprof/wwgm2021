@@ -112,6 +112,7 @@ const Edit = () => {
                         <section css={style.header}>
                             <div className="inner contain-size-m flex-cc col">
                                 <h1>EDIT SOAL</h1>
+                                <p>{examId}</p>
                             </div>
                         </section>
 
