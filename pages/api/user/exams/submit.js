@@ -1,8 +1,6 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 import { checkCompletion } from '@core/utils/validator'
 
-// [TODO] : checking predecessor validation
-
 export default async (req, res) => {
     const { body: { authToken, examId, answers: userAnswers } } = req
 
@@ -26,7 +24,8 @@ export default async (req, res) => {
     if (!checkCompletion(userData)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Biodata Anda belum dilengkapi (di dashboard)` })
     else if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
     else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
-    
+    else if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
+
     //CHECK TIME
     const currentTime = (new Date()).getTime()
     const start = (new Date(examData.availability.start)).getTime()
@@ -52,6 +51,7 @@ export default async (req, res) => {
 
     if (savedData) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Sudah pernah mengumpulkan` })
     
+
     await DB.collection('Exams').doc(examId).collection('Results').doc(userData.uid).set({
         uid: userData.uid,
         noPeserta: userData.noPeserta,
@@ -63,7 +63,15 @@ export default async (req, res) => {
         timestamp: admin.firestore.Timestamp.now()
     })
     .then(() => {
-        return res.status(200).json({ status: 'OK', message: 'Try Out berhasil dikumpulkan' })
+        DB.collection('Users').doc(userData.uid).update({
+            examsHistory: admin.firestore.FieldValue.arrayUnion(examId)
+        })
+        .then(() => {
+            return res.status(200).json({ status: 'OK', message: 'Try Out berhasil dikumpulkan' })
+        })
+        .catch(err => {
+            return res.status(500).json({ status: 'ERROR', message: `Firebase related error : ${err}` })
+        })
     })
     .catch(err => {
         return res.status(500).json({ status: 'ERROR', message: `Firebase related error : ${err}` })

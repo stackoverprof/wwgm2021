@@ -1,4 +1,3 @@
-//read, Mengambil soal.//scope: all, atau sesi 0, 1, 2, 3 dst...//participant of exam terkait only (coba tembak api /check-access dari api ini)//availibity time range true//read, Melihat data basic sebuah exam
 import admin, { DB } from '@core/services/firebaseAdmin'
 import { checkCompletion } from '@core/utils/validator'
 
@@ -25,8 +24,7 @@ export default async (req, res) => {
     if (!checkCompletion(userData)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Biodata Anda belum dilengkapi (di dashboard)` })
     else if (!userData.approved) return res.status(403).json({ status: 'ERROR', message: `Forbidden! No Peserta Anda blm di approve` })
     else if (!userData.examsAccess.includes(examId)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Anda bukan participant dari ${examId}` })
-    
-    // [TODO] : VALIDATE SESI HARUS URUT
+    else if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
 
     const currentTime = (new Date()).getTime()
     const start = (new Date(examData.availability.start)).getTime()

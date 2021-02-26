@@ -22,6 +22,7 @@ export default async (req, res) => {
 
     await DB.collection('Users').doc(currentUser.uid).update({
         examsAccess: [],    //admin only
+        examsHistory: [],    //admin only
         uid: currentUser.uid,   //permanent
         email: currentUser.email, //permanent
         noPeserta: '', //user with rules || admin 

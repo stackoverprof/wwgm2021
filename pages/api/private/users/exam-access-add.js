@@ -32,7 +32,6 @@ export default async (req, res) => {
     const allExams = allExamsRef.map(item => item.id)
     if (!allExams.includes(examId)) return res.status(500).json({ status: 'ERROR', message: 'Ujian terkait tidak ditemukan' })
 
-    
 
     //BEGIN UPDATE PROCESS
     await DB.collection('Users').doc(issuedUser.uid).update({
