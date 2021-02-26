@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
@@ -7,9 +7,12 @@ import { useAuth } from '@core/contexts/AuthContext'
 import axios from 'axios'
 import { useLayout } from '@core/contexts/LayoutContext'
 import UserCard from '@components/atomic/UserCard'
+import CardManageUser from '@components/atomic/CardManageUser'
 
 const AreaAdmin = () => {
     const [issuedEmail, setIssuedEmail] = useState('')
+    const [listAdmin, setListAdmin] = useState([])
+    
     const { user, authState, access } = useAuth()
     const { setGlobalAlert } = useLayout()
 
@@ -27,6 +30,20 @@ const AreaAdmin = () => {
         })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
+
+    const fetchListAdmin = async () => {
+        await axios.post('/api/private/admin/list-admin', {
+            authToken: await user.getIdToken()
+        })
+        .then(res => setListAdmin(res.data.body))
+        .catch(err => setGlobalAlert({body: err.response.data.message, error: true}))
+    }
+
+    useEffect(() => {
+        if (Object.keys(user).length !== 0) {
+            fetchListAdmin()
+        }
+    }, [user])
 
     return (
         <AdminOnlyRoute>
@@ -49,6 +66,20 @@ const AreaAdmin = () => {
                                 <input type="email" value={issuedEmail} required onChange={e => setIssuedEmail(e.target.value)}/>
                                 <button className="btn" type="submit">{alert === null ? <Spinner /> : 'set admin'}</button>
                             </form>
+                        </div>
+                    </section>
+
+                    <section css={style.header}>
+                        <div className="inner contain-size-s flex-cc col">
+                            <h1>LIST ADMIN</h1>
+                        </div>
+                    </section>
+
+                    <section css={style.usersList} className="users-list">
+                        <div className="contain-size-l">
+                            {listAdmin.map((item, i) => (
+                                <CardManageUser itemId={item} adminLabeled key={item} i={i} />
+                            ))}
                         </div>
                     </section>
                 </AdminLayout>
