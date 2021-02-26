@@ -12,6 +12,8 @@ import { STORAGE } from '@core/services/firebase'
 import InitialAva from '@components/atomic/InitialAva'
 import Spinner from '@components/atomic/spinner/Circle'
 
+// [TODO] : Move storage upload ke api biar aman
+
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: '', loading: false})
     const [makeInitial, setMakeInitial] = useState(true)
@@ -198,7 +200,7 @@ const style = css`
     }
 
     form {
-        width: 100%;
+        width: calc(100% - 96px);
         padding: 0 24px;
     }
     
