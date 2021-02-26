@@ -58,7 +58,7 @@ export default async (req, res) => {
         ...afiller[index],
         body: data.key,
         explanation: data.explanation,
-        level: parseInt(data.level),
+        level: data.level,
     }
 
     //BEGIN INSERTION PROCESS
