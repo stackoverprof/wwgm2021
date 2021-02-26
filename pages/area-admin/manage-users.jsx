@@ -32,16 +32,6 @@ const ManageUsers = () => {
     }, [user])
 
     useEffect(() => {
-        const filler = allUsers
-        filler.forEach(item => {
-            if (listAdmin.includes(item.uid)) {
-                item.adminLabeled = true
-            }
-        })
-        setAllUsers(filler)
-    }, [listAdmin, allUsers])
-
-    useEffect(() => {
         const unlisten = FireFetcher.listen.allUsers({
             attach: async (docs) => { 
                 let filler = [], a = [], b = []
@@ -75,7 +65,7 @@ const ManageUsers = () => {
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
                             {allUsers.map((item, i) => (
-                                <CardManageUser itemId={item} key={item} i={i} />
+                                <CardManageUser itemId={item} adminLabeled={listAdmin.includes(item)} key={item} i={i} />
                             ))}
                         </div>
                     </section>

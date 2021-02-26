@@ -11,7 +11,7 @@ import AdminBadge from '@components/atomic/AdminBadge'
 import UserDetail from '@components/molecular/AdminArea/UserDetail'
 import FireFetcher from '@core/services/FireFetcher'
 
-const CardManageUser = ({itemId, i}) => {
+const CardManageUser = ({itemId, adminLabeled, i}) => {
     const [itemData, setItemData] = useState({})
     const [openDetail, setOpenDetail] = useState(false) 
 
@@ -61,7 +61,7 @@ const CardManageUser = ({itemId, i}) => {
                         <p className="no-peserta">{itemData.noPeserta ? itemData.noPeserta : '—'}</p>
                     </div>
                     <div className="right flex-bc">
-                        {itemData.adminLabeled && (
+                        {adminLabeled && (
                             <div className="admin-badge flex-cc">
                                 <AdminBadge />
                             </div>
