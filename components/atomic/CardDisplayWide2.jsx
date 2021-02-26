@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import axios from 'axios'
-import { FaBook } from 'react-icons/fa'
+import { FaBook, FaCheckSquare } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
 import { set } from '@core/routepath'
@@ -30,18 +30,17 @@ const CardDisplayWide = ({examId, onButton}) => {
             <div className="body flex-bc">
                 <p className="date flex-cc"><FaBook />{examData.title}</p>
                 
-                {onButton ?
-                    <button className="bordered" onClick={onButton}>DETAIL</button>
-                    :
+                {onButton && <button className="bordered" onClick={onButton}>DETAIL</button>}
+
+                {!onButton && !userData.examsHistory.includes(examId) ? (
                     <Link href={set.tryOutOverview({examId: examId})}>
-                        <button 
-                            className="bordered"
-                            disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} 
-                        >
-                            DETAIL
+                        <button className="bordered" disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} >
+                            MASUK
                         </button>
                     </Link>
-                }
+                ):(
+                    <FaCheckSquare />
+                )}
             </div>
         </div>
     )
