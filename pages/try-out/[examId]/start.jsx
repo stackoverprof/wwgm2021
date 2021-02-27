@@ -29,8 +29,6 @@ const Start = () => {
     const router = useRouter()
     
     const safeLocal = (filler) => {
-        localStorage.setItem('user', user.uid)
-        localStorage.setItem('examId', examId)
         localStorage.setItem('answers', JSON.stringify(filler))
     }
     
@@ -79,7 +77,7 @@ const Start = () => {
         const savedAnswers = JSON.parse(localStorage.getItem('answers'))
         const savedTime = JSON.parse(localStorage.getItem('time'))
         
-        if (savedExamId && savedUser && savedAnswers && savedExamId === examId && savedUser === user.uid){
+        if (savedTime && savedExamId && savedUser && savedAnswers && savedExamId === examId && savedUser === user.uid){
             setInputData(savedAnswers)
         }
 
@@ -88,7 +86,9 @@ const Start = () => {
         } else {
             const timeEnd = Date.now() + examData.duration * 60 * 1000
             setCountdown(timeEnd)
-            localStorage.setItem('time', timeEnd)
+            localStorage.setItem('time', timeEnd)    
+            localStorage.setItem('user', user.uid)
+            localStorage.setItem('examId', examId)
         }    
     }
 

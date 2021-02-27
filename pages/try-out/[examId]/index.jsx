@@ -65,8 +65,9 @@ const TryOutOverview = () => {
                                 </>
                                 )}
                                 <div className="text-group">
-                                    <p className="label">DIBUKA</p>
-                                    <p className="data">{convert.time(examData.availability.start)} - {convert.fullDate(examData.availability.start)}</p>
+                                    <p className="label">TERSEDIA</p>
+                                    <p className="data">{convert.time(examData.availability.start)} - {convert.time(examData.availability.end)}</p>
+                                    <p className="data">{convert.fullDate(examData.availability.start)}</p>
                                 </div>
                                 <div className="text-group">
                                     <p className="label">DURASI</p>
