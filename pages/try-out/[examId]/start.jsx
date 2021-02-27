@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { FaArrowRight } from 'react-icons/fa'
 import { BiCloudUpload } from 'react-icons/bi'
+import Countdown from 'react-countdown'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
@@ -19,6 +20,7 @@ const Edit = () => {
     const [inputData, setInputData] = useState(Array(20).fill(''))
     const [activeIndex, setActiveIndex] = useState(0)
     const [examData, setExamData] = useState(null)
+    const [ date, setDate ] = useState(Date.now() + 5000)
     
     const { user, authState } = useAuth()
     const { setGlobalAlert } = useLayout()
@@ -100,6 +102,7 @@ const Edit = () => {
                 <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
                     {questions.length !== 0 && examData && (
                     <>  
+                        <Countdown date={date} renderer={renderer} onComplete={() => handleSubmit()}/>
 
                         <section css={style.header}>
                             <div className="inner contain-size-m flex-cc">
@@ -150,12 +153,44 @@ const Edit = () => {
     )
 }
 
+const renderer = ({ hours, minutes, seconds, completed}) => {
+    if (completed) {
+      return <div className="bordered">Time is up!</div>
+    } else {
+      return (
+        <div css={style.timer} className="bordered">
+            <p>
+                { hours ? <span className="timer">{('0' + hours).slice(-2)}</span> : '' } {hours ? ':' : ''} <span  className="timer">{('0' + minutes).slice(-2)}</span> : <span className="timer">{('0' + seconds).slice(-2)}</span>
+            </p>
+        </div>
+      )
+    }
+}
+
 const style = {
     page: css`
         margin: 24px 0;
     `,
     main: css`
         margin-bottom: 32px;
+    `,
+    timer: css`
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+
+        p{
+            min-width: 154px;
+            position: relative;
+            margin: 4px 0;
+            font-family: Oxygen;
+            font-weight: bold;
+            font-size: 32px;
+        }
     `,
     navigator: css`
         .buttons {

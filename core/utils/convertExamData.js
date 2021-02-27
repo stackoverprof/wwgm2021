@@ -16,7 +16,7 @@ const time = (value) => {
     const a = new Date(value)
     const hour = a.getHours()
     const min = a.getMinutes()
-    return `${hour}:${("0" + min).slice(-2)}`
+    return `${hour}:${('0' + min).slice(-2)}`
 }
 
 const duration = (sessions) => {
