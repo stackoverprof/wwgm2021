@@ -13,6 +13,7 @@ import ExamLayout from '@components/layouts/ExamLayout'
 import QuizNav from '@components/atomic/QuizNav'
 import OptionsUI from '@components/atomic/OptionsUI'
 import QuestionUI from '@components/atomic/QuestionUI'
+import SubmissionPopUp from '@components/molecular/PopUps/SubmissionPopUp'
 
 // [TODO] : Masih ada x soal yang belum dijawab. Konfimasi pengumpulan?
 
@@ -22,9 +23,10 @@ const Start = () => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [questions, setQuestions] = useState([])
     const [examData, setExamData] = useState(null)
+    const [openPopUp, setOpenPopUp] = useState(false)
     
     const { user, authState } = useAuth()
-    const { setGlobalAlert } = useLayout()
+    const { setDimm, setGlobalAlert } = useLayout()
     const { query: { examId } } = useRouter()
     const router = useRouter()
     
@@ -39,6 +41,20 @@ const Start = () => {
             safeLocal(filler)
             return filler
         })
+    }
+
+    const countProgress = () => {
+        return inputData.filter(item => item !== '').length
+    }
+
+    const showPopUp = {
+        open: () => {
+            setOpenPopUp(true)
+        },
+        close: () => {
+            setDimm(false)
+            setOpenPopUp(false)
+        }
     }
 
     const handleSubmission = async () => {
@@ -144,10 +160,11 @@ const Start = () => {
                             <div className="inner contain-size-m flex-cc col">
                                 <div className="buttons full-w flex-bc">
                                     <button onClick={() => setActiveIndex(activeIndex > 0 ? activeIndex - 1 : 0)} className="bordered">Previous</button>
+                                    <p>{countProgress()} dari {inputData.length} terjawab</p>
                                     {activeIndex < 19 ?
                                         <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
                                     : 
-                                        <button onClick={handleSubmission}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
+                                        <button onClick={showPopUp.open}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
                                     }
                                 </div>
                                 <QuizNav
@@ -156,6 +173,7 @@ const Start = () => {
                                     inputData={inputData}
                                 />
                            </div>
+                           {openPopUp && <SubmissionPopUp handleSubmission={handleSubmission} emptyAnswers={inputData.length - countProgress()} handleClose={showPopUp.close}/>}
                         </section>
                         
                     </>
