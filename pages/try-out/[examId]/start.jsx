@@ -7,7 +7,7 @@ import { BiCloudUpload } from 'react-icons/bi'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
-import { to } from '@core/routepath'
+import { to, set } from '@core/routepath'
 import { useLayout } from '@core/contexts/LayoutContext'
 import MainLayout from '@components/layouts/MainLayout'
 import QuizNav from '@components/atomic/QuizNav'
@@ -21,8 +21,9 @@ const Edit = () => {
     const [examData, setExamData] = useState(null)
     
     const { user, authState } = useAuth()
-    const { query: { examId } } = useRouter()
     const { setGlobalAlert } = useLayout()
+    const { query: { examId } } = useRouter()
+    const router = useRouter()
     
     const safeLocal = (filler) => {
         localStorage.setItem('user', user.uid)
@@ -44,7 +45,13 @@ const Edit = () => {
             authToken: await user.getIdToken(),
             examId: examId,
             answers: inputData
-        }).then(res => setGlobalAlert({error: false, body: res.data.message}))
+        }).then(res => {
+            setGlobalAlert({error: false, body: res.data.message + '. Menuju ke sesi selanjutnya...'})
+            setTimeout(() => {
+                if (examData.successor) router.push(set.tryOutOverview({examId: examData.successor}))
+                else router.push(to.dashboard)
+            }, 3000)
+        })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
