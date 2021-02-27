@@ -15,11 +15,11 @@ import OptionsUI from '@components/atomic/OptionsUI'
 import QuestionUI from '@components/atomic/QuestionUI'
 
 const Start = () => {
-    const [questions, setQuestions] = useState([])
+    const [countdown, setCountdown] = useState(Date.now() + 20 * 60 * 1000)
     const [inputData, setInputData] = useState(Array(20).fill(''))
     const [activeIndex, setActiveIndex] = useState(0)
+    const [questions, setQuestions] = useState([])
     const [examData, setExamData] = useState(null)
-    const [ countdown, setCountdown ] = useState(Date.now() + 20 * 60 * 1000)
     
     const { user, authState } = useAuth()
     const { setGlobalAlert } = useLayout()
@@ -32,10 +32,10 @@ const Start = () => {
         localStorage.setItem('answers', JSON.stringify(filler))
     }
     
-    const mutateChange = (e) => {
+    const mutateChange = ({target: { value }}) => {
         setInputData(prev => {
             let filler = [...prev]
-            filler[activeIndex] = filler[activeIndex] === e.target.value ? '' : e.target.value
+            filler[activeIndex] = filler[activeIndex] !== value ? value : ''
             safeLocal(filler)
             return filler
         })
@@ -67,36 +67,46 @@ const Start = () => {
     const fetchExamData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
             examId: examId
-        })
-        .then(res => setExamData(res.data.body))
+        }).then(res => setExamData(res.data.body))
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
+    const syncLocal = () => {
+        const savedExamId = localStorage.getItem('examId')
+        const savedUser = localStorage.getItem('user')
+        const savedAnswers = JSON.parse(localStorage.getItem('answers'))
+        const savedTime = JSON.parse(localStorage.getItem('time'))
+        
+        if (savedExamId && savedUser && savedAnswers && savedExamId === examId && savedUser === user.uid){
+            setInputData(savedAnswers)
+        }
+
+        if (savedTime && savedExamId === examId && savedUser === user.uid) {
+            setCountdown(savedTime)
+        } else {
+            const timeEnd = Date.now() + examData.duration * 60 * 1000
+            setCountdown(timeEnd)
+            localStorage.setItem('time', timeEnd)
+        }    
+    }
+
     useEffect(() => {
-        if (examId) fetchExamData()
+        if (examId) {
+            fetchExamData()
+        }
     }, [examId])
 
     useEffect(() => {
         if (examId && typeof user.getIdToken === 'function') {
             fetchQuestions()
         }
-
-        const savedExamId = localStorage.getItem('examId')
-        const savedUser = localStorage.getItem('user')
-        const savedAnswers = JSON.parse(localStorage.getItem('answers'))
-
-        if  (user.uid && examId && savedExamId && savedUser && savedAnswers && 
-                savedExamId === examId && savedUser === user.uid
-            ) {
-            setInputData(savedAnswers)
-        }
-    }, [user, examId])
-
+    }, [examId, user])
+    
     useEffect(() => {
-        if (examData) {
-            setCountdown(Date.now() + examData.duration * 60 * 1000)
+        if (user.uid && examId && examData) {
+            syncLocal()
         }
-    }, [examData])
+    }, [examId, user, examData])
 
     return (
         <UserOnlyRoute redirect={to.home}>
