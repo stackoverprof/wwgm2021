@@ -22,14 +22,19 @@ const renderer = ({ hours, minutes, seconds, completed}) => {
       return <div className="bordered">Time is up!</div>
     } else {
       return (
-        <div css={style.timer} className="bordered">
+        <div css={style.timer} className="flex-cc">
             <p>
-                { hours ? <span className="timer">{('0' + hours).slice(-2)}</span> : '' } {hours ? ':' : ''} <span  className="timer">{('0' + minutes).slice(-2)}</span> : <span className="timer">{('0' + seconds).slice(-2)}</span>
+                
             </p>
         </div>
       )
     }
 }
+
+// { hours ? <span className="timer">{('0' + hours).slice(-2)}</span> : '' } 
+// {hours ? ':' : ''} <span  className="timer">{('0' + minutes).slice(-2)}</span>
+// : <span className="timer">{('0' + seconds).slice(-2)}</span>
+
 const style = () => css` 
     //Nav tag core style is in globals.scss
     width: 100%;

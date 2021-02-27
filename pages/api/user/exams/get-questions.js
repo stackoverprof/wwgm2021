@@ -25,9 +25,11 @@ export default async (req, res) => {
     if (examData.predecessor && !userData.examsHistory.includes(examData.predecessor)) return res.status(403).json({ status: 'ERROR', message: `Forbidden! Ambil sesi sebelumnya dahulu : ${examData.predecessor}` })
     if (userData.examsHistory.includes(examId)) return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Sudah pernah dikerjakan dan terkumpul' })
 
+    const additionalTime = userData.noPeserta.split('-')[1] === 'CP' ?  3 * 60 * 60 * 1000 : 0
+
     const currentTime = (new Date()).getTime()
     const start = (new Date(examData.availability.start)).getTime()
-    const end = (new Date(examData.availability.end)).getTime()
+    const end = (new Date(examData.availability.end)).getTime() + additionalTime
 
     if (examData.status === 'closed')  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
     else if (examData.status === 'limited' && (currentTime < start || currentTime > end))  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Tidak pada waktunya' })

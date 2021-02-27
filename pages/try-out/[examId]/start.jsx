@@ -14,6 +14,8 @@ import QuizNav from '@components/atomic/QuizNav'
 import OptionsUI from '@components/atomic/OptionsUI'
 import QuestionUI from '@components/atomic/QuestionUI'
 
+// [TODO] : Masih ada x soal yang belum dijawab. Konfimasi pengumpulan?
+
 const Start = () => {
     const [countdown, setCountdown] = useState(Date.now() + 20 * 60 * 1000)
     const [inputData, setInputData] = useState(Array(20).fill(''))
