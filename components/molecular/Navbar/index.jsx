@@ -9,10 +9,7 @@ import { to }from '@core/routepath'
 import LinkSet from './LinkSet'
 import MenuButton from '@components/atomic/MenuButton'
 
-import NavbarClean from './Customized/NavbarClean'
-import NavbarAdmin from './Customized/NavbarAdmin'
-
-const Navbar = ({variant}) => {
+const Navbar = () => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)
     const [openLoginPop, setOpenLoginPop] = useState(false)
@@ -26,41 +23,20 @@ const Navbar = ({variant}) => {
         setOpenAuthAction(false)
     }
 
-    switch (variant) {
-        case 'admin': return <NavbarAdmin />
-        case 'clean': return <NavbarClean />
-        
-        default: return (
-            <nav css={style({openDropper, dimm})}>
-                <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper && !openAuthAction}>
-                    <div className="navbar-main">
-                        <div className="bg-provider bg-blur"></div>
-                        <div className="inner contain-size-xl flex-bc">
-                            <Link href={to.home}>
-                                <a className="brand flex-cc">
-                                    <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
-                                    <p>WWGM 2021</p>
-                                </a>
-                            </Link>
-                            {screen > 950 && (
-                                <div className="wider links flex-cc">
-                                    <LinkSet
-                                        openLoginPop={openLoginPop}
-                                        openLogoutPop={openLogoutPop}
-                                        setOpenLoginPop={setOpenLoginPop}
-                                        setOpenLogoutPop={setOpenLogoutPop}
-                                        openAuthAction={openAuthAction}
-                                        setOpenAuthAction={setOpenAuthAction}
-                                        toggleDropper={toggleDropper}
-                                        />
-                                </div>
-                            )}
-                            <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
-                        </div>
-                    </div>
-                    {screen <= 950 && (
-                        <div className="dropper links">
-                            <div className="dropper-inner contain-size-m flex-cc">
+    return (
+        <nav css={style({openDropper, dimm})}>
+            <OutsideClickHandler onOutsideClick={() => toggleDropper(false)} disabled={!openDropper && !openAuthAction}>
+                <div className="navbar-main">
+                    <div className="bg-provider bg-blur"></div>
+                    <div className="inner contain-size-xl flex-bc">
+                        <Link href={to.home}>
+                            <a className="brand flex-cc">
+                                <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
+                                <p>WWGM 2021</p>
+                            </a>
+                        </Link>
+                        {screen > 950 && (
+                            <div className="wider links flex-cc">
                                 <LinkSet
                                     openLoginPop={openLoginPop}
                                     openLogoutPop={openLogoutPop}
@@ -71,12 +47,28 @@ const Navbar = ({variant}) => {
                                     toggleDropper={toggleDropper}
                                     />
                             </div>
+                        )}
+                        <MenuButton open={openDropper} toggleDropper={toggleDropper} breakpoint={950}/>
+                    </div>
+                </div>
+                {screen <= 950 && (
+                    <div className="dropper links">
+                        <div className="dropper-inner contain-size-m flex-cc">
+                            <LinkSet
+                                openLoginPop={openLoginPop}
+                                openLogoutPop={openLogoutPop}
+                                setOpenLoginPop={setOpenLoginPop}
+                                setOpenLogoutPop={setOpenLogoutPop}
+                                openAuthAction={openAuthAction}
+                                setOpenAuthAction={setOpenAuthAction}
+                                toggleDropper={toggleDropper}
+                                />
                         </div>
-                    )}
-                </OutsideClickHandler>
-            </nav>
-        )
-    }
+                    </div>
+                )}
+            </OutsideClickHandler>
+        </nav>
+    )
 }
 
 const style = ({openDropper, dimm}) => css` 

@@ -4,23 +4,22 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { FaArrowRight } from 'react-icons/fa'
 import { BiCloudUpload } from 'react-icons/bi'
-import Countdown from 'react-countdown'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
 import { to, set } from '@core/routepath'
 import { useLayout } from '@core/contexts/LayoutContext'
-import MainLayout from '@components/layouts/MainLayout'
+import ExamLayout from '@components/layouts/ExamLayout'
 import QuizNav from '@components/atomic/QuizNav'
 import OptionsUI from '@components/atomic/OptionsUI'
 import QuestionUI from '@components/atomic/QuestionUI'
 
-const Edit = () => {
+const Start = () => {
     const [questions, setQuestions] = useState([])
     const [inputData, setInputData] = useState(Array(20).fill(''))
     const [activeIndex, setActiveIndex] = useState(0)
     const [examData, setExamData] = useState(null)
-    const [ date, setDate ] = useState(Date.now() + 5000)
+    const [ countdown, setCountdown ] = useState(Date.now() + 20 * 60 * 1000)
     
     const { user, authState } = useAuth()
     const { setGlobalAlert } = useLayout()
@@ -81,28 +80,30 @@ const Edit = () => {
         if (examId && typeof user.getIdToken === 'function') {
             fetchQuestions()
         }
-    }, [examId, user])
 
-    useEffect(() => {
         const savedExamId = localStorage.getItem('examId')
         const savedUser = localStorage.getItem('user')
         const savedAnswers = JSON.parse(localStorage.getItem('answers'))
 
-        if  (   user.uid && examId && 
-                savedExamId && savedUser && savedAnswers && 
+        if  (user.uid && examId && savedExamId && savedUser && savedAnswers && 
                 savedExamId === examId && savedUser === user.uid
             ) {
             setInputData(savedAnswers)
         }
     }, [user, examId])
 
+    useEffect(() => {
+        if (examData) {
+            setCountdown(Date.now() + examData.duration * 60 * 1000)
+        }
+    }, [examData])
+
     return (
         <UserOnlyRoute redirect={to.home}>
             { authState === 'user' && (
-                <MainLayout css={style.page} title="Exam Control" className="flex-sc col">
+                <ExamLayout css={style.page} title="Exam Control" className="flex-sc col" countdown={countdown} onTimeUp={handleSubmission}>
                     {questions.length !== 0 && examData && (
                     <>  
-                        <Countdown date={date} renderer={renderer} onComplete={() => handleSubmit()}/>
 
                         <section css={style.header}>
                             <div className="inner contain-size-m flex-cc">
@@ -147,25 +148,12 @@ const Edit = () => {
                         
                     </>
                     )}
-                </MainLayout>
+                </ExamLayout>
             )}
         </UserOnlyRoute>
     )
 }
 
-const renderer = ({ hours, minutes, seconds, completed}) => {
-    if (completed) {
-      return <div className="bordered">Time is up!</div>
-    } else {
-      return (
-        <div css={style.timer} className="bordered">
-            <p>
-                { hours ? <span className="timer">{('0' + hours).slice(-2)}</span> : '' } {hours ? ':' : ''} <span  className="timer">{('0' + minutes).slice(-2)}</span> : <span className="timer">{('0' + seconds).slice(-2)}</span>
-            </p>
-        </div>
-      )
-    }
-}
 
 const style = {
     page: css`
@@ -173,24 +161,6 @@ const style = {
     `,
     main: css`
         margin-bottom: 32px;
-    `,
-    timer: css`
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 20;
-
-        p{
-            min-width: 154px;
-            position: relative;
-            margin: 4px 0;
-            font-family: Oxygen;
-            font-weight: bold;
-            font-size: 32px;
-        }
     `,
     navigator: css`
         .buttons {
@@ -262,4 +232,4 @@ const style = {
     
     `
 }
-export default Edit
+export default Start

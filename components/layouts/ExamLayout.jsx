@@ -4,10 +4,10 @@ import Head from "next/head"
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLayout } from '@core/contexts/LayoutContext'
-import NavbarAdmin from '@components/molecular/Navbar/Customized/NavbarAdmin'
+import NavbarExam from '@components/molecular/Navbar/Customized/NavbarExam'
 import AlertHandler from '@components/atomic/AlertHandler'
 
-const AdminLayout = ({className, title, css: style, children, noClearance}) => {
+const MainLayout = ({className, title, css: style, children, noClearance, countdown, onTimeUp}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
@@ -25,7 +25,7 @@ const AdminLayout = ({className, title, css: style, children, noClearance}) => {
                 <title>WWGM 2021 {title ? `— ${title}` : ''}</title>
             </Head>
             
-            <NavbarAdmin />
+            <NavbarExam countdown={countdown} onTimeUp={onTimeUp}/>
             <main css={style} className={className}>
                 {children}
             </main>
@@ -62,12 +62,12 @@ const ShadowLayer = ({dimm}) => {
 const layer = ({navHeight, noClearance}) => css`
     padding-top: ${noClearance ? 0 : navHeight}px;
     padding-bottom: 54px;
-    overflow: hidden;
+    height: 100%;
 
     .dimm-layer{
-        background:  #000c;
+        background: #000c;
         z-index: 50;
     }
 `
 
-export default AdminLayout
+export default MainLayout
