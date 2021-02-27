@@ -68,7 +68,7 @@ const Start = () => {
         }).then(res => {
             setGlobalAlert({error: false, body: res.data.message + '. Menuju ke sesi selanjutnya...'})
             setTimeout(() => {
-                if (examData.successor) router.push(set.tryOutOverview({examId: examData.successor}))
+                if (examData.successor) router.push(set.overviewTO({examId: examData.successor}))
                 else router.push(to.dashboard)
             }, 3000)
         })

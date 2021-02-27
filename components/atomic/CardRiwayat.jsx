@@ -8,7 +8,7 @@ import Skeleton from 'react-loading-skeleton'
 import { set } from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 
-const CardDisplayWide2 = ({examId, onButton}) => {
+const CardRiwayat = ({examId}) => {
     const [examData, setExamData] = useState(null)
     const { userData } = useAuth()
     
@@ -29,18 +29,11 @@ const CardDisplayWide2 = ({examId, onButton}) => {
         <div css={style.main} className="full-w flex-cc">
             <div className="body flex-bc">
                 <p className="date flex-cc"><FaBook />{examData.title}</p>
-                
-                {onButton && <button className="bordered" onClick={onButton}>DETAIL</button>}
-
-                {!onButton && !userData.examsHistory.includes(examId) ? (
-                    <Link href={set.overviewTO({examId: examId})}>
-                        <button className="bordered" disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} >
-                            MASUK
-                        </button>
-                    </Link>
-                ):(
-                    <FaCheckSquare />
-                )}
+                <Link href={set.resultTO({examId: examId})}>
+                    <button className="bordered" disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} >
+                        DETAIL
+                    </button>
+                </Link>
             </div>
         </div>
     )
@@ -191,4 +184,4 @@ const style = {
         }
     `
 }
-export default CardDisplayWide2
+export default CardRiwayat

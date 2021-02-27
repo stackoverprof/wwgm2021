@@ -76,7 +76,7 @@ const TryOutOverview = () => {
                             </div>
                             <div className="bottom flex-bc full-w">
                                 <p className="access">Access : {userData.examsAccess?.includes(examId) && dataCompleted && userData.approved ? 'Allowed' : 'Not Allowed'}</p>
-                                <Link href={set.tryOutStart({examId: examId})}>
+                                <Link href={set.startTO({examId: examId})}>
                                     <button className="bordered">MASUK</button>
                                 </Link>
                             </div>

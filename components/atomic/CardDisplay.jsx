@@ -48,7 +48,7 @@ const CardDisplay = ({examId, i, refreshData}) => {
                     fullDate={convert.fullDate(examData.availability.start)}
                     time={convert.time(examData.availability.start)}
                 />
-                <Link href={set.tryOutOverview({examId: examId})}>    
+                <Link href={set.overviewTO({examId: examId})}>    
                     <button className="action mx-auto bordered green">IKUTI TRYOUT</button>
                 </Link>
             </div>
