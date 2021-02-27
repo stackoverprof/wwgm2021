@@ -8,7 +8,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import InitialAva from '@components/atomic/InitialAva'
 import AdminBadge from '@components/atomic/AdminBadge'
-import UserDetail from '@components/molecular/AdminArea/UserDetail'
+import UserDetail from '@components/atomic/UserDetail'
 import FireFetcher from '@core/services/FireFetcher'
 
 const CardManageUser = ({itemId, adminLabeled, i}) => {

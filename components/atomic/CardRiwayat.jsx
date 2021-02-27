@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 import axios from 'axios'
-import { FaBook, FaCheckSquare } from 'react-icons/fa'
+import { FaBook } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
 import { set } from '@core/routepath'
@@ -27,13 +27,18 @@ const CardRiwayat = ({examId}) => {
     
     return (
         <div css={style.main} className="full-w flex-cc">
-            <div className="body flex-bc">
-                <p className="date flex-cc"><FaBook />{examData.title}</p>
-                <Link href={set.resultTO({examId: examId})}>
-                    <button className="bordered" disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} >
-                        DETAIL
-                    </button>
-                </Link>
+            <div className="body flex-cc col">
+                <div className="rowing full-w flex-bc">
+                    <p className="date green flex-cc"><FaBook />{examData.title}</p>
+                    <Link href={set.resultTO({examId: examId})}>
+                        <button className="bordered" disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} >
+                            DETAIL
+                        </button>
+                    </Link>
+                </div>
+                <div className="rowing full-w flex-bc">
+                    <p className="date smaller flex-cc">Hasil : 4 dari 20 benar</p>
+                </div>
             </div>
         </div>
     )
@@ -89,6 +94,10 @@ const style = {
             }
         }    
 
+        .green {
+            color: var(--army) !important;
+        }
+
         .smaller {
             font-size: 16px !important;
         }
@@ -97,12 +106,15 @@ const style = {
             width: 100%;
             border: 1px solid #0005;
             border-radius: 12px;
-            height: 80px;
             margin-left: 12px;
-            padding: 0 16px;
+            padding: 12px 16px;
 
             @media (max-width: 660px) {
                 margin-left: 0;
+            }
+
+            .rowing {
+                margin: 6px 0;
             }
 
             p.date {
@@ -112,6 +124,7 @@ const style = {
                 line-height: 24px;
                 color: #000a;
                 transition: 0.1s;
+                margin-left: 12px;
 
                 &:hover {
                     color: var(--army);
