@@ -77,7 +77,7 @@ const Start = () => {
         const savedAnswers = JSON.parse(localStorage.getItem('answers'))
         const savedTime = JSON.parse(localStorage.getItem('time'))
         
-        if (savedTime && savedExamId && savedUser && savedAnswers && savedExamId === examId && savedUser === user.uid){
+        if (savedTime && savedAnswers && savedExamId === examId && savedUser === user.uid){
             setInputData(savedAnswers)
         }
 
