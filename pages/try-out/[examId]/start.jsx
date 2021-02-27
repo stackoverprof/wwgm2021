@@ -24,6 +24,7 @@ const Start = () => {
     const [questions, setQuestions] = useState([])
     const [examData, setExamData] = useState(null)
     const [openPopUp, setOpenPopUp] = useState(false)
+    const [loading, setLoading] = useState(false)
     
     const { user, authState } = useAuth()
     const { setDimm, setGlobalAlert } = useLayout()
@@ -58,7 +59,9 @@ const Start = () => {
     }
 
     const handleSubmission = async () => {
-        axios.post('/api/user/exams/submit', {
+        setLoading(true)
+        
+        await axios.post('/api/user/exams/submit', {
             authToken: await user.getIdToken(),
             examId: examId,
             answers: inputData
@@ -70,8 +73,10 @@ const Start = () => {
             }, 3000)
         })
         .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        
+        setLoading(false)
     }
-
+    
     const fetchQuestions = async () => {
         axios.post('/api/user/exams/get-questions', {
             authToken: await user.getIdToken(),
@@ -173,7 +178,14 @@ const Start = () => {
                                     inputData={inputData}
                                 />
                            </div>
-                           {openPopUp && <SubmissionPopUp handleSubmission={handleSubmission} emptyAnswers={inputData.length - countProgress()} handleClose={showPopUp.close}/>}
+                           {openPopUp && 
+                                <SubmissionPopUp
+                                    loading={loading}
+                                    handleSubmission={handleSubmission}
+                                    emptyAnswers={inputData.length - countProgress()}
+                                    handleClose={showPopUp.close}
+                                />
+                            }
                         </section>
                         
                     </>

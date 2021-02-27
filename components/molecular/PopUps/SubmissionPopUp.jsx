@@ -1,14 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { BiCloudUpload } from 'react-icons/bi'
 
 import { useLayout } from '@core/contexts/LayoutContext'
+import Spinner from '@components/atomic/spinner/Circle'
 
-const SubmissionPopUp = ({handleSubmission, emptyAnswers, handleClose}) => {
+const SubmissionPopUp = ({handleSubmission, emptyAnswers, loading, handleClose}) => {
+    const [done, setDone] = useState(false)
 
     const { setDimm } = useLayout()
+
+    const submitActions = () => {
+        handleSubmission()
+        setDone(true)
+    }
 
     useEffect(() => {
         setDimm(true)
@@ -25,10 +32,14 @@ const SubmissionPopUp = ({handleSubmission, emptyAnswers, handleClose}) => {
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
                     className="pop-up flex-bc col"
                 >
-                    <p className="title">Konfirmasi Pengumpulan</p>
-                    {emptyAnswers > 0 && <p className="message">{emptyAnswers} soal belum terjawab</p>}
+                    <p className="title">{!done ? 'Konfirmasi Pengumpulan' : 'Berhasil Terkumpul'}</p>
+                    {emptyAnswers > 0 && !done && <p className="message">{emptyAnswers} soal belum terjawab</p>}
                     <div className="buttons-container full-w flex-cc col">
-                        <button onClick={handleSubmission}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
+                        {!done &&
+                            <button onClick={submitActions}>
+                                {!loading ? <>KUMPULKAN &nbsp; <BiCloudUpload /></> : <Spinner />}
+                            </button>
+                        }
                         <button onClick={handleClose} className="bordered tutup">Tutup</button>
                     </div>
                 </motion.div>
