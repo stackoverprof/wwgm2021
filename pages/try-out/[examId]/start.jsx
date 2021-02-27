@@ -165,13 +165,14 @@ const Start = () => {
                             <div className="inner contain-size-m flex-cc col">
                                 <div className="buttons full-w flex-bc">
                                     <button onClick={() => setActiveIndex(activeIndex > 0 ? activeIndex - 1 : 0)} className="bordered">Previous</button>
-                                    <p>{countProgress()} dari {inputData.length} terjawab</p>
+                                    <p className="answer-counter">{countProgress()} dari {inputData.length} terjawab</p>
                                     {activeIndex < 19 ?
                                         <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
-                                    : 
+                                        : 
                                         <button onClick={showPopUp.open}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
                                     }
                                 </div>
+                                <p className="answer-counter-2">{countProgress()} dari {inputData.length} terjawab</p>
                                 <QuizNav
                                     activeIndex={activeIndex}
                                     setActiveIndex={setActiveIndex}
@@ -207,6 +208,20 @@ const style = {
     navigator: css`
         .buttons {
             margin-bottom: 24px;
+        }
+
+        .answer-counter-2 {
+            display: none;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 550px) {
+            .answer-counter {
+                display: none;
+            }
+            .answer-counter-2 {
+                display: unset;
+            }
         }
     `,
     header: css`
