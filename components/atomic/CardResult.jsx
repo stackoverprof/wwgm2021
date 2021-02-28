@@ -1,15 +1,16 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { FaTimes } from 'react-icons/fa'
+import parseHTML from 'html-react-parser'
 
-const CardResult = ({item, i}) => {
+const CardResult = ({item, openDropper, setOpenDropper, num}) => {
 
     return (
         <div css={style} className="full-w flex-c col">
             <div className="upper flex-bc">
                 <div className="left full-w flex-bc">
                     <div className="number flex-cc">
-                        <p>{i + 1}</p>
+                        <p>{num}</p>
                     </div>
                     <p className="smhide">Jawaban :</p>
                     <div className="answer flex-bc">
@@ -18,14 +19,21 @@ const CardResult = ({item, i}) => {
                     </div>
                     <p className="icon flex-cc">{item.correctness ? '' : <FaTimes color="#b31d2a88" />}</p>
                 </div>
-                <button className="pembahasan">Pembahasan</button>
+                <button onClick={() => setOpenDropper(openDropper === num ? null : num)} className="pembahasan">Pembahasan</button>
             </div>
+            {openDropper === num && (
+                <>
+                    <hr className="fade-flip"/>
+                    <div className="dropper">
+                        <p>{parseHTML(item.explanation)}</p>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
 
 const style = css`
-    height: 48px;
     border: 1px solid #0005;
     border-radius: 8px;
     margin: 8px 0;
@@ -33,6 +41,10 @@ const style = css`
     .upper {
         height: 48px;
         padding: 0 6px;
+    }
+
+    .dropper {
+        padding: 24px;
     }
 
     button.pembahasan {

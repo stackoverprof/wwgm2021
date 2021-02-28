@@ -9,9 +9,11 @@ import { useAuth } from '@core/contexts/AuthContext'
 import MainLayout from '@components/layouts/MainLayout'
 import CardResult from '@components/atomic/CardResult'
 
-const TryOutRank = () => {
+const TryOutResult = () => {
     const [examData, setExamData] = useState(null)
     const [examResult, setExamResult] = useState([])
+    const [openDropper, setOpenDropper] = useState(null)
+    
 
     const { user, authState } = useAuth() 
     const { query: { examId } } = useRouter()
@@ -70,7 +72,7 @@ const TryOutRank = () => {
                     <section css={style.list}>
                         <div className="inner contain-size-m">
                             {examResult.map((item, i) => (
-                                <CardResult item={item} i={i} key={i} />
+                                <CardResult item={item} openDropper={openDropper} setOpenDropper={setOpenDropper} num={i +1} key={i} />
                             ))}
                         </div>
                     </section>
@@ -110,4 +112,4 @@ const style = {
 `,
 }
 
-export default TryOutRank
+export default TryOutResult
