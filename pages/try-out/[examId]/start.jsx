@@ -134,61 +134,61 @@ const Start = () => {
             { authState === 'user' && (
                 <ExamLayout css={style.page} title="Try Out" className="flex-sc col" countdown={countdown} onTimeUp={handleSubmission}>
                     {questions.length !== 0 && examData && (
-                    <>  
+                        <>  
 
-                        <section css={style.header}>
-                            <div className="inner contain-size-m flex-cc">
-                                <div className="no flex-cc">
-                                    {questions[activeIndex].id}
+                            <section css={style.header}>
+                                <div className="inner contain-size-m flex-cc">
+                                    <div className="no flex-cc">
+                                        {questions[activeIndex].id}
+                                    </div>
+                                    <div className="detail flex-bc">
+                                        <p>{examData.title}</p>
+                                        <p className="kluster"><strong>{examData.cluster}</strong></p>
+                                    </div>
                                 </div>
-                                <div className="detail flex-bc">
-                                    <p>{examData.title}</p>
-                                    <p className="kluster"><strong>{examData.cluster}</strong></p>
-                                </div>
-                            </div>
-                        </section>
+                            </section>
 
-                        <section css={style.main}>
-                            <div className="inner contain-size-m">
-                                <QuestionUI question={questions[activeIndex]}/>
-                                <OptionsUI
-                                    options={questions[activeIndex].options}
-                                    value={inputData[activeIndex]}
-                                    onChange={mutateChange}
-                                />
-                            </div>
-                        </section>
-
-                        <section css={style.navigator}>
-                            <div className="inner contain-size-m flex-cc col">
-                                <div className="buttons full-w flex-bc">
-                                    <button onClick={() => setActiveIndex(activeIndex > 0 ? activeIndex - 1 : 0)} className="bordered">Previous</button>
-                                    <p className="answer-counter">{countProgress()} dari {inputData.length} terjawab</p>
-                                    {activeIndex < 19 ?
-                                        <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
-                                        : 
-                                        <button onClick={showPopUp.open}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
-                                    }
+                            <section css={style.main}>
+                                <div className="inner contain-size-m">
+                                    <QuestionUI question={questions[activeIndex]}/>
+                                    <OptionsUI
+                                        options={questions[activeIndex].options}
+                                        value={inputData[activeIndex]}
+                                        onChange={mutateChange}
+                                    />
                                 </div>
-                                <p className="answer-counter-2">{countProgress()} dari {inputData.length} terjawab</p>
-                                <QuizNav
-                                    activeIndex={activeIndex}
-                                    setActiveIndex={setActiveIndex}
-                                    inputData={inputData}
-                                />
-                           </div>
-                           {openPopUp && 
-                                <SubmissionPopUp
-                                    loading={loading}
-                                    handleSubmission={handleSubmission}
-                                    emptyAnswers={inputData.length - countProgress()}
-                                    handleClose={showPopUp.close}
-                                    examId={examId}
-                                />
-                            }
-                        </section>
-                        
-                    </>
+                            </section>
+
+                            <section css={style.navigator}>
+                                <div className="inner contain-size-m flex-cc col">
+                                    <div className="buttons full-w flex-bc">
+                                        <button onClick={() => setActiveIndex(activeIndex > 0 ? activeIndex - 1 : 0)} className="bordered">Previous</button>
+                                        <p className="answer-counter">{countProgress()} dari {inputData.length} terjawab</p>
+                                        {activeIndex < 19 ?
+                                            <button onClick={() => setActiveIndex(activeIndex < 19 ? activeIndex + 1 : 19)}>Next &nbsp; <FaArrowRight /></button>
+                                            : 
+                                            <button onClick={showPopUp.open}>KUMPULKAN &nbsp; <BiCloudUpload /></button>
+                                        }
+                                    </div>
+                                    <p className="answer-counter-2">{countProgress()} dari {inputData.length} terjawab</p>
+                                    <QuizNav
+                                        activeIndex={activeIndex}
+                                        setActiveIndex={setActiveIndex}
+                                        inputData={inputData}
+                                    />
+                                </div>
+                                {openPopUp && 
+                                    <SubmissionPopUp
+                                        loading={loading}
+                                        handleSubmission={handleSubmission}
+                                        emptyAnswers={inputData.length - countProgress()}
+                                        handleClose={showPopUp.close}
+                                        examId={examId}
+                                    />
+                                }
+                            </section>
+                            
+                        </>
                     )}
                 </ExamLayout>
             )}

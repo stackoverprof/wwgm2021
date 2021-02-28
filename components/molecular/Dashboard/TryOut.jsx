@@ -7,6 +7,9 @@ import { to }from '@core/routepath'
 import CardNoPeserta from '@components/atomic/CardNoPeserta'
 import CardDisplayWide2 from '@components/atomic/CardDisplayWide2'
 
+// [TODO] : message lanjutan, cek hasil koreksi tryoutmu disini
+// [TODO] : message lanjutan, cek nilai boobot/IRT disini
+
 const TryOut = () => {
     const { userData } = useAuth()
 

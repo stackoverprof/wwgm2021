@@ -28,10 +28,6 @@ const Participants = () => {
         }
     }, [examId])
 
-    useEffect(() => {
-        console.log(allParticipants)
-    }, [allParticipants])
-
     return (
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (

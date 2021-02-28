@@ -82,6 +82,7 @@ const AreaAdmin = () => {
                             ))}
                         </div>
                     </section>
+                    
                 </AdminLayout>
             )}
         </AdminOnlyRoute>
