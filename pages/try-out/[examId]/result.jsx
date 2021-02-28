@@ -7,10 +7,11 @@ import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { to } from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import MainLayout from '@components/layouts/MainLayout'
+import CardResult from '@components/atomic/CardResult'
 
 const TryOutRank = () => {
     const [examData, setExamData] = useState(null)
-    const [examResult, setExamResult] = useState(null)
+    const [examResult, setExamResult] = useState([])
 
     const { user, authState } = useAuth() 
     const { query: { examId } } = useRouter()
@@ -19,7 +20,7 @@ const TryOutRank = () => {
         await axios.post('/api/public/exams/get-exam-data', {
             examId: examId
         })
-        .then(res => setExamResult(res.data.body))
+        .then(res => setExamData(res.data.body))
         .catch(err => console.log(err.response.data.message))
     }
 
@@ -35,7 +36,7 @@ const TryOutRank = () => {
                 examId: examId
             }).then(res => res.data.body)
             
-            let filler = [] 
+            let filler = []
             data.userAnswers.forEach((answer, i) => {
                 filler.push({
                     ...keyAnswer[i],
@@ -55,29 +56,58 @@ const TryOutRank = () => {
         }
     }, [examId, user])
     
-    useEffect(() => {
-        console.log(examData)
-    }, [examData])
-    
-    useEffect(() => {
-        console.log(examResult)
-    }, [examResult])
-    
-    return (
+    return (  
         <UserOnlyRoute redirect={to.home}>
             { authState === 'user' && (
                 <MainLayout css={style.page} title="Hasil TO" className="flex-sc col">
-                    {/* {examResult?.map((answer, i) => (
-                        <div key="i"></div>
-                    ))} */}
+
+                    <section css={style.header}>
+                        <div className="inner contain-size-s flex-cc col">
+                            <h1>Detail Hasil Try Out</h1>
+                        </div>
+                    </section>
+
+                    <section css={style.list}>
+                        <div className="inner contain-size-s">
+                            {examResult.map((item, i) => (
+                                <CardResult item={item} i={i} key={i} />
+                            ))}
+                        </div>
+                    </section>
+
                 </MainLayout>
             )}
         </UserOnlyRoute>
     )
 }
 
-const style = css`
+const style = {
+    page: css`
     
-`
+    `,
+    list: css`
+
+    `,
+    header: css`
+    .inner{
+        padding: 48px 0;
+        
+        @media (max-width: 600px) {
+            padding: 32px 0;
+        }
+    }
+    
+    h1 {
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 40px;
+        color: #1A2C1E;
+
+        @media (max-width: 780px) {
+            font-size: 28px;
+        }
+    }
+`,
+}
 
 export default TryOutRank
