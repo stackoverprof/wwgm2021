@@ -10,7 +10,9 @@ import { useAuth } from '@core/contexts/AuthContext'
 
 const CardRiwayat = ({examId}) => {
     const [examData, setExamData] = useState(null)
-    const { userData } = useAuth()
+    const [examResult, setExamResult] = useState(null)
+
+    const { user } = useAuth()
     
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -19,9 +21,24 @@ const CardRiwayat = ({examId}) => {
         .then(res => setExamData(res.data.body))
     }
 
+    const fetchResult = async () => {
+        await axios.post('/api/user/exams/get-result', {
+            authToken: await user.getIdToken(),
+            examId: examId
+        })
+        .then(res => setExamResult(res.data.body))
+    }
+
     useEffect(() => {
-        if (examId) fetchData()
+        if (examId) {
+            fetchData()
+            fetchResult()
+        }
     }, [examId])
+
+    useEffect(() => {
+        console.log(examResult)
+    }, [examResult])
 
     if (!examId || !examData) return <ContentLoader />
     
@@ -31,13 +48,13 @@ const CardRiwayat = ({examId}) => {
                 <div className="rowing full-w flex-bc">
                     <p className="date green flex-cc"><FaBook />{examData.title}</p>
                     <Link href={set.resultTO({examId: examId})}>
-                        <button className="bordered" disabled={examData.predecessor && !userData.examsHistory.includes(examData.predecessor)} >
+                        <button className="bordered">
                             DETAIL
                         </button>
                     </Link>
                 </div>
                 <div className="rowing full-w flex-bc">
-                    <p className="date smaller flex-cc">Hasil : 4 dari 20 benar</p>
+                    {examResult && <p className="date smaller flex-cc">Hasil : {examResult.nonIRTResult} dari {examResult.userAnswers.length} benar</p>}
                 </div>
             </div>
         </div>
