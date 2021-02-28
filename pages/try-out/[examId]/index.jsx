@@ -66,7 +66,7 @@ const TryOutOverview = () => {
                                 )}
                                 <div className="text-group">
                                     <p className="label">TERSEDIA</p>
-                                    <p className="data">{convert.time(examData.availability.start)} - {convert.time(examData.availability.end)}</p>
+                                    <p className="data">{convert.time(examData.availability.start)} - {convert.time(examData.availability.end, userData.noPeserta.split('-')[1] === 'CP')}</p>
                                     <p className="data">{convert.fullDate(examData.availability.start)}</p>
                                 </div>
                                 <div className="text-group">

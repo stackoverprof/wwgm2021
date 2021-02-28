@@ -12,9 +12,10 @@ const fullDate = (value) => {
     return `${date(value)} ${year}`
 }
 
-const time = (value) => {
+const time = (value, additional = false) => {
     const a = new Date(value)
-    const hour = a.getHours()
+    const extraTime = additional ? 3 : 0
+    const hour = a.getHours() + extraTime
     const min = a.getMinutes()
     return `${hour}:${('0' + min).slice(-2)}`
 }

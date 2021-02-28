@@ -6,6 +6,8 @@ const Navbar = ({countdown, onTimeUp}) => {
     
     return (
         <nav css={style.main} className="flex-cc">
+            <div className="bg-provider bg-blur"></div>
+            
             <div className="contain-size-xl flex-bc inner">
                 <div className="brand flex-cc">
                     <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
@@ -44,11 +46,21 @@ const style = {
         width: 100%;
         height: 64px;
         z-index: 100;
-        background: rgba(255, 255, 255, 1);
+        background: rgba(255, 255, 255, 0.7);
         box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+
+        .bg-provider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 101;
+        }
 
         .inner{
             height: 100%;
+            z-index: 102;
         }
         
         .brand{
