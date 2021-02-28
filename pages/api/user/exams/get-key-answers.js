@@ -22,7 +22,7 @@ export default async (req, res) => {
     const end = (new Date(examData.availability.end)).getTime() + 3 * 60 * 60 * 1000
 
     if (examData.status === 'closed') return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Try Out Ditutup' })
-    else if (examData.status === 'limited' && currentTime <= end)  return res.status(403).json({ status: 'ERROR', message: 'Forbidden! Tidak pada waktunya' })
+    else if (examData.status === 'limited' && currentTime <= end)  return res.status(403).json({ status: 'ERROR', message: 'Hasil bisa dilihat setelah masa tryout usai' })
 
     //CHECK EXAM ACCESS
     const userData = await DB.collection('Users').doc(currentUser.uid).get().then(doc => doc.data())

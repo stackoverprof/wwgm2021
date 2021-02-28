@@ -8,7 +8,7 @@ import LoginPopUp from '@components/molecular/PopUps/LoginPopUp'
 import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 
-// [TODO] : kelebihan nambah : Pake sistem bobot IRT
+// [TODO] : kelebihan nambah : Pake sistem bobot IRT, kurangi leaderboard dan scope
 
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)

@@ -9,6 +9,7 @@ import { useAuth } from '@core/contexts/AuthContext'
 import MainLayout from '@components/layouts/MainLayout'
 import CardResult from '@components/atomic/CardResult'
 import { useLayout } from '@core/contexts/LayoutContext'
+import convert from '@core/utils/convertExamData'
 
 const TryOutResult = () => {
     const [examData, setExamData] = useState(null)
@@ -50,7 +51,11 @@ const TryOutResult = () => {
             })
             setExamResult(filler)
         })
-        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
+        .catch(err => {
+            const { end, message } = err.response.data
+            const finalMessage = end ? message + convert.time(end) : message
+            setGlobalAlert({error: true, body: finalMessage})
+        })
     }
 
     useEffect(() => {
@@ -59,9 +64,6 @@ const TryOutResult = () => {
             fetchResult()
         }
     }, [examId, user])
-    useEffect(() => {
-        console.log(examResult)
-    }, [examResult])
     
     return (  
         <UserOnlyRoute redirect={to.home}>

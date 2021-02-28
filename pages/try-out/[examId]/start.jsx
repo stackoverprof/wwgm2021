@@ -15,8 +15,6 @@ import OptionsUI from '@components/atomic/OptionsUI'
 import QuestionUI from '@components/atomic/QuestionUI'
 import SubmissionPopUp from '@components/molecular/PopUps/SubmissionPopUp'
 
-// [TODO] : Masih ada x soal yang belum dijawab. Konfimasi pengumpulan?
-
 const Start = () => {
     const [countdown, setCountdown] = useState(Date.now() + 20 * 60 * 1000)
     const [inputData, setInputData] = useState(Array(20).fill(''))
