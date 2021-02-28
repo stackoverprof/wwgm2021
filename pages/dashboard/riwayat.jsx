@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
