@@ -7,16 +7,18 @@ const CardResult = ({item, i}) => {
     return (
         <div css={style} className="full-w flex-c col">
             <div className="upper flex-bc">
-                <div className="number flex-cc">
-                    <p>{i + 1}</p>
+                <div className="left full-w flex-bc">
+                    <div className="number flex-cc">
+                        <p>{i + 1}</p>
+                    </div>
+                    <p className="smhide">Jawaban :</p>
+                    <div className="answer flex-bc">
+                        <p className={`letter ${item.correctness ? 'green' : 'red'}`}>{item.userAnswer ? item.userAnswer : '-'}</p>
+                        <p className="letter gray">{item.body}</p>
+                    </div>
+                    <p className="icon flex-cc">{item.correctness ? '' : <FaTimes color="#b31d2a88" />}</p>
                 </div>
-                <p>Jawaban :</p>
-                <div className="answer flex-bc">
-                    <p className={`letter ${item.correctness ? 'green' : 'red'}`}>{item.userAnswer ? item.userAnswer : '-'}</p>
-                    <p className="letter gray">{item.body}</p>
-                </div>
-                <p className="icon flex-cc">{item.correctness ? '' : <FaTimes color="#b31d2a88" />}</p>
-                <button className="pembahasan bordered">Pembahasan</button>
+                <button className="pembahasan">Pembahasan</button>
             </div>
         </div>
     )
@@ -38,12 +40,28 @@ const style = css`
         padding: 0 12px;
         font-size: 16px;
         border-radius: 6px;
-        border-color: #0007;
-        color: #0007;
+        background: #0000000f;
+        color: #0008;
+        box-shadow: none;
+
+        &:hover {
+            background: #00000022;
+        }
+    }
+
+    .smhide{
+        @media (max-width: 520px) {
+            display: none;
+        }
     }
 
     .answer {
         width: 80px;
+    }
+
+    .left {
+        max-width: 400px;
+        margin-right: 24px;
     }
 
     p.icon {
@@ -72,11 +90,11 @@ const style = css`
         text-align: center;
         
         &.green {
-            color: #009744;
+            color: #268651;
         }
         
         &.red {
-            color: #b31d2a;
+            color: #b31d2aaa;
         }
         
         &.gray {

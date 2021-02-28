@@ -68,7 +68,7 @@ const TryOutRank = () => {
                     </section>
 
                     <section css={style.list}>
-                        <div className="inner contain-size-s">
+                        <div className="inner contain-size-m">
                             {examResult.map((item, i) => (
                                 <CardResult item={item} i={i} key={i} />
                             ))}
