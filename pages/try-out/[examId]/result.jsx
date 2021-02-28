@@ -66,6 +66,14 @@ const TryOutResult = () => {
             { authState === 'user' && (
                 <MainLayout css={style.page} title="Hasil TO" className="flex-sc col">
 
+                    <section css={style.illus}>
+                        <div className="inner contain-size-s flex-cc">    
+                            <p>Ini adalah hasil sementara. Tunggu kami menganalisis nilai IRT-nya!</p>
+                            <img src="/img/illus/time-wait.svg" alt=""/>
+                        </div>
+                        <hr className="fade-flip"/>
+                    </section>
+
                     <section css={style.header}>
                         <div className="inner contain-size-s flex-cc col">
                             <h1>Detail Hasil Try Out</h1>
@@ -88,31 +96,66 @@ const TryOutResult = () => {
 
 const style = {
     page: css`
-    
+        padding-top: 48px;
     `,
     list: css`
 
     `,
     header: css`
-    .inner{
-        padding: 48px 0;
+        .inner{
+            padding: 24px 0 48px 0;
+            
+            @media (max-width: 600px) {
+                padding: 32px 0;
+            }
+        }
         
-        @media (max-width: 600px) {
-            padding: 32px 0;
-        }
-    }
-    
-    h1 {
-        font-family: Poppins;
-        font-weight: 600;
-        font-size: 40px;
-        color: #1A2C1E;
+        h1 {
+            font-family: Poppins;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A2C1E;
 
-        @media (max-width: 780px) {
-            font-size: 28px;
+            @media (max-width: 780px) {
+                font-size: 28px;
+            }
         }
-    }
-`,
+    `,
+
+    illus: css`
+        width: 90%;
+        margin-bottom: 32px;
+
+        .inner {
+            margin-bottom: 24px;
+        }
+
+        p {
+            margin-right: 24px;
+            font-family: Poppins;
+            font-weight: 700;
+            font-size: 20px;
+            color: #75AA87;
+
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        @media (max-width: 500px) {
+            padding: 0;
+            
+            img {
+                width: 88px;
+            }
+            
+            p {
+                line-height: 20px;
+                font-size: 16px;
+            }
+        }
+    `,
+
 }
 
 export default TryOutResult
