@@ -8,12 +8,14 @@ import { useAuth } from '@core/contexts/AuthContext'
 import convert from '@core/utils/convertExamData'
 import { set } from '@core/routepath'
 import MainLayout from '@components/layouts/MainLayout'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const TryOutOverview = () => {
     const [examData, setExamData] = useState(null)
 
     const { query: { examId } } = useRouter()
     const { dataCompleted, userData, authState } = useAuth()
+    const { setGlobalAlert } = useLayout()
 
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -27,8 +29,8 @@ const TryOutOverview = () => {
         if (examId) fetchData()
     }, [examId])
 
-    return ( 
-        <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col">
+    return (
+        <MainLayout css={style.page} title="Try Out" className="flex-sc col">
             {examData && (
             <>
                 <section css={style.header}>
@@ -66,7 +68,7 @@ const TryOutOverview = () => {
                                 )}
                                 <div className="text-group">
                                     <p className="label">TERSEDIA</p>
-                                    <p className="data">{convert.time(examData.availability.start)} - {convert.time(examData.availability.end, userData.noPeserta.split('-')[1] === 'CP')}</p>
+                                    <p className="data">{convert.time(examData.availability.start)} - {convert.time(examData.availability.end, authState === 'user' && userData.noPeserta.split('-')[1] === 'CP')}</p>
                                     <p className="data">{convert.fullDate(examData.availability.start)}</p>
                                 </div>
                                 <div className="text-group">

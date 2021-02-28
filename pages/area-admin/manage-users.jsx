@@ -10,6 +10,8 @@ import AdminLayout from '@components/layouts/AdminLayout'
 import CardManageUser from '@components/atomic/CardManageUser'
 import QuickAddAccess from '@components/atomic/QuickAddAccess'
 
+// [TODO] : filter non admin, urutkam abjad
+
 const ManageUsers = () => {
     const [allUsers, setAllUsers] = useState([])
     const [listAdmin, setListAdmin] = useState([])

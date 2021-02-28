@@ -36,10 +36,6 @@ const CardRiwayat = ({examId}) => {
         }
     }, [examId])
 
-    useEffect(() => {
-        console.log(examResult)
-    }, [examResult])
-
     if (!examId || !examData) return <ContentLoader />
     
     return (

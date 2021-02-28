@@ -8,7 +8,7 @@ import { to } from '@core/routepath'
 import MainLayout from '@components/layouts/MainLayout'
 import CardRiwayat from '@components/atomic/CardRiwayat'
 
-const Hasil = () => {
+const Riwayat = () => {
     const { userData, authState } = useAuth()
 
     return (
@@ -63,4 +63,4 @@ const style = {
 
 }
 
-export default Hasil
+export default Riwayat

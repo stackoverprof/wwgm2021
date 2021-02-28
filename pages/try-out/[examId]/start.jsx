@@ -134,7 +134,7 @@ const Start = () => {
     return (
         <UserOnlyRoute redirect={to.home}>
             { authState === 'user' && (
-                <ExamLayout css={style.page} title="Exam Control" className="flex-sc col" countdown={countdown} onTimeUp={handleSubmission}>
+                <ExamLayout css={style.page} title="Try Out" className="flex-sc col" countdown={countdown} onTimeUp={handleSubmission}>
                     {questions.length !== 0 && examData && (
                     <>  
 
