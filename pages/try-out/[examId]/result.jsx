@@ -8,6 +8,7 @@ import { to } from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import MainLayout from '@components/layouts/MainLayout'
 import CardResult from '@components/atomic/CardResult'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const TryOutResult = () => {
     const [examData, setExamData] = useState(null)
@@ -17,13 +18,14 @@ const TryOutResult = () => {
 
     const { user, authState } = useAuth() 
     const { query: { examId } } = useRouter()
+    const { setGlobalAlert } = useLayout()
     
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
             examId: examId
         })
         .then(res => setExamData(res.data.body))
-        .catch(err => console.log(err.response.data.message))
+        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
     const fetchResult = async () => {
@@ -48,7 +50,7 @@ const TryOutResult = () => {
             })
             setExamResult(filler)
         })
-        .catch(err => console.log(err))
+        .catch(err => setGlobalAlert({error: true, body: err.response.data.message}))
     }
 
     useEffect(() => {
