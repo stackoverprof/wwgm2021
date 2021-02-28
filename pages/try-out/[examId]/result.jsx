@@ -48,7 +48,7 @@ const TryOutResult = () => {
             })
             setExamResult(filler)
         })
-        .catch(err => console.log(err.response.data.message))
+        .catch(err => console.log(err))
     }
 
     useEffect(() => {
@@ -57,6 +57,9 @@ const TryOutResult = () => {
             fetchResult()
         }
     }, [examId, user])
+    useEffect(() => {
+        console.log(examResult)
+    }, [examResult])
     
     return (  
         <UserOnlyRoute redirect={to.home}>

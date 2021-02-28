@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import { FaTimes } from 'react-icons/fa'
 import parseHTML from 'html-react-parser'
 
 const CardResult = ({item, openDropper, setOpenDropper, num}) => {
-
+    
     return (
         <div css={style} className="full-w flex-c col">
             <div className="upper flex-bc">
@@ -21,15 +21,35 @@ const CardResult = ({item, openDropper, setOpenDropper, num}) => {
                 </div>
                 <button onClick={() => setOpenDropper(openDropper === num ? null : num)} className="pembahasan">Pembahasan</button>
             </div>
-            {openDropper === num && (
-                <>
-                    <hr className="fade-flip"/>
-                    <div className="dropper">
-                        <p>{parseHTML(item.explanation)}</p>
-                    </div>
-                </>
-            )}
+            {openDropper === num && <Dropper item={item} />}
         </div>
+    )
+}
+
+const Dropper = ({item}) => {
+    const [openQuestionInfo, setOpenQuestionInfo] = useState(false)
+
+    return (
+        <>
+            <hr className="fade-flip"/>
+            <div className="dropper">
+                <div className="explanation-info">{parseHTML(item.explanation)}</div>
+                <button onClick={() => setOpenQuestionInfo(!openQuestionInfo)} className="show-question no-btn">
+                    {!openQuestionInfo ? 'Lihat Soal' : 'Tutup Soal'}
+                </button>
+                {openQuestionInfo && (
+                    <div className="question-info">
+                        <div className="question-body">{parseHTML(item.questionInfo.body)}</div>
+                        {item.questionInfo.options.map((opt, i) => (
+                            <div className={`flex-ss ${item.body === opt.option ? 'bold' : ''}`} key={i}>
+                                <p className="indicator">{opt.option}.</p>
+                                <p>{opt.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </>
     )
 }
 
@@ -43,8 +63,36 @@ const style = css`
         padding: 0 6px;
     }
 
+    p.indicator {
+        min-width: 24px;
+        margin-right: 4px;
+
+    }
+    .bold p{    
+        font-weight: 700;
+        color: var(--army);
+    }
+    
+    button.show-question {
+        margin-top: 12px;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     .dropper {
         padding: 24px;
+    }
+
+    .question-body {
+        margin-bottom: 12px;
+    }
+
+    .question-info {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #0003;
     }
 
     button.pembahasan {
@@ -92,6 +140,12 @@ const style = css`
             font-weight: 600;
             color: white;
         }
+    }
+
+    .explanation-info {
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #0003;
     }
 
     p.letter {
