@@ -185,6 +185,7 @@ const Start = () => {
                                     handleSubmission={handleSubmission}
                                     emptyAnswers={inputData.length - countProgress()}
                                     handleClose={showPopUp.close}
+                                    examId={examId}
                                 />
                             }
                         </section>

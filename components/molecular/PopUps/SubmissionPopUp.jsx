@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import OutsideClickHandler from 'react-outside-click-handler'
@@ -6,15 +6,14 @@ import { BiCloudUpload } from 'react-icons/bi'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import Spinner from '@components/atomic/spinner/Circle'
+import { useAuth } from '@core/contexts/AuthContext'
 
-const SubmissionPopUp = ({handleSubmission, emptyAnswers, loading, handleClose}) => {
-    const [done, setDone] = useState(false)
-
+const SubmissionPopUp = ({handleSubmission, emptyAnswers, loading, handleClose, examId}) => {
     const { setDimm } = useLayout()
+    const { userData } = useAuth()
 
     const submitActions = () => {
         handleSubmission()
-        setDone(true)
     }
 
     useEffect(() => {
@@ -32,10 +31,10 @@ const SubmissionPopUp = ({handleSubmission, emptyAnswers, loading, handleClose})
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 }}} 
                     className="pop-up flex-bc col"
                 >
-                    <p className="title">{!done ? 'Konfirmasi Pengumpulan' : 'Berhasil Terkumpul'}</p>
-                    {emptyAnswers > 0 && !done && <p className="message">{emptyAnswers} soal belum terjawab</p>}
+                    <p className="title">{!(userData.examsHistory.includes(examId)) ? 'Konfirmasi Pengumpulan' : 'Berhasil Terkumpul'}</p>
+                    {emptyAnswers > 0 && !(userData.examsHistory.includes(examId)) && <p className="message">{emptyAnswers} soal belum terjawab</p>}
                     <div className="buttons-container full-w flex-cc col">
-                        {!done &&
+                        {!(userData.examsHistory.includes(examId)) &&
                             <button onClick={submitActions}>
                                 {!loading ? <>KUMPULKAN &nbsp; <BiCloudUpload /></> : <Spinner />}
                             </button>
