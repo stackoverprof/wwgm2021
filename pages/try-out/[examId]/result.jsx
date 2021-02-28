@@ -79,6 +79,7 @@ const TryOutResult = () => {
                     <section css={style.header}>
                         <div className="inner contain-size-s flex-cc col">
                             <h1>Detail Hasil Try Out</h1>
+                            {examData && <p>{examData.title}</p>}
                         </div>
                     </section>
 
