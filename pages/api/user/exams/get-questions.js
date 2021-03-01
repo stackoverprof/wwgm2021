@@ -1,8 +1,6 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 import { checkCompletion } from '@core/utils/validator'
 
-// [TODO] : gimana cara handle user yg skip  ujian
-
 export default async (req, res) => {
     const { body: { authToken, examId } } = req
 
