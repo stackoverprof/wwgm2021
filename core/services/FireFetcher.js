@@ -26,7 +26,7 @@ const allUsers = (action) => {
 }
 
 const allExams = (action) => {
-    return DB.collection('Exams').orderBy('created_at').onSnapshot(action.attach, action.detach)
+    return DB.collection('Exams').orderBy('created_at', 'desc').onSnapshot(action.attach, action.detach)
 }
 
 const examParticipants = (examId, action) => {
