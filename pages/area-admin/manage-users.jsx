@@ -22,6 +22,7 @@ const ManageUsers = () => {
         switch (method) {
             case 'hide-admin': return array.filter(item => !listAdmin.includes(item.uid))
             case 'hide-approved': return array.filter(item => !item.approved)
+            case 'hide-approved-and-admin': return array.filter(item => !item.approved && !listAdmin.includes(item.uid))
             default: return array
         }
     }
@@ -69,6 +70,7 @@ const ManageUsers = () => {
                                 <option value="">No filter</option>
                                 <option value="hide-admin">Hide admin</option>
                                 <option value="hide-approved">Hide approved</option>
+                                <option value="hide-approved-and-admin">Hide approved and admin</option>
                             </select>
                         </div>
                     </section>
