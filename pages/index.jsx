@@ -55,8 +55,8 @@ const Home = () => {
                         <Advantages />
                     </div>
                     <div className="right flex-bs">
-                        <CardDisplay examId={displayedExams[0]} i={0} refreshData={fetchData}/>
-                        <CardDisplay examId={displayedExams[1]} i={1} refreshData={fetchData}/>
+                        <CardDisplay examId={displayedExams[0]} title="SAINTEK" i={0} refreshData={fetchData}/>
+                        <CardDisplay examId={displayedExams[1]} title="SOSHUM" i={1} refreshData={fetchData}/>
                     </div>
                 </div>
             </section>

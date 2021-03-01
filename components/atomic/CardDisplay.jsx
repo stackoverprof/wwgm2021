@@ -12,7 +12,7 @@ import EditDisplayExams from '@components/atomic/EditDisplayExams'
 import Link from 'next/link'
 import { set } from '@core/routepath'
 
-const CardDisplay = ({examId, i, refreshData}) => {
+const CardDisplay = ({examId, title, i, refreshData}) => {
     const [examData, setExamData] = useState(null)
 
     const { access } = useAuth()
@@ -35,16 +35,16 @@ const CardDisplay = ({examId, i, refreshData}) => {
     return (
         <div css={style}>
             <div className="header flex-cc col">
-                <p className="title">{examData.cluster}</p>
+                <p className="title">{title}</p>
                 <p className="date flex-cc"><FaRegCalendarAlt />{convert.date(examData.availability.start)}</p>
             </div>
             <div className="body flex-cc col">
                 <OverviewExam
                     examId={examId}
-                    title={examData.title}
-                    size={convert.size(examData.sessions)}
-                    duration={convert.duration(examData.sessions)}
-                    sessionsLength={examData.sessions.length}
+                    title={`TRY OUT NASIONAL ${title}`}
+                    size={160}
+                    duration={210}
+                    sessionsLength={8}
                     fullDate={convert.fullDate(examData.availability.start)}
                     time={convert.time(examData.availability.start)}
                 />
