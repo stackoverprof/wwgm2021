@@ -9,6 +9,7 @@ import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 import IntroBox from '@components/molecular/Home/IntroBox'
 import AdvantagesBar from '@components/atomic/AdvantagesBar'
+import Gallery from '@components/atomic/Gallery'
 
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
@@ -77,6 +78,12 @@ const Home = () => {
                 </div>
             </section>
 
+            <section css={style.documentation}>
+                <div className="inner contain-size-sm">
+                    <Gallery />
+                </div>
+            </section>
+
         </MainLayout>
     )
 }
@@ -84,6 +91,10 @@ const Home = () => {
 const style = {
     page: css`
 
+    `,
+
+    documentation: css`
+        padding: 80px 0;
     `,
 
     advantages: css`

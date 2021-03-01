@@ -6,8 +6,10 @@ import useResize from 'use-resizing'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import { to }from '@core/routepath'
-import LinkSet from './LinkSet'
 import MenuButton from '@components/atomic/MenuButton'
+import LinkSet from './LinkSet'
+
+// [TODO] : Navbar link aktifin, sekalian fixin link link yg to._404
 
 const Navbar = () => {
     const [openDropper, setOpenDropper] = useState(false)
