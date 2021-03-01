@@ -8,16 +8,23 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import FireFetcher from '@core/services/FireFetcher'
 import AdminLayout from '@components/layouts/AdminLayout'
 import CardManageUser from '@components/atomic/CardManageUser'
-import QuickAddAccess from '@components/atomic/QuickAddAccess'
-
-// [TODO] : filter non admin, urutkam abjad
+// import QuickAddAccess from '@components/atomic/QuickAddAccess'
 
 const ManageUsers = () => {
     const [allUsers, setAllUsers] = useState([])
     const [listAdmin, setListAdmin] = useState([])
+    const [filter, setFilter] = useState('')
 
     const { user, authState, access } = useAuth()
     const { setGlobalAlert } = useLayout()
+
+    const conditional = (array, method) => {
+        switch (method) {
+            case 'hide-admin': return array.filter(item => !listAdmin.includes(item.uid))
+            case 'hide-approved': return array.filter(item => !item.approved)
+            default: return array
+        }
+    }
 
     const fetchListAdmin = async () => {
         await axios.post('/api/private/admin/list-admin', {
@@ -37,12 +44,8 @@ const ManageUsers = () => {
         const unlisten = FireFetcher.listen.allUsers({
             attach: async (docs) => { 
                 let filler = [], a = [], b = []
-                docs.forEach(doc => filler.push(doc.id))
-                filler.forEach(id => {
-                    if (id !== '') a.push(id)
-                    else b.push(id)
-                })
-                setAllUsers(a.concat(b))
+                docs.forEach(doc => filler.push(doc.data()))
+                setAllUsers(filler)
             },
             detach: () => {
                 setAllUsers([])
@@ -60,14 +63,20 @@ const ManageUsers = () => {
                     <section css={style.header}>
                         <div className="inner contain-size-s flex-cc col">
                             <h1>Manage All Users</h1>
-                            <QuickAddAccess />
+                            {/* <QuickAddAccess /> */}
+                            <p>(gunakan ctrl+f untuk pencarian)</p>
+                            <select value={filter} onChange={e => setFilter(e.target.value)} name="filter" id="filter">
+                                <option value="">No filter</option>
+                                <option value="hide-admin">Hide admin</option>
+                                <option value="hide-approved">Hide approved</option>
+                            </select>
                         </div>
                     </section>
 
                     <section css={style.usersList} className="users-list">
                         <div className="contain-size-l">
-                            {allUsers.map((item, i) => (
-                                <CardManageUser itemId={item} adminLabeled={listAdmin.includes(item)} key={item} i={i} />
+                            {conditional(allUsers, filter).map((item, i) => (
+                                <CardManageUser itemId={item.uid} adminLabeled={listAdmin.includes(item.uid)} key={item.uid} i={i} />
                             ))}
                         </div>
                     </section>
@@ -85,7 +94,16 @@ const style = {
     header: css`
         .inner{
             padding: 48px 0;
-            
+
+            button.show-admin {
+                font-size: 16px;
+                padding: 6px 10px;
+            }
+
+            p {
+                margin: 12px 0;
+            }
+
             @media (max-width: 600px) {
                 padding: 32px 0;
             }

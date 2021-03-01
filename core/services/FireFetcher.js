@@ -22,7 +22,7 @@ const userData = (uid, action) => {
 }
 
 const allUsers = (action) => {
-    return DB.collection('Users').orderBy('noPeserta').onSnapshot(action.attach, action.detach)
+    return DB.collection('Users').orderBy('fullName').onSnapshot(action.attach, action.detach)
 }
 
 const allExams = (action) => {

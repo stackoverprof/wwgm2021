@@ -24,7 +24,6 @@ const Participants = () => {
                     setAllParticipants([])
                 }
             })
-
         }
     }, [examId])
 
