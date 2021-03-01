@@ -13,17 +13,15 @@ import CardManageUser from '@components/atomic/CardManageUser'
 const ManageUsers = () => {
     const [allUsers, setAllUsers] = useState([])
     const [listAdmin, setListAdmin] = useState([])
-    const [filter, setFilter] = useState('')
+    const [filter, setFilter] = useState([])
 
     const { user, authState, access } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const conditional = (array, method) => {
-        switch (method) {
-            case 'hide-admin': return array.filter(item => !listAdmin.includes(item.uid))
-            case 'hide-approved': return array.filter(item => !item.approved)
-            default: return array
-        }
+        // if (method.includes('hide-admin')) array = array.filter(item => !listAdmin.includes(item.uid))
+        // if (method.includes('hide-approved')) array = array.filter(item => !item.approved)
+        return array
     }
 
     const fetchListAdmin = async () => {
@@ -39,6 +37,10 @@ const ManageUsers = () => {
             fetchListAdmin()
         }
     }, [user])
+
+    useEffect(() => {
+        console.log(filter)
+    }, [filter])
 
     useEffect(() => {
         const unlisten = FireFetcher.listen.allUsers({
@@ -65,11 +67,14 @@ const ManageUsers = () => {
                             <h1>Manage All Users</h1>
                             {/* <QuickAddAccess /> */}
                             <p>(gunakan ctrl+f untuk pencarian)</p>
-                            <select value={filter} onChange={e => setFilter(e.target.value)} name="filter" id="filter">
-                                <option value="">No filter</option>
-                                <option value="hide-admin">Hide admin</option>
-                                <option value="hide-approved">Hide approved</option>
-                            </select>
+                            <div className="flex-cc">
+                                <button onClick={() => setFilter(filter.includes('hide-admin') ? filter.filter(item => item !== 'hide-admin') : filter.push('hide-admin'))} className="show-admin bordered">
+                                    {filter === 'hide-admin' ? 'Show admin' : 'Hide admin'}
+                                </button>
+                                <button onClick={() => setFilter(filter.includes('hide-approved') ? filter.filter(item => item !== 'hide-approved') : filter.push('hide-approved'))} className="show-admin bordered">
+                                    {filter === 'hide-approved' ? 'Show approved' : 'Hide approved'}
+                                </button>
+                            </div>
                         </div>
                     </section>
 
