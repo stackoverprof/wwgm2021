@@ -24,7 +24,7 @@ const BioEdit = ({setEditSwitch}) => {
         school: ''
     })
     
-    const { user, userData } = useAuth()
+    const { userData } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const mutateInputData = (e) => {
@@ -42,7 +42,7 @@ const BioEdit = ({setEditSwitch}) => {
         e.preventDefault()
         setLoading(true)
 
-        await FireFetcher.editBiodata(user.uid, {
+        await FireFetcher.editBiodata(userData.uid, {
             fullName: inputData.fullName,
             displayName: inputData.displayName,
             contact: inputData.contact,

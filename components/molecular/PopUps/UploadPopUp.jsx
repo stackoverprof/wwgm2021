@@ -17,7 +17,7 @@ const UploadPopUp = ({handleClose}) => {
     const [makeInitial, setMakeInitial] = useState(true)
     const [draggedOver, setDraggedOver] = useState(false)
     const [loading, setLoading] = useState(false)
-    const { user, userData } = useAuth()
+    const { userData } = useAuth()
     const { setGlobalAlert, setDimm } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
@@ -45,7 +45,7 @@ const UploadPopUp = ({handleClose}) => {
     }
 
     const updateUserData = async (url) => {
-        await FireFetcher.editPhoto(user.uid, { photoURL: url })
+        await FireFetcher.editPhoto(userData.uid, { photoURL: url })
             .then(() => {
                 setGlobalAlert({error: false, body:'Foto profil telah diperbarui'})
                 handleClose()

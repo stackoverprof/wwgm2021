@@ -8,6 +8,10 @@ const editPhoto = (uid, query) => {
     return DB.collection('Users').doc(uid).update(query)
 }
 
+const editFileIRT = (examId, query) => {
+    return DB.collection('Exams').doc(examId).update(query)
+}
+
 const initUserDatabase = (uid, query) => {
     return DB.collection('Users').doc(uid).set(query)
 }
@@ -43,6 +47,7 @@ const examAnswers = (examId, action) => {
 export default {
     editBiodata,
     editPhoto,
+    editFileIRT,
     initUserDatabase,
     getExamData,
 

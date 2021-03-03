@@ -7,10 +7,11 @@ import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
 import AdminLayout from '@components/layouts/AdminLayout'
 import { STORAGE } from '@core/services/firebase'
+import axios from 'axios'
 
 const UploadIRT = () => {
     const { query: { examId } } = useRouter()
-    const { authState, access } = useAuth()
+    const { user, authState, access } = useAuth()
     const { setGlobalAlert } = useLayout()
 
     const fileInput = useRef({current: {file: [{name: ''}]}})
@@ -19,6 +20,20 @@ const UploadIRT = () => {
         const validType = ['application/pdf']
 
         return file && validType.includes(file.type)
+    }
+
+    const updateExam = async (url) => {
+        await axios.post('/api/private/exams/edit-file-irt', {
+                authToken: await user.getIdToken(),
+                url: url,
+                examId: examId
+            })
+            .then(() => {
+                setGlobalAlert({error: false, body:'File hasil IRT telah dipublikasikan'})
+            }).catch(err => {
+                console.log(err)
+                setGlobalAlert({error: true, body:'Gagal memperbarui DB. Refresh dan coba lagi'})
+            })
     }
 
     const handleSubmit = async (e) => {
@@ -39,19 +54,18 @@ const UploadIRT = () => {
         const storageRef = STORAGE.ref('/FileIRT').child(fileIRT.name)
         await storageRef.put(fileIRT)
             .catch(() => {
-                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+                setGlobalAlert({error: true, body:'Gagal memperbarui put. Refresh dan coba lagi'})
                 return
             })
         await storageRef.getDownloadURL()
             .then(res => {
-                console.log(res)
-            })
-            .catch(() => {
-                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+                updateExam(res)
                 return
             })
-
-        console.log(fileIRT)
+            .catch(() => {
+                setGlobalAlert({error: true, body:'Gagal memperbarui link. Refresh dan coba lagi'})
+                return
+            })
     }
 
     return (
