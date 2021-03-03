@@ -28,7 +28,7 @@ const UploadPopUp = ({handleClose}) => {
 
         return parsed.toString()
     }
-
+ 
     const validateImage = (file) => {
         const validType = ['image/gif', 'image/jpeg', 'image/png']
         const validSize = 5 * 1024 * 1024

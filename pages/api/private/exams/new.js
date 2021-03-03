@@ -42,6 +42,7 @@ export default async (req, res) => {
         duration: 0,
         predecessor: '',
         successor: '',
+        fileIRT: '',
         participants: [],
         security: [
             {

@@ -1,14 +1,42 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
 
 import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
+import { useLayout } from '@core/contexts/LayoutContext'
 import AdminLayout from '@components/layouts/AdminLayout'
 
 const UploadIRT = () => {
-    const { authState, access } = useAuth()
     const { query: { examId } } = useRouter()
+    const { authState, access } = useAuth()
+    const { setGlobalAlert } = useLayout()
+
+    const fileInput = useRef({current: {file: [{name: ''}]}})
+
+    const validateFile = (file) => {
+        const validType = ['application/pdf']
+
+        return file && validType.includes(file.type)
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        const fileIRT = fileInput.current.files[0]
+
+        if (!fileIRT) {
+            setGlobalAlert({error: false, body:'Tidak ada file terdeteksi'})
+            return
+        }
+
+        if (!validateFile(fileIRT)) {
+            setGlobalAlert({error: true, body:'File tidak valid. Gunakan tipe .pdf'})
+            return
+        }
+
+        console.log(fileIRT)
+    }
 
     return (
         <AdminOnlyRoute>
@@ -20,6 +48,19 @@ const UploadIRT = () => {
                             <h1>Upload IRT</h1>
                             <p>{examId}</p>
                         </div>
+                    </section>
+
+                    <section css={style.form}>
+                        <form onSubmit={handleSubmit} className="inner contain-size-s flex-cc col">
+                            <input
+                                ref={fileInput}
+                                type="file"
+                                name="irtfile"
+                                id="irtfile"
+                                accept="application/pdf"
+                            />
+                            <button type="submit">Upload</button>
+                        </form>
                     </section>
 
                 </AdminLayout>
@@ -51,6 +92,9 @@ const style = {
                 font-size: 28px;
             }
         }
+    `,
+    form: css`
+    
     `
 }
 export default UploadIRT
