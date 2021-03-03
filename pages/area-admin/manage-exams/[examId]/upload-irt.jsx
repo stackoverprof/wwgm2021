@@ -6,6 +6,7 @@ import AdminOnlyRoute from '@core/routeblocks/AdminOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
 import { useLayout } from '@core/contexts/LayoutContext'
 import AdminLayout from '@components/layouts/AdminLayout'
+import { STORAGE } from '@core/services/firebase'
 
 const UploadIRT = () => {
     const { query: { examId } } = useRouter()
@@ -20,7 +21,7 @@ const UploadIRT = () => {
         return file && validType.includes(file.type)
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const fileIRT = fileInput.current.files[0]
@@ -34,6 +35,21 @@ const UploadIRT = () => {
             setGlobalAlert({error: true, body:'File tidak valid. Gunakan tipe .pdf'})
             return
         }
+
+        const storageRef = STORAGE.ref('/FileIRT').child(fileIRT.name)
+        await storageRef.put(fileIRT)
+            .catch(() => {
+                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+                return
+            })
+        await storageRef.getDownloadURL()
+            .then(res => {
+                console.log(res)
+            })
+            .catch(() => {
+                setGlobalAlert({error: true, body:'Gagal memperbarui. Refresh dan coba lagi'})
+                return
+            })
 
         console.log(fileIRT)
     }
