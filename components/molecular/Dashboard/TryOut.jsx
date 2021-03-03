@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 
 import { useAuth } from '@core/contexts/AuthContext'
-import { to }from '@core/routepath'
+import { to } from '@core/routepath'
 import CardNoPeserta from '@components/atomic/CardNoPeserta'
 import CardDisplayWide2 from '@components/atomic/CardDisplayWide2'
 
@@ -13,7 +13,7 @@ const TryOut = () => {
     const message = () => {
         if (!userData.noPeserta) return 'Input dahulu nomor pesertamu dan tunggu approval dari panitia'
         else if (!userData.approved) return 'Status akunmu menunggu approval dari panitia'
-        else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <a href="https://wa.me/6281373368875" target="_blank" rel="noopener noreferrer">panitia</a> untuk meminta akses ke tryoutmu</>
+        else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <a href={to.whatsappTehnical} target="_blank" rel="noopener noreferrer">panitia</a> untuk meminta akses ke tryoutmu</>
         else if (userData.examsHistory?.length === userData.examsAccess?.length) return <>Lihat hasil TryOutmu disini<Link href={to.history}><button>Riwayat</button></Link></>
         else return 'Informasi mengenai try out yang kamu ikuti ada di bawah sini'
     }
@@ -36,7 +36,7 @@ const TryOut = () => {
                     {(!userData.approved || userData.examsAccess.length === 0) && 
                         <div className="information-access full-w flex-cc col">
                             <p>Akses TryOut akan muncul setelah Anda di-approve oleh panitia</p>
-                            {userData.approved && <p>Hubungi <a href="https://wa.me/6281373368875" target="_blank" rel="noopener noreferrer">panitia</a> bila terdapat kesalahan</p>}
+                            {userData.approved && <p>Hubungi <a href={to.whatsappTehnical} target="_blank" rel="noopener noreferrer">panitia</a> bila terdapat kesalahan</p>}
                         </div>
                     }
                     {userData.approved && userData.examsAccess?.map((exam, i) => (

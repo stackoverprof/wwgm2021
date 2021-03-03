@@ -5,6 +5,7 @@ const RoutePath = {
     adminArea: '/area-admin',
     manageUsers: '/area-admin/manage-users',
     manageExams: '/area-admin/manage-exams',
+    whatsappTehnical: 'https://wa.me/6281373368875',
     _404: '/404'
 }
 
