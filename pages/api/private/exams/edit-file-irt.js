@@ -25,7 +25,7 @@ export default async (req, res) => {
 
     //BEGIN INSERTION PROCESS
     return await DB.collection('Exams').doc(examId).update({
-        fieIRT: url
+        fileIRT: url
     })
     .then(() => res.status(200).json({ status: 'OK', message: 'Berhasil mengubah detail ujian' }))
     .catch(err => res.status(500).json({ status: 'ERROR', message: `Gagal : ${err}` }))

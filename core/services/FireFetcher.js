@@ -8,10 +8,6 @@ const editPhoto = (uid, query) => {
     return DB.collection('Users').doc(uid).update(query)
 }
 
-const editFileIRT = (examId, query) => {
-    return DB.collection('Exams').doc(examId).update(query)
-}
-
 const initUserDatabase = (uid, query) => {
     return DB.collection('Users').doc(uid).set(query)
 }
@@ -33,13 +29,14 @@ const allExams = (action) => {
     return DB.collection('Exams').orderBy('created_at', 'desc').onSnapshot(action.attach, action.detach)
 }
 
-const examParticipants = (examId, action) => {
+const examData = (examId, action) => {
     return DB.collection('Exams').doc(examId).onSnapshot(action.attach, action.detach)
 }
 
 const examQuestions = (examId, action) => {
     return DB.collection('Exams').doc(examId).collection('Content').doc('Questions').onSnapshot(action.attach, action.detach)
 }
+
 const examAnswers = (examId, action) => {
     return DB.collection('Exams').doc(examId).collection('Content').doc('Answers').onSnapshot(action.attach, action.detach)
 }
@@ -47,7 +44,6 @@ const examAnswers = (examId, action) => {
 export default {
     editBiodata,
     editPhoto,
-    editFileIRT,
     initUserDatabase,
     getExamData,
 
@@ -55,7 +51,7 @@ export default {
         userData,
         allUsers,
         allExams,
-        examParticipants,
+        examData,
         examQuestions,
         examAnswers
     }

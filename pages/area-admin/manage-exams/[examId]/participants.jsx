@@ -16,7 +16,7 @@ const Participants = () => {
 
     useEffect(() => {
         if (examId) {
-            FireFetcher.listen.examParticipants(examId, {
+            const unlisten = FireFetcher.listen.examData(examId, {
                 attach: doc => {
                     setAllParticipants(doc.data().participants)
                 },
@@ -24,8 +24,10 @@ const Participants = () => {
                     setAllParticipants([])
                 }
             })
+
+            return () => unlisten()
         }
-    }, [examId])
+    }, [examId]) 
 
     return (
         <AdminOnlyRoute>

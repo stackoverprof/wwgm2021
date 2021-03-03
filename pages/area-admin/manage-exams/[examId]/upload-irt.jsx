@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
 
@@ -8,8 +8,10 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import AdminLayout from '@components/layouts/AdminLayout'
 import { STORAGE } from '@core/services/firebase'
 import axios from 'axios'
+import FireFetcher from '@core/services/FireFetcher'
 
 const UploadIRT = () => {
+    const [currentLink, setCurrentLink] = useState('') 
     const { query: { examId } } = useRouter()
     const { user, authState, access } = useAuth()
     const { setGlobalAlert } = useLayout()
@@ -68,6 +70,21 @@ const UploadIRT = () => {
             })
     }
 
+    useEffect(() => {
+        if (examId) {
+            const unlisten = FireFetcher.listen.examData(examId, {
+                attach: doc => {
+                    setCurrentLink(doc.data().fileIRT)
+                },
+                detach: () => {
+                    setCurrentLink('')
+                }
+            })
+
+            return () => unlisten()
+        }
+    }, [examId]) 
+
     return (
         <AdminOnlyRoute>
             { authState === 'user' && access.admin && (
@@ -82,6 +99,7 @@ const UploadIRT = () => {
 
                     <section css={style.form}>
                         <form onSubmit={handleSubmit} className="inner contain-size-s flex-cc col">
+                            <p>current file : <a href={currentLink} download>download</a></p>
                             <input
                                 ref={fileInput}
                                 type="file"
@@ -124,7 +142,13 @@ const style = {
         }
     `,
     form: css`
-    
+        p {
+            margin-bottom: 32px;
+        }
+        
+        button {
+            margin-top: 24px;
+        }
     `
 }
 export default UploadIRT
