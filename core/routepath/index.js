@@ -14,7 +14,8 @@ const RouteSet = {
     startTO: ({examId}) => `/try-out/${examId}/start`,
     resultTO: ({examId}) => `/try-out/${examId}/result`,
     examParticipants: ({examId}) => `/area-admin/manage-exams/${examId}/participants`,
-    examEdit: ({examId}) => `/area-admin/manage-exams/${examId}/edit`
+    examEdit: ({examId}) => `/area-admin/manage-exams/${examId}/edit`,
+    examUploadIRT: ({examId}) => `/area-admin/manage-exams/${examId}/upload-irt`
 }
 
 export { 

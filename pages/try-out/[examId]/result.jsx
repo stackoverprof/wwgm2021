@@ -11,7 +11,6 @@ import CardResult from '@components/atomic/CardResult'
 import { useLayout } from '@core/contexts/LayoutContext'
 import convert from '@core/utils/convertExamData'
 
-// [!TODO] : level kesulitan tampilin
 // [!TODO] : tonmbol download hasil rank irt
 // [!TODO] : input buat admin file hasil rank irt
 
@@ -19,10 +18,9 @@ const TryOutResult = () => {
     const [examData, setExamData] = useState(null)
     const [examResult, setExamResult] = useState([])
     const [openDropper, setOpenDropper] = useState(null)
-    
 
-    const { user, authState } = useAuth() 
     const { query: { examId } } = useRouter()
+    const { user, authState } = useAuth() 
     const { setGlobalAlert } = useLayout()
     
     const fetchData = async () => {

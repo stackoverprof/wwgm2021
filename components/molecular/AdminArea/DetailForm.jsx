@@ -96,9 +96,10 @@ const DetailForm = ({examId, handleClose}) => {
                     <input value={inputData.successor} onChange={mutateInputData} type="text" id="successor" name="successor"/>
                 </div>
                 <button type="submit">SUBMIT</button>
-                <div className="flex-cc">
+                <div className="flex-cc col">
                     <Link href={set.examParticipants({examId: examId})}><a className="action">Manage Peserta</a></Link>
                     <Link href={set.examEdit({examId: examId})}><a className="action">Manage Soal</a></Link>
+                    <Link href={set.examUploadIRT({examId: examId})}><a className="action">Upload file IRT</a></Link>
                 </div>
             </form>
         }
