@@ -18,6 +18,7 @@ const CardResult = ({item, openDropper, setOpenDropper, num}) => {
                         <p className="letter gray">{item.body}</p>
                     </div>
                     <p className="icon flex-cc">{item.correctness ? '' : <FaTimes color="#b31d2a88" />}</p>
+                    <p className="smhide level">{!item.level ? '-' : (item.level == 1 ? 'Mudah' : (item.level == 2 ? 'Sedang' : 'Sulit'))}</p>
                 </div>
                 <button onClick={() => setOpenDropper(openDropper === num ? null : num)} className="pembahasan">Pembahasan</button>
             </div>
@@ -34,9 +35,12 @@ const Dropper = ({item}) => {
             <hr className="fade-flip"/>
             <div className="dropper">
                 <div className="explanation-info">{parseHTML(item.explanation)}</div>
-                <button onClick={() => setOpenQuestionInfo(!openQuestionInfo)} className="show-question no-btn">
-                    {!openQuestionInfo ? 'Lihat Soal' : 'Tutup Soal'}
-                </button>
+                <div className="flex-bc bar-q">
+                    <button onClick={() => setOpenQuestionInfo(!openQuestionInfo)} className="show-question no-btn">
+                        {!openQuestionInfo ? 'Lihat Soal' : 'Tutup Soal'}
+                    </button>
+                    <p className="anti-smhide level">{!item.level ? '-' : (item.level == 1 ? 'Mudah' : (item.level == 2 ? 'Sedang' : 'Sulit'))}</p>
+                </div>
                 {openQuestionInfo && (
                     <div className="question-info">
                         <div className="question-body">{parseHTML(item.questionInfo.body)}</div>
@@ -68,14 +72,21 @@ const style = css`
         margin-right: 4px;
 
     }
+    
+    .bar-q {
+        margin-top: 12px;
+    }
+        
+    p.level {
+        min-width: 64px;
+    }
+        
     .bold p{    
         font-weight: 700;
         color: var(--army);
     }
     
-    button.show-question {
-        margin-top: 12px;
-        
+    button.show-question {        
         &:hover {
             text-decoration: underline;
         }
@@ -110,7 +121,12 @@ const style = css`
     }
 
     .smhide{
-        @media (max-width: 520px) {
+        @media (max-width: 600px) {
+            display: none;
+        }
+    }
+    .anti-smhide{
+        @media (min-width: 600px) {
             display: none;
         }
     }
