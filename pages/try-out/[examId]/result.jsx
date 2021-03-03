@@ -66,6 +66,10 @@ const TryOutResult = () => {
             fetchResult()
         }
     }, [examId, user])
+
+    useEffect(() => {
+        console.log(examData)
+    }, [examData])
     
     return (  
         <UserOnlyRoute redirect={to.home}>
@@ -74,7 +78,11 @@ const TryOutResult = () => {
 
                     <section css={style.illus}>
                         <div className="inner contain-size-s flex-cc">    
-                            <p>Ini adalah hasil sementara. Tunggu kami menganalisis nilai IRT-nya!</p>
+                            {examData?.fileIRT ? (
+                                <p>Yeay hasil IRT sudah tersedia : <a href={examData.fileIRT} className="btn no-u" target="_blank" rel="noopener noreferrer" download>Download</a></p>
+                            ):(
+                                <p>Ini adalah hasil sementara. Tunggu kami menganalisis nilai IRT-nya!</p>
+                            )}
                             <img src="/img/illus/time-wait.svg" alt=""/>
                         </div>
                         <hr className="fade-flip"/>
@@ -147,6 +155,11 @@ const style = {
             a {
                 text-decoration: underline;
             }
+        }
+
+        .no-u {
+            text-decoration: none;
+            margin-top: 12px;
         }
 
         @media (max-width: 500px) {

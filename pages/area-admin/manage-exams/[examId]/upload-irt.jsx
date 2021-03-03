@@ -32,9 +32,11 @@ const UploadIRT = () => {
             })
             .then(() => {
                 setGlobalAlert({error: false, body:'File hasil IRT telah dipublikasikan'})
+                fileInput.current.value = '' 
             }).catch(err => {
                 console.log(err)
                 setGlobalAlert({error: true, body:'Gagal memperbarui DB. Refresh dan coba lagi'})
+                fileInput.current.value = '' 
             })
     }
 
@@ -45,19 +47,19 @@ const UploadIRT = () => {
 
         if (!fileIRT) {
             setGlobalAlert({error: false, body:'Tidak ada file terdeteksi'})
-            return
+            return e.target.value = ''
         }
 
         if (!validateFile(fileIRT)) {
             setGlobalAlert({error: true, body:'File tidak valid. Gunakan tipe .pdf'})
-            return
+            return e.target.value = ''
         }
 
         const storageRef = STORAGE.ref('/FileIRT').child(fileIRT.name)
         await storageRef.put(fileIRT)
             .catch(() => {
                 setGlobalAlert({error: true, body:'Gagal memperbarui put. Refresh dan coba lagi'})
-                return
+                return e.target.value = '' 
             })
         await storageRef.getDownloadURL()
             .then(res => {
@@ -66,7 +68,7 @@ const UploadIRT = () => {
             })
             .catch(() => {
                 setGlobalAlert({error: true, body:'Gagal memperbarui link. Refresh dan coba lagi'})
-                return
+                return e.target.value = '' 
             })
     }
 
@@ -99,7 +101,11 @@ const UploadIRT = () => {
 
                     <section css={style.form}>
                         <form onSubmit={handleSubmit} className="inner contain-size-s flex-cc col">
-                            <p>current file : <a href={currentLink} download>download</a></p>
+                                {currentLink ? 
+                                    <p>current file : <a href={currentLink} target="_blank" rel="noopener noreferrer" download>download</a></p>
+                                :
+                                    <p>Masukan file hasil</p>
+                                }
                             <input
                                 ref={fileInput}
                                 type="file"
@@ -144,6 +150,10 @@ const style = {
     form: css`
         p {
             margin-bottom: 32px;
+
+            a {
+                text-decoration: underline;
+            }
         }
         
         button {
