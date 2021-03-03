@@ -10,7 +10,7 @@ const IntroBox = () => {
         <div css={style} className="content-container full-w">
             <div className="upper full-w flex-cc">
                 <div className="inner contain-size-l flex-cc">
-                    <p>Wara-Wiri Gadjah Mada (WWGM) merupakan acara yang bertujuan untuk mengenalkan UGM kepada pelajar di Surabaya yang berbentuk TryOut berbasis utul dan faculty fair.</p>
+                    <p>Wara-Wiri Gadjah Mada (WWGM) merupakan acara yang bertujuan untuk mengenalkan UGM kepada pelajar di Surabaya yang berbentuk TryOut berbasis UTBK dan faculty fair.</p>
                     <img src="/img/illus/intro.svg" alt=""/>
                 </div>
             </div>

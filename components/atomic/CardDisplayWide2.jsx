@@ -125,6 +125,10 @@ const style = {
                     -webkit-text-stroke-width: 0.1px;
                 }
 
+                @media (max-width: 500px) {
+                    font-size: 16px;
+                }
+
                 svg {
                     margin-right: 8px;
                     margin-bottom: 3px;

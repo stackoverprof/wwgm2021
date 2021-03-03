@@ -12,8 +12,6 @@ import { STORAGE } from '@core/services/firebase'
 import InitialAva from '@components/atomic/InitialAva'
 import Spinner from '@components/atomic/spinner/Circle'
 
-// [TODO] : Move storage upload ke api biar aman
-
 const UploadPopUp = ({handleClose}) => {
     const [preview, setPreview] = useState({blob: '', name: '', loading: false})
     const [makeInitial, setMakeInitial] = useState(true)

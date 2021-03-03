@@ -7,9 +7,6 @@ import { to }from '@core/routepath'
 import CardNoPeserta from '@components/atomic/CardNoPeserta'
 import CardDisplayWide2 from '@components/atomic/CardDisplayWide2'
 
-// [TODO] : message lanjutan, cek hasil koreksi tryoutmu disini
-// [TODO] : message lanjutan, cek nilai boobot/IRT disini
-
 const TryOut = () => {
     const { userData } = useAuth()
 
@@ -17,6 +14,7 @@ const TryOut = () => {
         if (!userData.noPeserta) return 'Input dahulu nomor pesertamu dan tunggu approval dari panitia'
         else if (!userData.approved) return 'Status akunmu menunggu approval dari panitia'
         else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <Link href={to._404}>panitia</Link> untuk meminta akses ke tryoutmu</>
+        else if (userData.examsHistory?.length === userData.examsAccess?.length) return <>Lihat hasil TryOutmu disini<Link href={to.history}><button>Riwayat</button></Link></>
         else return 'Informasi mengenai try out yang kamu ikuti ada di bawah sini'
     }
 
@@ -110,6 +108,10 @@ const style = {
             font-weight: 700;
             font-size: 20px;
             color: #75AA87;
+
+            button {
+                margin-top: 12px;
+            }
 
             a {
                 text-decoration: underline;

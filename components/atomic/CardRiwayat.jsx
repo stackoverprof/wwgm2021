@@ -7,12 +7,15 @@ import Skeleton from 'react-loading-skeleton'
 
 import { set } from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
+import convert from '@core/utils/convertExamData'
+import { useLayout } from '@core/contexts/LayoutContext'
 
 const CardRiwayat = ({examId}) => {
     const [examData, setExamData] = useState(null)
     const [examResult, setExamResult] = useState(null)
 
     const { user } = useAuth()
+    const { setGlobalAlert } = useLayout()
     
     const fetchData = async () => {
         await axios.post('/api/public/exams/get-exam-data', {
@@ -27,6 +30,11 @@ const CardRiwayat = ({examId}) => {
             examId: examId
         })
         .then(res => setExamResult(res.data.body))
+        .catch(err => {
+            const { end, message } = err.response.data
+            const finalMessage = end ? message + convert.time(end) : message
+            setGlobalAlert({error: true, body: finalMessage})
+        })
     }
 
     useEffect(() => {
@@ -40,19 +48,21 @@ const CardRiwayat = ({examId}) => {
     
     return (
         <div css={style.main} className="full-w flex-cc">
-            <div className="body flex-cc col">
-                <div className="rowing full-w flex-bc">
-                    <p className="date green flex-cc"><FaBook />{examData.title}</p>
-                    <Link href={set.resultTO({examId: examId})}>
-                        <button className="bordered">
-                            DETAIL
-                        </button>
-                    </Link>
+            {examResult && (
+                <div className="body flex-cc col">
+                    <div className="rowing full-w flex-bc">
+                        <p className="date green flex-cc"><FaBook />{examData.title}</p>
+                        <Link href={set.resultTO({examId: examId})}>
+                            <button className="bordered">
+                                DETAIL
+                            </button>
+                        </Link>
+                    </div>
+                    <div className="rowing full-w flex-bc">
+                        <p className="date smaller flex-cc">Hasil : {examResult.nonIRTResult} dari {examResult.userAnswers.length} benar</p>
+                    </div>
                 </div>
-                <div className="rowing full-w flex-bc">
-                    {examResult && <p className="date smaller flex-cc">Hasil : {examResult.nonIRTResult} dari {examResult.userAnswers.length} benar</p>}
-                </div>
-            </div>
+            )}
         </div>
     )
 }

@@ -11,6 +11,8 @@ import IntroBox from '@components/molecular/Home/IntroBox'
 import AdvantagesBar from '@components/atomic/AdvantagesBar'
 import Gallery from '@components/atomic/Gallery'
 
+// [!TODO] : Selesaiin implement home woi wkwkwk, gallery pake grid, video, footer bikin
+
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
     const [displayedExams, setDisplayedExams] = useState([])
