@@ -50,7 +50,7 @@ const Home = () => {
                 </div>
             </section>
 
-            <section css={style.displayer}>
+            <section id="try-out" css={style.displayer}>
                 <div className="contain-size-l flex-bs">
                     <div className="left flex-cs col">
                         <h1>TRY OUT NASIONAL UTBK 2021</h1>
@@ -65,7 +65,7 @@ const Home = () => {
             </section>
 
             <section css={style.intro}>
-                <div className="flex-cc col">
+                <div className="inner flex-cc col">
                     <div className="text-container">
                         <h2>Apa Sih WWGM 2021?</h2>
                     </div>
@@ -80,7 +80,7 @@ const Home = () => {
                 </div>
             </section>
 
-            <section css={style.documentation}>
+            <section id="dokumentasi" css={style.documentation}>
                 <div className="inner contain-size-sm">
                     <Gallery />
                 </div>
@@ -104,6 +104,11 @@ const style = {
     `,
 
     intro: css`
+
+        .inner {
+            max-width: 100%;
+            overflow: hidden;
+        }
 
         .text-container {
             padding: 0 72px;

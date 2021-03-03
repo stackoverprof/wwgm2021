@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
-import Link from 'next/link'
 import axios from 'axios'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import Skeleton from 'react-loading-skeleton'
 
 import convert from '@core/utils/convertExamData'
-import { to } from '@core/routepath'
 
 const CardDisplayWide = ({examId, showId, onButton}) => {
     const [examData, setExamData] = useState(null)
@@ -35,13 +33,7 @@ const CardDisplayWide = ({examId, showId, onButton}) => {
                 :
                     <p className="date flex-cc"><FaRegCalendarAlt />{convert.date(examData.availability.start)}</p>
                 }
-                {onButton ?
-                    <button className="bordered" onClick={onButton}>DETAIL</button>
-                    :
-                    <Link href={to._404}>
-                        <button className="bordered">DETAIL</button>
-                    </Link>
-                }
+                <button className="bordered" onClick={onButton}>DETAIL</button>
             </div>
         </div>
     )

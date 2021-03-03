@@ -9,8 +9,6 @@ import { to }from '@core/routepath'
 import MenuButton from '@components/atomic/MenuButton'
 import LinkSet from './LinkSet'
 
-// [!TODO] : Navbar link aktifin, sekalian fixin link link yg to._404
-
 const Navbar = () => {
     const [openDropper, setOpenDropper] = useState(false)
     const [openAuthAction, setOpenAuthAction] = useState(false)

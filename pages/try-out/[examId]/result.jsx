@@ -11,9 +11,6 @@ import CardResult from '@components/atomic/CardResult'
 import { useLayout } from '@core/contexts/LayoutContext'
 import convert from '@core/utils/convertExamData'
 
-// [!TODO] : tonmbol download hasil rank irt
-// [!TODO] : input buat admin file hasil rank irt
-
 const TryOutResult = () => {
     const [examData, setExamData] = useState(null)
     const [examResult, setExamResult] = useState([])

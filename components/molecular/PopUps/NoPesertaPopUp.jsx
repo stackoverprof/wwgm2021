@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
-import Link from 'next/link'
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 import { useLayout } from '@core/contexts/LayoutContext'
-import { to }from '@core/routepath'
 import { useAuth } from '@core/contexts/AuthContext'
 import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
 
@@ -135,7 +133,7 @@ const NoPesertaPopUp = ({handleClose}) => {
                     className="pop-up flex-ec col"
                 >
                     <p className="instruction bigger">No Peserta akan dicek panitia dan mendapatkan approval jika sesuai</p>
-                    <p className="instruction">Hubungi <Link href={to._404}>panitia</Link> jika tak kunjung di approve</p>
+                    <p className="instruction">Hubungi <a href="https://wa.me/6281373368875" target="_blank" rel="noopener noreferrer">panitia</a> jika tak kunjung di approve</p>
                 </motion.div>
             </OutsideClickHandler>
         </div>    
