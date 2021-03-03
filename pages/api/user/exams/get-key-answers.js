@@ -1,7 +1,5 @@
 import admin, { DB } from '@core/services/firebaseAdmin'
 
-// [TODO] : Check lagi semua level kesulitan udh diisi apa blm, ada yg NaN apa nggak
-
 export default async (req, res) => {
     const { body: { authToken, examId } } = req
 

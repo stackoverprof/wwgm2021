@@ -8,8 +8,6 @@ import { useAuth } from '@core/contexts/AuthContext'
 import convert from '@core/utils/convertExamData'
 import { set } from '@core/routepath'
 
-// [TODO] : Delete exam cleanly
-
 const DetailForm = ({examId, handleClose}) => {
     const [inputData, setInputData] = useState({
         status: '',

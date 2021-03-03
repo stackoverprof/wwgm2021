@@ -3,8 +3,6 @@ import { css } from '@emotion/react'
 import parse from 'url-parse'
 import Skeleton from 'react-loading-skeleton'
 
-// [TODO] : a little 'edit' seeking out for mobile
-
 const InitialAva = ({size, className, src, override, overrideValue, loading, displayName}) => {
     
     const showInitial = () => {
