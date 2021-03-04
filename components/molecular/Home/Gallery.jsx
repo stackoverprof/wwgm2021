@@ -11,7 +11,7 @@ const Gallery = ({title, images}) => {
                 <div className="gallery full-w">
                     {images.map((image, i) => (
                         <div className="item-img" key={i}>
-                            <Image src={image} width={254} height={220} alt="Dokumentasi wwgm tahun yang lalu"/>
+                            <Image src={image} width={508} height={440} alt="Dokumentasi wwgm tahun yang lalu"/>
                         </div>
                     ))}
                 </div>
@@ -50,6 +50,11 @@ const style = css`
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                transition: 0.5s;
+            }
+
+            &:hover img {
+                transform: scale(1.2);
             }
         }
     }
