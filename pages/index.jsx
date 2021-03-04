@@ -93,7 +93,7 @@ const Home = () => {
                 <div className="inner contain-size-m flex-bc">
                     <div className="content flex-cs col">
                         <h3>Tunggu apa lagi? Jadilah bagian dari event ini</h3>
-                        <button className="bordered-bold">Daftar sekarang!</button>
+                        <button onClick={showLogin.open} className="bordered-bold">Daftar sekarang!</button>
                     </div>
                     <img src="/img/illus/books.webp" alt="books illustration"/>
                 </div>
