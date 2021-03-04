@@ -119,6 +119,7 @@ const style = {
 
             iframe {
                 margin: 0 54px 0 0;
+                border-radius: 8px;
             }
 
             h2 {
