@@ -1,1 +1,0 @@
-// remove seorang admin, membersihkan data yg tersebar 
