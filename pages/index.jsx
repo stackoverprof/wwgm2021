@@ -10,6 +10,7 @@ import CardDisplay from '@components/atomic/CardDisplay'
 import IntroBox from '@components/molecular/Home/IntroBox'
 import AdvantagesBar from '@components/atomic/AdvantagesBar'
 import Gallery from '@components/molecular/Home/Gallery'
+import documentation from '@core/utils/documentation.json'
 
 // [!TODO] : Selesaiin implement home woi wkwkwk, gallery pake grid, video, footer bikin
 
@@ -91,7 +92,9 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <Gallery />
+                    <Gallery title="Try Out" images={documentation.tryOut}/>
+                    <Gallery title="Faculty Fair" images={documentation.facultyFair}/>
+                    <Gallery title="Talk Show" images={documentation.talkShow}/>
                 </div>
             </section>
 
