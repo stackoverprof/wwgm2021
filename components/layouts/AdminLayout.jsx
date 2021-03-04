@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useLayout } from '@core/contexts/LayoutContext'
 import NavbarAdmin from '@components/molecular/Navbar/Customized/NavbarAdmin'
 import AlertHandler from '@components/atomic/AlertHandler'
+import Footer from '@components/molecular/Footer'
 
 const AdminLayout = ({className, title, css: style, children, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
@@ -29,6 +30,7 @@ const AdminLayout = ({className, title, css: style, children, noClearance}) => {
             <main css={style} className={className}>
                 {children}
             </main>
+            <Footer />
 
             <ShadowLayer dimm={dimm} />
             { globalAlert &&
@@ -66,6 +68,10 @@ const layer = ({navHeight, noClearance}) => css`
     .dimm-layer{
         background:  #000c;
         z-index: 50;
+    }
+    
+    main {
+        padding-bottom: 54px;
     }
 `
 

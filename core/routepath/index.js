@@ -5,7 +5,6 @@ const RoutePath = {
     adminArea: '/area-admin',
     manageUsers: '/area-admin/manage-users',
     manageExams: '/area-admin/manage-exams',
-    whatsappTehnical: 'https://wa.me/6281373368875',
     _404: '/404'
 }
 
@@ -19,7 +18,13 @@ const RouteSet = {
     examUploadIRT: ({examId}) => `/area-admin/manage-exams/${examId}/upload-irt`
 }
 
+const ReachOut = {
+    ig: 'https://instagram.com/areksgm',
+    waTech: 'https://wa.me/6281373368875'
+}
+
 export { 
     RoutePath as to,
-    RouteSet as set 
+    RouteSet as set,
+    ReachOut as out
 }

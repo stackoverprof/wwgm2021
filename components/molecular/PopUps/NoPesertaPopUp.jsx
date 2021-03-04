@@ -8,7 +8,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import { useLayout } from '@core/contexts/LayoutContext'
 import { useAuth } from '@core/contexts/AuthContext'
 import { validateFormatNoPeserta, validateNumber } from '@core/utils/validator'
-import { to } from '@core/routepath'
+import { out } from '@core/routepath'
 
 const NoPesertaPopUp = ({handleClose}) => {
     const [inputData, setInputData] = useState({
@@ -134,7 +134,7 @@ const NoPesertaPopUp = ({handleClose}) => {
                     className="pop-up flex-ec col"
                 >
                     <p className="instruction bigger">No Peserta akan dicek panitia dan mendapatkan approval jika sesuai</p>
-                    <p className="instruction">Hubungi <a href={to.whatsappTehnical} target="_blank" rel="noopener noreferrer">panitia</a> jika tak kunjung di approve</p>
+                    <p className="instruction">Hubungi <a href={out.waTech} target="_blank" rel="noopener noreferrer">panitia</a> jika tak kunjung di approve</p>
                 </motion.div>
             </OutsideClickHandler>
         </div>    

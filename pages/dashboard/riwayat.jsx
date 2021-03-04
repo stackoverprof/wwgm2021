@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 
 import UserOnlyRoute from '@core/routeblocks/UserOnlyRoute'
 import { useAuth } from '@core/contexts/AuthContext'
-import { to } from '@core/routepath'
+import { to, out } from '@core/routepath'
 import MainLayout from '@components/layouts/MainLayout'
 import CardRiwayat from '@components/atomic/CardRiwayat'
 
@@ -22,7 +22,7 @@ const Riwayat = () => {
                                 {(!userData.approved || userData.examsHistory.length === 0) && 
                                     <div className="information-access full-w flex-cc col">
                                         <p>Akses TryOut akan muncul setelah Anda di-approve oleh panitia</p>
-                                        {userData.approved && <p>Hubungi <a href={to.whatsappTehnical} target="_blank" rel="noopener noreferrer">panitia</a> bila terdapat kesalahan</p>}
+                                        {userData.approved && <p>Hubungi <a href={out.waTech} target="_blank" rel="noopener noreferrer">panitia</a> bila terdapat kesalahan</p>}
                                     </div>
                                 }
                                 {userData.approved && userData.examsHistory?.map((exam, i) => (

@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import documentation from '@core/utils/documentation.json'
-import MainLayout from '@components/layouts/MainLayout'
+import HomeLayout from '@components/layouts/HomeLayout'
 import LoginPopUp from '@components/molecular/PopUps/LoginPopUp'
 import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
@@ -40,7 +40,7 @@ const Home = () => {
     }, [])
 
     return (
-        <MainLayout css={style.page} title="Selamat datang!" className="flex-sc col" noClearance>
+        <HomeLayout css={style.page} title="Selamat datang!" className="flex-sc col" noClearance>
             
             <section css={style.hero}>
                 <div className="background">
@@ -101,7 +101,7 @@ const Home = () => {
                 </div>
             </section>
 
-        </MainLayout>
+        </HomeLayout>
     )
 }
 

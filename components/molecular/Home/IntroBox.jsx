@@ -4,7 +4,7 @@ import { FaInstagram } from 'react-icons/fa'
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLineFill } from 'react-icons/ri'
 
-// [TODO] : kontak dibuat link
+import { out } from '@core/routepath'
 
 const IntroBox = () => {
 
@@ -18,7 +18,7 @@ const IntroBox = () => {
             </div>
             <div className="lower flex-cc">
                 <div className="inner contain-size-l flex-sc">
-                    <p className="social flex-cc"><FaInstagram /> @areksgm</p>
+                    <a href={out.ig}><p className="social flex-cc"><FaInstagram /> @areksgm</p></a>
                     <p className="social flex-cc"><HiOutlineMail /> surabayagadjahmada@gmail.com</p>
                     <p className="social flex-cc"><RiLineFill /> @nts6607c</p>
                 </div>
