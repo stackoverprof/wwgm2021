@@ -101,7 +101,7 @@ const Home = () => {
             </section>
 
             <section css={style.partner}>
-                <div className="inner contain-size-m flex-cc ">
+                <div className="inner contain-size-m flex-cc">
                     <h3>In partnership with</h3>
                     <Image src="/img/partnership.png" height={100} width={366} alt="partner widya edu"/>
                 </div>
@@ -124,6 +124,12 @@ const style = {
             font-size: 20px;
             text-align: center;
             color: var(--army);
+        }
+        
+        @media (max-width: 800px) {
+            .inner {
+                flex-direction: column;
+            }
         }
     `,
 
