@@ -93,7 +93,7 @@ const Home = () => {
 
             <section css={style.cta}>
                 <div className="inner contain-size-m flex-bc">
-                    <div className="content">
+                    <div className="content flex-cs col">
                         <h3>Tunggu apa lagi? Jadilah bagian dari event ini</h3>
                         <button className="bordered-bold">Daftar sekarang!</button>
                     </div>
@@ -129,11 +129,32 @@ const style = {
 
         button {
             margin-top: 24px;
-            font-weight: 600;
+            font-weight: 700;
+
+            &:hover {
+                background: var(--army);
+            }
         }
 
         img {
             margin-top: 32px;
+        }
+
+        @media (max-width: 660px) {
+            margin-top: 24px;
+
+            .content {
+                width: 100%;
+                align-items: center;
+            }
+
+            h3 {
+                text-align: center;
+            }
+            
+            .inner {
+                flex-direction: column;
+            }
         }
     `,
 
