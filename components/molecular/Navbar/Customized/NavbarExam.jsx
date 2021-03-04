@@ -13,7 +13,7 @@ const Navbar = ({countdown, onTimeUp}) => {
                     <img src="/img/sgm-icon.png" className="no-pointer" alt=""/>
                     <p>WWGM 2021</p>
                 </div>
-                <Countdown date={countdown} renderer={renderer} onComplete={onTimeUp}/>
+                {countdown && <Countdown date={countdown} renderer={renderer} onComplete={onTimeUp}/>}
             </div> 
         </nav>
     )

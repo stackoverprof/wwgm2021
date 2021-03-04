@@ -16,7 +16,7 @@ import QuestionUI from '@components/atomic/QuestionUI'
 import SubmissionPopUp from '@components/molecular/PopUps/SubmissionPopUp'
 
 const Start = () => {
-    const [countdown, setCountdown] = useState(Date.now() + 20 * 60 * 1000)
+    const [countdown, setCountdown] = useState('')
     const [inputData, setInputData] = useState(Array(20).fill(''))
     const [activeIndex, setActiveIndex] = useState(0)
     const [questions, setQuestions] = useState([])
@@ -58,6 +58,8 @@ const Start = () => {
 
     const handleSubmission = async () => {
         setLoading(true)
+
+        console.log('submitting...')
         
         await axios.post('/api/user/exams/submit', {
             authToken: await user.getIdToken(),
@@ -124,10 +126,10 @@ const Start = () => {
     }, [examId, user])
     
     useEffect(() => {
-        if (user.uid && examId && examData) {
+        if (questions.length !== 0 && user.uid && examId && examData) {
             syncLocal()
         }
-    }, [examId, user, examData])
+    }, [examId, user, examData, questions])
 
     return (
         <UserOnlyRoute redirect={to.home}>
