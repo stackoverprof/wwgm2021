@@ -23,7 +23,7 @@ const FooterContent = () => {
                     </div>
                     <div className="contact flex-cs col">
                         <a href={out.ig}><p className="social flex-cc"><FaInstagram /> @areksgm</p></a>
-                        <p className="social flex-cc"><HiOutlineMail /> surabayagadjahmada<span>&nbsp;</span>@gmail.com</p>
+                        <p className="social flex-cc"><HiOutlineMail /> surabayagadjahmada<br/>@gmail.com</p>
                         <p className="social flex-cc"><RiLineFill /> @nts6607c</p>
                     </div>
                 </div>
@@ -104,7 +104,7 @@ const style = css`
             margin-top: 24px;
             align-items: center;
 
-            p span {
+            p br {
                 display: none;
             }
         }

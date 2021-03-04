@@ -13,8 +13,6 @@ import AdvantagesBar from '@components/atomic/AdvantagesBar'
 import Gallery from '@components/molecular/Home/Gallery'
 import Videotron from '@components/molecular/Home/Videotron'
 
-// [!TODO] : footer bikin
-
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
     const [displayedExams, setDisplayedExams] = useState([])
