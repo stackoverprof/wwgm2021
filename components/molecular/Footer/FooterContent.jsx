@@ -17,13 +17,13 @@ const FooterContent = () => {
             </div>
             <div className="main">
                 <div className="inner contain-size-l flex-bc">
-                    <div className="intro">
+                    <div className="intro flex-cs col">
                         <img src="/img/logo-areksgm.png" alt="logo Areksgm"/>
                         <p>Areksgm adalah wadah yang menaungi mahasiswa-mahasiswa Universitas Gadjah Mada (UGM) yang berasal dari Surabaya</p>
                     </div>
                     <div className="contact flex-cs col">
                         <a href={out.ig}><p className="social flex-cc"><FaInstagram /> @areksgm</p></a>
-                        <p className="social flex-cc"><HiOutlineMail /> surabayagadjahmada @gmail.com</p>
+                        <p className="social flex-cc"><HiOutlineMail /> surabayagadjahmada<span>&nbsp;</span>@gmail.com</p>
                         <p className="social flex-cc"><RiLineFill /> @nts6607c</p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const style = css`
 
         .contact {
             min-width: 228px;
-            
+
             p.social {
                 font-family: Poppins;
                 font-weight: 500;
@@ -80,6 +80,32 @@ const style = css`
                     font-size: 24px;
                     min-width: 24px;
                 }
+            }
+        }
+    }
+
+    @media (max-width: 800px) {
+
+        .upper div {
+            justify-content: center;
+        }
+
+        .intro {
+            width: 100%;
+            align-items: center;
+            margin: 0 !important;
+
+            p {
+                text-align: center;
+            }
+        }
+        
+        .contact{
+            margin-top: 24px;
+            align-items: center;
+
+            p span {
+                display: none;
             }
         }
     }

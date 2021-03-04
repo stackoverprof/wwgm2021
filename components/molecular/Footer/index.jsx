@@ -12,7 +12,7 @@ const Footer = ({bigger}) => {
             {bigger && <FooterContent />}
             <div className="inner contain-size-l flex-bc">
                 <p className="copyright-text">WWGM 2021&ensp;|&ensp;Diselenggarakan oleh ArekSGM</p>
-                <div className={`brand ${bigger ? 'aligned' : ''}`}>
+                <div className={`brand ${bigger ? 'aligned' : ''} flex-sc`}>
                     <img src="/img/logo-areksgm.png" alt="logo Areksgm"/>
                 </div>
             </div>
@@ -34,7 +34,9 @@ const style = css`
         }
 
         .aligned {
-            min-width: 228px;
+            @media (min-width: 800px) {
+                min-width: 228px;
+            }
         }
         
         img {
@@ -42,16 +44,19 @@ const style = css`
         }
         
         @media (max-width: 800px) {
-            .inner {
-                padding: 12px 0;
-                justify-content: center;
-                flex-direction: column;
-            }
+            padding: 12px 0;
+            justify-content: center;
+            flex-direction: column;
             
             p.copyright-text {
                 margin-bottom: 24px;
                 text-align: center;
                 font-size: 12px;
+            }
+
+            .brand {
+                width: 100%;
+                justify-content: center;
             }
             
             img {
