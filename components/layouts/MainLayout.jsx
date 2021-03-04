@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLayout } from '@core/contexts/LayoutContext'
 import Navbar from '@components/molecular/Navbar'
+import Footer from '@components/molecular/Footer'
 import AlertHandler from '@components/atomic/AlertHandler'
 
 const MainLayout = ({className, title, css: style, children, noClearance, data}) => {
@@ -29,6 +30,7 @@ const MainLayout = ({className, title, css: style, children, noClearance, data})
             <main css={style} className={className}>
                 {children}
             </main>
+            <Footer />
 
             <ShadowLayer dimm={dimm} />
             { globalAlert &&
@@ -61,12 +63,15 @@ const ShadowLayer = ({dimm}) => {
 
 const layer = ({navHeight, noClearance}) => css`
     padding-top: ${noClearance ? 0 : navHeight}px;
-    padding-bottom: 54px;
     height: 100%;
 
     .dimm-layer{
         background: #000c;
         z-index: 50;
+    }
+
+    main {
+        padding-bottom: 54px;
     }
 `
 

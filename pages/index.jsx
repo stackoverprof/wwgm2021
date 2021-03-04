@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import axios from 'axios'
 
 import { useLayout } from '@core/contexts/LayoutContext'
+import documentation from '@core/utils/documentation.json'
 import MainLayout from '@components/layouts/MainLayout'
 import LoginPopUp from '@components/molecular/PopUps/LoginPopUp'
 import Advantages from '@components/atomic/Advantages'
@@ -10,7 +11,6 @@ import CardDisplay from '@components/atomic/CardDisplay'
 import IntroBox from '@components/molecular/Home/IntroBox'
 import AdvantagesBar from '@components/atomic/AdvantagesBar'
 import Gallery from '@components/molecular/Home/Gallery'
-import documentation from '@core/utils/documentation.json'
 import Videotron from '@components/molecular/Home/Videotron'
 
 // [!TODO] : footer bikin
