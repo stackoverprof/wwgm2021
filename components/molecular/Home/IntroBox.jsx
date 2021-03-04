@@ -4,6 +4,8 @@ import { FaInstagram } from 'react-icons/fa'
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLineFill } from 'react-icons/ri'
 
+// [TODO] : kontak dibuat link
+
 const IntroBox = () => {
 
     return (

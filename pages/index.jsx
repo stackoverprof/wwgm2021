@@ -11,8 +11,9 @@ import IntroBox from '@components/molecular/Home/IntroBox'
 import AdvantagesBar from '@components/atomic/AdvantagesBar'
 import Gallery from '@components/molecular/Home/Gallery'
 import documentation from '@core/utils/documentation.json'
+import Videotron from '@components/molecular/Home/Videotron'
 
-// [!TODO] : Selesaiin implement home woi wkwkwk, gallery pake grid, video, footer bikin
+// [!TODO] : footer bikin
 
 const Home = () => {
     const [openLoginPop, setOpenLoginPop] = useState(false)
@@ -83,18 +84,20 @@ const Home = () => {
 
             <section id="dokumentasi" css={style.documentation}>
                 <div className="inner flex-cc col">
-                    <div className="videotron full-w flex-cc">
-                        <div className="videotron-inner contain-size-l flex-sc">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/q0yjMWdSIoc" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                            <div className="text-content">
-                                <h2>Dokumentasi</h2>
-                                <p>Keseruan Wara-Wiri Gadjah Mada 2020</p>
-                            </div>
-                        </div>
-                    </div>
+                    <Videotron />
                     <Gallery title="Try Out" images={documentation.tryOut}/>
                     <Gallery title="Faculty Fair" images={documentation.facultyFair}/>
                     <Gallery title="Talk Show" images={documentation.talkShow}/>
+                </div>
+            </section>
+
+            <section css={style.cta}>
+                <div className="inner contain-size-m flex-bc">
+                    <div className="content">
+                        <h3>Tunggu apa lagi? Jadilah bagian dari event ini</h3>
+                        <button className="bordered-bold">Daftar sekarang!</button>
+                    </div>
+                    <img src="/img/illus/books.webp" alt="books illustration"/>
                 </div>
             </section>
 
@@ -108,61 +111,30 @@ const style = {
     `,
 
     documentation: css`
-        padding: 80px 0;
+        padding: 80px 0 20px 0;
 
-        .videotron {
-            padding: 60px 0;
-
-            background: url('/img/assets/docu.svg'), #0F1A12;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-
-            color: white;
-
-            iframe {
-                margin: 0 54px 0 0;
-                border-radius: 8px;
-            }
-
-            h2 {
-                font-weight: 600;
-                font-size: 36px;
-                margin-bottom: 12px;
-            }
-
-            p {
-                font-size: 24px;
-                max-width: 252px;
-            }
-            
-            .text-content {
-                margin-right: 24px;
-            }
-            
-            @media (max-width: 800px) {
-                .videotron-inner {
-                    flex-direction: column-reverse;
-                }
-
-                .text-content {
-                    margin-right: 0;
-                }
-
-                h2, p {
-                    text-align: center;
-                }
-
-                iframe {
-                    width: 90%;
-                    margin: 24px 0 0 0;
-                }
-            }
-        }
     `,
 
     advantages: css`
         padding: 80px 0;
+    `,
+
+    cta: css`
+        h3 {
+            font-family: Poppins;
+            font-weight: 600;
+            font-size: 32px;
+            color: var(--army);
+        }
+
+        button {
+            margin-top: 24px;
+            font-weight: 600;
+        }
+
+        img {
+            margin-top: 32px;
+        }
     `,
 
     intro: css`
