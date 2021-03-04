@@ -43,7 +43,7 @@ const CardDisplay = ({examId, title, i, refreshData}) => {
                     examId={examId}
                     title={`TRY OUT NASIONAL ${title}`}
                     size={160}
-                    duration={210}
+                    duration={title === 'SAINTEK' ? 210 : 192}
                     sessionsLength={8}
                     fullDate={convert.fullDate(examData.availability.start)}
                     time={convert.time(examData.availability.start)}
