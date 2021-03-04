@@ -3,8 +3,6 @@ import { css } from '@emotion/react'
 
 import FooterContent from './FooterContent'
 
-// [TODO] : show illus credit di home
-
 const Footer = ({bigger}) => {
 
     return (

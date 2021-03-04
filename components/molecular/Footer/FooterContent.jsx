@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import { FaInstagram } from 'react-icons/fa'
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLineFill } from 'react-icons/ri'
 
 import { out } from '@core/routepath'
+import Attribution from '@components/atomic/Attribution'
 
 const FooterContent = () => {
+    const [showAttribution, setShowAttribution] = useState(false)
 
     return (
         <div css={style}>
@@ -20,6 +22,7 @@ const FooterContent = () => {
                     <div className="intro flex-cs col">
                         <img src="/img/logo-areksgm.png" alt="logo Areksgm"/>
                         <p>Areksgm adalah wadah yang menaungi mahasiswa-mahasiswa Universitas Gadjah Mada (UGM) yang berasal dari Surabaya</p>
+                        <button onClick={() => setShowAttribution(!showAttribution)} className="no-btn">{showAttribution ? 'Close' : 'Show'} attribution</button>
                     </div>
                     <div className="contact flex-cs col">
                         <a href={out.ig}><p className="social flex-cc"><FaInstagram /> @areksgm</p></a>
@@ -28,6 +31,7 @@ const FooterContent = () => {
                     </div>
                 </div>
             </div>
+            {showAttribution && <Attribution />}
         </div>
     )
 }
@@ -60,6 +64,13 @@ const style = css`
                 font-weight: 600;
                 font-size: 20px;
                 color: #FFFFFF;
+            }
+
+            .no-btn {
+                font-weight: 600;
+                margin-top: 40px;
+                text-decoration: underline;
+                color: #327c54;
             }
         }
 
