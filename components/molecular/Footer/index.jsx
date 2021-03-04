@@ -25,6 +25,30 @@ const style = css`
         font-size: 18px;
         color: #A4BBA9;
     }
+
+    img {
+        width: 200px;
+    }
+
+    @media (max-width: 800px) {
+        .inner {
+            padding: 12px 0;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        p.copyright-text {
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        img {
+            width: 50%;
+            max-width: 200px;
+        }
+    }
+
 `
 
 export default Footer
