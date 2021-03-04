@@ -7,7 +7,7 @@ import { useLayout } from '@core/contexts/LayoutContext'
 import Navbar from '@components/molecular/Navbar'
 import AlertHandler from '@components/atomic/AlertHandler'
 
-const MainLayout = ({className, title, css: style, children, noClearance}) => {
+const MainLayout = ({className, title, css: style, children, noClearance, data}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 

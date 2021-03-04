@@ -83,9 +83,9 @@ const Home = () => {
             <section id="dokumentasi" css={style.documentation}>
                 <div className="inner flex-cc col">
                     <div className="videotron full-w flex-cc">
-                        <div className="contain-size-l flex-sc">
+                        <div className="videotron-inner contain-size-l flex-sc">
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/q0yjMWdSIoc" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                            <div>
+                            <div className="text-content">
                                 <h2>Dokumentasi</h2>
                                 <p>Keseruan Wara-Wiri Gadjah Mada 2020</p>
                             </div>
@@ -118,7 +118,7 @@ const style = {
             color: white;
 
             iframe {
-                margin-right: 54px;
+                margin: 0 54px 0 0;
             }
 
             h2 {
@@ -130,6 +130,29 @@ const style = {
             p {
                 font-size: 24px;
                 max-width: 252px;
+            }
+            
+            .text-content {
+                margin-right: 24px;
+            }
+            
+            @media (max-width: 800px) {
+                .videotron-inner {
+                    flex-direction: column-reverse;
+                }
+
+                .text-content {
+                    margin-right: 0;
+                }
+
+                h2, p {
+                    text-align: center;
+                }
+
+                iframe {
+                    width: 90%;
+                    margin: 24px 0 0 0;
+                }
             }
         }
     `,
