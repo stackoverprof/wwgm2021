@@ -9,7 +9,7 @@ import Advantages from '@components/atomic/Advantages'
 import CardDisplay from '@components/atomic/CardDisplay'
 import IntroBox from '@components/molecular/Home/IntroBox'
 import AdvantagesBar from '@components/atomic/AdvantagesBar'
-import Gallery from '@components/atomic/Gallery'
+import Gallery from '@components/molecular/Home/Gallery'
 
 // [!TODO] : Selesaiin implement home woi wkwkwk, gallery pake grid, video, footer bikin
 
@@ -81,7 +81,16 @@ const Home = () => {
             </section>
 
             <section id="dokumentasi" css={style.documentation}>
-                <div className="inner contain-size-sm">
+                <div className="inner flex-cc col">
+                    <div className="videotron full-w flex-cc">
+                        <div className="contain-size-l flex-sc">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/q0yjMWdSIoc" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                            <div>
+                                <h2>Dokumentasi</h2>
+                                <p>Keseruan Wara-Wiri Gadjah Mada 2020</p>
+                            </div>
+                        </div>
+                    </div>
                     <Gallery />
                 </div>
             </section>
@@ -97,6 +106,32 @@ const style = {
 
     documentation: css`
         padding: 80px 0;
+
+        .videotron {
+            padding: 60px 0;
+
+            background: url('/img/assets/docu.svg'), #0F1A12;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+            color: white;
+
+            iframe {
+                margin-right: 54px;
+            }
+
+            h2 {
+                font-weight: 600;
+                font-size: 36px;
+                margin-bottom: 12px;
+            }
+
+            p {
+                font-size: 24px;
+                max-width: 252px;
+            }
+        }
     `,
 
     advantages: css`
@@ -106,7 +141,6 @@ const style = {
     intro: css`
 
         .inner {
-            max-width: 100%;
             overflow: hidden;
         }
 

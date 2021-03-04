@@ -37,30 +37,6 @@ const Gallery = () => {
 }
 
 const style = css`
-	max-width: 100rem;
-	margin: 0 auto;
-	padding: 0 2rem 2rem;
-
-    .heading {
-        font-family: "Montserrat", Arial, sans-serif;
-        font-size: 4rem;
-        font-weight: 500;
-        line-height: 1.5;
-        text-align: center;
-        padding: 3.5rem 0;
-        color: #1a1a1a;
-    }
-
-    .heading span {
-        display: block;
-    }
-
-    .gallery {
-        display: flex;
-        flex-wrap: wrap;
-        /* Compensate for excess margin on outer gallery flex items */
-        margin: -1rem -1rem;
-    }
 
     .gallery-item {
         /* Minimum width of 24rem and grow to fit available space */
@@ -72,7 +48,6 @@ const style = css`
     }
 
     .gallery-image {
-        display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -81,25 +56,6 @@ const style = css`
 
     .gallery-image:hover {
         transform: scale(1.15);
-    }
-
-    /*
-
-    The following rule will only run if your browser supports CSS grid.
-
-    Remove or comment-out the code block below to see how the browser will fall-back to flexbox styling. 
-
-    */
-
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-        grid-gap: 2rem;
-    }
-
-    .gallery,
-    .gallery-item {
-        margin: 0;
     }
 
 `
