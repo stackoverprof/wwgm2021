@@ -11,7 +11,7 @@ const FooterContent = () => {
     const [showAttribution, setShowAttribution] = useState(false)
 
     return (
-        <div css={style}>
+        <div id="tentang-kami" css={style}>
             <div className="upper">
                 <div className="contain-size-l flex-sc">
                     <p>Diselenggarakan oleh</p>

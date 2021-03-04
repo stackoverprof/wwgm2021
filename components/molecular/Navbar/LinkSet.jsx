@@ -2,19 +2,20 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
 
+import { to } from '@core/routepath'
 import AuthArea from './AuthArea'
 
 const defaultItems = [
     {
-        route: '/#try-out',
+        route: `${to.home}#try-out`,
         label: 'Try Out'
     },
     {
-        route: '/#dokumentasi',
+        route: `${to.home}#dokumentasi`,
         label: 'Dokumentasi'
     },
     {
-        route: '/#tentang-kami',
+        route: `${to.home}#tentang-kami`,
         label: 'Tentang Kami'
     }
 ]
