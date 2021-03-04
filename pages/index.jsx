@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
+import Image from 'next/image'
 import axios from 'axios'
 
 import { useLayout } from '@core/contexts/LayoutContext'
@@ -99,6 +100,13 @@ const Home = () => {
                 </div>
             </section>
 
+            <section css={style.partner}>
+                <div className="inner contain-size-m flex-cc ">
+                    <h3>In partnership with</h3>
+                    <Image src="/img/partnership.png" height={100} width={366} alt="partner widya edu"/>
+                </div>
+            </section>
+
         </HomeLayout>
     )
 }
@@ -106,6 +114,17 @@ const Home = () => {
 const style = {
     page: css`
 
+    `,
+
+    partner: css`
+        margin-top: 48px;
+
+        h3 {
+            font-weight: 500;
+            font-size: 20px;
+            text-align: center;
+            color: var(--army);
+        }
     `,
 
     documentation: css`

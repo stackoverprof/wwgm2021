@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { FaStar, FaBalanceScaleRight, FaSortAmountUp } from 'react-icons/fa'
+import { FaStar, FaBalanceScaleRight } from 'react-icons/fa'
 import { MdQuestionAnswer } from 'react-icons/md'
 
 const Advantages = () => {
@@ -9,7 +9,6 @@ const Advantages = () => {
         <ul css={style}>
             <li className="flex-sc"><FaStar />Berstandar UTBK</li>
             <li className="flex-sc"><FaBalanceScaleRight />Pembobotan IRT</li>
-            <li className="flex-sc"><FaSortAmountUp />Rank Nasional</li>
             <li className="flex-sc"><MdQuestionAnswer />Pembahasan</li>
         </ul>
     )
