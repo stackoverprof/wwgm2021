@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import Image from 'next/image'
 
 const Gallery = ({title, images}) => {
 
@@ -10,7 +11,7 @@ const Gallery = ({title, images}) => {
                 <div className="gallery full-w">
                     {images.map((image, i) => (
                         <div className="item-img" key={i}>
-                            <img src={image} alt="Dokumentasi wwgm tahun yang lalu"/>
+                            <Image src={image} width={254} height={220} alt="Dokumentasi wwgm tahun yang lalu"/>
                         </div>
                     ))}
                 </div>
