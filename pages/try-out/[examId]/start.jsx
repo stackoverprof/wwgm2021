@@ -59,8 +59,6 @@ const Start = () => {
     const handleSubmission = async () => {
         setLoading(true)
 
-        console.log('submitting...')
-        
         await axios.post('/api/user/exams/submit', {
             authToken: await user.getIdToken(),
             examId: examId,

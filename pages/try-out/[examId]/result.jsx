@@ -63,10 +63,6 @@ const TryOutResult = () => {
             fetchResult()
         }
     }, [examId, user])
-
-    useEffect(() => {
-        console.log(examData)
-    }, [examData])
     
     return (  
         <UserOnlyRoute redirect={to.home}>

@@ -34,7 +34,6 @@ const UploadIRT = () => {
                 setGlobalAlert({error: false, body:'File hasil IRT telah dipublikasikan'})
                 fileInput.current.value = '' 
             }).catch(err => {
-                console.log(err)
                 setGlobalAlert({error: true, body:'Gagal memperbarui DB. Refresh dan coba lagi'})
                 fileInput.current.value = '' 
             })
