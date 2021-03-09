@@ -100,6 +100,15 @@ const Home = () => {
                 </div>
             </section>
 
+            <hr className="fade"/>
+
+            <section css={style.poster}>
+                <div className="inner contain-size-sm flex-cc col">
+                    <h3>Rangkaian Acara</h3>
+                    <Image src="https://firebasestorage.googleapis.com/v0/b/areks-gm.appspot.com/o/Poster%2FPoster%20Utama%20Full.png?alt=media&token=91eadae5-7299-49ec-a6af-4ad8125dd1c3" height={1433} width={1000} alt="partner widya edu"/>
+                </div>
+            </section>
+
             <section css={style.partner}>
                 <div className="inner contain-size-m flex-cc">
                     <h3>In partnership with</h3>
@@ -114,6 +123,20 @@ const Home = () => {
 const style = {
     page: css`
 
+    `,
+
+    poster: css`
+        margin: 54px 0;
+            
+        img {
+            border-radius: 12px;
+        }
+
+        h3 {
+            margin-bottom: 48px;
+            font-size: 32px;
+            font-weight: bold;
+        }
     `,
 
     partner: css`
@@ -143,6 +166,8 @@ const style = {
     `,
 
     cta: css`
+        margin-bottom: 54px;
+
         h3 {
             font-family: Poppins;
             font-weight: 600;
