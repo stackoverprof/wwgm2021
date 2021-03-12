@@ -8,7 +8,7 @@ import Navbar from '@components/molecular/Navbar'
 import Footer from '@components/molecular/Footer'
 import AlertHandler from '@components/atomic/AlertHandler'
 
-const MainLayout = ({className, title, css: style, children, noClearance, data}) => {
+const MainLayout = ({className, title, css: style, children, noClearance}) => {
     const [navHeight, setNavHeight] = useState(0)
     const navRef = useRef(null)
 
