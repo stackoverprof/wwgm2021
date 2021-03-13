@@ -11,11 +11,12 @@ const TryOut = () => {
     const { userData } = useAuth()
 
     const message = () => {
-        if (!userData.noPeserta) return 'Input dahulu nomor pesertamu dan tunggu approval dari panitia'
-        else if (!userData.approved) return 'Status akunmu menunggu approval dari panitia'
-        else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <a href={out.waTech} target="_blank" rel="noopener noreferrer">panitia</a> untuk meminta akses ke tryoutmu</>
-        else if (userData.examsHistory?.length === userData.examsAccess?.length) return <>Lihat hasil TryOutmu disini<Link href={to.history}><button>Riwayat</button></Link></>
-        else return 'Informasi mengenai try out yang kamu ikuti ada di bawah sini'
+        // if (!userData.noPeserta) return 'Input dahulu nomor pesertamu dan tunggu approval dari panitia'
+        // else if (!userData.approved) return 'Status akunmu menunggu approval dari panitia'
+        // else if (userData.examsAccess?.length === 0) return <>Kamu sudah di approve, hubungi <a href={out.waTech} target="_blank" rel="noopener noreferrer">panitia</a> untuk meminta akses ke tryoutmu</>
+        // else if (userData.examsHistory?.length === userData.examsAccess?.length) return <>Lihat hasil TryOutmu disini<Link href={to.history}><button>Riwayat</button></Link></>
+        // else return 'Informasi mengenai try out yang kamu ikuti ada di bawah sini'
+        return <>Lihat hasil TryOutmu disini<Link href={to.history}><button>Riwayat</button></Link></>
     }
 
     return (
