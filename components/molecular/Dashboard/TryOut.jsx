@@ -26,11 +26,16 @@ const TryOut = () => {
                 <CardNoPeserta />
             </div>
 
+
             <div css={style.illus} className="flex-cc mx-auto">
                 <p>{message()}</p>
                 <img src="/img/illus/dash-tryout.svg" alt=""/>
             </div>
 
+            <div css={style.illus} className="flex-cc mx-auto">
+                <p>Yeay hasil IRT sudah tersedia <a href="https://drive.google.com/file/d/1irJSPy4_M-QH6lpnKm0A9vh70v40c1hd/view?usp=sharing" className="btn no-u" target="_blank" rel="noopener noreferrer" download>Download</a></p>
+            </div>
+            
             <div css={style.access} className="full-w">
                 <p className="label">AKSES TRYOUT</p>
                 <div className="full-w flex-cc col">
